@@ -1,0 +1,68 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr" lang="fr">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title>Player</title>
+<link rel="stylesheet" type="text/css" href="styles.css" />
+
+<script type="text/javascript" src="swfobject.js"></script>
+<script type="text/javascript">
+var dewp = document.getElementById("dewplayer");
+function play() {
+  if(dewp!=null) dewp.dewplay();
+}
+function go(track) {
+  if(dewp!=null) dewp.dewgo(track);
+}
+function stop() {
+  if(dewp!=null) dewp.dewstop();
+}
+function pause() {
+  if(dewp!=null) dewp.dewpause();
+}
+function next() {
+  if(dewp!=null) dewp.dewnext();
+}
+function prev() {
+  if(dewp!=null) dewp.dewprev();
+}
+</script>
+</head>
+
+<body id="dewbody">
+
+<div id="content">
+<h1><img src="zdewplayer.png" alt="Dewplayer" /></h1>
+  
+  <h2>Lecteur</h2>
+  
+	<div id="dewplayer_content">
+	<object data="dewplayer-vinyl.swf" width="303" height="113" name="dewplayer" id="dewplayer" type="application/x-shockwave-flash">
+	<param name="movie" value="dewplayer-vinyl.swf" />
+	<param name="flashvars" value="xml=playlist.xml&javascript=on" />
+	<param name="wmode" value="transparent" />
+	</object>
+	</div>
+	
+  <br /><br />
+  
+  <h2>Actions JavaScript</h2>
+  
+  <input type="button" onclick="play();" value="Play" />
+  <input type="button" onclick="go(1);" value="Play(1)" />
+  <input type="button" onclick="go(2);" value="Play(2)" />
+  <input type="button" onclick="go(3);" value="Play(3)" />
+  <input type="button" onclick="go(4);" value="Play(4)" /><br />
+  <input type="button" onclick="stop();" value="Stop" />
+  <input type="button" onclick="pause();" value="Pause" />
+  <input type="button" onclick="next();" value="Next" />
+  <input type="button" onclick="prev();" value="Prev" />
+  
+  <h2>Playlist</h2>
+
+  <p><a href="playlist.xml">playlist.xml</a></p>
+
+</div>
+
+</body>
+</html>

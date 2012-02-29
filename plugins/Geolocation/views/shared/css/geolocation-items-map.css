@@ -1,0 +1,28 @@
+#map-display { 
+    width: 100%; 
+    height: 400px;
+}
+
+#map-block { 
+    float:right; 
+    width:70%;
+}
+
+#map-links {
+    float:left;
+    width: 25%;
+}
+
+#map-links ul {
+    margin-left:0;
+}
+
+#map-links li {
+    overflow:hidden; 
+    border-bottom:1px dotted #ccc;
+}
+
+#map-links li a {
+    display:block;
+    text-decoration:none; 
+}

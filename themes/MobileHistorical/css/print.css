@@ -1,0 +1,3 @@
+video, object, #header, #page-col-left, #page-col-right #share-this, #page-col-right div.item-file,#footer,a.player,div.clips,#page-col-right h3{display:none;visibility: hidden collapse;height:0px;}
+
+#cite-this{margin-top:3em;}

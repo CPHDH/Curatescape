@@ -1,0 +1,78 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr" lang="fr">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Dewplayer</title>
+
+<!-- Quelques styles CSS -->
+<style type="text/css">
+html {
+  font-family:"Myriad","Myriad Pro",Georgia,Helvetica,Sans-serif;
+  background:url(zdewplayer.jpg) no-repeat bottom right;
+  height:100%;
+  padding:0;
+  margin:0;
+}
+body {
+  height:100%;
+  padding:0;
+  margin:0;
+}
+h1 {
+  color:#eee;
+  padding-top:3em;
+  padding-bottom:2em;
+  margin:0;
+}
+#content {
+  margin-left:15%;
+  width:500px;
+  text-align:center;
+}
+#hint {
+  color:#666;
+  margin-left:15%;
+  width:300px;
+  text-align:left;
+  margin-top:3em;
+}
+</style>
+
+<!-- Appel à la librairie SWFObject (fichier à placer également sur le serveur) -->
+<script type="text/javascript" src="swfobject.js"></script>
+
+</head>
+
+<body>
+
+<div id="content">
+
+  <h1><img src="zdewplayer.png" alt="Dewplayer" /></h1>
+  
+  <div id="dewplayer_content">
+  <object data="dewplayer.swf" width="200" height="20" name="dewplayer" id="dewplayer" type="application/x-shockwave-flash">
+  <param name="movie" value="dewplayer.swf" />
+  <param name="flashvars" value="mp3=mp3/test1.mp3" />
+  <param name="wmode" value="transparent" />
+  </object>
+  </div>
+  
+  
+</div>
+
+
+<script type="text/javascript">
+var flashvars = {
+  mp3: "mp3/test1.mp3"
+};
+var params = {
+  wmode: "transparent"
+};
+var attributes = {
+  id: "dewplayer"
+};
+swfobject.embedSWF("dewplayer.swf", "dewplayer_content", "200", "20", "9.0.0", false, flashvars, params, attributes);
+</script>
+
+</body>
+</html>

@@ -1,0 +1,92 @@
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+
+<!-- it's recommended to load jquery directly from googleapis. fast and gzipped --> 
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script> 
+
+<!-- flowplayer scripts should be loaded from your servers NOT from static.flowplayer.org  --> 
+<script type="text/javascript" src="http://dev.clevelandhistorical.co/themes/CLEhistorical/common/flowplayer/flowplayer-3.2.6.min.js"></script> 
+<script src="http://dev.clevelandhistorical.co/themes/CLEhistorical/common/flowplayer/flowplayer.playlist-3.0.8.js"></script>	
+<link rel="stylesheet" type="text/css" href="http://dev.clevelandhistorical.co/themes/CLEhistorical/common/flowplayer/style.css"/> 
+</head>
+
+
+
+
+
+<body>
+
+
+ 
+<script> 
+// wait for the DOM to load using jQuery
+$(function() {
+	
+	// setup player normally
+	$f("player1", "http://releases.flowplayer.org/swf/flowplayer-3.2.7.swf", {
+	
+		// clip properties common to all playlist entries
+		clip: {
+			baseUrl: 'http://blip.tv/file/get',
+			subTitle: 'from blib.tv video sharing site',
+			time: '20 sec'
+		},
+		
+		// our playlist
+		playlist: [
+			{
+				url: 'KimAronson-TwentySeconds59483.flv',
+				title: 'Palm trees and the sun'
+			},	
+			{
+				url: 'KimAronson-TwentySeconds58192.flv',
+				title: 'Happy feet in a car'
+			},	
+			{
+				url: 'KimAronson-TwentySeconds63617.flv',
+				title: 'People jogging'
+			}
+		],
+		
+		// show playlist buttons in controlbar
+		plugins: {
+			controls: {
+				playlist: true
+			}
+		}
+	});
+	
+	/*
+		here comes the magic plugin. It uses first div.clips element as the 
+		root for as playlist entries. loop parameter makes clips play
+		from the beginning to the end.
+	*/
+	$f("player1").playlist("div.clips:first", {loop:true});
+	
+});
+</script> 
+ 
+ 
+ 
+ 
+<div class="clips" style="float:left"> 
+	<!-- single playlist entry as an "template" --> 
+	<a href="${url}"> 
+		${title} <span>${subTitle}</span> 
+		<em>${time}</em> 
+	</a> 
+</div>
+
+
+
+<!-- the player using splash image --> 
+<a class="player plain" id="player1" style="float:left"> 
+	<!-- <img src="<?php echo WEB_ROOT;?>/themes/CLEhistorical/images/poster.jpg" /> -->
+	<img src="http://dev.clevelandhistorical.co/themes/CLEhistorical/images/poster.jpg" /> 
+</a> 
+<!-- let rest of the page float normally --> 
+<br clear="all"/> 
+	
+	
+</body></html>

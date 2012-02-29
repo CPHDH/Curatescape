@@ -1,0 +1,18 @@
+.info-panel .map {
+    margin-top:-18px;
+    display:block; 
+    margin-left:-18px; 
+    margin-bottom:0;
+    border-top:3px solid #eae9db; 
+    padding:0;
+}
+
+.geolocation_balloon {
+    width: '200px';
+}
+
+.geolocation_balloon_title {
+    font-weight:bold; 
+    font-size:18px; 
+    margin-bottom:0px;
+}

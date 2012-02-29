@@ -1,0 +1,35 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+		<title>jquery.twitter.js Demo</title>
+
+		<link rel="stylesheet" href="demo.css" type="text/css" media="all">
+		<link rel="stylesheet" href="jquery.twitter.css" type="text/css" media="all">
+
+		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.2.6/jquery.min.js"></script>
+		<script type="text/javascript" src="jquery.twitter.js"></script>
+
+		<script type="text/javascript">
+		<!--//--><![CDATA[//><!--
+			$(document).ready(function() {
+				$("#twitter").getTwitter({
+					userName: "jquery",
+					numTweets: 5,
+					loaderText: "Loading tweets...",
+					slideIn: true,
+					showHeading: true,
+					headingText: "Latest Tweets",
+					showProfileLink: true
+				});
+			});
+		//--><!]]>
+		</script>
+	</head>
+
+	<body>
+		<div id="twitter"></div>
+	</body>
+</html>

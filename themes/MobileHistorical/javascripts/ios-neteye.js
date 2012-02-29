@@ -1,0 +1,1 @@
+$(document).ready(function() {$('div#gallery div.gallery-item a').touchGallery();})

@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<playlist version="1" xmlns="http://xspf.org/ns/0/">
+    <title>Ounage Playlist</title>
+    <creator>Dew</creator>
+    <link>http://www.blup.fr/</link>
+    <info>The Best Playlist for Testing</info>
+    <image>covers/tracklist.jpg</image>
+
+    <trackList>
+
+        <track>
+          <location>mp3/moldau.mp3</location>
+          <creator>Bedrich Smetana</creator>
+          <album>Má Vlast</album>
+          <title>La Moldau (Smetana)</title>
+          <annotation>I love this song</annotation>
+          <duration>32000</duration>
+          <image>covers/smetana.jpg</image>
+          <info></info>
+          <link>http://fr.wikipedia.org/wiki/M%C3%A1_Vlast_(Smetana)</link>
+        </track>
+        
+        <track>
+          <location>mp3/cesaria.mp3</location>
+          <creator>Cesaria Evora</creator>
+          <album>Voz d'Amor (Cesaria Evora)</album>
+          <title>Saia Travada</title>
+          <annotation></annotation>
+          <duration></duration>
+          <image>covers/cesaria.jpg</image>
+          <info></info>
+          <link>http://fr.wikipedia.org/wiki/Cesaria_Evora</link>
+        </track>
+        
+        <track>
+          <location>mp3/katusha.mp3</location>
+          <creator>Russian Red Army Choir</creator>
+          <album>Best Of</album>
+          <title>Katusha</title>
+          <annotation></annotation>
+          <duration></duration>
+          <image>covers/redarmy.jpg</image>
+          <info></info>
+          <link>http://www.blup.fr/</link>
+        </track>
+        
+        <track>
+          <location>mp3/everywhere.mp3</location>
+          <creator>Michelle Branch</creator>
+          <album>Everywhere</album>
+          <title>Everywhere (Michelle Branch)</title>
+          <annotation></annotation>
+          <duration></duration>
+          <image>covers/everywhere.jpg</image>
+          <link>http://fr.wikipedia.org/wiki/Michelle_Branch</link>
+        </track>
+        
+        <track>
+          <location>mp3/cartographer-caarano.mp3</location>
+          <creator>E.S. Posthumus</creator>
+          <album>Cartographer</album>
+          <title>Caarano</title>
+          <annotation></annotation>
+          <duration></duration>
+          <image>covers/cartographer.jpg</image>
+          <info></info>
+          <link>http://www.esposthumus.com/</link>
+        </track>
+        
+        <track>
+          <location>mp3/cartographer-isunova.mp3</location>
+          <creator>E.S. Posthumus</creator>
+          <album>Cartographer</album>
+          <title>Isunova</title>
+          <annotation></annotation>
+          <duration></duration>
+          <image>covers/cartographer.jpg</image>
+          <info></info>
+          <link>http://www.esposthumus.com/</link>
+        </track>
+        
+        <track>
+          <location>mp3/cartographer-nolitus.mp3</location>
+          <creator>E.S. Posthumus</creator>
+          <album>Cartographer</album>
+          <title>Nolitus</title>
+          <annotation></annotation>
+          <duration></duration>
+          <image>covers/cartographer.jpg</image>
+          <info></info>
+          <link>http://www.esposthumus.com/</link>
+        </track>
+
+        <track>
+          <location>mp3/unearthed-nara.mp3</location>
+          <creator>E.S. Posthumus</creator>
+          <album>Unearthed</album>
+          <title>Nara</title>
+          <annotation></annotation>
+          <duration></duration>
+          <image>covers/unearthed.jpg</image>
+          <info></info>
+          <link>http://www.esposthumus.com/</link>
+        </track>
+
+        <track>
+          <location>mp3/cortex.mp3</location>
+          <creator>Warner Bros</creator>
+          <album>Conquérir le Monde</album>
+          <title>Minus et Cortex</title>
+          <annotation></annotation>
+          <duration></duration>
+          <image>covers/minus.jpg</image>
+          <info></info>
+        </track>
+
+        <track>
+          <location>mp3/hussard.mp3</location>
+          <creator>Jean-Claude Petit</creator>
+          <album>Le Hussard sur le Toit</album>
+          <title>Le Hussard sur le Toit</title>
+          <annotation></annotation>
+          <duration></duration>
+          <image>covers/hussard.jpg</image>
+          <info></info>
+        </track>
+
+        <track>
+          <location>mp3/vinci.mp3</location>
+          <creator>Dan Brown</creator>
+          <album>Da Vinci Code</album>
+          <title>Da Vinci Code</title>
+          <annotation></annotation>
+          <duration></duration>
+          <image>covers/vinci.jpg</image>
+          <info></info>
+        </track>
+
+        <track>
+          <location>mp3/rachmaninov.mp3</location>
+          <creator>Rachmaninov</creator>
+          <album>Piano Concertos</album>
+          <title>Concerto pour Piano (Rachmaninov)</title>
+          <annotation></annotation>
+          <duration></duration>
+          <image>covers/rachma.jpg</image>
+          <info></info>
+        </track>
+
+    </trackList>
+</playlist>

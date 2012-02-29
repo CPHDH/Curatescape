@@ -1,0 +1,116 @@
+body{
+	margin:0;
+	padding:0;
+	background-color:#dadada;
+	color:#858585;
+	font-family:Helvetica, Arial, sans-serif;
+}
+
+#wrapper{
+	width:1010px;
+	height:auto;
+	margin:auto;
+	padding:10px 0 0 0;
+	background-color:#fff;
+	overflow:hidden;
+}
+
+div #container{
+	width:990px;
+	min-height:680px;
+	background-color:#cdcece;
+	background-image:url('../images/bg.jpg');
+	background-position:top;
+	background-repeat:no-repeat;
+	margin:0 auto 10px auto;
+	
+}
+
+div #header{
+	width:990px;
+	height:auto;
+	overflow:hidden;
+}
+
+div #app-badge{
+	width:990px;
+	height:41px;
+	padding:10px 10px 0 0;
+	float:right;
+	text-align:right;
+	overflow:hidden;
+}
+
+div #logo{
+	padding:0 0 0 75px;
+	float:left;
+}
+
+div #logo img{max-height:270px;}
+
+div #get-app{
+	height:167px;
+	width:227px;
+	background-image:url('../images/getapp-bg.gif');
+	background-repeat:no-repeat;
+	float:right;
+	margin:78px 75px 0 0;
+	padding:20px 0 0 18px;
+}
+
+div #content{
+	width:900px;
+	height:auto;
+	margin:100px 35px 0 55px;
+	background-image:url('../images/content-bg.gif');
+	background-repeat:repeat-y;
+	overflow:hidden;
+}
+
+div #cols{
+	width:100%;
+	height:auto;
+	float:left;
+	word-wrap: break-word;
+}
+
+div #col1{
+	width:280px;
+	height:240px;
+	padding:0 20px 0 0;
+	float:left;
+
+}
+
+div #col2{
+	width:260px;
+	height:auto;
+	padding:0 20px 0 20px;
+	float:left;
+
+}
+div #col3{
+	width:260px;
+	height:auto;
+	padding:0 20px 0 20px;
+	float:right;
+}
+div #footer{
+	width:990px;
+	height:110px;
+	margin:auto;
+	padding:0;
+	font-size: 0.9em;
+}
+
+h2{text-shadow: 1px -1px #fff;text-transform:uppercase; font-weight:bold; font-size:24px; color:#404041; padding:0 0 10px 0; margin:0;}
+h3{text-transform:uppercase; font-weight:lighter; font-size:14px; line-height:18px; color:#555;padding:0 0 7px 0; margin:0;}
+h3.contact small{text-transform: uppercase;}
+h3.contact{text-transform: none;}
+
+p{font-size:12px; padding:5px 0 0 0; margin:0; line-height:18px;}
+a{color:#555;}
+a:hover{color:#777;}
+
+#content img{padding-bottom:25px;}
+
