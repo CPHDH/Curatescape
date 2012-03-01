@@ -490,9 +490,9 @@ $(function() {
 			<a class="addthis_button_preferred_3"></a>
 			<a class="addthis_button_preferred_4"></a>
 			</div>
-			<script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid=ra-4e89c646711b8856"></script>
-			
-			<!-- replace #pubid= value with your ADDTHIS user profile to enable analytics (see settings >> profiles) -->
+			<?php $addthis = (get_theme_option('Add This')) ? (get_theme_option('Add This')) : 'ra-4e89c646711b8856';?>
+			<script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid=<?php echo $addthis ;?>"></script>
+				<!-- replace #pubid= value with your ADDTHIS user profile to enable analytics (see settings >> profiles) -->
 			<!-- AddThis Button END -->
 			</div>
 

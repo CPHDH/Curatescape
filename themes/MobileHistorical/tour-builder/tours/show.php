@@ -140,9 +140,8 @@ head( array( 'title' => $tourTitle, 'content_class' => 'horizontal-nav',
 <h1><?php echo $tourTitle; ?></h1>
 
 <?php if( has_permission( 'TourBuilder_Tours', 'edit' ) ): ?>
-<p id="edit-tour" class="edit-button"><a class="edit" href="<?php
-echo $this->url( array( 'action' => 'edit', 'id' => tour( 'id' ) ) )
-?>">Edit this Tour</a></p>
+
+
 <?php endif; ?>
 
 
@@ -154,10 +153,12 @@ echo $this->url( array( 'action' => 'edit', 'id' => tour( 'id' ) ) )
    </div>
 
    <div id="tour-credits" class="element">
+   <?php if(tour( 'Credits' )): ?>
       <h2>Credits</h2>
       <div class="element-text">
          <?php echo tour( 'Credits' ); ?>
       </div>
+    <?php endif;?>  
    </div>
 
 
@@ -165,10 +166,33 @@ echo $this->url( array( 'action' => 'edit', 'id' => tour( 'id' ) ) )
 
 
 
-<!-- -->
-
 </div>
 <!-- -->
+
+<div id="page-col-right">
+
+	<div id="itemfiles" class="element">
+	<div class="element-text">
+
+		<div id="share-this">
+			<h3 style="margin-top:10px;clear:both">Share this Page</h3>
+			<!-- AddThis Button BEGIN -->
+			<div class="addthis_toolbox addthis_default_style addthis_32x32_style">
+			<a class="addthis_button_preferred_1"></a>
+			<a class="addthis_button_preferred_2"></a>
+			<a class="addthis_button_preferred_3"></a>
+			<a class="addthis_button_preferred_4"></a>
+		</div>
+		<?php $addthis = (get_theme_option('Add This')) ? (get_theme_option('Add This')) : 'ra-4e89c646711b8856';?>
+		<script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid=<?php echo $addthis ;?>"></script>
+			<!-- replace #pubid= value with your ADDTHIS user profile to enable analytics (see settings >> profiles) -->
+		<!-- AddThis Button END -->
+	</div>
+	</div>
+	
+</div>	
+	
+</div>
 
 
 
