@@ -187,7 +187,6 @@ echo mh_lg_logo_url();
 <h2>What Users Are Saying</h2>
 	
 	<div id="twit">
-	<!-- http://search.twitter.com/search.atom?q=clehistorical&result_type=recent -->
 
 <ul>
 <?php
@@ -203,14 +202,14 @@ echo $text;
 
 function twi_get(){
 
- $twitte = file_get_contents("http://search.twitter.com/search.json?q=CLEhistorical%20OR%20%23CLEhistorical&rpp=10");
+ $twitte = file_get_contents("http://search.twitter.com/search.json?q=".get_theme_option('twitter_username')."%20OR%20%23".get_theme_option('twitter_username')."&rpp=10");
  $data = json_decode($twitte);
  $o_text = "";
  foreach($data->results as $item)
  {
  	$date = date('m/d/o',strtotime($item->created_at));
  	echo "<li>";
-    $o_text = "<div class='date'><a href='https://twitter.com/#!/CLEhistorical/status/". $item->id_str . "' target='_blank'>" .$date."</a> @". $item->from_user .": "."</div>".$item->text;
+    $o_text = "<div class='date'><a href='https://twitter.com/#!/".get_theme_option('twitter_username')."/status/". $item->id_str . "' target='_blank'>" .$date."</a> @". $item->from_user .": "."</div>".$item->text;
 	linkmytweet($o_text);
 
    	//echo $o_text;

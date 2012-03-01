@@ -23,8 +23,8 @@ function display_tour_items($num = '10')
     // Build the select query.
     $select = $table->getSelect();
     $select->from(array(), 'RAND() as rand');
-    //$select->where('public = 1');
-    $select->order('rand DESC');
+    $select->where('public = 1');
+    $select->order('title ASC');
     $select->limit($num);    
 	 
     // Fetch some items with our select.

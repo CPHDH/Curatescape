@@ -162,7 +162,7 @@ div.error {font-size:1.5em; line-height:1.33333em; margin:1.33333em 0;}
 			.pagination .next {border-left:1px solid #ccc; padding-left:1em;}
 			.pagination .previous {border-right:1px solid #ccc; padding-right:1em;}
 	
-		.browse .item {overflow:hidden; border-top:1px solid #ccc;padding-top:2em;}
+		.browse .item {overflow:hidden; border-bottom:1px solid #ccc;padding-top:2em;}
 		.browse .item-img img {width:100px; height:100px; float:left; display:block; margin-bottom:2em; margin-right:2em; padding:6px; border:1px solid #ccc;}
 		.tags li {display:inline;}
 		.tags a {}
@@ -315,3 +315,6 @@ div#footer a:hover {color:#aaa; text-transform:underline;}
     width: 190px;
 }
 
+/* Tours */
+
+table tbody  tr.tours td{border-bottom:1px solid #ccc;}

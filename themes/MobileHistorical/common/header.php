@@ -50,17 +50,6 @@ if (mobile_device_detect()==true){
 	<!-- Google Analytics -->
 	<?php echo mh_google_analytics();?>
 	
-	<!-- start NETEYE Touch Gallery image viewer script (iOS only) -->
-	<?php 
-	//$ios=mobile_device_detect($iphone=true,$ipad=true,$android=false,$opera=false,$blackberry=false,$palm=false,$windows=false,$mobileredirect=false,$desktopredirect=false);
-	//if ($ios==true)
-	//{
-	//echo js('jquery.touch-gallery-1.0.0.min');
-	//echo js('ios-neteye');;
-	//}
-	?>
-	<!-- end NETEYE Touch Gallery -->
-
   </head> 
 
 	
@@ -112,7 +101,7 @@ else{
 <!-- END FLOWPLAYER -->
 
 
-<?php echo js('jquery-1.6.1');?>
+
 
 <!-- Meta -->
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -133,9 +122,6 @@ else{
 
 <!-- Plugin Stuff -->
 <?php echo plugin_header(); ?>
-
-<!-- Twitter -->
-<link rel="stylesheet" href="<?php echo WEB_ROOT;?>/themes/MobileHistorical/javascripts/twitter/jquery.twitter.css" type="text/css" />
 
 
 <!-- TypeKit -->

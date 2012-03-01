@@ -32,7 +32,7 @@ head( array( 'title' => $tourTitle, 'content_class' => 'horizontal-nav',
 <!-- -->
 <div id="page-col-left">
 
-<div id="lv-logo"><a href="<?php echo WEB_ROOT;?>/"><img src="<?php echo img('lv-logo.png'); ?>" border="0" alt="Cleveland Historical" title="Cleveland Historical" /></a></div>
+<div id="lv-logo"><a href="<?php echo WEB_ROOT;?>/"><img src="<?php echo img('lv-logo.png'); ?>" border="0" alt="<?php echo settings('site_title');?>" title="<?php echo settings('site_title');?>" /></a></div>
 
 <div id="tour-items">
    <h3>Locations</h3>

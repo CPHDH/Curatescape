@@ -462,7 +462,7 @@ $(function() {
 	    			$photoDesc = normalize_special_characters($query);
 	    			//
 	    			$query = item_file('Dublin Core', 'Title');
-	    			$photoTitle = normalize_special_characters($query);
+	    			$photoTitle = $query; // normalize function fails on title, not needed
 	    			//
 	    			echo display_file($file, array('linkAttributes'=>array('rel'=>'clearbox[gallery=Photo Gallery,,comment='.$photoDesc.',,title='.$photoTitle.']')));
 				} else {

@@ -151,7 +151,7 @@ function has_tours_for_loop()
 
 function loop_tours()
 {
-   // (see loop_records for implemntation comments)
+   // (see loop_records for implementation comments)
    $records = get_tours_for_loop();
    static $recordLoop = null;
    static $lastRecord = null;

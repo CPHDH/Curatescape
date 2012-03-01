@@ -39,16 +39,6 @@
 	<script src="http://code.jquery.com/jquery-1.6.2.min.js"></script>
 	<script src="http://code.jquery.com/mobile/1.0b2/jquery.mobile-1.0b2.min.js"></script>
 	
-				<!-- start NETEYE Touch Gallery image viewer script (iOS only) -->
-				<?php 
-				$ios=mobile_device_detect($iphone=true,$ipad=true,$android=false,$opera=false,$blackberry=false,$palm=false,$windows=false,$mobileredirect=false,$desktopredirect=false);
-				if ($ios==true)
-				{
-				echo js('jquery.touch-gallery-1.0.0.min');
-				echo js('ios-neteye');;
-				}
-				?>
-				<!-- end NETEYE Touch Gallery -->
     
 </head> 
 
