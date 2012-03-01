@@ -171,8 +171,10 @@ function normalize_special_characters( $str )
                                 'Ê'=>'E', 'Ë'=>'E', 'Ì'=>'I', 'Í'=>'I', 'Î'=>'I', 'Ï'=>'I', 'Ñ'=>'N', 'Ò'=>'O', 'Ó'=>'O', 'Ô'=>'O', 'Õ'=>'O', 'Ö'=>'O', 'Ø'=>'O', 'Ù'=>'U', 
                                 'Ú'=>'U', 'Û'=>'U', 'Ü'=>'U', 'Ý'=>'Y', 'Þ'=>'B', 'ß'=>'Ss', 'à'=>'a', 'á'=>'a', 'â'=>'a', 'ã'=>'a', 'ä'=>'a', 'å'=>'a', 'æ'=>'a', 'ç'=>'c', 
                                 'è'=>'e', 'é'=>'e', 'ê'=>'e', 'ë'=>'e', 'ì'=>'i', 'í'=>'i', 'î'=>'i', 'ï'=>'i', 'ð'=>'o', 'ñ'=>'n', 'ò'=>'o', 'ó'=>'o', 'ô'=>'o', 'õ'=>'o', 
-                                'ö'=>'o', 'ø'=>'o', 'ù'=>'u', 'ú'=>'u', 'û'=>'u', 'ý'=>'y', 'ý'=>'y', 'þ'=>'b', 'ÿ'=>'y', 'eight'=>'&#101;ight' ); 
+                                'ö'=>'o', 'ø'=>'o', 'ù'=>'u', 'ú'=>'u', 'û'=>'u', 'ý'=>'y', 'ý'=>'y', 'þ'=>'b', 'ÿ'=>'y' ); 
     $str = strtr( $str, $unwanted_array ); 
+    
+    #For reasons yet unknown, some servers may require an additional $unwanted_array item: 'eight'=>'&#101;ight'
 
     # Bullets, dashes, and trademarks 
     $str = str_replace( chr(149), "&#8226;", $str );    # bullet • 
@@ -182,7 +184,7 @@ function normalize_special_characters( $str )
     $str = str_replace( chr(169), "&copy;", $str );    # copyright mark 
     $str = str_replace( chr(174), "&reg;", $str );        # registration mark 
     $str = str_replace( "&quot;", "\"", $str );        # "
-    $str = str_replace( "&apos;", "\"", $str );        # '
+    $str = str_replace( "&apos;", "\'", $str );        # '
 
     return $str; 
 } 
@@ -462,7 +464,7 @@ $(function() {
 	    			$photoDesc = normalize_special_characters($query);
 	    			//
 	    			$query = item_file('Dublin Core', 'Title');
-	    			$photoTitle = $query; // normalize function fails on title, not needed
+	    			$photoTitle = normalize_special_characters($query); 
 	    			//
 	    			echo display_file($file, array('linkAttributes'=>array('rel'=>'clearbox[gallery=Photo Gallery,,comment='.$photoDesc.',,title='.$photoTitle.']')));
 				} else {
