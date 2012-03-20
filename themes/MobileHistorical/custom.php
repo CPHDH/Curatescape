@@ -324,7 +324,7 @@ function mh_bg_lv_logo_url()
 {
     $bg_lv_logo = get_theme_option('bg_lv');
 	
-	$logo_img = $bg_lv_logo ? WEB_ROOT.'/archive/theme_uploads/'.$bg_lv_logo : img('lv-bg.jpg');
+	$logo_img = $bg_lv_logo ? WEB_ROOT.'/archive/theme_uploads/'.$bg_lv_logo : img('lv-bg.png');
 	
 	return $logo_img;
 }
