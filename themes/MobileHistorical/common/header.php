@@ -13,27 +13,15 @@ if (mobile_device_detect()==true){
 	<meta name="format-detection" content="telephone=no">
 
     <!-- allow installation as offline iOS app 
-    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="no" />
 	<meta name="apple-mobile-web-app-status-bar-style" content="black" />
 	-->
-	<!-- iOS icons 
-	<link rel="apple-touch-icon" href="<?php// echo img('Icon.png');?>" />
-	<link rel="apple-touch-icon" sizes="72x72" href="<?php// echo img('Icon-72.png');?>" />
-	<link rel="apple-touch-icon" sizes="114x114" href="<?php// echo img('Icon@2x.png');?>" />
-	-->
-	<!-- iPhone/iPodTouch loading image 
-	<link rel="apple-touch-startup-image" href="<?php// echo img('Default.png');?>" />
-	-->
-	
-	<!-- iPad loading image - landscape (1024x748) 
-	<link rel="apple-touch-startup-image" href="<?php// echo img('Default-iPad-L.png');?>" media="screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:landscape)" />
-	-->
-
-	<!-- iPad loading image - portrait (768x1024) 
-	<link rel="apple-touch-startup-image" href="<?php// echo img('Default-iPad-P');?>" media="screen and (min-device-width: 481px) and (max-device-width: 1024px) and (orientation:portrait)" />
-	-->
+	<!-- iOS icon : Generic -->
+	<link rel="apple-touch-icon" href="<?php echo mh_apple_icon_logo_url();?>" />
+	<link rel="icon" href="<?php echo mh_apple_icon_logo_url();?>" />
     
 	<title><?php echo settings('site_title'); echo $title ? ' | ' . $title : ''; ?></title>
+	
 	<?php 
 	queue_css('m-jquerymobile1bmin');
 	queue_css('m-screen');
@@ -90,6 +78,9 @@ else{
 <head>
 <!-- Chrome Frame for IE -->
 <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1"/>
+
+    <link rel="shortcut icon" href="<?php echo img('favicon.ico');?>"/>
+    
 <title><?php echo settings('site_title'); echo $title ? ' | ' . $title : ''; ?></title>
 
 
@@ -115,7 +106,7 @@ else{
 <link rel="stylesheet" media="print" href="<?php echo html_escape(css('print')); ?>" />
 
 <!-- Custom CSS via theme config -->
-<?php echo '<style type="text/css">'.get_theme_option('custom_css').'</style>';?>
+<?php echo '<style type="text/css">#content-home{background:url('.mh_bg_home_logo_url().') no-repeat center top #bbb;}#content{background:url('.mh_bg_lv_logo_url().') no-repeat center top #d7d7d7;}'.get_theme_option('custom_css').'</style>';?>
 
 <!-- JavaScripts -->
 <?php echo js('default'); ?>

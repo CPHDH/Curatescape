@@ -90,7 +90,7 @@ else{
 		    <div id="header">
 			<div id="primary-nav">
     			<ul class="navigation">
-    			    <?php echo public_nav_main(array('Home' => uri('/'), 'Tours' => uri('/tour-builder/tours/browse/'), 'Browse Locations' => uri('items'))); ?>
+    			    <?php echo public_nav_main(array('Home' => uri('/'), 'Tours' => uri('/tour-builder/tours/browse/'), 'Stories' => uri('items'))); ?>
     			</ul>
     		</div>
     		<div id="search-wrap">
@@ -133,7 +133,7 @@ echo mh_lg_logo_url();
 </div>
 
 <div id="col-lft">
-<img src="<?php echo img('ttl-take-a-tour.png'); ?>" alt="Take a Tour" title="Take a Tour" border="0" />
+<img src="<?php echo mh_tour_logo_url(); ?>" alt="Take a Tour" title="Take a Tour" border="0" />
 
 <?php display_tour_items($items); ?>
 
@@ -147,7 +147,7 @@ echo mh_lg_logo_url();
 	<div class="hm-col">
 	<!-- Recent Items -->		
 	<div id="recent-items">
-    	<h2>Recently Added Items</h2>
+    	<h2>Recently Added Stories</h2>
 	
     		<?php set_items_for_loop(recent_items(1)); ?>
     		<?php if (has_items_for_loop()): ?>
@@ -171,7 +171,7 @@ echo mh_lg_logo_url();
 			
     		<?php endif; ?>
 		
-    		<p class="view-items-link"><?php echo link_to_browse_items('View All Items'); ?></p>
+    		<p class="view-items-link"><?php echo link_to_browse_items('View All Stories'); ?></p>
 	
 	</div><!-- end recent-items -->
 	</div><!-- end col -->
@@ -202,14 +202,14 @@ echo $text;
 
 function twi_get(){
 
- $twitte = file_get_contents("http://search.twitter.com/search.json?q=".get_theme_option('twitter_username')."%20OR%20%23".get_theme_option('twitter_username')."&rpp=10");
+ $twitte = file_get_contents("http://search.twitter.com/search.json?q=".get_theme_option('twitter_hashtag')."%20OR%20%23".get_theme_option('twitter_hashtag')."&rpp=4");
  $data = json_decode($twitte);
  $o_text = "";
  foreach($data->results as $item)
  {
  	$date = date('m/d/o',strtotime($item->created_at));
  	echo "<li>";
-    $o_text = "<div class='date'><a href='https://twitter.com/#!/".get_theme_option('twitter_username')."/status/". $item->id_str . "' target='_blank'>" .$date."</a> @". $item->from_user .": "."</div>".$item->text;
+    $o_text = "<div class='date'><a href='https://twitter.com/#!/".get_theme_option('twitter_hashtag')."/status/". $item->id_str . "' target='_blank'>" .$date."</a> @". $item->from_user .": "."</div>".$item->text;
 	linkmytweet($o_text);
 
    	//echo $o_text;
@@ -225,7 +225,7 @@ function twi_get(){
 	</div>
 
 	<br />
-	<a href="http://twitter.com/#!/search/<?php echo get_theme_option('twitter_hashtag') ? get_theme_option('twitter_hashtag') : get_theme_option('twitter_username') ; ?>"><img src="<?php echo img('btn-conversation.png'); ?>" alt="Join the Conversation on Twitter" title="Join the Conversation on Twitter" border="0" /></a>
+	<a href="http://twitter.com/#!/search/<?php echo get_theme_option('twitter_hashtag') ? get_theme_option('twitter_hashtag') : get_theme_option('twitter_username') ; ?>"><img src="<?php echo mh_follow_logo_url(); ?>" alt="Join the Conversation on Twitter" title="Join the Conversation on Twitter" border="0" /></a>
 	
 <?php }
 else{

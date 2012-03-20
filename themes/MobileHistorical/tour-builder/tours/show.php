@@ -100,7 +100,7 @@ head( array( 'title' => $tourTitle, 'content_class' => 'horizontal-nav',
 		    <div id="header">
 			<div id="primary-nav">
     			<ul class="navigation">
-    			    <?php echo public_nav_main(array('Home' => uri('/'), 'Tours' => uri('/tour-builder/tours/browse/'), 'Browse Locations' => uri('items'))); ?>
+    			    <?php echo public_nav_main(array('Home' => uri('/'), 'Tours' => uri('/tour-builder/tours/browse/'), 'Stories' => uri('items'))); ?>
     			</ul>
     		</div>
     		<div id="search-wrap">

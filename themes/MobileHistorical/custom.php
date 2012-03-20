@@ -81,7 +81,7 @@ echo Zend_Json_Encoder::encode( $metadata );
  function display_random_featured_item_CH($withImage=false)
  {
     $featuredItem = random_featured_item($withImage);
- 	$html = '<h2>Featured Item</h2>';
+ 	$html = '<h2>Featured Story</h2>';
  	if ($featuredItem) {
  	    $itemTitle = item('Dublin Core', 'Title', array(), $featuredItem);
         
@@ -271,6 +271,60 @@ function mh_nav_logo_url()
     $nav_logo = get_theme_option('tiny_logo');
 	
 	$logo_img = $nav_logo ? WEB_ROOT.'/archive/theme_uploads/'.$nav_logo : img('icn-sm.png');
+	
+	return $logo_img;
+}
+
+function mh_tour_logo_url()
+{
+    $tour_logo = get_theme_option('tour_logo');
+	
+	$logo_img = $tour_logo ? WEB_ROOT.'/archive/theme_uploads/'.$tour_logo : img('ttl-take-a-tour.png');
+	
+	return $logo_img;
+}
+
+function mh_follow_logo_url()
+{
+    $follow_logo = get_theme_option('follow_logo');
+	
+	$logo_img = $follow_logo ? WEB_ROOT.'/archive/theme_uploads/'.$follow_logo : img('btn-conversation.png');
+	
+	return $logo_img;
+}
+
+function mh_map_pin_logo_url()
+{
+    $map_pin_logo = get_theme_option('map_pin');
+	
+	$logo_img = $map_pin_logo ? WEB_ROOT.'/archive/theme_uploads/'.$map_pin_logo : img('icn.png');
+	
+	return $logo_img;
+}
+
+function mh_apple_icon_logo_url()
+{
+    $apple_icon_logo = get_theme_option('apple_icon');
+	
+	$logo_img = $apple_icon_logo ? WEB_ROOT.'/archive/theme_uploads/'.$apple_icon_logo : img('Icon.png');
+	
+	return $logo_img;
+}
+
+function mh_bg_home_logo_url()
+{
+    $bg_home_logo = get_theme_option('bg_home');
+	
+	$logo_img = $bg_home_logo ? WEB_ROOT.'/archive/theme_uploads/'.$bg_home_logo : img('bg-home.jpg');
+	
+	return $logo_img;
+}
+
+function mh_bg_lv_logo_url()
+{
+    $bg_lv_logo = get_theme_option('bg_lv');
+	
+	$logo_img = $bg_lv_logo ? WEB_ROOT.'/archive/theme_uploads/'.$bg_lv_logo : img('lv-bg.jpg');
 	
 	return $logo_img;
 }

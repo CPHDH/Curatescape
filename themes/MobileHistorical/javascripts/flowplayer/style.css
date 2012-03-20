@@ -15,15 +15,12 @@
 
 .playlist, .clips {
 	width:476px;
-	background-color:#fff;
 	margin-bottom: 15px;
 }
 
 .clips a {
-	background:url(/img/global/gradient/h80.png);
 	display:block;
-	background-color:#fefeff;
-	padding:0 10px 5px 0px;
+	padding:5px;
 	height:auto;
 	width:100%;
 	font-size:12px;

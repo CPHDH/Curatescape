@@ -13,6 +13,9 @@
 <link rel="stylesheet" media="all" type='text/css' href="<?php echo css('sm-screen'); ?>" />
 <?php };?>
 
+<!-- Custom CSS via theme config -->
+<?php echo '<style type="text/css">div #container{background-image:url('.mh_bg_lv_logo_url().');background-position:top center;background-color:#d7d7d7;background-repeat:none;}'.get_theme_option('custom_css').'</style>';?>
+
 <!-- TypeKit -->
 <script type="text/javascript" src="http://use.typekit.com/<?php echo get_theme_option('typekit');?>.js"></script>
 <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
