@@ -144,7 +144,7 @@ else{
 		    <div id="header">
 			<div id="primary-nav">
     			<ul class="navigation">
-    			    <?php echo public_nav_main(array('Home' => uri('/'), 'Tours' => uri('/tour-builder/tours/browse/'), 'Stories' => uri('items'))); ?>
+    			   <?php echo mh_global_nav('desktop'); ?>
     			</ul>
     		</div>
     		<div id="search-wrap">
@@ -192,7 +192,7 @@ function normalize_special_characters( $str )
 
 
 <!-- -->
-<div id="page-col-left">
+<div id="page-col-left" class="item">
 
 <div id="lv-logo"><a href="<?php echo WEB_ROOT;?>/"><img src="<?php echo mh_med_logo_url(); ?>" border="0" alt="Cleveland Historical" title="Cleveland Historical" /></a></div>
 
@@ -210,6 +210,7 @@ if (function_exists('geolocation_get_location_for_item')){
 
 <div id="audio-list">
 <h3>Audio Files</h3>
+
 <?php $audioTypes = array('audio/mpeg'); ?>
 	<?php $myaudio = array(); ?>
 	<?php while ($file = loop_files_for_item()):
@@ -222,7 +223,7 @@ if (function_exists('geolocation_get_location_for_item')){
 					// echo code here
 					array_push($myaudio, $file);
 				?>
-				<h4><?php echo item_file('Dublin Core', 'Title') ?></h4>
+				<h4><?php echo item_file('Dublin Core', 'Title') ?> <span class="info"><a href="htmlcontent" rel="clearbox[html=<h1 class='audio-caption'>Audio Detail:</h1><br><h2 class='audio-caption'><?php echo item_file('Dublin Core', 'Title');?></h2><br/><p class='audio-caption'><?php echo item_file('Dublin Core', 'Description');?></p>]">info</a></span></h4>
 			
 				<?php 
 				$msie = strpos($_SERVER["HTTP_USER_AGENT"], 'MSIE') ? true : false; 
@@ -275,7 +276,7 @@ if (count($subjects) > 1):
 
 
     	<h3>Subject</h3>
-    	<div>
+    	<div class="subjects">
 
 <?php foreach ($subjects as $subject): ?>
 <li>
@@ -283,6 +284,7 @@ if (count($subjects) > 1):
 </li>
 <?php endforeach; ?>
 </div>
+
 <?php endif; ?>
     	
 	
@@ -461,12 +463,14 @@ $(function() {
 	    		if ($file->hasThumbnail()) {
 	    			//
 	    			$query = item_file('Dublin Core', 'Description');
+	    			$query = preg_replace("/(<br\s*\/?>\s*)+/", "<br><br>", $query); // remove excess <br> tags!
 	    			$photoDesc = normalize_special_characters($query);
 	    			//
 	    			$query = item_file('Dublin Core', 'Title');
 	    			$photoTitle = normalize_special_characters($query); 
 	    			//
 	    			echo display_file($file, array('linkAttributes'=>array('rel'=>'clearbox[gallery=Photo Gallery,,comment='.$photoDesc.',,title='.$photoTitle.']')));
+	    			//echo display_file($file, array('linkAttributes'=>array('href'=>'htmlcontent','rel'=>'clearbox[gallery=Photo Gallery,,html=<h1 class="photo-caption">Photo Detail:</h1><img class="photo-detail" src="'.img('poster.jpg').'"/><h2 class="photo-caption">'.$photoTitle.'<h2><p class="photo-caption">'.$photoDesc.'</p>]')));
 				} else {
 				// echo display_files_for_item();
 				}
@@ -501,7 +505,6 @@ $(function() {
 	</div>	
 </div>
 <!-- -->
-
 
 <?php foot(); ?>
 <?php 

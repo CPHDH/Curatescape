@@ -2,7 +2,7 @@
 if (mobile_device_detect()==true){
 // begin mobile items/browse
 ?>
-<?php head( array( 'title' => 'Browse Locations') );?>
+<?php head( array( 'title' => 'Browse Stories') );?>
 <!-- Start of page content: #browse -->
 
 
@@ -65,14 +65,14 @@ if (mobile_device_detect()==true){
 else{
 // begin non-mobile items/browse	
 ?>
-<?php head(array('title'=>'Browse Items')); ?>
+<?php head(array('title'=>'Browse Stories')); ?>
 
 <div id="content">
 			
 		    <div id="header">
 			<div id="primary-nav">
     			<ul class="navigation">
-    			    <?php echo public_nav_main(array('Home' => uri('/'), 'Tours' => uri('/tour-builder/tours/browse/'), 'Stories' => uri('items'))); ?>
+    			    <?php echo mh_global_nav('desktop'); ?>
     			</ul>
     		</div>
     		<div id="search-wrap">
@@ -88,7 +88,7 @@ else{
 <!-- -->
 <div id="page-col-left">
 
-<div id="lv-logo"><a href="<?php echo WEB_ROOT;?>/"><img src="<?php echo mh_med_logo_url(); ?>" border="0" alt="Cleveland Historical" title="<?php echo settings('site_title');?>" /></a></div>
+<div id="lv-logo"><a href="<?php echo WEB_ROOT;?>/"><img src="<?php echo mh_med_logo_url(); ?>" border="0" alt="<?php echo settings('site_title');?>" title="<?php echo settings('site_title');?>" /></a></div>
 
 
 </div>
@@ -103,7 +103,13 @@ else{
 		<h1>Browse <?php echo $term.$term2 ?> (<?php echo total_results(); ?> total)</h1>
 		
 		<ul class="navigation" id="secondary-nav">
-			<?php echo nav(array('Browse All' => uri('items'), 'Browse by Tag' => uri('items/tags'), 'Browse by Subject' => uri('items/subject-browse'))); ?>
+			<?php 
+			if (function_exists('subject_browse_public_navigation_items')){
+			echo nav(array('Browse All' => uri('items'), 'Browse by Tag' => uri('items/tags'), 'Browse by Subject' => uri('items/subject-browse')));
+			}
+			else{
+			echo nav(array('Browse All' => uri('items'), 'Browse by Tag' => uri('items/tags')));
+			} ?>
 		</ul>
 		
 		<div class="pagination top"><?php echo pagination_links(); ?></div>

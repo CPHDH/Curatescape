@@ -7,8 +7,8 @@ var
 // CB layout:
 
 	CB_WindowColor='#fff',				// color of the CB window (note: you have to change the rounded-corner PNGs too!), transparent is also working
-	CB_MinWidth=200,				// minimum (only at images) or initial width of CB window
-	CB_MinHeight=200,				// initial heigth of CB window
+	CB_MinWidth=300,				// minimum (only at images) or initial width of CB window
+	CB_MinHeight=400,				// initial heigth of CB window
 	CB_WinPadd=15,					// padding of the CB window from sides of the browser 
 	CB_RoundPix=12,					// change this setting only if you are generating new PNGs for rounded corners
 	CB_ImgBorder=0,					// border size around the picture in CB window
@@ -43,15 +43,15 @@ var
 // CB font, text and navigation (at the bottom of CB window) settings:
 
 	CB_FontT='helvetica, arial, sans-serif',				//
-	CB_FontSizeT=13,				// these variables are referring to the title or caption line
+	CB_FontSizeT=14,				// these variables are referring to the title or caption line
 	CB_FontColorT='#777',				// 
 	CB_FontWeightT='normal',			//
 
 	CB_FontC='helvetica, arial, sans-serif',				//
-	CB_FontSizeC=11,				// these variables are referring to
+	CB_FontSizeC=13,				// these variables are referring to
 	CB_FontColorC='#999',				// comment lines under the title
 	CB_FontWeightC='normal',			//
-	CB_TextAlignC='justify',			//
+	CB_TextAlignC='left',			//
 	CB_txtHCMax=300,				// maximum height of the comment box in pixels
 
 	CB_FontG='helvetica, arial, sans-serif',				//

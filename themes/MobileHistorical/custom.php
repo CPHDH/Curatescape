@@ -7,6 +7,47 @@
 // mobile device detection 
 require_once('mobile_device_detect.php');
 
+/** == Global navigation == **/
+
+function mh_global_nav($context)
+{
+		if($context == 'desktop'){
+			return public_nav_main(array('Home' => uri('/'), 'Tours' => uri('/tour-builder/tours/browse/'), 'Stories' => uri('items')));
+		}	
+		if($context == 'mobile_foot'){
+			$html = '<ul class="navigation">';
+    		$html .= '<li><a href="'.uri('/').'"';
+    		if (get_theme_option('stealth_mode')==1){
+    				$html .= 'target="_self"';
+    				}
+    				else{
+    				$html .= 'data-direction="reverse"';
+    				}
+    		$html .= '>Home</a></li>';
+    		$html .= '<li><a href="'.uri('/items/').'"  >Browse</a></li>';
+    		$html .= '<li><a href="'.uri('/tour-builder/tours/browse/').'"  >Tours</a></li>';
+    		$html .= '</ul>';
+    		
+    		return $html;
+		}			
+		if($context == 'mobile_head'){
+    			$html = '<ul class="navigation">';
+    			$html .= '<li><a href="'.uri('/').'" data-icon="home"';
+    			if (get_theme_option('stealth_mode')==1){
+    				$html .= 'target="_self"';
+    				}
+    				else{
+    				$html .= 'data-direction="reverse"';
+    				}
+    			$html .='>Home</a></li>';
+    			$html .= '<li><a href="'.uri('/items/').'" data-icon="grid" >Browse</a></li>';
+    			$html .= '<li><a href="'.uri('/tour-builder/tours/browse/').'" data-icon="star" >Tours</a></li>';
+    			$html .= '</ul>';
+    			
+    			return $html;
+    	}	
+}
+
 /** -- GET THE TOUR LIST -- **/
 function display_tour_items($num = '10')
 
@@ -43,11 +84,6 @@ function display_tour_items($num = '10')
 	return $items;
 }
 
-
-
-
-
-
 function toursList() {
 
 // Start with an empty array of tours
@@ -75,10 +111,7 @@ echo Zend_Json_Encoder::encode( $metadata );
 }
 
 
-
-
-
- function display_random_featured_item_CH($withImage=false)
+function display_random_featured_item_CH($withImage=false)
  {
     $featuredItem = random_featured_item($withImage);
  	$html = '<h2>Featured Story</h2>';
@@ -103,7 +136,7 @@ echo Zend_Json_Encoder::encode( $metadata );
      return $html;
  }
  
-  function display_recent_item_CH($withImage=false)
+function display_recent_item_CH($withImage=false)
  {
     $recentItem = set_items_for_loop(recent_items(1));
  	$html = '<h2>Recently Added</h2>';
@@ -172,7 +205,7 @@ function mh_display_app_links_home(){
 function mh_display_app_links_mobile(){
 	echo '
 	<a href="'.get_theme_option('android_link').'"><img src="'.img('btn-android.png').'"/></a>
-	<a href="'.get_theme_option('ios_link').'"><img src="'.img('btn-appstore.png').'"/></a>
+	<a href="'.get_theme_option('ios_link').'"><img src="'.img('app-store-badge.gif').'"/></a>
 	';
 }
 
@@ -327,6 +360,15 @@ function mh_bg_lv_logo_url()
 	$logo_img = $bg_lv_logo ? WEB_ROOT.'/archive/theme_uploads/'.$bg_lv_logo : img('lv-bg.png');
 	
 	return $logo_img;
+}
+
+function mh_link_color()
+{
+    $color = get_theme_option('link_color');
+	
+	if ( ($color) && (preg_match('/^#[a-f0-9]{6}$/i', $color)) ){
+		return $color;
+	}
 }
 
 ?>

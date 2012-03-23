@@ -10,18 +10,17 @@ div #content {
     background-image: none;
     background-repeat: none;
     height: auto;
-    margin: 1em;
+    margin: 0.5em;
     overflow: hidden;
-    width: 100%;
+    width: auto;
 }
 
 div #cols {
 
     float: none;
     height: auto;
-    max-width: 90%;
     background: #fff;
-    padding:0 1em;
+    padding:0;
     opacity: .8
 }
 
@@ -29,7 +28,7 @@ div #col1 {
     float: none;
     height: auto;
     padding: 1em 0 1em;
-    width: 100%;
+    width: 90%;
 	border-bottom:1px solid #ccc;
 	margin:0 auto;
 	opacity:1;
@@ -39,7 +38,7 @@ div #col2 {
     float: none;
     height: auto;
     padding: 1em 0 1em;
-    width: 100%;
+    width: 90%;
 	border-bottom:1px solid #ccc;
 	margin:0 auto;
 	opacity:1;
@@ -49,7 +48,7 @@ div #col3 {
     float: none;
     height: auto;
     padding: 1em 0 1em;
-    width: 100%;
+    width: 90%;
     margin:0 auto;
     opacity:1;
 }

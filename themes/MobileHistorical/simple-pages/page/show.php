@@ -16,7 +16,7 @@ if (simple_pages_is_home_page(get_current_simple_page())) {
 		    <div id="header">
 			<div id="primary-nav">
     			<ul class="navigation">
-    			    <?php echo public_nav_main(array('Home' => uri('/'), 'Tours' => uri('/tour-builder/tours/browse/'), 'Stories' => uri('items'))); ?>
+    			    <?php echo mh_global_nav('desktop'); ?>
     			</ul>
     		</div>
     		<div id="search-wrap">

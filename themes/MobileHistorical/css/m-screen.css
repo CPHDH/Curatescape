@@ -82,3 +82,8 @@ a#download-app{margin-bottom:80px;clear:left; margin-top:10px;}
 	.vvvvvv-popular a, .vvvvvv-popular a:visited {}
 	.vvvvvvv-popular a, .vvvvvvv-popular a:visited {}
 	.vvvvvvvv-popular a, .vvvvvvvv-popular a:visited {}
+	
+.ui-btn-active{border:1px solid #ccc;font-weight:bold;color:#fff;cursor:pointer;text-shadow: 0px -1px 1px #000;text-decoration:none;background-image: background-image: url(none);outline:0;background:#aaa}
+.ui-btn-active a.ui-link-inherit{color:#fff}.ui-btn-inner{border-top:1px solid #fff;border-color:rgba(255,255,255,.3)}	
+
+.ui-body-c .ui-link{} /* see custom styles in mobile header */

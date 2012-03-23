@@ -38,6 +38,9 @@ if (mobile_device_detect()==true){
 	<!-- Google Analytics -->
 	<?php echo mh_google_analytics();?>
 	
+	<!-- Custom CSS via theme config -->
+	<?php echo '<style type="text/css">.ui-body-c .ui-link{color:'.mh_link_color().'}</style>';?>	
+	
   </head> 
 
 	
@@ -58,11 +61,7 @@ if ($ipad==true){echo 'class="tablet"';}elseif ($phone==true){echo 'class="phone
 		<h1><?php echo settings('site_title');?></h1>
 		
 		<div data-role="navbar">
-    			<ul class="navigation">
-    			    <li><a href="<?php echo uri('/')?>" data-icon="home" <?php if (get_theme_option('stealth_mode')==1){echo 'target="_self"';}else{echo 'data-direction="reverse"';} ;?>>Home</a></li>
-    			    <li><a href="<?php echo uri('/items/')?>" data-icon="grid" >Browse</a></li>
-    			    <li><a href="<?php echo uri('/tour-builder/tours/browse/')?>" data-icon="star" >Tours</a></li>
-    			</ul>
+			<?php echo mh_global_nav('mobile_head'); ?>
 		</div> <!-- end nav -->		
     	
 	</div><!-- /header -->
@@ -106,7 +105,7 @@ else{
 <link rel="stylesheet" media="print" href="<?php echo html_escape(css('print')); ?>" />
 
 <!-- Custom CSS via theme config -->
-<?php echo '<style type="text/css">#content-home{background:url('.mh_bg_home_logo_url().') no-repeat center top #bbb;}#content{background:url('.mh_bg_lv_logo_url().') no-repeat center top #d7d7d7;}'.get_theme_option('custom_css').'</style>';?>
+<?php echo '<style type="text/css">#content-home{background:url('.mh_bg_home_logo_url().') no-repeat center top #bbb;}#content{background:url('.mh_bg_lv_logo_url().') no-repeat center top #d7d7d7;}p.view-items-link a, div#footer a, div#footer a:link, #page-col-left div.subjects li a, h3 a, h3 a:link, h3 a:visited,h3 a:active,#primary.show a{color:'.mh_link_color().'}'.get_theme_option('custom_css').'</style>';?>
 
 <!-- JavaScripts -->
 <?php echo js('default'); ?>

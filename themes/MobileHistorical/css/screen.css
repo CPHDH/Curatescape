@@ -32,12 +32,12 @@ h4 span.i{
 }
 
 /* Links */
-a:link {color:#ACACAC;}
-a:visited {color:#ACACAC;}
-a:hover {color:#777;}
-a:active {color:#777;}
+a:link {color:#777;}
+a:visited {color:#777;}
+a:hover {color:#ACACAC;}
+a:active {color:#ACACAC;}
 
-h3 a {text-decoration:none;}
+h3 a, h3 a:link, h3 a:visited,h3 a:active {text-decoration:none;}
 
 /* Reusable classes */
 .hide {text-indent: -1000em; width: 0; height: 0; overflow: hidden;}
@@ -147,6 +147,8 @@ div.error {font-size:1.5em; line-height:1.33333em; margin:1.33333em 0;}
 	#primary-nav a:active {color:#777;}
 	
 	#primary-home {float:right; width: 720px; margin:10px 0 0 0; padding:20px; background-color:#404041;}
+	#primary-home a:link,#primary-home a:visited,#primary-home a:active{color:#ACACAC}
+	#primary-home a:hover{color:#777}
 	#primary-browse {float:left; width: 600px; margin:10px 0 0 0; padding:20px; color:#404041;}
 	#primary {float:left; width: 440px; margin:28px 0 0 10px; padding:20px; color:#404041;}
 	
@@ -166,6 +168,8 @@ div.error {font-size:1.5em; line-height:1.33333em; margin:1.33333em 0;}
 		.browse .item-img img {width:100px; height:100px; float:left; display:block; margin-bottom:2em; margin-right:2em; padding:6px; border:1px solid #ccc;}
 		.tags li {display:inline;}
 		.tags a {}
+		#primary-browse .tags {font-size:0.9em;}
+		#primary-browse .tags a:link{color:#777;}
 		
 		#item-content img {padding:5px; border:1px solid #ccc; margin-bottom:2em;}
 
@@ -244,9 +248,11 @@ div.error {font-size:1.5em; line-height:1.33333em; margin:1.33333em 0;}
 	color:#404041;
 	width:180px;
 	float:left;
-	margin:100px 30px 0 30px;
+	margin:100px 30px 0;
 }
-
+#page-col-left.item {
+	margin:100px 30px;
+}
 #page-col-left a{
 	text-decoration:none;
 }
@@ -262,6 +268,19 @@ div.error {font-size:1.5em; line-height:1.33333em; margin:1.33333em 0;}
 #audio-list {
 	margin:20px 0;
 }
+
+#audio-list h4 span.info {
+    background: none repeat scroll 0 0 #FFFFFF;
+    border-radius: 3px 3px 3px 3px;
+    font-family: monospace;
+    padding: 0 3px;
+    margin-left:2px;
+}
+
+h1.audio-caption, h1.photo-caption{background:#eaeaea;padding:1%;width:97%;text-align:center}
+h2.audio-caption, h2.photo-caption{text-align:center}
+p.audio-caption, p.photo-caption{font-size:14px;color:#333;}
+img.photo-detail{max-width:100%;max-height:500px;float:left;padding:0 10px 5px 0;}
 
 audio {width:200px;}
 
@@ -318,3 +337,21 @@ div#footer a:hover {color:#aaa; text-transform:underline;}
 /* Tours */
 
 table tbody  tr.tours td{border-bottom:1px solid #ccc;}
+#tour-items{
+    background-color: #FFFFFF;
+    color: #404041;
+    height: auto;
+    min-height: 500px;
+    padding: 10px;
+    vertical-align: bottom;
+    width:100%;
+    }
+#tour-items div{
+	padding-top:10px;
+	margin-top:10px;
+	border-top:1px dotted #ccc;
+	padding-bottom: 200px;
+	}    
+#tour-items div li a{font-size:13px;color:#000;}	
+
+#tour-items div li:nth-child(odd){background:#eaeaea;}
