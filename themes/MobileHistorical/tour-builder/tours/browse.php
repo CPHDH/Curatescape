@@ -113,12 +113,6 @@ echo tag_cloud($tags, uri('items/browse'));
 	<div id="primary-browse" class="browse">
 <h1>Browse Tours (<?php echo $total_records; ?> total)</h1>
 
-<?php if( has_permission( 'TourBuilder_Tours', 'add' ) ): ?>
-<p id="add-tour" class="add-button">
-   <a class="add"
-      href="<?php echo $this->url( array( 'action' => 'add' ) ); ?>">Add a Tour</a>
-</p>
-<?php endif; ?>
 
    <?php
    echo flash();
@@ -137,7 +131,10 @@ echo tag_cloud($tags, uri('items/browse'));
                      echo $this->url( array(
                         'action' => 'show', 'id' => tour( 'id' ) ) );
                      ?>"><?php echo tour( 'title' ); ?></a></h3>
-                     <p><?php echo nls2p( tour( 'Description' ) ); ?></p>
+                     <p><?php 
+                     $tourdesc = nls2p( tour( 'Description' ) );
+                     echo snippet($tourdesc,0,300); 
+                     ?></p>
                      </td></tr>
 
                
