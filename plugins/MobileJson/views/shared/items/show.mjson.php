@@ -36,7 +36,7 @@ if( item_has_files() ) {
       }
 
       if( strpos( $mimetype, 'image' ) === 0 ) {
-         list( $width, $height ) = getimagesize( $file->getPath( 'archive' ) );
+         list( $width, $height ) = getimagesize( $file->getWebPath( 'archive' ) );
          $filedata[ 'width' ] = $width;
          $filedata[ 'height' ] = $height;
       }

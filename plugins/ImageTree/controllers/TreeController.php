@@ -20,7 +20,7 @@ class ImageTree_TreeController extends Omeka_Controller_Action
       $x = $this->getRequest()->getParam( 'x' );
       $y = $this->getRequest()->getParam( 'y' );
 
-      $f = $file->getPath( 'archive' );
+      $f = $file->getWebPath( 'archive' );
       $this->_helper->viewRenderer->setNoRender();
       if( $this->img_caching )
       {
