@@ -141,5 +141,9 @@ class Tour extends Omeka_Record
       if( strlen( $this->slug > 30 ) ) {
          $this->addError( 'slug', 'Slug for a tour must be 30 characters or fewer.' ); 
       }
+      
+      if( empty( $this->slug ) ) {
+         $this->addError( 'slug', 'Tour must be given a slug.' );
+      }      
    }
 }
