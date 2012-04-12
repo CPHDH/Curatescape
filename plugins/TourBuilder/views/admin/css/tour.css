@@ -1,3 +1,6 @@
 .add-tour {
    background-image: url(../images/picture_add.png);
 }
+div#tourbuilder-additem a.submit{color:#fff;}
+
+body.tours form.button-form fieldset{border-top:1px dotted #ccc;padding-top:25px;}

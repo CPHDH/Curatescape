@@ -26,10 +26,12 @@ head( array( 'title' => $tourTitle, 'content_class' => 'vertical-nav',
          <input type="submit" name="submit" class="submit submit-medium"
             id="save-changes" value="Save Changes" />
       </div>
-      <p id="delete_tour_link">
-         <?php echo link_to_tour( 'Delete This Tour',
-            array( 'class' => 'delete delete-tour' ), 'delete' ); ?>
-      </p>
+
    </form>
+  
+    <p id="delete_tour_link">
+	<?php echo delete_button(null, 'delete-tour', 'Delete this Tour'); ?>
+	</p>
+	 
 </div>
 <?php foot();
