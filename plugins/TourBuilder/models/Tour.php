@@ -137,6 +137,9 @@ class Tour extends Omeka_Record
       if( strlen( $this->title > 255 ) ) {
          $this->addError( 'title', 'Title for a tour must be 255 characters or fewer.' );
       }
+	  if (!$this->fieldIsUnique('title')) {
+            $this->addError('title', 'The Title is already in use by another tour. Please choose another.');      
+      }      
 
       if( strlen( $this->slug > 30 ) ) {
          $this->addError( 'slug', 'Slug for a tour must be 30 characters or fewer.' ); 
@@ -145,5 +148,8 @@ class Tour extends Omeka_Record
       if( empty( $this->slug ) ) {
          $this->addError( 'slug', 'Tour must be given a slug.' );
       }      
-   }
+	  if (!$this->fieldIsUnique('slug')) {
+            $this->addError('slug', 'The slug is already in use by another tour. Please choose another.');      
+      }
+}
 }
