@@ -239,7 +239,7 @@ echo '<h2>About</h2><p>'.get_theme_option('about').'</p>';
     <div class="hm-col">
     <!-- Featured Item -->
 	<div id="featured-item">
-		<?php echo display_random_featured_item_CH(); ?>
+		<?php echo display_random_featured_item_CH(true); ?>
 	</div><!--end featured-item-->
 	
 	</div><!-- end center column -->
