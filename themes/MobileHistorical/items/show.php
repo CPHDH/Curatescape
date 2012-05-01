@@ -171,10 +171,10 @@ function normalize_special_characters( $str )
                                 'Ê'=>'E', 'Ë'=>'E', 'Ì'=>'I', 'Í'=>'I', 'Î'=>'I', 'Ï'=>'I', 'Ñ'=>'N', 'Ò'=>'O', 'Ó'=>'O', 'Ô'=>'O', 'Õ'=>'O', 'Ö'=>'O', 'Ø'=>'O', 'Ù'=>'U', 
                                 'Ú'=>'U', 'Û'=>'U', 'Ü'=>'U', 'Ý'=>'Y', 'Þ'=>'B', 'ß'=>'Ss', 'à'=>'a', 'á'=>'a', 'â'=>'a', 'ã'=>'a', 'ä'=>'a', 'å'=>'a', 'æ'=>'a', 'ç'=>'c', 
                                 'è'=>'e', 'é'=>'e', 'ê'=>'e', 'ë'=>'e', 'ì'=>'i', 'í'=>'i', 'î'=>'i', 'ï'=>'i', 'ð'=>'o', 'ñ'=>'n', 'ò'=>'o', 'ó'=>'o', 'ô'=>'o', 'õ'=>'o', 
-                                'ö'=>'o', 'ø'=>'o', 'ù'=>'u', 'ú'=>'u', 'û'=>'u', 'ý'=>'y', 'ý'=>'y', 'þ'=>'b', 'ÿ'=>'y','&amp;'=>'&'); 
+                                'ö'=>'o', 'ø'=>'o', 'ù'=>'u', 'ú'=>'u', 'û'=>'u', 'ý'=>'y', 'ý'=>'y', 'þ'=>'b', 'ÿ'=>'y','&amp;'=>'&','height'=>'h&#101;ight' ); 
     $str = strtr( $str, $unwanted_array ); 
     
-    #For reasons yet unknown, some servers may require an additional $unwanted_array item: 'eight'=>'&#101;ight'
+    #For reasons yet unknown, only some servers may require an additional $unwanted_array item: 'height'=>'h&#101;ight'
 
     # Bullets, dashes, and trademarks 
     $str = str_replace( chr(149), "&#8226;", $str );    # bullet • 
@@ -185,6 +185,7 @@ function normalize_special_characters( $str )
     $str = str_replace( chr(174), "&reg;", $str );        # registration mark 
     $str = str_replace( "&quot;", "\"", $str );        # "
     $str = str_replace( "&apos;", "\'", $str );        # '
+    $str = str_replace( "&#039;", "'", $str );        # '
 
     return $str; 
 } 
@@ -209,7 +210,7 @@ if (function_exists('geolocation_get_location_for_item')){
 
 
 <div id="audio-list">
-<h3>Audio Files</h3>
+
 
 <?php $audioTypes = array('audio/mpeg'); ?>
 	<?php $myaudio = array(); ?>
@@ -220,8 +221,12 @@ if (function_exists('geolocation_get_location_for_item')){
 				
 				
 				if ( array_search($mime, $audioTypes) !== false ) {
-					// echo code here
+					
+					if ($index==0) echo '<h3>Audio Files</h3>';
+					$index++;
+					
 					array_push($myaudio, $file);
+					
 				?>
 				<h4><?php echo item_file('Dublin Core', 'Title') ?> <span class="info"><a href="htmlcontent" rel="clearbox[html=<h1 class='audio-caption'>Audio Detail:</h1><br><h2 class='audio-caption'><?php echo item_file('Dublin Core', 'Title');?></h2><br/><p class='audio-caption'><?php echo item_file('Dublin Core', 'Description');?></p>]">info</a></span></h4>
 			
@@ -259,7 +264,6 @@ echo '<audio controls="controls"><source src="'.file_download_uri($file).'" type
 		if ( count($myaudio) == null ) {
 					// echo code here
 					
-					echo '<li>No audio available.</li>';
 				}
 	?>
 </div>
