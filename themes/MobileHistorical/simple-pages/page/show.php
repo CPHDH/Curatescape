@@ -1,3 +1,39 @@
+<?php
+if (mobile_device_detect()==true){
+//begin mobile index
+?>
+<?php head();?>
+
+<!-- Start of page content: #home -->
+
+	<div data-role="content" id="home">	
+	<?php echo mobile_simple_search();?>
+
+
+
+<div id="primary" class="show">
+
+    <h2><?php echo html_escape(simple_page('title')); ?></h2>
+    <?php echo eval('?>' . simple_page('text')); ?>
+</div>
+
+<a href="#download-app" data-role="button" data-rel="dialog" data-transition="pop" id="download-app">Download the App</a>		
+</div> <!-- end content-->
+
+<?php echo common('m-footer-nav');?>
+
+</div> <!-- end outer page from header -->	
+
+<?php echo common('m-dialogues');?>
+
+</body>
+</html>
+<?	}
+//end mobile page
+else{	
+//begin non-mobile page
+?>
+
 <?php 
 
 $bodyclass = 'page simple-page';
@@ -77,6 +113,6 @@ if (simple_pages_is_home_page(get_current_simple_page())) {
 		
 </div>
 
-
+<?php }?>
 
 <?php echo foot(); ?>

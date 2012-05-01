@@ -84,6 +84,19 @@ ul.items-list, ul.collections-list, ul.title-list {font-size:1em;}
 .item-description, .element-text-empty {font-size:1.2em; line-height:1.33333em; margin-bottom:1.33333em;}
 .item-description p, {font-size:1.2em; line-height:1.33333em; margin-bottom:1.33333em;}
 
+
+.item-related-links ul li{line-height:2em;color:#777;}
+.item-related-links{
+    border-top: 1px solid #bbb;
+    clear: none;
+    display: block;
+    font-size: smaller;
+    max-width: 100%;
+    padding: 5px 10px;
+    text-align: right;
+    }
+.item-related-links h3{}
+
 .title-list li {font-size:1.5em; line-height:1.33333em; margin-bottom:1.33333em;}
 	
 em {font-style:italic;}

@@ -440,9 +440,26 @@ $(function() {
 	
 
 	<?php echo item('Dublin Core', 'Description');?>
-	<br/><?php echo link_to_item_edit();?>
+	
 
 </div>
+
+<div class="item-related-links">
+<?php 
+    $relations = item('Dublin Core', 'Relation', array('all' => true));
+    if ($relations){
+    echo '<h3>Related Sources</h3><ul>';
+    	foreach ($relations as $relation) {
+        	echo "<li>$relation</li>";
+    		}
+    echo '</ul>';		
+    }
+?>
+</div>
+
+<br/><?php echo link_to_item_edit();?>
+
+
 	
 	<!-- uncomment the following line to allow plugins to automatically insert content into the primary container -->
 	<?php //echo plugin_append_to_items_show(); ?> 
