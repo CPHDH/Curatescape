@@ -195,7 +195,7 @@ function normalize_special_characters( $str )
 <!-- -->
 <div id="page-col-left" class="item">
 
-<div id="lv-logo"><a href="<?php echo WEB_ROOT;?>/"><img src="<?php echo mh_med_logo_url(); ?>" border="0" alt="Cleveland Historical" title="Cleveland Historical" /></a></div>
+<div id="lv-logo"><a href="<?php echo WEB_ROOT;?>/"><img src="<?php echo mh_med_logo_url(); ?>" border="0" alt="<?php echo settings('site_title');?>" title="<?php echo settings('site_title');?>" /></a></div>
 
 <div id="lv-map">
 <?php 
@@ -361,12 +361,11 @@ if (count($subjects) > 1):
 $(function() {
 	
 	// setup player normally
-	$f("player1", {src:"http://releases.flowplayer.org/swf/flowplayer-3.2.7.swf", wmode:"transparent" }, {
-	
+	$f("player1", {src:"http://releases.flowplayer.org/swf/flowplayer-3.2.7.swf", wmode:"transparent" }, {	
 		// clip properties common to all playlist entries
 		clip: {
-			baseUrl: 'http://clevelandhistorical.org',
-			subTitle: 'from ClevelandHistorical.org',
+			baseUrl: location.protocol + '//' + location.host,
+			subTitle: 'from '+ location.host,
 			autoPlay: false,
 			autoBuffering: true
 		},
