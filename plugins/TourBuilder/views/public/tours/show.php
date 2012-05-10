@@ -55,12 +55,6 @@ head( array( 'title' => $tourTitle, 'content_class' => 'horizontal-nav',
 
 <h1><?php echo $tourTitle; ?></h1>
 
-<?php if( has_permission( 'TourBuilder_Tours', 'edit' ) ): ?>
-<p id="edit-tour" class="edit-button"><a class="edit" href="<?php
-echo $this->url( array( 'action' => 'edit', 'id' => tour( 'id' ) ) )
-?>">Edit this Tour</a></p>
-<?php endif; ?>
-
 
    <div id="tour-description" class="element">
       <h2>Description</h2>

@@ -9,7 +9,6 @@ add_plugin_hook( 'install', 'TourBuilder::install' );
 add_plugin_hook( 'uninstall', 'TourBuilder::uninstall' );
 add_plugin_hook( 'define_acl', 'TourBuilder::defineAcl' );
 add_plugin_hook( 'define_routes', 'tours_define_routes' );
-
 add_plugin_hook( 'admin_append_to_dashboard_primary', 'tours_dashboard' );
 add_plugin_hook( 'admin_theme_header', 'tours_admin_header' );
 
@@ -149,31 +148,12 @@ function has_tours_for_loop()
    return $view->tours && count( $view->tours );
 }
 
+
 function loop_tours()
 {
-   // (see loop_records for implementation comments)
-   $records = get_tours_for_loop();
-   static $recordLoop = null;
-   static $lastRecord = null;
-
-   if( ! isset( $recordLoop ) ) {
-      $recordLoop = $records;
-   }
-
-   if( $lastRecord ) {
-      release_object( $lastRecord );
-      $lastRecord = null;
-   }
-
-   if( list( $key, $record ) = each( $recordLoop ) ) {
-      $lastRecord = $record;
-      set_current_tour( $record );
-      return $record;
-   }
-
-   unset( $recordLoop );
-   return false;
+    return loop_records('tours', get_tours_for_loop(), 'set_current_tour');
 }
+
 
 function tour( $fieldName, $options=array(), $tour=null )
 {

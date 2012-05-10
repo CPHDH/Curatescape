@@ -25,31 +25,17 @@ head( array( 'title' => 'Browse Tours', 'content_class' => 'horizontal-nav',
 <!-- -->
 <div id="page-col-left">
 
-<div id="lv-logo"><a href="<?php echo WEB_ROOT;?>/"><img src="<?php echo img('lv-logo.png'); ?>" border="0" alt="<?php echo settings('site_title');?>" title="<?php echo settings('site_title');?>" /></a></div>
-<!--
-<h3>Tags:</h3>
-<?php
-$tags = get_tags(array('sort' => 'alpha'), 20); 
-echo tag_cloud($tags, uri('items/browse'));
-?>
--->
-
+	<div id="lv-logo"><a href="<?php echo WEB_ROOT;?>/"><img src="<?php echo img('lv-logo.png'); ?>" border="0" alt="<?php echo settings('site_title');?>" title="<?php echo settings('site_title');?>" /></a>
+	</div>
 
 </div>
 
 
-	<div id="primary-browse" class="browse">
+<div id="primary-browse" class="browse">
 <h1>Browse Tours (<?php echo $total_records; ?> total)</h1>
 
-<?php if( has_permission( 'TourBuilder_Tours', 'add' ) ): ?>
-<p id="add-tour" class="add-button">
-   <a class="add"
-      href="<?php echo $this->url( array( 'action' => 'add' ) ); ?>">Add a Tour</a>
-</p>
-<?php endif; ?>
 
    <?php
-   echo flash();
    if( has_tours() ):
       ?>
       <div class="pagination"><?php echo pagination_links(); ?></div>
