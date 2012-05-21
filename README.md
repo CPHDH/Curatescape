@@ -1,10 +1,14 @@
-#About the Mobile Historical Project
+#About Curatescape and the Mobile Historical Initiative
 
-Mobile Historical is a mobile app platform for iOS & Android, designed to "curate the city" through the use of geo-located historical texts, archival film and images, oral history (and other) audio, and short documentary videos. Built on Omeka, everyone's favorite open source archival CMS, Mobile Historical is designed for small- to medium-sized cultural heritage and educational institutions. For more information, visit [mobilehistorical.org](http://mobilehistorical.org/ "Mobile Historical").
+Curatescape is the set of tools used in the Mobile Historical initiative, including a set of themes and plugins for the [Omeka CMS](http://omeka.org), as well as native client applications for Android and iOS devices.
+
+The Mobile Historical initiative represents first steps toward developing best practices toward curating landscapes and collections within the intellectual framework of humanities and social science disciplines. The Mobile Historical initiative seeks to explore the development of low-cost, hosted, and open-source technical solutions to mobile curation and publishing.
+
+For more information, visit [mobilehistorical.org](http://mobilehistorical.org/ "Mobile Historical") or view the [GitHub project wiki](https://github.com/CPHDH/MobileHistorical/wiki).
 
 #About This Code
 
-This code is dependant upon the [Omeka CMS](http://omeka.org "Omeka"), and contains a theme and several plugins to run on that platform. 
+The Curatescape ecosystem is dependant upon the [Omeka CMS](http://omeka.org "Omeka"), and contains a theme and several plugins to run on that platform. 
 
 ##Theme
 
@@ -31,7 +35,7 @@ Modifies the content entry process to help clarify the data model used in Mobile
 
 ##Client Apps
 
-The native client applications are not yet available for download.
+The native client applications for Android and iOS are not yet available for download.
 
 
 
