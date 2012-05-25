@@ -62,7 +62,7 @@
 	</div><!--#container-->
 	
 <div id="footer">
-<p>Powered by <a href="http://omeka.org/">Omeka</a> + <a href="http://mobilehistorical.org">MobileHistorical</a>
+<p>Powered by <a href="http://omeka.org/">Omeka</a> + <a href="http://curatescape.org">Curatescape</a>
 <br/>
 &copy; <?php echo date('Y').' '.settings('author');?> 
 </p>
