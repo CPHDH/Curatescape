@@ -52,10 +52,7 @@ head(array( 'title' => $tourTitle));
 	  				<h4 class="ui-li-heading">
 	  				<?php echo $this->itemMetadata( $tourItem, 'Dublin Core', 'Title' ); ?>
 	  				</h4>
-	  				<!-- 
-	  				<p><?php// echo $this->itemMetadata( $tourItem, 'Dublin Core', 'Description' ); ?></p>
-					-->
-					
+
 			   </a>
 			</div>
 			<span class="ui-icon ui-icon-arrow-r ui-icon-shadow"></span>

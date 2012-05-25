@@ -98,15 +98,6 @@ head( array( 'title' => 'Tours', 'content_class' => 'horizontal-nav',
 <div id="page-col-left">
 
 <div id="lv-logo"><a href="<?php echo WEB_ROOT;?>/"><img src="<?php echo mh_med_logo_url(); ?>" border="0" alt="<?php echo settings('site_title');?>" title="<?php echo settings('site_title');?>" /></a></div>
-<!--
-<h3>Tags:</h3>
-<?php
-$tags = get_tags(array('sort' => 'alpha'), 20); 
-echo tag_cloud($tags, uri('items/browse'));
-?>
--->
-
-
 </div>
 
 
@@ -115,7 +106,6 @@ echo tag_cloud($tags, uri('items/browse'));
 
 
    <?php
-   echo flash();
    if( has_tours() ):
       ?>
       <div class="pagination"><?php echo pagination_links(); ?></div>
