@@ -147,7 +147,7 @@ echo mh_lg_logo_url();
 	<div class="hm-col">
 	<!-- Recent Items -->		
 	<div id="recent-items">
-    	<h2>Recently Added Stories</h2>
+    	<h2 class="col-heading">Recently Added Stories</h2>
 	
     		<?php set_items_for_loop(recent_items(1)); ?>
     		<?php if (has_items_for_loop()): ?>
@@ -181,56 +181,24 @@ echo mh_lg_logo_url();
 	<!-- center column-->	
 	<div class="hm-col">
 	
-<?php if ((get_theme_option('twitter_username'))!=false) {
+<?php 
 //if twitter values are set, display twitter stuff, otherwise display About text
-?>
-<h2>What Users Are Saying</h2>
-	
-	<div id="twit">
-
-<ul>
-<?php
-
-function linkmytweet($text){
-$text= preg_replace("#(^|[\n ])([\w]+?://[\w]+[^ \"\n\r\t< ]*)#", "\\1<a href=\"\\2\" target=\"_blank\">\\2</a>", $text);
-$text= preg_replace("#(^|[\n ])((www|ftp)\.[^ \"\t\n\r< ]*)#", "\\1<a href=\"http://\\2\" target=\"_blank\">\\2</a>", $text);
-$text= preg_replace("/@(\w+)/", "<a href=\"http://www.twitter.com/\\1\" target=\"_blank\">@\\1</a>", $text);
-$text= preg_replace("/#(\w+)/", "<a href=\"http://search.twitter.com/search?q=\\1\" target=\"_blank\">#\\1</a>", $text);
-echo $text;
-}
+if ( (get_theme_option('twitter_username')!=false) && (get_theme_option('home_column')!=='about')) {?>
 
 
-function twi_get(){
+	 <h2 class="col-heading">What Users Are Saying</h2>
+	 <div id="twit">
+	 <ul><?php echo twi_get(); ?></ul>
+	 </div><br>
+	 <?php echo mh_follow_the_conversation(); ?>
 
- $twitte = file_get_contents("http://search.twitter.com/search.json?q=".get_theme_option('twitter_hashtag')."%20OR%20%23".get_theme_option('twitter_hashtag')."&rpp=4");
- $data = json_decode($twitte);
- $o_text = "";
- foreach($data->results as $item)
- {
- 	$date = date('m/d/o',strtotime($item->created_at));
- 	echo "<li>";
-    $o_text = "<div class='date'><a href='https://twitter.com/#!/".get_theme_option('twitter_hashtag')."/status/". $item->id_str . "' target='_blank'>" .$date."</a> @". $item->from_user .": "."</div>".$item->text;
-	linkmytweet($o_text);
 
-   	//echo $o_text;
-	   echo "</li>";
-	 } 
- }
- twi_get();
- ?>
- 
-</ul>
-	
-	
-	</div>
-
-	<br />
-	<a href="http://twitter.com/#!/search/<?php echo get_theme_option('twitter_hashtag') ? get_theme_option('twitter_hashtag') : get_theme_option('twitter_username') ; ?>"><img src="<?php echo mh_follow_logo_url(); ?>" alt="Join the Conversation on Twitter" title="Join the Conversation on Twitter" border="0" /></a>
-	
 <?php }
 else{
-echo '<h2>About</h2><p>'.get_theme_option('about').'</p>';
+echo '<h2 class="col-heading">About</h2><p id="about">'.snippet(get_theme_option('about'),0, 900).'</p>';
 }?>	
+
+
 	</div><!-- end col -->
 	
 	

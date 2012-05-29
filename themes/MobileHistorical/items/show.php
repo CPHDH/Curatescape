@@ -3,8 +3,8 @@ if (mobile_device_detect()==true){
 //begin mobile items/show
 ?>
 <?php 
-$location=item('Dublin Core', 'Title');
-head( array( 'title' => $location) );?>
+$story=item('Dublin Core', 'Title');
+head( array( 'title' => $story) );?>
 <!-- Start of page content: #show -->
 
 <div data-role="content" id="show">	
@@ -152,44 +152,6 @@ else{
     			</div>
     			<div style="clear:both;"></div>
    		</div>
-	
-
-<?php 
-function normalize_special_characters( $str ) 
-{ 
-    # Quotes cleanup 
-    $str = str_replace( chr(ord("`")), "'", $str );        # ` 
-    $str = str_replace( chr(ord("´")), "'", $str );        # ´ 
-    $str = str_replace( chr(ord("„")), ",", $str );        # „ 
-    $str = str_replace( chr(ord("`")), "'", $str );        # ` 
-    $str = str_replace( chr(ord("´")), "'", $str );        # ´ 
-    $str = str_replace( chr(ord("“")), "\"", $str );        # “ 
-    $str = str_replace( chr(ord("”")), "\"", $str );        # ” 
-    $str = str_replace( chr(ord("´")), "'", $str );        # ´ 
-
-    $unwanted_array = array(    'Š'=>'S', 'š'=>'s', 'Ž'=>'Z', 'ž'=>'z', 'À'=>'A', 'Á'=>'A', 'Â'=>'A', 'Ã'=>'A', 'Ä'=>'A', 'Å'=>'A', 'Æ'=>'A', 'Ç'=>'C', 'È'=>'E', 'É'=>'E', 
-                                'Ê'=>'E', 'Ë'=>'E', 'Ì'=>'I', 'Í'=>'I', 'Î'=>'I', 'Ï'=>'I', 'Ñ'=>'N', 'Ò'=>'O', 'Ó'=>'O', 'Ô'=>'O', 'Õ'=>'O', 'Ö'=>'O', 'Ø'=>'O', 'Ù'=>'U', 
-                                'Ú'=>'U', 'Û'=>'U', 'Ü'=>'U', 'Ý'=>'Y', 'Þ'=>'B', 'ß'=>'Ss', 'à'=>'a', 'á'=>'a', 'â'=>'a', 'ã'=>'a', 'ä'=>'a', 'å'=>'a', 'æ'=>'a', 'ç'=>'c', 
-                                'è'=>'e', 'é'=>'e', 'ê'=>'e', 'ë'=>'e', 'ì'=>'i', 'í'=>'i', 'î'=>'i', 'ï'=>'i', 'ð'=>'o', 'ñ'=>'n', 'ò'=>'o', 'ó'=>'o', 'ô'=>'o', 'õ'=>'o', 
-                                'ö'=>'o', 'ø'=>'o', 'ù'=>'u', 'ú'=>'u', 'û'=>'u', 'ý'=>'y', 'ý'=>'y', 'þ'=>'b', 'ÿ'=>'y','&amp;'=>'&','height'=>'h&#101;ight' ); 
-    $str = strtr( $str, $unwanted_array ); 
-    
-    #For reasons yet unknown, only some servers may require an additional $unwanted_array item: 'height'=>'h&#101;ight'
-
-    # Bullets, dashes, and trademarks 
-    $str = str_replace( chr(149), "&#8226;", $str );    # bullet • 
-    $str = str_replace( chr(150), "&ndash;", $str );    # en dash 
-    $str = str_replace( chr(151), "&mdash;", $str );    # em dash 
-    $str = str_replace( chr(153), "&#8482;", $str );    # trademark 
-    $str = str_replace( chr(169), "&copy;", $str );    # copyright mark 
-    $str = str_replace( chr(174), "&reg;", $str );        # registration mark 
-    $str = str_replace( "&quot;", "\"", $str );        # "
-    $str = str_replace( "&apos;", "\'", $str );        # '
-    $str = str_replace( "&#039;", "'", $str );        # '
-
-    return $str; 
-} 
-?>
 
 
 <!-- -->
@@ -238,58 +200,49 @@ if (function_exists('geolocation_get_location_for_item')){
 				$opera = strpos($_SERVER["HTTP_USER_AGENT"], 'Opera') ? true : false;
 				?>
 
-<?php
-if (($firefox == 'true')||($msie == 'true')||($opera == 'true')){
-echo '<object type="application/x-shockwave-flash" data="'.WEB_ROOT.'/themes/MobileHistorical/javascripts/dewplayer/dewplayer.swf" width="200" height="20" id="audioplayer" name="audioplayer">';
-echo '<param name="movie" value="'.WEB_ROOT.'/themes/MobileHistorical/javascripts/dewplayer/dewplayer.swf" />';
-echo '<param name="flashvars" value="mp3='.file_download_uri($file).'" />';
-echo '<param name="wmode" value="transparent" />';
-echo '</object>';
-//echo '<p style="font-size:1em">'.item_file('Dublin Core', 'Description').'</p>';
-
-} else {
-echo '<audio controls="controls"><source src="'.file_download_uri($file).'" type="audio/mpeg" /><h5 class="no-audio"><strong>Download Audio:</strong><a href="'.file_download_uri($file).'">MP3</a></h5></audio>';
-//echo '<p style="font-size:1em">'.item_file('Dublin Core', 'Description').'</p>';
-?>
-
-
-				
-			
 				<?php
-				}
-				}
+				if (($firefox == 'true')||($msie == 'true')||($opera == 'true')){
+				echo '<object type="application/x-shockwave-flash" data="'.WEB_ROOT.'/themes/MobileHistorical/javascripts/dewplayer/dewplayer.swf" width="200" height="20" id="audioplayer" name="audioplayer">';
+				echo '<param name="movie" value="'.WEB_ROOT.'/themes/MobileHistorical/javascripts/dewplayer/dewplayer.swf" />';
+				echo '<param name="flashvars" value="mp3='.file_download_uri($file).'" />';
+				echo '<param name="wmode" value="transparent" />';
+				echo '</object>';
+				
+				} else {
+				echo '<audio controls="controls"><source src="'.file_download_uri($file).'" type="audio/mpeg" /><h5 class="no-audio"><strong>Download Audio:</strong><a href="'.file_download_uri($file).'">MP3</a></h5></audio>';
 				?>
-	<?php endwhile; ?>
-	<?php
-		if ( count($myaudio) == null ) {
-					// echo code here
+				
+				
+				<?php 
+						}
+					}?>
 					
-				}
-	?>
+				<?php endwhile; ?>
+
 </div>
  
 	
 	
   	
     	<?php
-$subjects = item('Dublin Core', 'Subject', 'all');
+	    $subjects = item('Dublin Core', 'Subject', 'all');
 
-if (count($subjects) > 1):
+	    if (count($subjects) > 1):
 
-?>
+	    ?>
 
 
     	<h3>Subject</h3>
     	<div class="subjects">
 
-<?php foreach ($subjects as $subject): ?>
-<li>
-<a href="<?php echo WEB_ROOT;?>/items/browse?search=&advanced[0][element_id]=49&advanced[0][type]=contains&advanced[0][terms]=<?php echo $subject; ?>&submit_search=Search"><?php echo $subject; ?></a>
-</li>
-<?php endforeach; ?>
-</div>
+	    	<?php foreach ($subjects as $subject): ?>
+	    	<li>
+	    	<a href="<?php echo WEB_ROOT;?>/items/browse?search=&advanced[0][element_id]=49&advanced[0][type]=contains&advanced[0][terms]=<?php echo $subject; ?>&submit_search=Search"><?php echo $subject; ?></a>
+	    	</li>
+	    	<?php endforeach; ?>
+	    </div>
 
-<?php endif; ?>
+	    <?php endif; ?>
     	
 	
 	
@@ -313,8 +266,7 @@ if (count($subjects) > 1):
 	<?php endif;?>
 	</div>
 
-</div>
-<!-- -->
+	</div>
 
 
 
@@ -335,10 +287,8 @@ if (count($subjects) > 1):
         $mime = item_file("MIME Type");
 
 
-				if ($mime == 'video/quicktime' or $mime == 'video/mpeg' or $mime == 'video/mp4' or $mime == ''){
+				if ($mime == 'video/quicktime' or $mime == 'video/mpeg' or $mime == 'video/mp4'){
 					$videoItems++;
-					//array_push($myvideo, "test");
-					//echo "hey";
 					if($videoItems > 1) { echo ","; }
 					echo '{';
 					echo 'url:"'.file_download_uri($file).'"';
@@ -347,7 +297,6 @@ if (count($subjects) > 1):
 					echo ', ';
 					echo 'mime:"'.$mime.'"';
 					echo '}';
-					//echo $myvideo;
 				}
 		endwhile;
 	
@@ -356,55 +305,56 @@ if (count($subjects) > 1):
 ?>
   	
   	
-  <script> 
-// wait for the DOM to load using jQuery
-$(function() {
-	
-	// setup player normally
-	$f("player1", {src:"http://releases.flowplayer.org/swf/flowplayer-3.2.7.swf", wmode:"transparent" }, {	
-		// clip properties common to all playlist entries
-		clip: {
-			baseUrl: location.protocol + '//' + location.host,
-			subTitle: 'from '+ location.host,
-			autoPlay: false,
-			autoBuffering: true
-		},
+		<script> 
+		// wait for the DOM to load using jQuery
+		$(function() {
+			
+			// setup player normally
+			$f("player1", {src:"http://releases.flowplayer.org/swf/flowplayer-3.2.7.swf", wmode:"transparent" }, {	
+				// clip properties common to all playlist entries
+				clip: {
+					baseUrl: location.protocol + '//' + location.host,
+					subTitle: 'from '+ location.host,
+					autoPlay: false,
+					autoBuffering: true
+				},
+				
+				/**/
+				playlist: [
+				
+				<?php loadPlaylist(); ?>
+				
+				],
+				/**/
+				
+				// show playlist buttons in controlbar
+				plugins: {
+					controls: {
+						autoHide: 'always',
+						playlist: true,
+						all: false,   
+		            	play: true,  
+		            	scrubber: true,  
+		            	fullscreen:true 
+					}
+				}
+			});
+			
+			/*
+				here comes the magic plugin. It uses first div.clips element as the 
+				root for as playlist entries. loop parameter makes clips play
+				from the beginning to the end.
+			*/
+			$f("player1").playlist("div.clips:first", {loop:true});
+			
+		});
+		</script> 
 		
-		/**/
-		playlist: [
-		
-		<?php loadPlaylist(); ?>
-		
-		],
-		/**/
-		
-		// show playlist buttons in controlbar
-		plugins: {
-			controls: {
-				autoHide: 'always',
-				playlist: true,
-				all: false,   
-            	play: true,  
-            	scrubber: true,  
-            	fullscreen:true 
-			}
-		}
-	});
-	
-	/*
-		here comes the magic plugin. It uses first div.clips element as the 
-		root for as playlist entries. loop parameter makes clips play
-		from the beginning to the end.
-	*/
-	$f("player1").playlist("div.clips:first", {loop:true});
-	
-});
-</script> 
 	</div>
 	
 	
 	
-	  <?php function loadPlaylistB() {
+<?php function loadPlaylistB() {
   	$myvideo = array();
   	$videoItems = 0;
 	while(loop_files_for_item()): 
@@ -414,7 +364,6 @@ $(function() {
 					$videoItems++;
 				}
 		endwhile;
-		//echo $videoItems;
 	if($videoItems >0) {
 		echo '<a class="player plain" id="player1" style="float:left"><img src="'.mh_poster_url().'" /></a>'; 
 		echo '<div class="clips" style="float:left">';

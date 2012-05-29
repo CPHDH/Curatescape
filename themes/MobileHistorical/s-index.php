@@ -1,10 +1,23 @@
 <!--STEALTH MODE-->
 
 		<?php head(array(),'s-header'); ?>	
-		<div id="app-badge"><a href="<?php get_theme_option('ios_link');?>"><img src="<?php echo img('app-store-badge.gif');?>" alt="Available at the iPhone App Store" border="0" /></a>
-		<a href="<?php get_theme_option('android_link');?>"><img src="<?php echo img('btn-android.png');?>" width="96" height="32" border="0" /></a>
-		</div>
 		
+		<div id="app-badge">
+			<?php 
+			if (get_theme_option('enable_app_links')){ 
+	
+				$ios_link = get_theme_option('ios_link');
+				echo ($ios_link ? '<a href="'.$ios_link.'">
+				<img src="'.img('app-store-badge.gif').'" alt="Available at the iPhone App Store" border="0"/>
+				</a>':'');
+				
+				$android_link = get_theme_option('android_link');
+				echo ($android_link ? '<a href="'.$android_link.'">
+				<img src="'.img('btn-android.png').'" alt="Available at the Android Market" border="0"/>
+				</a>':'');
+			
+			} ?>
+		</div>
 		
 		<div style="clear:both;"></div>
 	
@@ -12,12 +25,7 @@
 			<div id="logo">
 				<img src="<?php echo mh_stealth_logo_url();?>" alt="<?php echo settings('site_title');?>" border=0 />
 			</div>
-			<!--
-			<div id="get-app">
-				<img src="<?php// echo img('getapp.gif');?>" alt="Get the App:" border=0 />
-				<a href="http://ax.itunes.apple.com/us/app/cleveland-historical/id401222855?mt=8#ls=1"><img src="<?php// echo img('dwnload-btn.gif');?>" alt="Download Button" border=0 /></a>
-			</div>
-			-->
+
 		</div> <!--#header-->
 
 		<div id="content">
@@ -29,14 +37,21 @@
 				</div>
 				<div id="col2">
 				<h2>Contact</h2>
-				<h3 class="contact"><small>Email:</small> <a href="mailto:<?php echo get_theme_option('contact_email') ;?>"><?php echo get_theme_option('contact_email') ;?></a></h3>
-				<?php if( get_theme_option('twitter_username') != null):?>
-				<h3 class="contact"><small>Twitter:</small> <a href="http://twitter.com/<?php echo get_theme_option('twitter_username') ;?>">@<?php echo get_theme_option('twitter_username') ;?></a></h3>
-				<?php endif; ?>
-				<h3 class="contact"><small>Phone:</small> <?php echo get_theme_option('contact_phone') ;?></h3>
-				<p>				
-				<?php echo get_theme_option('contact_address') ;?>
-				</p>				
+				<?php 
+					
+					$contact_email = get_theme_option('contact_email');
+					echo ($contact_email ? '<h3 class="contact"><small>Email:</small> <a href="mailto:'.$contact_email.'">'.$contact_email.'</a></h3>' : '');
+					
+					$twitter_username = get_theme_option('twitter_username');
+					echo ($twitter_username ? '<h3 class="contact"><small>Twitter:</small> <a href="http://twitter.com/'.$twitter_username.'">@'.$twitter_username.'</a></h3>' : '');
+
+					$contact_phone = get_theme_option('contact_phone');
+					echo ($contact_phone ? '<h3 class="contact"><small>Phone:</small> '.$contact_phone.'</h3>' : '');
+					
+					$contact_address = get_theme_option('contact_address');
+					echo ($contact_address ? '<p>'.$contact_address.'</p>' : '');									
+						
+				?>			
 				
 				
 				</div>
@@ -48,7 +63,11 @@
 				<br />
 				<!--start button-->
 
-				<p><?php echo ((get_theme_option('donate_button')!=null) ? get_theme_option('donate_button'): 'Please contact us directly if you would like to support the project.') ;?></p>
+				<?php
+				$donate_button = get_theme_option('donate_button');
+				echo ($donate_button ? '<p>'.$donate_button.'</p>' : '<p>Please contact us directly if you would like to support the project.</p>');
+				?>	
+
 
 				<!-- end button-->
 				

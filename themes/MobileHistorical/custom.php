@@ -12,7 +12,7 @@ require_once('mobile_device_detect.php');
 function mh_global_nav($context)
 {
 		if($context == 'desktop'){
-			return public_nav_main(array('Home' => uri('/'), 'Tours' => uri('/tour-builder/tours/browse/'), 'Stories' => uri('items')));
+			return public_nav_main(array('Home' => uri('/'), 'Stories' => uri('items'), 'Tours' => uri('/tour-builder/tours/browse/')));
 		}	
 		if($context == 'mobile_foot'){
 			$html = '<ul class="navigation">';
@@ -114,7 +114,7 @@ echo Zend_Json_Encoder::encode( $metadata );
 function display_random_featured_item_CH($withImage=false)
  {
     $featuredItem = random_featured_item($withImage);
- 	$html = '<h2>Featured Story</h2>';
+ 	$html = '<h2 class="col-heading">Featured Story</h2>';
  	if ($featuredItem) {
  	    $itemTitle = item('Dublin Core', 'Title', array(), $featuredItem);
         
@@ -370,5 +370,75 @@ function mh_link_color()
 		return $color;
 	}
 }
+
+/*TWITTER*/
+
+function linkmytweet($text){
+	$text= preg_replace("#(^|[\n ])([\w]+?://[\w]+[^ \"\n\r\t< ]*)#", "\\1<a href=\"\\2\" target=\"_blank\">\\2</a>", $text);
+	$text= preg_replace("#(^|[\n ])((www|ftp)\.[^ \"\t\n\r< ]*)#", "\\1<a href=\"http://\\2\" target=\"_blank\">\\2</a>", $text);
+	$text= preg_replace("/@(\w+)/", "<a href=\"http://www.twitter.com/\\1\" target=\"_blank\">@\\1</a>", $text);
+	$text= preg_replace("/#(\w+)/", "<a href=\"http://search.twitter.com/search?q=\\1\" target=\"_blank\">#\\1</a>", $text);
+	echo $text;
+}
+
+
+function twi_get(){
+
+	 $twitte = file_get_contents("http://search.twitter.com/search.json?q=".get_theme_option('twitter_hashtag')."%20OR%20%23".get_theme_option('twitter_hashtag')."&rpp=4");
+	 $data = json_decode($twitte);
+	 $o_text = "";
+	 foreach($data->results as $item)
+	 {
+	 	$date = date('m/d/o',strtotime($item->created_at));
+	 	echo "<li>";
+	    $o_text = "<div class='date'><a href='https://twitter.com/#!/".get_theme_option('twitter_hashtag')."/status/". $item->id_str . "' target='_blank'>" .$date."</a> @". $item->from_user .": "."</div>".$item->text;
+		linkmytweet($o_text);
+	
+	   	//echo $o_text;
+		   echo "</li>";
+		 } 
+ }
+ 
+ function mh_follow_the_conversation(){
+	 
+	 $html .= '<a href="http://twitter.com/#!/search/'.(get_theme_option('twitter_hashtag') ? get_theme_option('twitter_hashtag') : get_theme_option('twitter_username')).'"><img src="'. mh_follow_logo_url().'" alt="Join the Conversation on Twitter" title="Join the Conversation on Twitter" border="0" /></a>';
+	 return $html;
+ }
+ 
+ /*UNWANTED CHARACTER STRIPPING */
+ function normalize_special_characters( $str ) 
+{ 
+    # Quotes cleanup 
+    $str = str_replace( chr(ord("`")), "'", $str );        # ` 
+    $str = str_replace( chr(ord("´")), "'", $str );        # ´ 
+    $str = str_replace( chr(ord("?")), ",", $str );        # ? 
+    $str = str_replace( chr(ord("`")), "'", $str );        # ` 
+    $str = str_replace( chr(ord("´")), "'", $str );        # ´ 
+    $str = str_replace( chr(ord("?")), "\"", $str );        # ? 
+    $str = str_replace( chr(ord("?")), "\"", $str );        # ? 
+    $str = str_replace( chr(ord("´")), "'", $str );        # ´ 
+
+    $unwanted_array = array(    '?'=>'S', '?'=>'s', '?'=>'Z', '?'=>'z', 'À'=>'A', 'Á'=>'A', 'Â'=>'A', 'Ã'=>'A', 'Ä'=>'A', 'Å'=>'A', 'Æ'=>'A', 'Ç'=>'C', 'È'=>'E', 'É'=>'E', 
+                                'Ê'=>'E', 'Ë'=>'E', 'Ì'=>'I', 'Í'=>'I', 'Î'=>'I', 'Ï'=>'I', 'Ñ'=>'N', 'Ò'=>'O', 'Ó'=>'O', 'Ô'=>'O', 'Õ'=>'O', 'Ö'=>'O', 'Ø'=>'O', 'Ù'=>'U', 
+                                'Ú'=>'U', 'Û'=>'U', 'Ü'=>'U', 'Ý'=>'Y', 'Þ'=>'B', 'ß'=>'Ss', 'à'=>'a', 'á'=>'a', 'â'=>'a', 'ã'=>'a', 'ä'=>'a', 'å'=>'a', 'æ'=>'a', 'ç'=>'c', 
+                                'è'=>'e', 'é'=>'e', 'ê'=>'e', 'ë'=>'e', 'ì'=>'i', 'í'=>'i', 'î'=>'i', 'ï'=>'i', 'ð'=>'o', 'ñ'=>'n', 'ò'=>'o', 'ó'=>'o', 'ô'=>'o', 'õ'=>'o', 
+                                'ö'=>'o', 'ø'=>'o', 'ù'=>'u', 'ú'=>'u', 'û'=>'u', 'ý'=>'y', 'ý'=>'y', 'þ'=>'b', 'ÿ'=>'y','&amp;'=>'&','height'=>'h&#101;ight' ); 
+    $str = strtr( $str, $unwanted_array ); 
+    
+    #For reasons yet unknown, only some servers may require an additional $unwanted_array item: 'height'=>'h&#101;ight'
+
+    # Bullets, dashes, and trademarks 
+    $str = str_replace( chr(149), "&#8226;", $str );    # bullet ? 
+    $str = str_replace( chr(150), "&ndash;", $str );    # en dash 
+    $str = str_replace( chr(151), "&mdash;", $str );    # em dash 
+    $str = str_replace( chr(153), "&#8482;", $str );    # trademark 
+    $str = str_replace( chr(169), "&copy;", $str );    # copyright mark 
+    $str = str_replace( chr(174), "&reg;", $str );        # registration mark 
+    $str = str_replace( "&quot;", "\"", $str );        # "
+    $str = str_replace( "&apos;", "\'", $str );        # '
+    $str = str_replace( "&#039;", "'", $str );        # '
+
+    return $str; 
+} 
 
 ?>
