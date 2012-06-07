@@ -105,7 +105,7 @@ else{
 <link rel="stylesheet" media="print" href="<?php echo html_escape(css('print')); ?>" />
 
 <!-- Custom CSS via theme config -->
-<?php echo '<style type="text/css">#content-home{background:url('.mh_bg_home_logo_url().') no-repeat center top #bbb;}#content{background:url('.mh_bg_lv_logo_url().') no-repeat center top #d7d7d7;}p.view-items-link a, div#footer a, div#footer a:link, #page-col-left div.subjects li a, h3 a, h3 a:link, h3 a:visited,h3 a:active,#primary.show a{color:'.mh_link_color().'}'.get_theme_option('custom_css').'</style>';?>
+<?php echo '<style type="text/css">#content-home{background:url('.mh_bg_home_logo_url().') no-repeat center top #bbb;}#content{background:url('.mh_bg_lv_logo_url().') no-repeat center top #d7d7d7;}a, a:link, p.view-items-link a, div#footer a, div#footer a:link, #page-col-left div.subjects li a, h3 a, h3 a:link, h3 a:visited,h3 a:active,#primary.show a, .geolocation_balloon_title a, #primary-home p.view-items-link a {color:'.mh_link_color().'}'.get_theme_option('custom_css').'</style>';?>
 
 <!-- JavaScripts -->
 <?php echo js('default'); ?>

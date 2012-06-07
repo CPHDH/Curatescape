@@ -32,12 +32,12 @@ h4 span.i{
 }
 
 /* Links */
-a:link {color:#777;}
+a {color:#777;}
 a:visited {color:#777;}
 a:hover {color:#ACACAC;}
 a:active {color:#ACACAC;}
 
-h3 a, h3 a:link, h3 a:visited,h3 a:active {text-decoration:none;}
+h3 a, h3 a:visited,h3 a:active {text-decoration:none;}
 
 /* Reusable classes */
 .hide {text-indent: -1000em; width: 0; height: 0; overflow: hidden;}
@@ -154,13 +154,13 @@ div.error {font-size:1.5em; line-height:1.33333em; margin:1.33333em 0;}
 	#primary-nav a {display:inline; width: 246px; padding:0;}
 	#primary-nav li.current a, #contribution #primary-nav li.nav-contribute-a-story-or-file a, #Tags #primary-nav li.nav-browse-contributions a, #items #primary-nav li.nav-browse-contributions a {color:#555;/*border-left:1em solid #777;*/ background: url("../images/icn-sm.png") top left no-repeat;  padding-left:1em;}
 	
-	#primary-nav a:link {color:#555;}
+	#primary-nav a  {color:#555;}
 	#primary-nav a:visited {color:#555;}
 	#primary-nav a:hover {color:#777;}
 	#primary-nav a:active {color:#777;}
 	
 	#primary-home {float:right; width: 720px; margin:10px 0 0 0; padding:20px; background-color:#404041;}
-	#primary-home a:link,#primary-home a:visited,#primary-home a:active{color:#ACACAC}
+	#primary-home a ,#primary-home a:visited,#primary-home a:active{color:#ACACAC}
 	#primary-home a:hover{color:#777}
 	#primary-browse {float:left; width: 600px; margin:10px 0 0 0; padding:20px; color:#404041;}
 	#primary {float:left; width: 440px; margin:28px 0 0 10px; padding:20px; color:#404041;}
@@ -182,7 +182,7 @@ div.error {font-size:1.5em; line-height:1.33333em; margin:1.33333em 0;}
 		.tags li {display:inline;}
 		.tags a {}
 		#primary-browse .tags {font-size:0.9em;}
-		#primary-browse .tags a:link{color:#777;}
+		#primary-browse .tags a {color:#777;}
 		
 		#item-content img {padding:5px; border:1px solid #ccc; margin-bottom:2em;}
 
@@ -316,7 +316,6 @@ audio {width:200px;}
 div#footer{clear:both; text-align:right; font-size:11px; color:#555; vertical-align:middle; border-top:0px none transparent;background: #fff;padding:15px 10px 10px;}
 
 div#footer a {color:#999; text-transform:none;}
-div#footer a:link {color:#999; text-transform:none;}
 div#footer a:visited {color:#999; text-transform:none;}
 div#footer a:active {color:#aaa; text-transform:none;}
 div#footer a:hover {color:#aaa; text-transform:underline;}
