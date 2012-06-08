@@ -10,8 +10,8 @@ if (mobile_device_detect()==true){
 <?php echo mobile_simple_search();?>
 
 			
-			<?php $term=$_GET['tags']; ?>
-			<?php $term2=$_GET['term']; ?>
+			<?php $term=html_escape($_GET['tags']); ?>
+			<?php $term2=html_escape($_GET['term']); ?>
 
 	    
 		<h2>Browse Sites (<?php echo total_results(); ?>)</h2>
@@ -96,8 +96,8 @@ else{
 
 	<div id="primary-browse" class="browse">
 			
-			<?php $term=$_GET['tags']; ?>
-			<?php $term2=$_GET['term']; ?>
+			<?php $term=html_escape($_GET['tags']); ?>
+			<?php $term2=html_escape($_GET['term']); ?>
 
 	    
 		<h1>Browse <?php echo $term.$term2 ?> (<?php echo total_results(); ?> total)</h1>

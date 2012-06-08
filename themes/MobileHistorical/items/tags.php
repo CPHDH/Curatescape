@@ -9,8 +9,8 @@ if (mobile_device_detect()==true){
 <div data-role="content" id="browse">	
 <?php echo mobile_simple_search();?>
 			
-			<?php $term=$_GET['tags']; ?>
-			<?php $term2=$_GET['term']; ?>
+			<?php $term=html_escape($_GET['tags']); ?>
+			<?php $term2=html_escape($_GET['term']); ?>
 
 	    
 		<h2>Browse Tags </h2>
