@@ -195,7 +195,7 @@ if ( (get_theme_option('twitter_username')!=false) && (get_theme_option('home_co
 
 <?php }
 else{
-echo '<h2 class="col-heading">About</h2><p id="about">'.snippet(get_theme_option('about'),0, 900).'</p>';
+echo '<h2 class="col-heading">About</h2><p id="about">'.get_theme_option('about').'</p>';
 }?>	
 
 
