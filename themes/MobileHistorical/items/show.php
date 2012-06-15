@@ -224,12 +224,10 @@ if (function_exists('geolocation_get_location_for_item')){
 	
 	
   	
-    	<?php
-	    $subjects = item('Dublin Core', 'Subject', 'all');
-
-	    if (count($subjects) > 1):
-
-	    ?>
+		<?php
+		$subjects = item('Dublin Core', 'Subject', 'all');
+		if (count($subjects) > 1):
+		?>
 
 
     	<h3>Subject</h3>
@@ -360,7 +358,7 @@ if (function_exists('geolocation_get_location_for_item')){
 	while(loop_files_for_item()): 
         $file = get_current_file();
         $mime = item_file("MIME Type");
-				if ($mime == 'video/quicktime'){
+				if ($mime == 'video/quicktime' or $mime == 'video/mpeg' or $mime == 'video/mp4'){
 					$videoItems++;
 				}
 		endwhile;
@@ -374,7 +372,7 @@ if (function_exists('geolocation_get_location_for_item')){
 	}
 ?>
  <?php loadPlaylistB(); ?> 	
-	
+
 
 <!-- let rest of the page float normally --> 
 <br clear="all"/> 
