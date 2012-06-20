@@ -226,7 +226,7 @@ if (function_exists('geolocation_get_location_for_item')){
   	
 		<?php
 		$subjects = item('Dublin Core', 'Subject', 'all');
-		if (count($subjects) > 1):
+		if (count($subjects) > 0):
 		?>
 
 
