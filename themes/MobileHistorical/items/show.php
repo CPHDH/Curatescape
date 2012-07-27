@@ -226,21 +226,18 @@ if (function_exists('geolocation_get_location_for_item')){
   	
 		<?php
 		$subjects = item('Dublin Core', 'Subject', 'all');
-		if (count($subjects) > 0):
-		?>
+		if (count($subjects) > 0){
 
+	    	echo '<h3>Subject</h3>';
+	    	echo '<div class="subjects"><ul>';
+	    	foreach ($subjects as $subject){
+		    	echo '<li>';
+		    	echo '<a href="'.WEB_ROOT.'/items/browse?search=&advanced[0][element_id]=49&advanced[0][type]=contains&advanced[0][terms]='.$subject.'&submit_search=Search">'.$subject.'</a>';
+		    	echo '</li>';
+		    	}
+		    echo '</ul></div>';
 
-    	<h3>Subject</h3>
-    	<div class="subjects">
-
-	    	<?php foreach ($subjects as $subject): ?>
-	    	<li>
-	    	<a href="<?php echo WEB_ROOT;?>/items/browse?search=&advanced[0][element_id]=49&advanced[0][type]=contains&advanced[0][terms]=<?php echo $subject; ?>&submit_search=Search"><?php echo $subject; ?></a>
-	    	</li>
-	    	<?php endforeach; ?>
-	    </div>
-
-	    <?php endif; ?>
+	    } ?>
     	
 	
 	
@@ -248,23 +245,50 @@ if (function_exists('geolocation_get_location_for_item')){
 	
 	
 	
-	<div>
-	 <!-- The following prints a list of all tags associated with the item -->
-	<?php if (item_has_tags()): ?>
-	
-		<h3>Tags:</h3>
-	    <?php echo item_tags_as_string(
-    		$delimiter = ' ', 
-    		$order = 'alpha', 
-   			$tagsAreLinked = true, 
-   	 		$item=null, 
-    		$limit=null
-		);?>
-	
-	<?php endif;?>
+	<div id="tags">
+		 <!-- The following prints a list of all tags associated with the item -->
+		<?php if (item_has_tags()): ?>
+		
+			<h3>Tags</h3>
+		    <?php echo item_tags_as_string(
+	    		$delimiter = ', ', 
+	    		$order = 'alpha', 
+	   			$tagsAreLinked = true, 
+	   	 		$item=null, 
+	    		$limit=null
+			);?>
+		
+		<?php endif;?>
 	</div>
-
+	
+	<div id="relations">
+		<?php
+		if (function_exists('item_relations_display_item_relations')){
+			$item=get_current_item();
+		    $subjectRelations = ItemRelationsPlugin::prepareSubjectRelations($item);
+		    $objectRelations = ItemRelationsPlugin::prepareObjectRelations($item);
+		    if ($subjectRelations || $objectRelations){
+				echo '<h3>Related Stories</h3>';
+				echo '<ul>';
+				foreach ($subjectRelations as $subjectRelation){
+				        	echo '<li><a href="'.uri('items/show/' . $subjectRelation['object_item_id']).'">'.$subjectRelation['object_item_title'].'</a></li>';
+				        		}
+				foreach ($objectRelations as $objectRelation){
+				        	echo '<li><a href="'.uri('items/show/' . $objectRelation['subject_item_id']).'">'.$objectRelation['subject_item_title'].'</a></li>';
+				        		}
+			echo '</ul>';
+			}		    
+		}
+		?>			
 	</div>
+	
+	<!--
+	<div id="tours">
+	<?php //echo mh_link_to_related_tours($item);?>
+	</div>
+	-->
+	
+</div>
 
 
 

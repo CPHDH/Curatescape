@@ -441,4 +441,33 @@ function twi_get(){
     return $str; 
 } 
 
+/**
+* Get Related Tours
+* not yet functional
+* based on Exhibit Builder related exhibits function
+
+
+function mh_link_to_related_tours() 
+{
+    $tourTable = get_db()->getTable('Tour');
+    $select = $tourTable->getSelect()->where("public = 1")->where("title != '[Untitled]'")->where("title != null");
+    $featuredTours = $tourTable->fetchObjects($select);
+ 
+    $html = '<h3>Related Tours</h3>';
+    if(count($featuredTours) !== 0) {
+    $html .= '<ul>';
+	    foreach($featuredTours as $featuredTour) {
+		if ($featuredTour) {
+		    $html .= '<li>' . link_to_tour($tourTitle, array(), 'show', $featuredTour) . '</li>';
+		    }
+		}
+    } else {
+	  $html .= '<p>No related tours are available.</p>';
+    }
+    $html .= '</ul>';
+ 
+    return $html;
+}
+*/
+
 ?>
