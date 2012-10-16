@@ -11,7 +11,7 @@ img.header-img{float:left; padding:6px 6px 0 10px;}
 /* general */
 .ui-content{}
 .ui-btn-up-c {}
-h1, h2, h3, h4, h5, strong, ul li a  {font-family: "news-gothic-std-1","news-gothic-std-2";}
+h1, h2, h3, h4, h5, strong, ul li a  {font-family: "news-gothic-std-1","news-gothic-std-2", "Arial Narrow", Helvetica, Arial, sans-serif;}
 
 /*links*/
 .ui-link{color:rgb(68,142,182);}
