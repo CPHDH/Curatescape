@@ -1,6 +1,6 @@
 <?php
 head( array( 'title' => 'Add Tour', 'content_class' => 'vertical-nav',
-   'bodyclass' => 'tours primary' ) );
+   'bodyclass' => 'tours primary add-tour-form' ) );
 ?>
 
 <script type="text/javascript" charset="utf-8">

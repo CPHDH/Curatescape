@@ -17,7 +17,7 @@ head( array( 'title' => $tourTitle, 'content_class' => 'vertical-nav',
    });
 </script>
 
-<h1>Add a Tour</h1>
+<h1>Edit Tour</h1>
 <?php include( 'form-tabs.php' ); ?>
 <div id="primary">
    <form method="post" enctype="multipart/form-data" id="tour-form" action="">

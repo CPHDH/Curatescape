@@ -11,6 +11,7 @@ add_plugin_hook( 'define_acl', 'TourBuilder::defineAcl' );
 add_plugin_hook( 'define_routes', 'tours_define_routes' );
 add_plugin_hook( 'admin_append_to_dashboard_primary', 'tours_dashboard' );
 add_plugin_hook( 'admin_theme_header', 'tours_admin_header' );
+add_filter('admin_navigation_main', 'TourBuilder::adminNavigationMain');
 
 class TourBuilder
 {
@@ -87,6 +88,11 @@ SQL
       // Allow contributors everything else
       $acl->allow('contributor', 'TourBuilder_Tours');
    }
+    public static function adminNavigationMain($nav)
+    {
+        $nav['Tours'] = uri('tour-builder/tours');
+        return $nav;
+    }   
 }
 
 function tours_define_routes( $router )

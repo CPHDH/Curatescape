@@ -1,6 +1,7 @@
 <?php
 $tabs = array();
-foreach( array( 'Items', 'Tour Info' ) as $tabName ) {
+$theTabs=(!tour( 'id' )) ? array( 'Tour Info' ) : array( 'Tour Info','Items' );
+foreach( $theTabs as $tabName ) {
    ob_start();
    switch( $tabName ) {
    case 'Tour Info':
