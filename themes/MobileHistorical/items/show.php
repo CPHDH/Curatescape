@@ -282,11 +282,10 @@ if (function_exists('geolocation_get_location_for_item')){
 		?>			
 	</div>
 	
-	<!--
-	<div id="tours">
-	<?php //echo mh_link_to_related_tours($item);?>
+	<div id="license">	
+	<?php mh_cc_for_item(get_current_item());?>
 	</div>
-	-->
+	
 	
 </div>
 

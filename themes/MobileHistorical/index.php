@@ -135,7 +135,7 @@ echo mh_lg_logo_url();
 <div id="col-lft">
 <img src="<?php echo mh_tour_logo_url(); ?>" alt="Take a Tour" title="Take a Tour" border="0" />
 
-<?php display_tour_items($items); ?>
+<?php display_tour_items(); ?>
 
 
 <p class="view-items-link"><a href="<?php echo WEB_ROOT;?>/tour-builder/tours/browse/">More Tours</a></p>

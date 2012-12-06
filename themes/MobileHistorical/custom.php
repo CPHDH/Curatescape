@@ -49,7 +49,7 @@ function mh_global_nav($context)
 }
 
 /** -- GET THE TOUR LIST -- **/
-function display_tour_items($num = '10')
+function display_tour_items($num = 15)
 
 //display_tour_items($items)
 
@@ -404,6 +404,35 @@ function twi_get(){
 	 $html .= '<a href="http://twitter.com/#!/search/'.(get_theme_option('twitter_hashtag') ? get_theme_option('twitter_hashtag') : get_theme_option('twitter_username')).'"><img src="'. mh_follow_logo_url().'" alt="Join the Conversation on Twitter" title="Join the Conversation on Twitter" border="0" /></a>';
 	 return $html;
  }
+ 
+ 
+ 
+/*
+** CC License chooser support 
+*/ 
+function mh_cc_for_item($item, $width = 0) {      
+if (function_exists('cc_for_item')){
+		$divId = "item-license-{$item->id}";
+		$cc = current(get_license_for_item($item->id));
+		if ($cc) {
+		     
+		//begin HTML ?>
+				<h3>License</h3>
+				
+				<div id="<?php echo $divId; ?>" style="display: block;">
+					<div id="cc_license"><!-- Creative Commonts License -->
+						<a href="<?php echo $cc->cc_uri; ?>" rel="license" class="cc_js_a"><img width="88" height="31" border="0" class="cc_js_cc-button" src="<?php echo $cc->cc_img; ?>" alt="Creative Commons License" style="margin:5px 0"/></a>
+					<div class="cc_info">This work is licensed under a <a href="<?php echo $cc->cc_uri; ?>" rel="license"><?php echo $cc->cc_name; ?></a>.
+					</div>
+				</div>
+				</div>
+		<?php //end HTML
+			
+		}
+	}
+} 
+ 
+ 
  
  /*UNWANTED CHARACTER STRIPPING */
  function normalize_special_characters( $str ) 
