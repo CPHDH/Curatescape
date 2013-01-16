@@ -17,4 +17,24 @@ class TourTable extends Omeka_Db_Table
       $items = $itemTable->fetchObjects( $select );
       return $items;
    }
+
+   public function getSelect()
+   {
+      $select = parent::getSelect();
+
+      // Determine public level
+      $acl = Omeka_Context::getInstance()->acl;
+      if( $acl && $acl->has( 'TourBuilder_Tours' ) )
+      {
+         $has_permission = $acl->isAllowed( current_user(), 'TourBuilder_Tours',
+                                            'showNotPublic' );
+         if( ! $has_permission )
+         {
+            $select->where( 't.public = 1' );
+         }
+      }
+
+      return $select;
+   }
+
 }
