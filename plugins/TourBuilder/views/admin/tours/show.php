@@ -13,7 +13,7 @@ head( array( 'title' => $tourTitle, 'content_class' => 'horizontal-nav',
 
 <h1><?php echo $tourTitle; ?>
 <span class="view-public-page">[ <a href="<?php
-echo html_escape( public_uri( 'tours/show/' . tour( 'id' ) ) );
+echo html_escape( public_uri( 'tour-builder/tours/show/id/' . tour( 'id' ) ) );
 ?>">View Public Page</a> ]</span></h1>
 
 <?php if( has_permission( 'TourBuilder_Tours', 'edit' ) ): ?>
