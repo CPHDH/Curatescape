@@ -409,6 +409,7 @@ if (function_exists('geolocation_get_location_for_item')){
 	
 
 	<?php echo item('Dublin Core', 'Description');?>
+	<?php echo link_to_item_edit();?>
 	
 
 </div>
@@ -425,8 +426,7 @@ if (function_exists('geolocation_get_location_for_item')){
     }
 ?>
 </div>
-
-<br/><?php echo link_to_item_edit();?>
+<?php echo mh_disquss_comments();?>
 
 
 	
@@ -477,17 +477,19 @@ if (function_exists('geolocation_get_location_for_item')){
 			
 			<div id="share-this">
 			<h3 style="margin-top:10px;clear:both">Share this Page</h3>
+
 			<!-- AddThis Button BEGIN -->
 			<div class="addthis_toolbox addthis_default_style addthis_32x32_style">
-			<a class="addthis_button_preferred_1"></a>
-			<a class="addthis_button_preferred_2"></a>
-			<a class="addthis_button_preferred_3"></a>
-			<a class="addthis_button_preferred_4"></a>
+				<a class="addthis_button_preferred_2"></a>
+				<a class="addthis_button_preferred_3"></a>
+				<a class="addthis_button_preferred_4"></a>
+				<a class="addthis_button_compact"></a>
 			</div>
 			<?php $addthis = (get_theme_option('Add This')) ? (get_theme_option('Add This')) : 'ra-4e89c646711b8856';?>
-			<script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid=<?php echo $addthis ;?>"></script>
-				<!-- replace #pubid= value with your ADDTHIS user profile to enable analytics (see settings >> profiles) -->
-			<!-- AddThis Button END -->
+			<script type="text/javascript">var addthis_config = {"data_track_addressbar":true};</script>
+			<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=<?php echo $addthis ;?>"></script>
+			<!-- AddThis Button END -->	
+
 			</div>
 
 		</div>

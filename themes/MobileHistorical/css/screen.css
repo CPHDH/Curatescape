@@ -310,6 +310,8 @@ audio {width:200px;}
 #twit ul li {padding:12px 0;}
 .browse {width:700px;}
 
+#disqus_thread{background:#fafafa; padding:1em; box-shadow: 0 0 .25em #999; border-radius: .25em;margin-top: 1.5em;}
+
 .item-description{ padding-bottom:16px; margin-bottom:1.33333em;}
 /* FOOTER */
 
