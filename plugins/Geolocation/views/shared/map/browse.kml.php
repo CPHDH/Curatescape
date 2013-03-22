@@ -25,14 +25,14 @@
             <Snippet maxLines="2"><![CDATA[<?php
             echo item('Dublin Core', 'Description', array('snippet' => 150));
             ?>]]></Snippet>    
-            <description><![CDATA[<?php 
+            <!--description><![CDATA[<?php 
             // @since 3/26/08: movies do not display properly on the map in IE6, 
             // so can't use display_files(). Description field contains the HTML 
             // for displaying the first file (if possible).
-            if (item_has_thumbnail($item)) {
-                echo link_to_item(item_thumbnail(), array('class' => 'view-item'));                
-            }
-            ?>]]></description>
+            //if (item_has_thumbnail($item)) {
+            //    echo link_to_item(item_thumbnail(), array('class' => 'view-item'));                
+            //}
+            //?>]]></description-->
             <Point>
                 <coordinates><?php echo $location['longitude']; ?>,<?php echo $location['latitude']; ?></coordinates>
             </Point>
