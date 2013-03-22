@@ -20,7 +20,7 @@
         $location = $locations[$item->id];
         ?>
         <Placemark>
-            <name><![CDATA[<?php echo item('Dublin Core', 'Title');?>]]></name>
+            <name><![CDATA[<?php echo htmlspecialchars_decode(item('Dublin Core', 'Title'),ENT_QUOTES);?>]]></name>
             <namewithlink><![CDATA[<?php echo link_to_item(item('Dublin Core', 'Title'), array('class' => 'view-item')); ?>]]></namewithlink>
             <Snippet maxLines="2"><![CDATA[<?php
             echo item('Dublin Core', 'Description', array('snippet' => 150));
