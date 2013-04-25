@@ -18,11 +18,13 @@ Curatescape is a suite of themes and plugins for the Omeka content management sy
 	- [Download Omeka (current supported version: 1.5.3)](http://omeka.org/files/omeka-1.5.3.zip) 
 	- [Installation instructions](http://omeka.org/codex/Installation)
 2. Curatescape themes 
-	- Curatescape: [repo](https://github.com/CPHDH/theme-curatescape) | [download](https://github.com/CPHDH/theme-curatescape/archive/master.zip) 
-	- MobileHistorical (for use only with Omeka 1.5.3): [repo](https://github.com/CPHDH/theme-MobileHistorical) | [download](https://github.com/CPHDH/theme-MobileHistorical/archive/master.zip) 
+	- Curatescape (beta): [repo](https://github.com/CPHDH/theme-curatescape) | [download](https://github.com/CPHDH/theme-curatescape/archive/master.zip) 
+	- MobileHistorical (for use only with Omeka 1.5.x): [repo](https://github.com/CPHDH/theme-MobileHistorical) | [download](https://github.com/CPHDH/theme-MobileHistorical/archive/master.zip) 
 3. Curatescape plugins 
 	- TourBuilder:  [repo](https://github.com/CPHDH/plugin-TourBuilder) | [download](https://github.com/CPHDH/plugin-TourBuilder/archive/master.zip)  
 	- MobileJSON: [repo](https://github.com/CPHDH/plugin-MobileJson) | [download](https://github.com/CPHDH/plugin-MobileJson/archive/master.zip) 
 	- ImageTree: [repo](https://github.com/CPHDH/plugin-ImageTree) | [download](https://github.com/CPHDH/plugin-ImageTree/archive/master.zip)  
-	- Geolocation_fork (for use only with Omeka 1.5.3): [repo](https://github.com/CPHDH/plugin-geolocation_fork) | [download](https://github.com/CPHDH/plugin-geolocation_fork/archive/master.zip) 
+	- Geolocation_fork (for use only with Omeka 1.5.x): [repo](https://github.com/CPHDH/plugin-geolocation_fork) | [download](https://github.com/CPHDH/plugin-geolocation_fork/archive/master.zip) 
 	- SendToAdminHeader: [repo](https://github.com/CPHDH/plugin-SendToAdminHeader) | [download](https://github.com/CPHDH/plugin-SendToAdminHeader/archive/master.zip) 
+4. CHNM plugins
+	- Geolocation (for Omeka 2.0 or newer): [instructions](http://omeka.org/codex/Plugins/Geolocation) | [repo](https://github.com/omeka/plugin-Geolocation) | [download (v. 2.0)](http://omeka.org/wordpress/wp-content/uploads/Geolocation-2.0.zip)
