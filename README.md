@@ -6,17 +6,14 @@ The Mobile Historical initiative is an NEH-funded project aiming to develop best
 
 For more information, visit [curatescape.org](http://curatescape.org/) or view the [GitHub project wiki](https://github.com/CPHDH/Curatescape/wiki).
 
-#Native client apps
-
-Note that while the server-side components of Curatescape are open source and freely available, the native client applications are proprietary and require a licensee fee. For more information about licensing, visit [curatescape.org](http://curatescape.org/).
-
 #Server-side Setup
 
 Curatescape is a suite of themes and plugins for the Omeka content management system. To get started, install Omeka on the server of your choice.
 
 1. Install Omeka 
 	- [Download Omeka (current supported version: 1.5.3)](http://omeka.org/files/omeka-1.5.3.zip) 
-	- [Installation instructions](http://omeka.org/codex/Installation)
+	- [Installation instructions (omeka.org)](http://omeka.org/codex/Installation)
+	- [Server requirements](https://github.com/CPHDH/Curatescape/wiki/Server-requirements)
 2. Curatescape themes 
 	- Curatescape (beta): [repo](https://github.com/CPHDH/theme-curatescape) | [download](https://github.com/CPHDH/theme-curatescape/archive/master.zip) 
 	- MobileHistorical (for use only with Omeka 1.5.x): [repo](https://github.com/CPHDH/theme-MobileHistorical) | [download](https://github.com/CPHDH/theme-MobileHistorical/archive/master.zip) 
@@ -28,3 +25,10 @@ Curatescape is a suite of themes and plugins for the Omeka content management sy
 	- SendToAdminHeader: [repo](https://github.com/CPHDH/plugin-SendToAdminHeader) | [download](https://github.com/CPHDH/plugin-SendToAdminHeader/archive/master.zip) 
 4. CHNM plugins
 	- Geolocation (for Omeka 2.0 or newer): [instructions](http://omeka.org/codex/Plugins/Geolocation) | [repo](https://github.com/omeka/plugin-Geolocation) | [download (v. 2.0)](http://omeka.org/wordpress/wp-content/uploads/Geolocation-2.0.zip)
+
+#Native client apps
+
+Note that while the server-side components of Curatescape are open source and freely available, the native client applications are proprietary and require a licensee fee. For more information about licensing, visit [curatescape.org](http://curatescape.org/).
+
+#Other documentation
+Please visit the [Curatescape project wiki](https://github.com/CPHDH/Curatescape/wiki) for additional information regarding [configuration](https://github.com/CPHDH/Curatescape/wiki/Configuring-omeka-for-curatescape), [content framework](https://github.com/CPHDH/Curatescape/wiki/Conceptual-and-organizational-framework) and more.
