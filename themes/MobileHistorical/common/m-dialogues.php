@@ -1,1 +1,0 @@
-<?php echo common('m-download-app');?>
