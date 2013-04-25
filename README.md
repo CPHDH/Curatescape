@@ -26,6 +26,11 @@ Curatescape is a suite of themes and plugins for the Omeka content management sy
 4. CHNM plugins
 	- Geolocation (for Omeka 2.0 or newer): [instructions](http://omeka.org/codex/Plugins/Geolocation) | [repo](https://github.com/omeka/plugin-Geolocation) | [download (v. 2.0)](http://omeka.org/wordpress/wp-content/uploads/Geolocation-2.0.zip)
 
+_Note that you can quickly grab one of the colocated Omeka+Curatescape server-side packages by cloning this repo or by using a shell command like:_
+```
+wget https://github.com/CPHDH/Curatescape/blob/master/Curatescape_and_Omeka1.5.3.zip 
+```
+
 #Native client apps
 
 Note that while the server-side components of Curatescape are open source and freely available, the native client applications are proprietary and require a licensee fee. For more information about licensing, visit [curatescape.org](http://curatescape.org/).
