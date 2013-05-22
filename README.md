@@ -24,7 +24,7 @@ Curatescape is a suite of themes and plugins for the Omeka content management sy
 	- Geolocation_fork (for use only with Omeka 1.5.x and Mobile Historical theme only): [repo](https://github.com/CPHDH/plugin-geolocation_fork) | [download](https://github.com/CPHDH/plugin-geolocation_fork/archive/master.zip) 
 	- SendToAdminHeader: [repo](https://github.com/CPHDH/plugin-SendToAdminHeader) | [download](https://github.com/CPHDH/plugin-SendToAdminHeader/archive/master.zip) 
 4. CHNM plugins
-	- Geolocation: [instructions](http://omeka.org/codex/Plugins/Geolocation) | [repo](https://github.com/omeka/plugin-Geolocation) | [download v. 1.2](http://omeka.org/wordpress/wp-content/uploads/2011/07/Geolocation-1.3-1.2.zip)(for Omeka 1.5.3 and Curatescape theme only)
+	- Geolocation: [instructions](http://omeka.org/codex/Plugins/Geolocation) | [repo](https://github.com/omeka/plugin-Geolocation) | [download v. 1.2](http://omeka.org/wordpress/wp-content/uploads/2011/07/Geolocation-1.3-1.2.zip) (for Omeka 1.5.3 and Curatescape theme only)
 
 _Note that you can quickly grab one of the colocated Omeka+Curatescape server-side packages by cloning this repo or by using a shell command like:_
 ```
