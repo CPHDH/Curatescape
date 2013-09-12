@@ -28,7 +28,7 @@ Curatescape is a suite of themes and plugins for the Omeka content management sy
 
 _Note that you can quickly grab one of the colocated Omeka+Curatescape server-side packages by cloning this repo or by using a shell command like:_
 ```
-wget https://github.com/CPHDH/Curatescape/blob/master/Curatescape_and_Omeka1.5.3.zip 
+wget https://github.com/CPHDH/Curatescape/archive/master.zip 
 ```
 
 #Native client apps
