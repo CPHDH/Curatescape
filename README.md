@@ -20,7 +20,7 @@ Curatescape is a suite of themes and plugins for the Omeka content management sy
 	- ImageTree: [repo](https://github.com/CPHDH/plugin-ImageTree) | [download](https://github.com/CPHDH/plugin-ImageTree/archive/master.zip)  
 	- SendToAdminHeader: [repo](https://github.com/CPHDH/plugin-SendToAdminHeader) | [download](https://github.com/CPHDH/plugin-SendToAdminHeader/archive/master.zip) 
 4. CHNM plugins
-	- Geolocation: [instructions](http://omeka.org/codex/Plugins/Geolocation) | [repo](https://github.com/omeka/plugin-Geolocation) | [download v. 2.0.1](http://omeka.org/wordpress/wp-content/uploads/Geolocation-2.0.1.zip) 
+	- Geolocation: [instructions](http://omeka.org/codex/Plugins/Geolocation) | [repo](https://github.com/omeka/plugin-Geolocation) | [download v. 2.1](http://omeka.org/wordpress/wp-content/uploads/Geolocation-2.1.zip) 
 	- SimplePages: [instructions](http://omeka.org/codex/Plugins/SimplePages) | [repo](https://github.com/omeka/plugin-SimplePages) | [download v. 2.1](http://omeka.org/wordpress/wp-content/uploads/Simple-Pages-2.1.zip) 
 
 _Note that you can quickly grab one of the colocated Omeka+Curatescape server-side packages by cloning this repo or by using the download link on this page.
