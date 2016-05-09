@@ -18,7 +18,6 @@ Curatescape is a suite of themes and plugins for the Omeka content management sy
 	- CuratescapeJSON: [repo](https://github.com/CPHDH/CuratescapeJSON) | [download](https://github.com/CPHDH/CuratescapeJSON/archive/master.zip) 
 	- CuratescapeAdminHelper: [repo](https://github.com/CPHDH/CuratescapeAdminHelper) | [download](https://github.com/CPHDH/CuratescapeAdminHelper/archive/master.zip)
 	- TourBuilder:  [repo](https://github.com/CPHDH/plugin-TourBuilder) | [download](https://github.com/CPHDH/plugin-TourBuilder/archive/master.zip)  
-	- ImageTree: [repo](https://github.com/CPHDH/plugin-ImageTree) | [download](https://github.com/CPHDH/plugin-ImageTree/archive/master.zip)  
 4. CHNM plugins (required)
 	- Geolocation: [instructions](http://omeka.org/codex/Plugins/Geolocation) | [repo](https://github.com/omeka/plugin-Geolocation) | [download v. 2.1](http://omeka.org/wordpress/wp-content/uploads/Geolocation-2.1.zip) 
 	- SimplePages: [instructions](http://omeka.org/codex/Plugins/SimplePages) | [repo](https://github.com/omeka/plugin-SimplePages) | [download v. 3.05](http://omeka.org/wordpress/wp-content/uploads/Simple-Pages-3.0.5.zip) 
