@@ -17,7 +17,7 @@ To get started, install Omeka and the Curatescape theme and plugins on the serve
 	- CuratescapeAdminHelper: [repo](https://github.com/CPHDH/CuratescapeAdminHelper) | [download](https://github.com/CPHDH/CuratescapeAdminHelper/archive/master.zip)
 	- TourBuilder:  [repo](https://github.com/CPHDH/plugin-TourBuilder) | [download](https://github.com/CPHDH/plugin-TourBuilder/archive/master.zip)  
 4. CHNM plugins (required)
-	- Geolocation: [instructions](http://omeka.org/codex/Plugins/Geolocation) | [get API key](https://developers.google.com/maps/web/) | [repo](https://github.com/omeka/plugin-Geolocation) | [download v. 2.2.4](http://omeka.org/wordpress/wp-content/uploads/Geolocation-2.2.4.zip) 
+	- Geolocation: [instructions](http://omeka.org/codex/Plugins/Geolocation_2.0) | [get API key](https://developers.google.com/maps/web/) | [repo](https://github.com/omeka/plugin-Geolocation) | [download v. 2.2.4](http://omeka.org/wordpress/wp-content/uploads/Geolocation-2.2.4.zip) 
 	- SimplePages: [instructions](http://omeka.org/codex/Plugins/SimplePages) | [repo](https://github.com/omeka/plugin-SimplePages) | [download v. 3.05](http://omeka.org/wordpress/wp-content/uploads/Simple-Pages-3.0.5.zip) 
 5. 	Optional Plugins
 	- SuperRSS:  [repo](https://github.com/CPHDH/SuperRss) | [download](https://github.com/CPHDH/SuperRss/archive/master.zip) 
