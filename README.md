@@ -31,7 +31,7 @@ Note that while the server-side components of Curatescape are open source and fr
 Please visit the [Curatescape project wiki](https://github.com/CPHDH/Curatescape/wiki) for technical and usage guides. For general information about the project, please visit [curatescape.org](http://curatescape.org/).
 
 # Acknowledgments
-The [Center for Public History + Digital Humanities](http://csudigitalhumanities.org) at Cleveland State University would like to thank the following for their support, direct or otherwise:
+The [Curatescape team](http://curatescape.org/about/our-team/) and the [Center for Public History + Digital Humanities](http://csudigitalhumanities.org) at Cleveland State University would like to thank the following for their support, direct or otherwise:
 
 - [Cleveland State University College of Liberal Arts and Social Sciences](http://www.csuohio.edu/class)
 - [Cleveland State University Research Corporation](http://www.csuohio.edu/research-corporation)
