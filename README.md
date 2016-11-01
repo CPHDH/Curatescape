@@ -37,5 +37,6 @@ The [Center for Public History + Digital Humanities](http://csudigitalhumanities
 - [Cleveland State University Research Corporation](http://www.csuohio.edu/research-corporation)
 - [Cleveland State University Department of History](http://www.csuohio.edu/class/history)
 - [The Omeka team](http://omeka.org) at [RRCHNM](http://rrchnm.org/) and the Omeka open source community
+- [OpenStreetMap contributors](https://www.openstreetmap.org/copyright)
 - [Github](https://github.com) for [supporting educational organizations](https://education.github.com/) 
 - [Browser Stack](https://www.browserstack.com/) for providing cross-browser testing tools for this open source project
