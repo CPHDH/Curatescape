@@ -7,7 +7,7 @@ Curatescape is a set of themes and plugins for the [Omeka](http://omeka.org) CMS
 To get started, install Omeka and the Curatescape theme and plugins on the server of your choice. You can grab the latest version of Omeka and all the Curatescape components at once by cloning or [downloading this repository](https://github.com/CPHDH/Curatescape/archive/master.zip).
 
 1. Install Omeka
-	- [Download Omeka (current supported version: 2.4)](http://omeka.org/files/omeka-2.4.zip)
+	- [Download Omeka (omeka.org)](http://omeka.org/download/)
 	- [Installation instructions (omeka.org)](http://omeka.org/codex/Installation)
 	- [Server requirements](https://github.com/CPHDH/Curatescape/wiki/Server-requirements)
 2. Curatescape themes
