@@ -17,12 +17,12 @@ To get started, install Omeka and the Curatescape theme and plugins on the serve
 	- CuratescapeAdminHelper: [repo](https://github.com/CPHDH/CuratescapeAdminHelper) | [download](https://github.com/CPHDH/CuratescapeAdminHelper/archive/master.zip)
 	- TourBuilder:  [repo](https://github.com/CPHDH/plugin-TourBuilder) | [download](https://github.com/CPHDH/plugin-TourBuilder/archive/master.zip)  
 4. CHNM plugins (required)
-	- Geolocation: [instructions](http://omeka.org/codex/Plugins/Geolocation_2.0) | [get API key](https://developers.google.com/maps/web/) | [repo](https://github.com/omeka/plugin-Geolocation) | [download v. 2.2.4](http://omeka.org/wordpress/wp-content/uploads/Geolocation-2.2.4.zip)
-	- SimplePages: [instructions](http://omeka.org/codex/Plugins/SimplePages) | [repo](https://github.com/omeka/plugin-SimplePages) | [download v. 3.05](http://omeka.org/wordpress/wp-content/uploads/Simple-Pages-3.0.5.zip)
+	- Geolocation: [instructions](http://omeka.org/codex/Plugins/Geolocation_2.0) | [get API key](https://developers.google.com/maps/web/) | [repo](https://github.com/omeka/plugin-Geolocation) | [download](http://omeka.org/add-ons/plugins/geolocation/)
+	- SimplePages: [instructions](http://omeka.org/codex/Plugins/SimplePages) | [repo](https://github.com/omeka/plugin-SimplePages) | [download](http://omeka.org/add-ons/plugins/simple-pages/)
 5. 	Optional Plugins
 	- SuperRSS:  [repo](https://github.com/CPHDH/SuperRss) | [download](https://github.com/CPHDH/SuperRss/archive/master.zip)
-	- ThemeHelper (beta): [repo](https://github.com/ebellempire/ThemeHelper) | [download](https://github.com/ebellempire/ThemeHelper/archive/master.zip)
-	- MoreUserRoles (beta): [repo](https://github.com/ebellempire/MoreUserRoles) | [download](https://github.com/ebellempire/MoreUserRoles/archive/master.zip)
+	- MoreUserRoles: [repo](https://github.com/ebellempire/MoreUserRoles) | [download](https://github.com/ebellempire/MoreUserRoles/archive/master.zip)
+	- SimpleVocab: [instructions](http://omeka.org/codex/Plugins/SimpleVocab_2.0) | [repo](https://github.com/omeka/plugin-SimpleVocab) | [download](http://omeka.org/add-ons/plugins/simple-vocab/)	
 
 # Native client apps
 Note that while the server-side components of Curatescape are open source and freely available, the native client applications are proprietary and require a license agreement. For more information about licensing, visit [curatescape.org](https://curatescape.org/).
