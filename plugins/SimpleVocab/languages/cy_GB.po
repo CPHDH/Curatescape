@@ -1,0 +1,116 @@
+# Translation for the Simple Vocab plugin for Omeka.
+# Copyright (C) 2012 Roy Rosenzweig Center for History and New Media
+# This file is distributed under the same license as the Omeka package.
+# 
+# Translators:
+# sionengland <sne@llgc.org.uk>, 2014
+msgid ""
+msgstr ""
+"Project-Id-Version: Omeka\n"
+"Report-Msgid-Bugs-To: http://github.com/omeka/plugin-SimpleVocab/issues\n"
+"POT-Creation-Date: 2012-11-28 21:49-0500\n"
+"PO-Revision-Date: 2017-09-19 22:32+0000\n"
+"Last-Translator: sionengland <sne@llgc.org.uk>\n"
+"Language-Team: Welsh (United Kingdom) (http://www.transifex.com/omeka/omeka/language/cy_GB/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: cy_GB\n"
+"Plural-Forms: nplurals=4; plural=(n==1) ? 0 : (n==2) ? 1 : (n != 8 && n != 11) ? 2 : 3;\n"
+
+#: SimpleVocabPlugin.php:80 views/admin/index/index.php:2
+msgid "Simple Vocab"
+msgstr "Geirfa Syml"
+
+#: controllers/IndexController.php:57
+msgid "Successfully deleted the element's vocabulary terms."
+msgstr "Cafodd termau geirfa'r elfen eu dileu'n llwyddiannus."
+
+#: controllers/IndexController.php:61
+msgid "Successfully edited the element's vocabulary terms."
+msgstr "Cafodd termau geirfa'r elfen eu golygu'n llwyddiannus."
+
+#: controllers/IndexController.php:72
+msgid "Successfully added the element's vocabulary terms."
+msgstr "Cafodd termau geirfa'r elfen eu hychwanegu'n llwyddiannus."
+
+#: controllers/IndexController.php:113
+msgid "Not in vocabulary."
+msgstr "Ddim yn y geirfa."
+
+#: controllers/IndexController.php:114
+msgid "Long text."
+msgstr "Testun hir"
+
+#: controllers/IndexController.php:115
+msgid "Contains newlines."
+msgstr "Yn cynnwys llinellau newydd."
+
+#: views/admin/index/element-texts.ajax.php:2
+msgid "No texts for the selected element exist in Omeka."
+msgstr "Does dim testun ar gyfer yr elfennau hynny yn Omeka."
+
+#: views/admin/index/element-texts.ajax.php:6
+msgid "Count"
+msgstr "Cyfrif"
+
+#: views/admin/index/element-texts.ajax.php:7
+msgid "Warnings"
+msgstr "Rhybuddion"
+
+#: views/admin/index/element-texts.ajax.php:8
+msgid "Text"
+msgstr "Testun"
+
+#: views/admin/index/index.php:34
+msgid "Element"
+msgstr "Elfen"
+
+#: views/admin/index/index.php:38
+msgid ""
+"Select an element to manage its custom vocabulary. Elements with a custom "
+"vocabulary are marked with an asterisk (*)."
+msgstr "Dewisiwch elfen i reoli ei eirfa. Mae elfennau gyda geirfa wedi'i addasu yn dangos gyda seren (*)."
+
+#: views/admin/index/index.php:44
+msgid "Vocabulary Terms"
+msgstr "Termau Geirfa"
+
+#: views/admin/index/index.php:47
+msgid ""
+"Enter the custom vocabulary terms for this element, one per line. To delete "
+"the vocabulary, simply remove the terms and submit this form."
+msgstr "Teipiwch yr addasiad i'r geirfa ar gyfer yr elfen, un ar bob llinell. I ddileu'r geirfa, dylid cael gwared a'r term ac yna ail-ddanfon y ffurflen."
+
+#: views/admin/index/index.php:52
+#, php-format
+msgid ""
+"%sClick here%s to display a list of texts for the selected element that "
+"currently exist in Omeka. You may use this list as a reference to build a "
+"vocabulary, but be aware of some caveats:"
+msgstr "%sCliciwch yma%s i weld rhestr o destunau sy'n bodoli ar gyfer yr elfen o dan sylw yn Omeka. Gellir defnyddio hwn fel rhestr gyfeirio er mwyn adeiladu geirfa, ond dylid fod yn ymwybodol o rhai pethau:"
+
+#: views/admin/index/index.php:58
+msgid "Vocabulary terms must not contain newlines (line breaks)."
+msgstr "Ni all termau geirfa gynnwys llinellau newydd (toriadau llinell)"
+
+#: views/admin/index/index.php:59
+msgid ""
+"Vocabulary terms are typically short and concise. If your existing texts are"
+" otherwise, avoid using a controlled vocabulary for this element."
+msgstr "Mae termau geirfa gan amlaf yn fyr ac yn gryno. Os yw eich testun i'r gwrthwyneb i hyn, dylid osgoi defnyddio geirfa wedi'i reoli ar gyfer yr elfen hon."
+
+#: views/admin/index/index.php:62
+msgid "Vocabulary terms must be identical to their corresponding texts."
+msgstr "Mae'n rhaid i'r termau geirfa cyfateb yn union a'u testun cyfatebol."
+
+#: views/admin/index/index.php:63
+msgid ""
+"Existing texts that are not in the vocabulary will be preserved — however, "
+"they cannot be selected in the item edit page, and will be deleted once you "
+"save the item."
+msgstr "Bydd testun sy'n bodoli eisoes ond ddim yn y geirfa yn cael eu cadw - ond ni fyddant yn gallu cael eu dewis yn y tudalen golygu eitem, ac y byddant yn cael eu dileu unwaith y byddwch yn eu harbed."
+
+#: views/admin/index/index.php:70
+msgid "Add/Edit Vocabulary"
+msgstr "Ychwanegu/Golygu Geirfa"

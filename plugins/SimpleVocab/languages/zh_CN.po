@@ -1,0 +1,116 @@
+# Translation for the Simple Vocab plugin for Omeka.
+# Copyright (C) 2012 Roy Rosenzweig Center for History and New Media
+# This file is distributed under the same license as the Omeka package.
+# 
+# Translators:
+# Hong Zhang <zhangh@unlv.nevada.edu>, 2013
+msgid ""
+msgstr ""
+"Project-Id-Version: Omeka\n"
+"Report-Msgid-Bugs-To: http://github.com/omeka/plugin-SimpleVocab/issues\n"
+"POT-Creation-Date: 2012-11-28 21:49-0500\n"
+"PO-Revision-Date: 2017-09-19 16:11+0000\n"
+"Last-Translator: Hong Zhang <zhangh@unlv.nevada.edu>\n"
+"Language-Team: Chinese (China) (http://www.transifex.com/omeka/omeka/language/zh_CN/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: zh_CN\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: SimpleVocabPlugin.php:80 views/admin/index/index.php:2
+msgid "Simple Vocab"
+msgstr "简单词汇表"
+
+#: controllers/IndexController.php:57
+msgid "Successfully deleted the element's vocabulary terms."
+msgstr "成功删除了元素的词汇表术语。"
+
+#: controllers/IndexController.php:61
+msgid "Successfully edited the element's vocabulary terms."
+msgstr "成功修改了元素的词汇表术语。"
+
+#: controllers/IndexController.php:72
+msgid "Successfully added the element's vocabulary terms."
+msgstr "成功添加了元素的词汇表术语。"
+
+#: controllers/IndexController.php:113
+msgid "Not in vocabulary."
+msgstr "不在词汇表中。"
+
+#: controllers/IndexController.php:114
+msgid "Long text."
+msgstr "长文本。"
+
+#: controllers/IndexController.php:115
+msgid "Contains newlines."
+msgstr "包含换行。"
+
+#: views/admin/index/element-texts.ajax.php:2
+msgid "No texts for the selected element exist in Omeka."
+msgstr "Omeka中没有所选择元素的文本。"
+
+#: views/admin/index/element-texts.ajax.php:6
+msgid "Count"
+msgstr "计数"
+
+#: views/admin/index/element-texts.ajax.php:7
+msgid "Warnings"
+msgstr "警告"
+
+#: views/admin/index/element-texts.ajax.php:8
+msgid "Text"
+msgstr "文本"
+
+#: views/admin/index/index.php:34
+msgid "Element"
+msgstr "元素"
+
+#: views/admin/index/index.php:38
+msgid ""
+"Select an element to manage its custom vocabulary. Elements with a custom "
+"vocabulary are marked with an asterisk (*)."
+msgstr "选择一个元素来管理它的定制词汇表。有定制词汇表的元素带有星号标记（*）。"
+
+#: views/admin/index/index.php:44
+msgid "Vocabulary Terms"
+msgstr "词汇表术语"
+
+#: views/admin/index/index.php:47
+msgid ""
+"Enter the custom vocabulary terms for this element, one per line. To delete "
+"the vocabulary, simply remove the terms and submit this form."
+msgstr "请给该元素输入定制词汇表术语，每行一个。要删除词汇表，只需去除术语并提交该表单。"
+
+#: views/admin/index/index.php:52
+#, php-format
+msgid ""
+"%sClick here%s to display a list of texts for the selected element that "
+"currently exist in Omeka. You may use this list as a reference to build a "
+"vocabulary, but be aware of some caveats:"
+msgstr "%s点击此处%s以显示存于Omeka中的当前被选中元素的文本列表。你可以用该列表做参考以创建词汇表，但是要留心几点警告："
+
+#: views/admin/index/index.php:58
+msgid "Vocabulary terms must not contain newlines (line breaks)."
+msgstr "词汇表术语不能包含换行（换行符）。"
+
+#: views/admin/index/index.php:59
+msgid ""
+"Vocabulary terms are typically short and concise. If your existing texts are"
+" otherwise, avoid using a controlled vocabulary for this element."
+msgstr "词汇表术语通常是短小精炼的。如果现有文本不是如此，请避免把受控词汇表用于该元素。"
+
+#: views/admin/index/index.php:62
+msgid "Vocabulary terms must be identical to their corresponding texts."
+msgstr "词汇表术语必须和它们相应的文本完全相同。"
+
+#: views/admin/index/index.php:63
+msgid ""
+"Existing texts that are not in the vocabulary will be preserved — however, "
+"they cannot be selected in the item edit page, and will be deleted once you "
+"save the item."
+msgstr "不在词汇表中的现有文本将会被保留；但是，在条目编辑页面它们不能被选择，并且当你保存条目时会被删除。"
+
+#: views/admin/index/index.php:70
+msgid "Add/Edit Vocabulary"
+msgstr "增添/编辑词汇表"

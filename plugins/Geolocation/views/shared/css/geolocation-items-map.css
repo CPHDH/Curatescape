@@ -1,0 +1,86 @@
+.geolocation-map {
+    line-height: normal;
+}
+
+#geolocation-browse {
+    clear: both;
+    overflow: hidden;
+    margin-bottom: 1em;
+}
+
+#map_browse {
+    height: 436px; 
+}
+
+#map-links ul {
+    margin-left:0;
+    padding: 0;
+}
+
+#map-links li {
+    overflow:hidden; 
+    width: 100% !important;
+    display: inline-block;
+    border-radius: 3px;
+    padding: 5px;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+}
+    
+#map-links {
+    padding: 10px 0 10px 0;
+}
+
+#map-links li a {
+    display:block;
+    text-decoration:none; 
+    border-bottom: 0 !important;
+}
+
+#map-links h2:first-child {
+    margin-top: 0 !important;
+}
+
+/* The map for the items page needs a bit of styling on it */
+#address_balloon dt {
+    font-weight: bold;
+}
+#address_balloon {
+    width: 100px;
+}
+
+div.map-notification {
+    display:block;
+    border: 1px dotted #ccc;
+    text-align:center;
+    font-size: 2em;
+}
+
+@media screen and (min-width:768px) {
+
+    #map-links {
+        padding: 0 10px 10px 10px;
+        -moz-box-sizing: border-box !important;
+        box-sizing: border-box !important;
+        height: 436px;
+        width: 30%;
+        float: left;
+        overflow-y: auto;
+        margin-bottom: 0 !important;
+    }
+
+    #map-links ul {
+        margin: 0;
+        padding: 0;
+    }
+
+    #map-links li {
+        overflow: hidden;
+    }
+
+    #map_browse { 
+        float:left;
+        width:70%;
+        margin-bottom: 0 !important;
+    }
+}

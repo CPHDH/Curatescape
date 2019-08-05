@@ -1,0 +1,116 @@
+# Translation for the Simple Vocab plugin for Omeka.
+# Copyright (C) 2012 Roy Rosenzweig Center for History and New Media
+# This file is distributed under the same license as the Omeka package.
+# 
+# Translators:
+# Rubén Alcaraz Martínez <rubenalcarazmartinez@gmail.com>, 2013
+msgid ""
+msgstr ""
+"Project-Id-Version: Omeka\n"
+"Report-Msgid-Bugs-To: http://github.com/omeka/plugin-SimpleVocab/issues\n"
+"POT-Creation-Date: 2012-11-28 21:49-0500\n"
+"PO-Revision-Date: 2017-09-19 16:11+0000\n"
+"Last-Translator: Rubén Alcaraz Martínez <rubenalcarazmartinez@gmail.com>\n"
+"Language-Team: Spanish (http://www.transifex.com/omeka/omeka/language/es/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: es\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: SimpleVocabPlugin.php:80 views/admin/index/index.php:2
+msgid "Simple Vocab"
+msgstr "Simple Vocab"
+
+#: controllers/IndexController.php:57
+msgid "Successfully deleted the element's vocabulary terms."
+msgstr "Los términos del vocabulario del elemento se han borrado correctamente."
+
+#: controllers/IndexController.php:61
+msgid "Successfully edited the element's vocabulary terms."
+msgstr "Los términos del vocabulario del elemento se han editado correctamente."
+
+#: controllers/IndexController.php:72
+msgid "Successfully added the element's vocabulary terms."
+msgstr "Los términos del vocabulario del elemento se han añadido correctamente."
+
+#: controllers/IndexController.php:113
+msgid "Not in vocabulary."
+msgstr "No se encuentra en el vocabulario."
+
+#: controllers/IndexController.php:114
+msgid "Long text."
+msgstr "Text demasiado largo."
+
+#: controllers/IndexController.php:115
+msgid "Contains newlines."
+msgstr "Contiene saltos de línea."
+
+#: views/admin/index/element-texts.ajax.php:2
+msgid "No texts for the selected element exist in Omeka."
+msgstr "No hay valores existentes en Omeka para el elemento seleccionado."
+
+#: views/admin/index/element-texts.ajax.php:6
+msgid "Count"
+msgstr "Recuento"
+
+#: views/admin/index/element-texts.ajax.php:7
+msgid "Warnings"
+msgstr "Advertencias"
+
+#: views/admin/index/element-texts.ajax.php:8
+msgid "Text"
+msgstr "Texto"
+
+#: views/admin/index/index.php:34
+msgid "Element"
+msgstr "Elemento"
+
+#: views/admin/index/index.php:38
+msgid ""
+"Select an element to manage its custom vocabulary. Elements with a custom "
+"vocabulary are marked with an asterisk (*)."
+msgstr "Selecciona un elemento para gestionar su vocabulario personalizado. Los elementos con un vocabulario personalizado están marcados con un asterisco (*)."
+
+#: views/admin/index/index.php:44
+msgid "Vocabulary Terms"
+msgstr "Términos del vocabulario"
+
+#: views/admin/index/index.php:47
+msgid ""
+"Enter the custom vocabulary terms for this element, one per line. To delete "
+"the vocabulary, simply remove the terms and submit this form."
+msgstr "Añade los términos del vocabulario personalizado para este elemento, uno por línea. Para borrar el vocabulario basta con borrar los términos y guardar este formulario."
+
+#: views/admin/index/index.php:52
+#, php-format
+msgid ""
+"%sClick here%s to display a list of texts for the selected element that "
+"currently exist in Omeka. You may use this list as a reference to build a "
+"vocabulary, but be aware of some caveats:"
+msgstr "%sPulsa aquí%s para mostrar la lista de textos para el elemento seleccionado que actualmente constan en Omeka. Puedes utilizar esta lista como referencia para construir el vocabulario. No obstante, ten en cuenta que:"
+
+#: views/admin/index/index.php:58
+msgid "Vocabulary terms must not contain newlines (line breaks)."
+msgstr "Los términos del vocabulario no deben contener más de una línea (sin saltos de línea)."
+
+#: views/admin/index/index.php:59
+msgid ""
+"Vocabulary terms are typically short and concise. If your existing texts are"
+" otherwise, avoid using a controlled vocabulary for this element."
+msgstr "Los términos de un vocabulario suelen ser cortos y concisos. Si los valores de esta campo no lo son, descarta utilizar un vocabulario controlado para este elemento."
+
+#: views/admin/index/index.php:62
+msgid "Vocabulary terms must be identical to their corresponding texts."
+msgstr "Los términos del vocabulario deben ser idénticos a los valores del campo correspondiente."
+
+#: views/admin/index/index.php:63
+msgid ""
+"Existing texts that are not in the vocabulary will be preserved — however, "
+"they cannot be selected in the item edit page, and will be deleted once you "
+"save the item."
+msgstr "Los valores existentes de cada elemento no incluidos en el vocabulario se mantendrán, pero no podrán ser seleccionados en la página de edición del elemento y erán borrados en el momento en que se guarde dicho elemento."
+
+#: views/admin/index/index.php:70
+msgid "Add/Edit Vocabulary"
+msgstr "Añadir/Editar vocabulario"

@@ -1,0 +1,202 @@
+# Translation for the Simple Pages plugin for Omeka.
+# Copyright (C) 2011 Roy Rosenzweig Center for History and New Media
+# This file is distributed under the same license as the Omeka package.
+# 
+# Translators:
+# Cédric Valmary <cvalmary@yahoo.fr>, 2016
+# Julien Sicot <julien.sicot@gmail.com>, 2012
+# rcheno <remi.cheno@ideo-cairo.org>, 2014
+# Stéphane Loret <stephane.loret@univ-nantes.fr>, 2012
+# Thierry Pasquier <thierry.pasquier@emf.ccsti.eu>, 2012-2013
+msgid ""
+msgstr ""
+"Project-Id-Version: Omeka\n"
+"Report-Msgid-Bugs-To: http://github.com/omeka/plugin-SimplePages/issues\n"
+"POT-Creation-Date: 2012-01-09 21:49-0500\n"
+"PO-Revision-Date: 2018-05-02 15:01+0000\n"
+"Last-Translator: John Flatness <john@zerocrates.org>\n"
+"Language-Team: Occitan (post 1500) (http://www.transifex.com/omeka/omeka/language/oc/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: oc\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: SimplePagesPlugin.php:246
+msgid "Simple Pages"
+msgstr "Simple Pages"
+
+#: SimplePagesPlugin.php:272
+msgid "Simple Page"
+msgstr "Simple Page"
+
+#: controllers/IndexController.php:67
+msgid "Name and heading for the page (required)"
+msgstr "Nom e entèsta de la pagina (requesit)"
+
+#: controllers/IndexController.php:77 views/admin/index/browse-list.php:6
+msgid "Slug"
+msgstr "Identificant "
+
+#: controllers/IndexController.php:79
+msgid ""
+"The slug is the part of the URL for this page. A slug will be created "
+"automatically from the title if one is not entered. Letters, numbers, "
+"underscores, dashes, and forward slashes are allowed."
+msgstr "L'identificant es la partida pròpria a aquesta pagina de son URL. Se es pas sasit, l'identificant serà creat automaticament a partir del títol. Las letras, las chifras, los jonhents e las barras oblicas son autorizats."
+
+#: controllers/IndexController.php:93
+msgid "Use HTML editor?"
+msgstr "Utilizar un editor HTML ?"
+
+#: controllers/IndexController.php:95
+msgid "Check this to add an HTML editor bar for easily creating HTML."
+msgstr "Marcatz aicí per apondre una barra d'edicion HTML per facilitar la creacion d'un còdi HTML."
+
+#: controllers/IndexController.php:106
+msgid "Text"
+msgstr "Tèxte"
+
+#: controllers/IndexController.php:108
+msgid ""
+"Add content for page. This field supports shortcodes. For a list of "
+"available shortcodes, refer to the <a target=_blank "
+"href=\"http://omeka.org/codex/Shortcodes\">Omeka Codex</a>."
+msgstr "Apondètz un contengut a aquesta pagina. Lo camp accèpta los còdis corts. Per una lista dels còdis corts acceptats, referissètz-vos al <a target=_blank href=\"http://omeka.org/codex/Shortcodes\">Codex d'Omeka</a>."
+
+#: controllers/IndexController.php:119
+msgid "Parent"
+msgstr "Parent"
+
+#: controllers/IndexController.php:120
+msgid "The parent page"
+msgstr "Pagina parenta"
+
+#: controllers/IndexController.php:128
+msgid "Order"
+msgstr "Òrdre"
+
+#: controllers/IndexController.php:130
+msgid "The order of the page relative to the other pages with the same parent"
+msgstr "L'òrdre de la pagina relativament a las paginas que possedisson la meteissa pagina parenta"
+
+#: controllers/IndexController.php:142
+msgid "Publish this page?"
+msgstr "Publicar aquesta pagina ?"
+
+#: controllers/IndexController.php:143
+msgid "Checking this box will make the page public"
+msgstr "Marcar aquesta casa rendrà la pagina publica"
+
+#: controllers/IndexController.php:171
+#, php-format
+msgid "The page \"%s\" has been added."
+msgstr "La pagina \"%s\" es estada aponduda."
+
+#: controllers/IndexController.php:173
+#, php-format
+msgid "The page \"%s\" has been edited."
+msgstr "La pagina \"%s\" es estada modificada."
+
+#: controllers/IndexController.php:188
+#, php-format
+msgid "The page \"%s\" has been deleted."
+msgstr "La pagina \"%s\" es estada suprimida."
+
+#: helpers/SimplePageFunctions.php:139
+msgid "Home"
+msgstr "Acuèlh"
+
+#: helpers/SimplePageFunctions.php:184
+msgid "Main Page (No Parent)"
+msgstr "Pagina raiç (sens parent)"
+
+#: models/SimplePagesPage.php:61
+msgid "The page must be given a title."
+msgstr "La pagina deu possedir un títol."
+
+#: models/SimplePagesPage.php:65
+msgid "The title for your page must be 255 characters or less."
+msgstr "Lo títol de vòstra pagina deu pas depassar 255 caractèrs."
+
+#: models/SimplePagesPage.php:69
+msgid "The title is already in use by another page. Please choose another."
+msgstr "Aqueste títol es ja estat utilizat per una autra pagina. Mercé de ne causir un autre."
+
+#: models/SimplePagesPage.php:73
+msgid "The page must be given a valid slug."
+msgstr "La pagina deu aver un identificant valid."
+
+#: models/SimplePagesPage.php:77
+msgid "The slug for your page must not be a forward slash."
+msgstr "L'identificant de vòstra pagina se pòt pas reduire a una barra oblica."
+
+#: models/SimplePagesPage.php:81
+msgid "The slug for your page must be 255 characters or less."
+msgstr "L'identificant de vòstra pagina deu pas depassar 255 caractèrs."
+
+#: models/SimplePagesPage.php:85
+msgid "The slug is already in use by another page. Please choose another."
+msgstr "Aqueste identificant es estat utilizat per una autra pagina. Mercé de ne causir un autre."
+
+#: models/SimplePagesPage.php:89
+msgid "The order must be an integer greater than or equal to 0."
+msgstr "Lo reng deu èsser un nombre entièr egal o superior a 0."
+
+#: views/admin/index/add.php:6
+msgid "Simple Pages | Add Page"
+msgstr "Simple Pages | Apondre una pagina"
+
+#: views/admin/index/browse-hierarchy-page.php:16
+#: views/admin/index/browse-list.php:33
+#, php-format
+msgid "<strong>%1$s</strong> on %2$s"
+msgstr "<strong>%1$s</strong> lo %2$s"
+
+#: views/admin/index/browse-hierarchy-page.php:20
+msgid "Published"
+msgstr "Publicat"
+
+#: views/admin/index/browse-hierarchy-page.php:20
+msgid "Not Published"
+msgstr "Pas publicat"
+
+#: views/admin/index/browse-list.php:7
+msgid "Last Modified"
+msgstr "Darrièra modificacion"
+
+#: views/admin/index/browse.php:3
+msgid "Simple Pages | Browse"
+msgstr "Simple Page | Percórrer"
+
+#: views/admin/index/browse.php:9
+msgid "List View"
+msgstr "Vista en lista"
+
+#: views/admin/index/browse.php:12
+msgid "Hierarchy View"
+msgstr "Vista ierarquica"
+
+#: views/admin/index/browse.php:17
+msgid "Add a Page"
+msgstr "Apondre una pagina"
+
+#: views/admin/index/browse.php:19
+msgid "There are no pages."
+msgstr "I a pas de pagina."
+
+#: views/admin/index/browse.php:19
+msgid "Add a page."
+msgstr "Apondre una pagina."
+
+#: views/admin/index/edit.php:6
+#, php-format
+msgid "Simple Pages | Edit \"%s\""
+msgstr "Simple Pages | Editar \"%s\""
+
+#: views/admin/index/edit.php:11
+#, php-format
+msgid ""
+"This page was created by <strong>%1$s</strong> on %2$s, and last modified by"
+" <strong>%3$s</strong> on %4$s."
+msgstr "Aquesta pagina es estada creada per <strong>%1$s</strong> lo %2$s, e la darrièra modificacion es estada efectuada per <strong>%3$s</strong> lo %4$s."

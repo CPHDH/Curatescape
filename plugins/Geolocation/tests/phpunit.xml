@@ -1,0 +1,7 @@
+<phpunit bootstrap="bootstrap.php"
+         convertErrorsToExceptions="true"
+         convertWarningsToExceptions="true">
+    <testsuite name="Geolocation">
+        <directory>cases</directory>
+    </testsuite>
+</phpunit>

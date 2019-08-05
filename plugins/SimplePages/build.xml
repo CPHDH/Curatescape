@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="SimplePages" basedir=".">
+    <property name="lang.dir" location="languages" />
+    <property name="core.pot" location="../../application/languages/Omeka.pot" />
+    <target name="update-pot" description="Update the translation template.">
+        <property name="pot.file" location="${lang.dir}/template.pot"/>
+        <property name="pot.base" location="${lang.dir}/template.base.pot"/>
+        <tempfile property="pot.temp" suffix=".pot"/>
+        <tempfile property="pot.duplicates" suffix="-duplicates.pot" />
+        <copy file="${pot.base}" tofile="${pot.temp}"/>
+        <apply executable="xgettext" relative="true" parallel="true" verbose="true">
+            <arg value="--language=php"/>
+            <arg value="--from-code=utf-8"/>
+            <arg value="--keyword=__"/>
+            <arg value="--flag=__:1:pass-php-format"/>
+            <arg value="--add-comments=/"/>
+            <arg value="--omit-header"/>
+            <arg value="--join-existing"/>
+            <arg value="-o"/>
+            <arg file="${pot.temp}"/>
+            <fileset dir="." includes="**/*.php **/*.phtml"
+                excludes="tests/"/>
+        </apply>
+        <exec executable="msgcomm">
+            <arg value="--omit-header" />
+            <arg value="-o" />
+            <arg file="${pot.duplicates}" />
+            <arg file="${pot.temp}" />
+            <arg file="${core.pot}" />
+        </exec>
+        <exec executable="msgcomm">
+            <arg value="--unique" />
+            <arg value="-o" />
+            <arg file="${pot.temp}" />
+            <arg file="${pot.temp}" />
+            <arg file="${pot.duplicates}" />
+        </exec>
+        <move file="${pot.temp}" tofile="${pot.file}"/>
+        <delete file="${pot.duplicates}" quiet="true" />
+    </target>
+
+    <target name="build-mo" description="Build the MO translation files.">
+        <apply executable="msgfmt" dest="${lang.dir}" verbose="true">
+            <arg value="-o"/>
+            <targetfile />
+            <srcfile />
+            <fileset dir="${lang.dir}" includes="*.po"/>
+            <mapper type="glob" from="*.po" to="*.mo"/>
+        </apply>
+    </target>
+</project>

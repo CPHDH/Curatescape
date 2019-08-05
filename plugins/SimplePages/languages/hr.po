@@ -1,0 +1,199 @@
+# Translation for the Simple Pages plugin for Omeka.
+# Copyright (C) 2011 Roy Rosenzweig Center for History and New Media
+# This file is distributed under the same license as the Omeka package.
+# 
+# Translators:
+# rijekateam <digitalizacija@gkri.hr>, 2013-2014
+# rijekateam <digitalizacija@gkri.hr>, 2012
+msgid ""
+msgstr ""
+"Project-Id-Version: Omeka\n"
+"Report-Msgid-Bugs-To: http://github.com/omeka/plugin-SimplePages/issues\n"
+"POT-Creation-Date: 2012-01-09 21:49-0500\n"
+"PO-Revision-Date: 2018-05-02 15:01+0000\n"
+"Last-Translator: John Flatness <john@zerocrates.org>\n"
+"Language-Team: Croatian (http://www.transifex.com/omeka/omeka/language/hr/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: hr\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+
+#: SimplePagesPlugin.php:246
+msgid "Simple Pages"
+msgstr "Simple Pages"
+
+#: SimplePagesPlugin.php:272
+msgid "Simple Page"
+msgstr "Jednostavna stranica"
+
+#: controllers/IndexController.php:67
+msgid "Name and heading for the page (required)"
+msgstr "Naziv i naslov stranice (obavezno)"
+
+#: controllers/IndexController.php:77 views/admin/index/browse-list.php:6
+msgid "Slug"
+msgstr "Slug"
+
+#: controllers/IndexController.php:79
+msgid ""
+"The slug is the part of the URL for this page. A slug will be created "
+"automatically from the title if one is not entered. Letters, numbers, "
+"underscores, dashes, and forward slashes are allowed."
+msgstr "Slug je dio URL-a ove stranice. Ukoliko ništa ne upišete, slug se generira automatski iz naslova. Dopušteni znakovi: slova, brojevi, podcrtice, crtice i kose crte."
+
+#: controllers/IndexController.php:93
+msgid "Use HTML editor?"
+msgstr "Koristi HTML urednik?"
+
+#: controllers/IndexController.php:95
+msgid "Check this to add an HTML editor bar for easily creating HTML."
+msgstr "Označite ovu kućicu ako želite dodati alatnu traku HTML uređivača za jednostavno kreiranje HTML-a."
+
+#: controllers/IndexController.php:106
+msgid "Text"
+msgstr "Tekst"
+
+#: controllers/IndexController.php:108
+msgid ""
+"Add content for page. This field supports shortcodes. For a list of "
+"available shortcodes, refer to the <a target=_blank "
+"href=\"http://omeka.org/codex/Shortcodes\">Omeka Codex</a>."
+msgstr "Dodavanje sadržaja stranici. Ovo polje podržava kratke kodove. Popis dostupnih kratkih kodova potražite u <a target=_blank href=\"http://omeka.org/codex/Shortcodes\">Omeka Codexu</a>."
+
+#: controllers/IndexController.php:119
+msgid "Parent"
+msgstr "Nadređena stranica"
+
+#: controllers/IndexController.php:120
+msgid "The parent page"
+msgstr "Hijerarhijski nadređena stranica. "
+
+#: controllers/IndexController.php:128
+msgid "Order"
+msgstr "Redoslijed"
+
+#: controllers/IndexController.php:130
+msgid "The order of the page relative to the other pages with the same parent"
+msgstr "Redoslijed stranice u odnosu na druge stranice s istom nadređenom stranicom. "
+
+#: controllers/IndexController.php:142
+msgid "Publish this page?"
+msgstr "Objavi ovu stranicu?"
+
+#: controllers/IndexController.php:143
+msgid "Checking this box will make the page public"
+msgstr "Označite ovu kućicu da objavite stranicu"
+
+#: controllers/IndexController.php:171
+#, php-format
+msgid "The page \"%s\" has been added."
+msgstr "Stranica \"%s\" je dodana."
+
+#: controllers/IndexController.php:173
+#, php-format
+msgid "The page \"%s\" has been edited."
+msgstr "Stranica \"%s\" je uređena."
+
+#: controllers/IndexController.php:188
+#, php-format
+msgid "The page \"%s\" has been deleted."
+msgstr "Stranica \"%s\" je obrisana."
+
+#: helpers/SimplePageFunctions.php:139
+msgid "Home"
+msgstr "Home"
+
+#: helpers/SimplePageFunctions.php:184
+msgid "Main Page (No Parent)"
+msgstr "Glavna stranica (nema nadređene)"
+
+#: models/SimplePagesPage.php:61
+msgid "The page must be given a title."
+msgstr "Stranica mora imati naslov."
+
+#: models/SimplePagesPage.php:65
+msgid "The title for your page must be 255 characters or less."
+msgstr "Naslov vaše stranice smije sadržavati najviše 255 znakova. "
+
+#: models/SimplePagesPage.php:69
+msgid "The title is already in use by another page. Please choose another."
+msgstr "Naslov se već koristi na drugoj stranici. Molimo izaberite drugi."
+
+#: models/SimplePagesPage.php:73
+msgid "The page must be given a valid slug."
+msgstr "Stranica mora imati valjani slug."
+
+#: models/SimplePagesPage.php:77
+msgid "The slug for your page must not be a forward slash."
+msgstr "Slug vaše stranice ne smije biti kosa crta."
+
+#: models/SimplePagesPage.php:81
+msgid "The slug for your page must be 255 characters or less."
+msgstr "Slug vaše stranice smije imati najviše 255 znakova. "
+
+#: models/SimplePagesPage.php:85
+msgid "The slug is already in use by another page. Please choose another."
+msgstr "Slug se već koristi na drugoj stranici. Molimo odaberite novi slug. "
+
+#: models/SimplePagesPage.php:89
+msgid "The order must be an integer greater than or equal to 0."
+msgstr "Redni broj mora biti cijeli broj veći od ili jednak 0. "
+
+#: views/admin/index/add.php:6
+msgid "Simple Pages | Add Page"
+msgstr "Jednostavne stranice | Dodaj stranicu"
+
+#: views/admin/index/browse-hierarchy-page.php:16
+#: views/admin/index/browse-list.php:33
+#, php-format
+msgid "<strong>%1$s</strong> on %2$s"
+msgstr "<strong>%1$s</strong> on %2$s"
+
+#: views/admin/index/browse-hierarchy-page.php:20
+msgid "Published"
+msgstr "Objavljeno"
+
+#: views/admin/index/browse-hierarchy-page.php:20
+msgid "Not Published"
+msgstr "Nije objavljeno"
+
+#: views/admin/index/browse-list.php:7
+msgid "Last Modified"
+msgstr "Posljednje uređivanje"
+
+#: views/admin/index/browse.php:3
+msgid "Simple Pages | Browse"
+msgstr "Jednostavne stranice | Pregledaj"
+
+#: views/admin/index/browse.php:9
+msgid "List View"
+msgstr "Popis"
+
+#: views/admin/index/browse.php:12
+msgid "Hierarchy View"
+msgstr "Hijerahijski prikaz"
+
+#: views/admin/index/browse.php:17
+msgid "Add a Page"
+msgstr "Dodaj stranicu"
+
+#: views/admin/index/browse.php:19
+msgid "There are no pages."
+msgstr "Nema stranica."
+
+#: views/admin/index/browse.php:19
+msgid "Add a page."
+msgstr "Dodaj stranicu."
+
+#: views/admin/index/edit.php:6
+#, php-format
+msgid "Simple Pages | Edit \"%s\""
+msgstr "Jednostavne stranice | Uredi \"%s\""
+
+#: views/admin/index/edit.php:11
+#, php-format
+msgid ""
+"This page was created by <strong>%1$s</strong> on %2$s, and last modified by"
+" <strong>%3$s</strong> on %4$s."
+msgstr "Stranicu izradio <strong>%1$s</strong>  %2$s, a posljednji put modificirao <strong>%3$s</strong> %4$s."

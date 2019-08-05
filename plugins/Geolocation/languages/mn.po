@@ -1,0 +1,405 @@
+# Translation for the Geolocation plugin for Omeka.
+# Copyright (C) 2011 Roy Rosenzweig Center for History and New Media
+# This file is distributed under the same license as the Omeka package.
+# 
+# Translators:
+# John Flatness <john@zerocrates.org>, 2016
+# Khaidav T. <khaidaw@yahoo.com>, 2016
+msgid ""
+msgstr ""
+"Project-Id-Version: Omeka\n"
+"Report-Msgid-Bugs-To: http://github.com/omeka/plugin-Geolocation/issues\n"
+"POT-Creation-Date: 2012-01-09 21:49-0500\n"
+"PO-Revision-Date: 2018-06-19 16:54+0000\n"
+"Last-Translator: John Flatness <john@zerocrates.org>\n"
+"Language-Team: Mongolian (http://www.transifex.com/omeka/omeka/language/mn/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: mn\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: GeolocationPlugin.php:250 GeolocationPlugin.php:268
+msgid "Geolocation"
+msgstr "Газар зүйн байршил"
+
+#: GeolocationPlugin.php:379
+msgid "kilometers"
+msgstr "километр"
+
+#: GeolocationPlugin.php:381
+msgid "miles"
+msgstr "мийл"
+
+#: GeolocationPlugin.php:383
+#, php-format
+msgid "within %1$s %2$s of \"%3$s\""
+msgstr "\"%3$s\" -ны хамт %1$s %2$s "
+
+#: GeolocationPlugin.php:403 GeolocationPlugin.php:409
+msgid "Map"
+msgstr "Газрын зураг"
+
+#: GeolocationPlugin.php:442
+msgid "Browse Map"
+msgstr "Газрын зургийг гүйлгэж харах"
+
+#: GeolocationPlugin.php:497
+#, php-format
+msgid "Find A Geographic Location For The %s:"
+msgstr "Газарзүйн байршлыг хайх %s:"
+
+#: GeolocationPlugin.php:509
+msgid "Geolocation Map"
+msgstr "Газарзүйн зураг"
+
+#: GeolocationPlugin.php:510
+msgid "Show attached items on a map"
+msgstr "Газрын зурагт хавсаргасан мэдээллийг харуулах"
+
+#: GeolocationPlugin.php:609
+msgid "Find a Location by Address:"
+msgstr "Байршлыг хаягаар хайх:"
+
+#: config_form.php:3
+msgid "General Settings"
+msgstr "Ерөнхий тохиргоо"
+
+#: config_form.php:7
+msgid "Default Latitude"
+msgstr "Үндсэн өргөрөг"
+
+#: config_form.php:10
+msgid ""
+"Latitude of the map's initial center point, in degrees. Must be between -90 "
+"and 90."
+msgstr "Газрын зургийн өргөрөгийн цэг, гардусаар. Энэ нь -90 ба 90 хооронд байдаг."
+
+#: config_form.php:17
+msgid "Default Longitude"
+msgstr "Үндсэн уртраг"
+
+#: config_form.php:20
+msgid ""
+"Longitude of the map's initial center point, in degrees. Must be between "
+"-180 and 180."
+msgstr "Газрын зургийн уртрагийн цэг, гардусаар. Энэ нь -180 ба 180 хооронд байдаг."
+
+#: config_form.php:27
+msgid "Default Zoom Level"
+msgstr "Харагдах үндсэн хэмжээ"
+
+#: config_form.php:30
+msgid ""
+"An integer greater than or equal to 0, where 0 represents the most zoomed "
+"out scale."
+msgstr "0 болон түүнээс их тоо, 0 -с их тоо нь томруулсан хэмжээг илэрхийлнэ."
+
+#: config_form.php:37
+msgid "Base Map"
+msgstr ""
+
+#: config_form.php:40
+msgid "The type of map to display"
+msgstr "Дэлгэцэнд харагдах газрын зургийн төрөл"
+
+#: config_form.php:43
+msgid "OpenStreetMap"
+msgstr ""
+
+#: config_form.php:44
+msgid "Standard"
+msgstr ""
+
+#: config_form.php:45
+msgid "Grayscale"
+msgstr ""
+
+#: config_form.php:46
+msgid "Humanitarian"
+msgstr ""
+
+#: config_form.php:48 config_form.php:49
+msgid "OpenTopoMap"
+msgstr ""
+
+#: config_form.php:51
+msgid "Stamen"
+msgstr ""
+
+#: config_form.php:52
+msgid "Toner"
+msgstr ""
+
+#: config_form.php:53
+msgid "Toner (background)"
+msgstr ""
+
+#: config_form.php:54
+msgid "Toner (lite)"
+msgstr ""
+
+#: config_form.php:55
+msgid "Watercolor"
+msgstr ""
+
+#: config_form.php:56
+msgid "Terrain"
+msgstr "Газар нутаг"
+
+#: config_form.php:57
+msgid "Terrain (background)"
+msgstr ""
+
+#: config_form.php:59
+msgid "Esri"
+msgstr ""
+
+#: config_form.php:60
+msgid "World Street Map"
+msgstr ""
+
+#: config_form.php:61
+msgid "DeLorme"
+msgstr ""
+
+#: config_form.php:62
+msgid "World Topographic Map"
+msgstr ""
+
+#: config_form.php:63
+msgid "World Imagery"
+msgstr ""
+
+#: config_form.php:64
+msgid "World Terrain"
+msgstr ""
+
+#: config_form.php:65
+msgid "World Shaded Relief"
+msgstr ""
+
+#: config_form.php:66
+msgid "World Physical Map"
+msgstr ""
+
+#: config_form.php:67
+msgid "Ocean Basemap"
+msgstr ""
+
+#: config_form.php:68
+msgid "National Geographic World Map"
+msgstr ""
+
+#: config_form.php:69
+msgid "Light Gray Canvas"
+msgstr ""
+
+#: config_form.php:71
+msgid "CartoDB"
+msgstr ""
+
+#: config_form.php:72
+msgid "Voyager"
+msgstr ""
+
+#: config_form.php:73
+msgid "Voyager (no labels)"
+msgstr ""
+
+#: config_form.php:74
+msgid "Positron"
+msgstr ""
+
+#: config_form.php:75
+msgid "Positron (no labels)"
+msgstr ""
+
+#: config_form.php:76
+msgid "Dark Matter"
+msgstr ""
+
+#: config_form.php:77
+msgid "Dark Matter (no labels)"
+msgstr ""
+
+#: config_form.php:79
+msgid "Mapbox"
+msgstr ""
+
+#: config_form.php:80
+msgid "Mapbox (see settings below)"
+msgstr ""
+
+#: config_form.php:89
+msgid "Mapbox Access Token"
+msgstr ""
+
+#: config_form.php:94
+#, php-format
+msgid ""
+"Mapbox access token. A token is required when Mapbox is selected as the "
+"basemap. Get your token at %s."
+msgstr ""
+
+#: config_form.php:105
+msgid "Mapbox Map ID"
+msgstr ""
+
+#: config_form.php:110
+msgid ""
+"Mapbox Map ID for the map to display as the basemap. The default "
+"\"mapbox.streets\" map will be used if nothing is entered here."
+msgstr ""
+
+#: config_form.php:119
+msgid "Browse Map Settings"
+msgstr "Газрын зургийн гүйлгэн харах тохиргоо"
+
+#: config_form.php:122
+msgid "Number of Locations Per Page"
+msgstr "Нэг хуудсанд харагдах газарзүйн байршлын тоо"
+
+#: config_form.php:125
+msgid "The number of locations displayed per page when browsing the map."
+msgstr "Газрын зургийг хархад нэг хуудсанд харагдах байршлын тоо"
+
+#: config_form.php:131
+msgid "Auto-fit to Locations"
+msgstr "Байршлын хэмжээг автоматаар тохируулах"
+
+#: config_form.php:135
+msgid ""
+"If checked, the default location and zoom settings will be ignored on the "
+"browse map. Instead, the map will automatically pan and zoom to fit the "
+"locations displayed on each page."
+msgstr "Үндсэн байршил болон томруулж харах тохиргоог шалгасан бол газрын зураг дээр тоймлож харахгүй байж болно.  Хуудас бүр дээр харагдах байршлыг газрын зураг автоматаар тохируулна."
+
+#: config_form.php:149
+msgid "Default Radius"
+msgstr "Үндсэн Радиус"
+
+#: config_form.php:152
+msgid ""
+"The size of the default radius to use on the items advanced search page. See"
+" below for whether to measure in miles or kilometers."
+msgstr "Нарийвчилсан хайлтын хуудсанд хэрэглэх радиусын үндсэн хэмжээ.\nМил эсвэл километрээр хэмжих эсэхийг доор харуулсан. "
+
+#: config_form.php:158
+msgid "Use metric distances"
+msgstr "Зайг метрээр хэмжих"
+
+#: config_form.php:161
+msgid "Use metric distances in proximity search."
+msgstr "Дөхүүлж хайх/prohimity/  хайлтын хэмжээсийг метрээр тохируулах"
+
+#: config_form.php:170
+msgid "Enable marker clustering"
+msgstr ""
+
+#: config_form.php:173
+msgid "Show close or overlapping markers as clusters."
+msgstr ""
+
+#: config_form.php:183
+msgid "Item Map Settings"
+msgstr "Мэдээллийг газрын зургийн тохиргоо"
+
+#: config_form.php:186
+msgid "Width for Item Map"
+msgstr "Мэдээллийн газрын зургийн өргөн"
+
+#: config_form.php:189
+msgid ""
+"The width of the map displayed on your items/show page. If left blank, the "
+"default width of 100% will be used."
+msgstr "Таны мэдээллүүд/харуулах хуудсанд харагдаж байгаа газрын зургийн өргөн. Хэрэв хоосон орхивол 100%-ийн  үндсэн өргөнөөр авна."
+
+#: config_form.php:196
+msgid "Height for Item Map"
+msgstr "Газрын зургийн өндөр"
+
+#: config_form.php:199
+msgid ""
+"The height of the map displayed on your items/show page. If left blank, the "
+"default height of 300px will be used."
+msgstr "Таны мэдээллүүд/харуулах хуудсанд харагдаж байгаа газрын зургийн өндөр. Хэрэв хоосон орхивол,  300px өндөртэй байна."
+
+#: config_form.php:206
+msgid "Map Integration"
+msgstr "Газрын зургийн нэгдэл"
+
+#: config_form.php:209
+msgid "Add Link to Map on Items/Browse Navigation"
+msgstr "Мэдээллүүд/Удирдлагыг Тоймлож харах хэсэгт байгаа газрын зурагт холбоос нэмэх"
+
+#: config_form.php:212
+msgid "Add a link to the items map on all the items/browse pages."
+msgstr "Бүх мэдээлэл/тоймлож харах хуудасны газрын зургийн мэдээлэлд холбоос нэмэх."
+
+#: config_form.php:222
+msgid "Add Map To Contribution Form"
+msgstr "Газрын зургийг дэмжин /хамтран/ ажиллагсадын формд нэмэх"
+
+#: config_form.php:225
+msgid ""
+"If the Contribution plugin is installed and activated, Geolocation  will add"
+" a geolocation map field to the contribution form to associate a location to"
+" a contributed item."
+msgstr "Хэрэв Хамтын ажиллагааны плагин суугаад идэвхжсэн бол Газарзүйн байршлыг формоор дамжуулан газарзүйн байршлын талбарт  мэдээлэлтэй холбож болно."
+
+#: models/Location.php:35
+msgid "Location requires an item ID."
+msgstr "Байршил нь мэдээллийн ID-г шаардана."
+
+#: models/Location.php:39
+msgid "Location requires a valid item ID."
+msgstr "Байршил нь мэдээллийн үнэн зөв ID-г шаардана."
+
+#: models/Location.php:44
+msgid "A location already exists for the provided item."
+msgstr "Энэ мэдээлэлд байршил тодорхойлогдсон байна."
+
+#: models/Location.php:47
+msgid "Location requires a latitude."
+msgstr "Байршил нь өргөрөг шаардана."
+
+#: models/Location.php:50
+msgid "Location requires a longitude."
+msgstr "Байршилд уртраг шаардлагатай."
+
+#: models/Location.php:53
+msgid "Location requires a zoom level."
+msgstr "Байршилд томруулж багасгах түвшин шаардлагатай. "
+
+#: views/admin/map/browse.php:4 views/public/map/browse.php:4
+msgid "Browse Items on the Map"
+msgstr "Газрын зураг дээр мэдээллүүдийг үзэх"
+
+#: views/admin/map/browse.php:4
+msgid "total"
+msgstr "нийт"
+
+#: views/admin/map/browse.php:13 views/public/map/browse.php:21
+msgid "Find An Item on the Map"
+msgstr "Мэдээллийг газрын зураг дээр хайх"
+
+#: views/helpers/GeolocationMapSingle.php:36
+msgid "This item has no location info associated with it."
+msgstr "Энэ мэдээлэлтэй холбоотой ямар нэг байршил алга."
+
+#: views/shared/map/advanced-search-partial.php:16
+msgid "Geographic Radius (kilometers)"
+msgstr "Газарзүйн радиус (километр)"
+
+#: views/shared/map/advanced-search-partial.php:18
+msgid "Geographic Radius (miles)"
+msgstr "Газарзүйн радиус (miles)"
+
+#: views/shared/map/advanced-search-partial.php:25
+msgid "Geographic Address"
+msgstr "Газарзүйн хаяг"
+
+#: views/shared/map/input-partial.php:17
+msgid "Find"
+msgstr "Хайх"

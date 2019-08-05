@@ -1,0 +1,117 @@
+# Translation for the Simple Vocab plugin for Omeka.
+# Copyright (C) 2012 Roy Rosenzweig Center for History and New Media
+# This file is distributed under the same license as the Omeka package.
+# 
+# Translators:
+# HadjaLSI <grebenkina007@mail.ru>, 2013
+# Mikhail Shvartsman <Shvar@rsl.ru>, 2014
+msgid ""
+msgstr ""
+"Project-Id-Version: Omeka\n"
+"Report-Msgid-Bugs-To: http://github.com/omeka/plugin-SimpleVocab/issues\n"
+"POT-Creation-Date: 2012-11-28 21:49-0500\n"
+"PO-Revision-Date: 2017-09-19 22:03+0000\n"
+"Last-Translator: Mikhail Shvartsman <Shvar@rsl.ru>\n"
+"Language-Team: Russian (http://www.transifex.com/omeka/omeka/language/ru/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ru\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);\n"
+
+#: SimpleVocabPlugin.php:80 views/admin/index/index.php:2
+msgid "Simple Vocab"
+msgstr "Обычный словарь"
+
+#: controllers/IndexController.php:57
+msgid "Successfully deleted the element's vocabulary terms."
+msgstr "Термин из словаря был успешно удалён."
+
+#: controllers/IndexController.php:61
+msgid "Successfully edited the element's vocabulary terms."
+msgstr "Словарный термин успешно отредактирован."
+
+#: controllers/IndexController.php:72
+msgid "Successfully added the element's vocabulary terms."
+msgstr "Словарный термин успешно добавлен."
+
+#: controllers/IndexController.php:113
+msgid "Not in vocabulary."
+msgstr "Такого нет в словаре."
+
+#: controllers/IndexController.php:114
+msgid "Long text."
+msgstr "Длинный текст."
+
+#: controllers/IndexController.php:115
+msgid "Contains newlines."
+msgstr "Содержит новые строки."
+
+#: views/admin/index/element-texts.ajax.php:2
+msgid "No texts for the selected element exist in Omeka."
+msgstr "Нет текста для выбранного элемента в ОМЕКЕ."
+
+#: views/admin/index/element-texts.ajax.php:6
+msgid "Count"
+msgstr "Подсчёт"
+
+#: views/admin/index/element-texts.ajax.php:7
+msgid "Warnings"
+msgstr "Предупреждения"
+
+#: views/admin/index/element-texts.ajax.php:8
+msgid "Text"
+msgstr "Текст"
+
+#: views/admin/index/index.php:34
+msgid "Element"
+msgstr "Элемент"
+
+#: views/admin/index/index.php:38
+msgid ""
+"Select an element to manage its custom vocabulary. Elements with a custom "
+"vocabulary are marked with an asterisk (*)."
+msgstr "Выберите элемент для управления пользовательским словарём. Элементы пользовательского словаря отмечены звёздочкой (*)"
+
+#: views/admin/index/index.php:44
+msgid "Vocabulary Terms"
+msgstr "Словарь терминов"
+
+#: views/admin/index/index.php:47
+msgid ""
+"Enter the custom vocabulary terms for this element, one per line. To delete "
+"the vocabulary, simply remove the terms and submit this form."
+msgstr "Зайдите в пользовательский словарь для данного элемента, по одному на каждой строке. Для удаления словаря, просто удалите термины и сделайте подтверждение. "
+
+#: views/admin/index/index.php:52
+#, php-format
+msgid ""
+"%sClick here%s to display a list of texts for the selected element that "
+"currently exist in Omeka. You may use this list as a reference to build a "
+"vocabulary, but be aware of some caveats:"
+msgstr "%sНажмите здесь%s для отображения списка текстов для выбранного элемента, существующего в ОМЕКЕ в данный момент. Вы можете использовать этот список как ссылку для создания словаря. Но будьте внимательны к некоторым предостережениям:"
+
+#: views/admin/index/index.php:58
+msgid "Vocabulary terms must not contain newlines (line breaks)."
+msgstr "Словарные термины не должны содержать красных строк (перевод строк)"
+
+#: views/admin/index/index.php:59
+msgid ""
+"Vocabulary terms are typically short and concise. If your existing texts are"
+" otherwise, avoid using a controlled vocabulary for this element."
+msgstr "Словарные термины обычно кратки и точны. Если ваши существующие тексты не отвечают данному требованию, то не используйте управляемый словарь для данного элемента. "
+
+#: views/admin/index/index.php:62
+msgid "Vocabulary terms must be identical to their corresponding texts."
+msgstr "Словарные термины должны быть идентичны содержанию соответствующим текстам. "
+
+#: views/admin/index/index.php:63
+msgid ""
+"Existing texts that are not in the vocabulary will be preserved — however, "
+"they cannot be selected in the item edit page, and will be deleted once you "
+"save the item."
+msgstr "Тексты, не входящие в словарь, будет сохранены - но, их невозможно будет выбрать в странице редактирования данного документа и будут удалены при попытке сохранить документ."
+
+#: views/admin/index/index.php:70
+msgid "Add/Edit Vocabulary"
+msgstr "Добавить/Редактировать словарь "

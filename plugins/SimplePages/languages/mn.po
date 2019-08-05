@@ -1,0 +1,198 @@
+# Translation for the Simple Pages plugin for Omeka.
+# Copyright (C) 2011 Roy Rosenzweig Center for History and New Media
+# This file is distributed under the same license as the Omeka package.
+# 
+# Translators:
+# Khaidav T. <khaidaw@yahoo.com>, 2016
+msgid ""
+msgstr ""
+"Project-Id-Version: Omeka\n"
+"Report-Msgid-Bugs-To: http://github.com/omeka/plugin-SimplePages/issues\n"
+"POT-Creation-Date: 2012-01-09 21:49-0500\n"
+"PO-Revision-Date: 2018-05-02 15:01+0000\n"
+"Last-Translator: John Flatness <john@zerocrates.org>\n"
+"Language-Team: Mongolian (http://www.transifex.com/omeka/omeka/language/mn/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: mn\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: SimplePagesPlugin.php:246
+msgid "Simple Pages"
+msgstr "Энгийн хуудсууд"
+
+#: SimplePagesPlugin.php:272
+msgid "Simple Page"
+msgstr "Энгийн хуудас"
+
+#: controllers/IndexController.php:67
+msgid "Name and heading for the page (required)"
+msgstr "Хуудасны нэр болон толгойн гарчиг  (шаардлагатай)"
+
+#: controllers/IndexController.php:77 views/admin/index/browse-list.php:6
+msgid "Slug"
+msgstr "Слаг /Slug/"
+
+#: controllers/IndexController.php:79
+msgid ""
+"The slug is the part of the URL for this page. A slug will be created "
+"automatically from the title if one is not entered. Letters, numbers, "
+"underscores, dashes, and forward slashes are allowed."
+msgstr "Слаг /Slug/ бол тухайн хуудасны URL хаягийн бүрэлдэхүүн хэсэг юм. Хэрэв та гараар үүсгээгүй бол слаг нь автоматаар үүсдэг.  Үсэг, тоо, доогуур зураас, ташуу зураас, дундуур зураасыг зөвшөөрнө."
+
+#: controllers/IndexController.php:93
+msgid "Use HTML editor?"
+msgstr "HTML  засварлагч хэрэглэх үү?"
+
+#: controllers/IndexController.php:95
+msgid "Check this to add an HTML editor bar for easily creating HTML."
+msgstr "HTML хялбар үүсгэх мөрийг засварлагчийн мөрөнд нэмэхийг шалгах.\nCheck this to add an HTML editor bar for easily creating HTML."
+
+#: controllers/IndexController.php:106
+msgid "Text"
+msgstr "Текст"
+
+#: controllers/IndexController.php:108
+msgid ""
+"Add content for page. This field supports shortcodes. For a list of "
+"available shortcodes, refer to the <a target=_blank "
+"href=\"http://omeka.org/codex/Shortcodes\">Omeka Codex</a>."
+msgstr "Хуудсанд агуулга нэмэх. Талбар нь тусгай коод /shortcode/ дэмжинэ. Ашиглаж болох тусгай коодын жагсаалт <a target=_blank href=\"http://omeka.org/codex/Shortcodes\">Omeka Codex</a>."
+
+#: controllers/IndexController.php:119
+msgid "Parent"
+msgstr "Дээд түвшний"
+
+#: controllers/IndexController.php:120
+msgid "The parent page"
+msgstr "Дээд түвшний хуудас"
+
+#: controllers/IndexController.php:128
+msgid "Order"
+msgstr "Эрэмблэх"
+
+#: controllers/IndexController.php:130
+msgid "The order of the page relative to the other pages with the same parent"
+msgstr "Ижил дээд түвшний бусад хуудсууд руу хамааралтай хуудасны эрэмблэлт"
+
+#: controllers/IndexController.php:142
+msgid "Publish this page?"
+msgstr "Энэ хуудсыг нийтлэх үү?"
+
+#: controllers/IndexController.php:143
+msgid "Checking this box will make the page public"
+msgstr "Энэ сонголтыг хийснээр хуудсыг нийтэд харуулах болно"
+
+#: controllers/IndexController.php:171
+#, php-format
+msgid "The page \"%s\" has been added."
+msgstr " \"%s\" хуудас нэмэгдсэн байна."
+
+#: controllers/IndexController.php:173
+#, php-format
+msgid "The page \"%s\" has been edited."
+msgstr " \"%s\" хуудас засварлагдсан байна."
+
+#: controllers/IndexController.php:188
+#, php-format
+msgid "The page \"%s\" has been deleted."
+msgstr " \"%s\" хуудас устгагдсан байна."
+
+#: helpers/SimplePageFunctions.php:139
+msgid "Home"
+msgstr "Нүүр хуудас"
+
+#: helpers/SimplePageFunctions.php:184
+msgid "Main Page (No Parent)"
+msgstr "Үндсэн хуудас (Дээд түвшний биш)"
+
+#: models/SimplePagesPage.php:61
+msgid "The page must be given a title."
+msgstr "Хуудас нэртэй байх шаардлагатай"
+
+#: models/SimplePagesPage.php:65
+msgid "The title for your page must be 255 characters or less."
+msgstr "Хуудасны нэр 255  хүртэлх тэмдэгтэд багтах ёстой"
+
+#: models/SimplePagesPage.php:69
+msgid "The title is already in use by another page. Please choose another."
+msgstr "Энэ нэрийг өөр хуудсанд хэрэглэж байна. Өөр нэр сонгоно уу."
+
+#: models/SimplePagesPage.php:73
+msgid "The page must be given a valid slug."
+msgstr "Хуудсанд зөв Слаг өгөгдсөн байх ёстой."
+
+#: models/SimplePagesPage.php:77
+msgid "The slug for your page must not be a forward slash."
+msgstr "Таны хуудасны Слаг нь /slug/ урагшаа ташуу зураасгүй байх ёстой."
+
+#: models/SimplePagesPage.php:81
+msgid "The slug for your page must be 255 characters or less."
+msgstr "Хуудасны слаг /slug/ 255 хүртэлх тэмдэгтэд багтах ёстой."
+
+#: models/SimplePagesPage.php:85
+msgid "The slug is already in use by another page. Please choose another."
+msgstr "Энэ слагийг /slug/ өөр хуудсанд хэрэглэж байна. Өөр слаг сонгоно уу."
+
+#: models/SimplePagesPage.php:89
+msgid "The order must be an integer greater than or equal to 0."
+msgstr "Эрэмбэлхэд /order/ 0 эсвэл түүнээс их бүхэл тоо байх ёстой."
+
+#: views/admin/index/add.php:6
+msgid "Simple Pages | Add Page"
+msgstr "Энгийн хуудсууд | Хуудас нэмэх"
+
+#: views/admin/index/browse-hierarchy-page.php:16
+#: views/admin/index/browse-list.php:33
+#, php-format
+msgid "<strong>%1$s</strong> on %2$s"
+msgstr "<strong>%1$s</strong> on %2$s"
+
+#: views/admin/index/browse-hierarchy-page.php:20
+msgid "Published"
+msgstr "Нийтлэгдсэн"
+
+#: views/admin/index/browse-hierarchy-page.php:20
+msgid "Not Published"
+msgstr "Нийтлэгдээгүй"
+
+#: views/admin/index/browse-list.php:7
+msgid "Last Modified"
+msgstr "Сүүлд өөрчлөгдсөн"
+
+#: views/admin/index/browse.php:3
+msgid "Simple Pages | Browse"
+msgstr "Энгийн хуудсууд | Гүйлгэж харах"
+
+#: views/admin/index/browse.php:9
+msgid "List View"
+msgstr "Жагсаалт байдлаар харах"
+
+#: views/admin/index/browse.php:12
+msgid "Hierarchy View"
+msgstr "Шаталсан байдлаар харах"
+
+#: views/admin/index/browse.php:17
+msgid "Add a Page"
+msgstr "Хуудас нэмэх"
+
+#: views/admin/index/browse.php:19
+msgid "There are no pages."
+msgstr "Ямар нэг хуудас алга"
+
+#: views/admin/index/browse.php:19
+msgid "Add a page."
+msgstr "Хуудас нэмэх"
+
+#: views/admin/index/edit.php:6
+#, php-format
+msgid "Simple Pages | Edit \"%s\""
+msgstr "Энгийн хуудсууд |  \"%s\" -г засах"
+
+#: views/admin/index/edit.php:11
+#, php-format
+msgid ""
+"This page was created by <strong>%1$s</strong> on %2$s, and last modified by"
+" <strong>%3$s</strong> on %4$s."
+msgstr "Хуудсыг үүсгэсэн <strong>%1$s</strong> огноо %2$s, сүүлд засварласан  <strong>%3$s</strong> огноо %4$s."

@@ -1,0 +1,117 @@
+# Translation for the Simple Vocab plugin for Omeka.
+# Copyright (C) 2012 Roy Rosenzweig Center for History and New Media
+# This file is distributed under the same license as the Omeka package.
+# 
+# Translators:
+# Doru  DEACONU <dumitrudeaconu@yahoo.com>, 2014
+# Nicolaie Constantinescu <kosson@gmail.com>, 2013,2015
+msgid ""
+msgstr ""
+"Project-Id-Version: Omeka\n"
+"Report-Msgid-Bugs-To: http://github.com/omeka/plugin-SimpleVocab/issues\n"
+"POT-Creation-Date: 2012-11-28 21:49-0500\n"
+"PO-Revision-Date: 2017-09-23 18:51+0000\n"
+"Last-Translator: Nicolaie Constantinescu <kosson@gmail.com>\n"
+"Language-Team: Romanian (http://www.transifex.com/omeka/omeka/language/ro/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ro\n"
+"Plural-Forms: nplurals=3; plural=(n==1?0:(((n%100>19)||((n%100==0)&&(n!=0)))?2:1));\n"
+
+#: SimpleVocabPlugin.php:80 views/admin/index/index.php:2
+msgid "Simple Vocab"
+msgstr "Simple Vocab"
+
+#: controllers/IndexController.php:57
+msgid "Successfully deleted the element's vocabulary terms."
+msgstr "Eliminare fără probleme a termenilor de vocabular corespunzători elementului."
+
+#: controllers/IndexController.php:61
+msgid "Successfully edited the element's vocabulary terms."
+msgstr "Ai editat fără probleme termenii de vocabular corespunzători ai elementului."
+
+#: controllers/IndexController.php:72
+msgid "Successfully added the element's vocabulary terms."
+msgstr "Adăugare fără probleme a termenilor de vocabular ai elementului. "
+
+#: controllers/IndexController.php:113
+msgid "Not in vocabulary."
+msgstr "Nu este în vocabular."
+
+#: controllers/IndexController.php:114
+msgid "Long text."
+msgstr "Text lung"
+
+#: controllers/IndexController.php:115
+msgid "Contains newlines."
+msgstr "Conține linii noi."
+
+#: views/admin/index/element-texts.ajax.php:2
+msgid "No texts for the selected element exist in Omeka."
+msgstr "Nu există texte în Omeka pentru elementul selectat."
+
+#: views/admin/index/element-texts.ajax.php:6
+msgid "Count"
+msgstr "Contor"
+
+#: views/admin/index/element-texts.ajax.php:7
+msgid "Warnings"
+msgstr "Atenţionări"
+
+#: views/admin/index/element-texts.ajax.php:8
+msgid "Text"
+msgstr "Text"
+
+#: views/admin/index/index.php:34
+msgid "Element"
+msgstr "Element"
+
+#: views/admin/index/index.php:38
+msgid ""
+"Select an element to manage its custom vocabulary. Elements with a custom "
+"vocabulary are marked with an asterisk (*)."
+msgstr "Selectează un element pentru a-i gestiona vocabularul propriu. Elementele cu un vocabular propriu sunt marcate cu un asterix (*)."
+
+#: views/admin/index/index.php:44
+msgid "Vocabulary Terms"
+msgstr "Termenii vocabularului"
+
+#: views/admin/index/index.php:47
+msgid ""
+"Enter the custom vocabulary terms for this element, one per line. To delete "
+"the vocabulary, simply remove the terms and submit this form."
+msgstr "Introdu termeni particulari în vocabularul corespunzător acestui element, unul pe fiecare linie. Pentru a șterge vocabularul, pur și simplu șterge termenii și trimite acest formular."
+
+#: views/admin/index/index.php:52
+#, php-format
+msgid ""
+"%sClick here%s to display a list of texts for the selected element that "
+"currently exist in Omeka. You may use this list as a reference to build a "
+"vocabulary, but be aware of some caveats:"
+msgstr "%sApasă aici%s pentru a afișa o listă de texte pentru elementul selectat care deja există în Omeka. Poți folosi această listă ca și referință pentru a construi un vocabular, dar fii atent la anumite probleme:"
+
+#: views/admin/index/index.php:58
+msgid "Vocabulary terms must not contain newlines (line breaks)."
+msgstr "Termenii vocabularului nu trebuie să conţină linii noi necompletatea (un enter dat fără a fi completat rândul nou)."
+
+#: views/admin/index/index.php:59
+msgid ""
+"Vocabulary terms are typically short and concise. If your existing texts are"
+" otherwise, avoid using a controlled vocabulary for this element."
+msgstr "Termenii vocabularului exprimă concizie și sunt scurți. Dacă textele existente sunt diferite de acest tipic, evită folosirea unui vocabular controlat pentru acest element."
+
+#: views/admin/index/index.php:62
+msgid "Vocabulary terms must be identical to their corresponding texts."
+msgstr "Termenii vocabularului trebuie să fie identici textului corespondent."
+
+#: views/admin/index/index.php:63
+msgid ""
+"Existing texts that are not in the vocabulary will be preserved — however, "
+"they cannot be selected in the item edit page, and will be deleted once you "
+"save the item."
+msgstr "Textele existente care nu sunt în vocabular vor fi păstrate. Totuși, nu pot fi selectați în pagina de editare a elementului și vor fi șterse de îndată ce salvezi elementul."
+
+#: views/admin/index/index.php:70
+msgid "Add/Edit Vocabulary"
+msgstr "Adaugă/Editează vocabularul"

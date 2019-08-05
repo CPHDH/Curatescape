@@ -1,0 +1,405 @@
+# Translation for the Geolocation plugin for Omeka.
+# Copyright (C) 2011 Roy Rosenzweig Center for History and New Media
+# This file is distributed under the same license as the Omeka package.
+# 
+# Translators:
+# John Flatness <john@zerocrates.org>, 2016
+# iteau <songphan@gmail.com>, 2014
+msgid ""
+msgstr ""
+"Project-Id-Version: Omeka\n"
+"Report-Msgid-Bugs-To: http://github.com/omeka/plugin-Geolocation/issues\n"
+"POT-Creation-Date: 2012-01-09 21:49-0500\n"
+"PO-Revision-Date: 2018-06-19 16:54+0000\n"
+"Last-Translator: John Flatness <john@zerocrates.org>\n"
+"Language-Team: Thai (http://www.transifex.com/omeka/omeka/language/th/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: th\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: GeolocationPlugin.php:250 GeolocationPlugin.php:268
+msgid "Geolocation"
+msgstr ""
+
+#: GeolocationPlugin.php:379
+msgid "kilometers"
+msgstr "กิโลเมตร"
+
+#: GeolocationPlugin.php:381
+msgid "miles"
+msgstr "ไมล์"
+
+#: GeolocationPlugin.php:383
+#, php-format
+msgid "within %1$s %2$s of \"%3$s\""
+msgstr "ภายใน %1$s %2$s จาก \"%3$s\""
+
+#: GeolocationPlugin.php:403 GeolocationPlugin.php:409
+msgid "Map"
+msgstr "แผนที่"
+
+#: GeolocationPlugin.php:442
+msgid "Browse Map"
+msgstr "เลือกดูตามแผนที่"
+
+#: GeolocationPlugin.php:497
+#, php-format
+msgid "Find A Geographic Location For The %s:"
+msgstr "ค้นหาสถานที่สำหรับ %s:"
+
+#: GeolocationPlugin.php:509
+msgid "Geolocation Map"
+msgstr "แผนที่ทางภูมิศาสตร์"
+
+#: GeolocationPlugin.php:510
+msgid "Show attached items on a map"
+msgstr "แสดงรายการแนบบนแผนที่"
+
+#: GeolocationPlugin.php:609
+msgid "Find a Location by Address:"
+msgstr "ค้นหาสถานที่จากที่อยู่"
+
+#: config_form.php:3
+msgid "General Settings"
+msgstr "การตั้งค่าทั่วไป"
+
+#: config_form.php:7
+msgid "Default Latitude"
+msgstr "ละติจูดตั้งต้น"
+
+#: config_form.php:10
+msgid ""
+"Latitude of the map's initial center point, in degrees. Must be between -90 "
+"and 90."
+msgstr "ละติจูดของจุดศูนย์กลางตั้งต้นบนแผนที่ จะต้องอยู่ระหว่าง -90 และ 90 องศา"
+
+#: config_form.php:17
+msgid "Default Longitude"
+msgstr "ลองติจูดตั้งต้น"
+
+#: config_form.php:20
+msgid ""
+"Longitude of the map's initial center point, in degrees. Must be between "
+"-180 and 180."
+msgstr "ลองติจูดของจุดศูนย์กลางตั้งต้นบนแผนที่ จะต้องอยู่ระหว่าง -180 และ 80 องศา"
+
+#: config_form.php:27
+msgid "Default Zoom Level"
+msgstr "ระดับการซูมตั้งต้น"
+
+#: config_form.php:30
+msgid ""
+"An integer greater than or equal to 0, where 0 represents the most zoomed "
+"out scale."
+msgstr "ตัวเลขจะสร้างมากกว่าหรือเท่ากับ 0 ซึ่ง 0 หมายถึง ซูมกว้างที่สุด"
+
+#: config_form.php:37
+msgid "Base Map"
+msgstr ""
+
+#: config_form.php:40
+msgid "The type of map to display"
+msgstr "ประเภทของแผนที่ที่จะนำแสดง"
+
+#: config_form.php:43
+msgid "OpenStreetMap"
+msgstr ""
+
+#: config_form.php:44
+msgid "Standard"
+msgstr ""
+
+#: config_form.php:45
+msgid "Grayscale"
+msgstr ""
+
+#: config_form.php:46
+msgid "Humanitarian"
+msgstr ""
+
+#: config_form.php:48 config_form.php:49
+msgid "OpenTopoMap"
+msgstr ""
+
+#: config_form.php:51
+msgid "Stamen"
+msgstr ""
+
+#: config_form.php:52
+msgid "Toner"
+msgstr ""
+
+#: config_form.php:53
+msgid "Toner (background)"
+msgstr ""
+
+#: config_form.php:54
+msgid "Toner (lite)"
+msgstr ""
+
+#: config_form.php:55
+msgid "Watercolor"
+msgstr ""
+
+#: config_form.php:56
+msgid "Terrain"
+msgstr "แผนที่ภูมิประเทศ"
+
+#: config_form.php:57
+msgid "Terrain (background)"
+msgstr ""
+
+#: config_form.php:59
+msgid "Esri"
+msgstr ""
+
+#: config_form.php:60
+msgid "World Street Map"
+msgstr ""
+
+#: config_form.php:61
+msgid "DeLorme"
+msgstr ""
+
+#: config_form.php:62
+msgid "World Topographic Map"
+msgstr ""
+
+#: config_form.php:63
+msgid "World Imagery"
+msgstr ""
+
+#: config_form.php:64
+msgid "World Terrain"
+msgstr ""
+
+#: config_form.php:65
+msgid "World Shaded Relief"
+msgstr ""
+
+#: config_form.php:66
+msgid "World Physical Map"
+msgstr ""
+
+#: config_form.php:67
+msgid "Ocean Basemap"
+msgstr ""
+
+#: config_form.php:68
+msgid "National Geographic World Map"
+msgstr ""
+
+#: config_form.php:69
+msgid "Light Gray Canvas"
+msgstr ""
+
+#: config_form.php:71
+msgid "CartoDB"
+msgstr ""
+
+#: config_form.php:72
+msgid "Voyager"
+msgstr ""
+
+#: config_form.php:73
+msgid "Voyager (no labels)"
+msgstr ""
+
+#: config_form.php:74
+msgid "Positron"
+msgstr ""
+
+#: config_form.php:75
+msgid "Positron (no labels)"
+msgstr ""
+
+#: config_form.php:76
+msgid "Dark Matter"
+msgstr ""
+
+#: config_form.php:77
+msgid "Dark Matter (no labels)"
+msgstr ""
+
+#: config_form.php:79
+msgid "Mapbox"
+msgstr ""
+
+#: config_form.php:80
+msgid "Mapbox (see settings below)"
+msgstr ""
+
+#: config_form.php:89
+msgid "Mapbox Access Token"
+msgstr ""
+
+#: config_form.php:94
+#, php-format
+msgid ""
+"Mapbox access token. A token is required when Mapbox is selected as the "
+"basemap. Get your token at %s."
+msgstr ""
+
+#: config_form.php:105
+msgid "Mapbox Map ID"
+msgstr ""
+
+#: config_form.php:110
+msgid ""
+"Mapbox Map ID for the map to display as the basemap. The default "
+"\"mapbox.streets\" map will be used if nothing is entered here."
+msgstr ""
+
+#: config_form.php:119
+msgid "Browse Map Settings"
+msgstr "ตั้งค่าการเลือกดูแผนที่"
+
+#: config_form.php:122
+msgid "Number of Locations Per Page"
+msgstr "จำนวนสถานที่ต่อหน้า"
+
+#: config_form.php:125
+msgid "The number of locations displayed per page when browsing the map."
+msgstr "จำนวนสถานที่แสดงต่อหนึ่งหน้าเมื่อเลือกดูบนแผนที่"
+
+#: config_form.php:131
+msgid "Auto-fit to Locations"
+msgstr "ปรับอัตโนมัติตามสถานที่"
+
+#: config_form.php:135
+msgid ""
+"If checked, the default location and zoom settings will be ignored on the "
+"browse map. Instead, the map will automatically pan and zoom to fit the "
+"locations displayed on each page."
+msgstr "ถ้าเลือก ค่าตั้งต้นของสถานที่และระดับการซูมจะไม่นำมาใช้บนหน้าจอการเลือกดูบนแผนที่ แต่จะปรับการแสดงผลให้เข้ากับสถานที่ที่แสดงในแต่ละหน้า"
+
+#: config_form.php:149
+msgid "Default Radius"
+msgstr ""
+
+#: config_form.php:152
+msgid ""
+"The size of the default radius to use on the items advanced search page. See"
+" below for whether to measure in miles or kilometers."
+msgstr ""
+
+#: config_form.php:158
+msgid "Use metric distances"
+msgstr "ใช้การวัดระยะแบบเมตริกส์"
+
+#: config_form.php:161
+msgid "Use metric distances in proximity search."
+msgstr "ใช้การวัดระบบแบบเมตริกส์ในการค้นระยะทาง"
+
+#: config_form.php:170
+msgid "Enable marker clustering"
+msgstr ""
+
+#: config_form.php:173
+msgid "Show close or overlapping markers as clusters."
+msgstr ""
+
+#: config_form.php:183
+msgid "Item Map Settings"
+msgstr "ตั้งค่าแผนที่บนหน้ารายการ"
+
+#: config_form.php:186
+msgid "Width for Item Map"
+msgstr "ความกว้างของแผนที่ในหน้ารายการ"
+
+#: config_form.php:189
+msgid ""
+"The width of the map displayed on your items/show page. If left blank, the "
+"default width of 100% will be used."
+msgstr "ความกว้างของแผนที่แสดงในหน้าแสดงข้อมูลรายการ หากไม่ระบุ ความกว้างตั้งต้นจะอยู่ที่ 100%"
+
+#: config_form.php:196
+msgid "Height for Item Map"
+msgstr "ความสูงของแผนที่ในหน้ารายการ"
+
+#: config_form.php:199
+msgid ""
+"The height of the map displayed on your items/show page. If left blank, the "
+"default height of 300px will be used."
+msgstr "ความสูงของแผนที่แสดงในหน้าแสดงข้อมูลรายการ หากไม่ระบุ ความสูงตั้งต้นจะอยู่ที่ 100%"
+
+#: config_form.php:206
+msgid "Map Integration"
+msgstr "การเชื่อมต่อกับแผนที่"
+
+#: config_form.php:209
+msgid "Add Link to Map on Items/Browse Navigation"
+msgstr "เพิ่มลิงก์แผนที่บนแถบนำทางเลือกดูรายการ"
+
+#: config_form.php:212
+msgid "Add a link to the items map on all the items/browse pages."
+msgstr "เพิ่มลิงค์ไปยังแผนที่ของรายการในทุกหน้าเลือกดูข้อมูลรายการ"
+
+#: config_form.php:222
+msgid "Add Map To Contribution Form"
+msgstr "เพิ่มแผนที่ในแบบฟอร์มส่งข้อมูล"
+
+#: config_form.php:225
+msgid ""
+"If the Contribution plugin is installed and activated, Geolocation  will add"
+" a geolocation map field to the contribution form to associate a location to"
+" a contributed item."
+msgstr "หากมีการใช้งานปลั๊กอิน Contribution ปลั๊กอิน Geolocation จะเพิ่มแผนที่ทางภูมิศาสตร์ในหน้าแบบฟอร์มนำส่งข้อมูล เพื่อเชื่อมโยงข้อมูลสถานที่กับรายการที่นำส่ง"
+
+#: models/Location.php:35
+msgid "Location requires an item ID."
+msgstr "กรุณาระบุรหัสประจำรายการ"
+
+#: models/Location.php:39
+msgid "Location requires a valid item ID."
+msgstr "กรุณาระบุรหัสประจำรายการที่ใช้งานได้"
+
+#: models/Location.php:44
+msgid "A location already exists for the provided item."
+msgstr "รายการนี้มีข้อมูลสถานที่แล้ว"
+
+#: models/Location.php:47
+msgid "Location requires a latitude."
+msgstr "กรุณาระบุละติจูด"
+
+#: models/Location.php:50
+msgid "Location requires a longitude."
+msgstr "กรุณาระบุลองติจูด"
+
+#: models/Location.php:53
+msgid "Location requires a zoom level."
+msgstr "กรุณาระบุระดับการซูม"
+
+#: views/admin/map/browse.php:4 views/public/map/browse.php:4
+msgid "Browse Items on the Map"
+msgstr "เลือกดูรายการบนแผนที่"
+
+#: views/admin/map/browse.php:4
+msgid "total"
+msgstr "รวม"
+
+#: views/admin/map/browse.php:13 views/public/map/browse.php:21
+msgid "Find An Item on the Map"
+msgstr "ค้นหารายการจากแผนที่"
+
+#: views/helpers/GeolocationMapSingle.php:36
+msgid "This item has no location info associated with it."
+msgstr "รายการนี้ไม่มีข้อมูลสถานที่"
+
+#: views/shared/map/advanced-search-partial.php:16
+msgid "Geographic Radius (kilometers)"
+msgstr "รัศมีทางภูมิศาสตร์ (กิโลเมตร)"
+
+#: views/shared/map/advanced-search-partial.php:18
+msgid "Geographic Radius (miles)"
+msgstr "รัศมีทางภูมิศาสตร์ (ไมล์)"
+
+#: views/shared/map/advanced-search-partial.php:25
+msgid "Geographic Address"
+msgstr "ที่อยู่ทางภูมิศาสตร์"
+
+#: views/shared/map/input-partial.php:17
+msgid "Find"
+msgstr "ค้นหา"

@@ -1,0 +1,44 @@
+#omeka-map-form {
+    width: 100%;
+    height: 300px;
+    clear: both;
+}
+#geolocation_address {
+    width: 80%;
+}
+button#geolocation_find_location_by_address {
+    float: none;
+}
+
+div#geolocation {
+    clear: both;
+}
+
+.info-panel .map {
+    margin-top:-18px;
+    display:block;
+    margin-left:-18px;
+    margin-bottom:0;
+    border-top:3px solid #eae9db;
+    padding:0;
+}
+
+.geolocation_balloon {
+    width: 200px;
+}
+.geolocation_balloon img {
+    max-width: 100%;
+}
+.geolocation_balloon_title {
+    font-weight:bold;
+    font-size:18px;
+    margin-bottom:0px;
+}
+
+img.leaflet-tile,
+img.leaflet-marker-icon,
+img.leaflet-marker-shadow {
+    padding: 0 !important;
+    border: 0 !important;
+    background-color: transparent !important;
+}
