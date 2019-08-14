@@ -30,7 +30,7 @@ echo head(array('maptype'=>'none','title'=>$title,'bodyid'=>'exhibits','bodyclas
 ?>
 
 
-<div id="content">
+<div id="content" role="main">
 
 <article class="browse stories items">	
 	<h2 class="query-header"><?php 

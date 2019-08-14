@@ -12,6 +12,7 @@ echo head( array(
 	<h2 class="query-header"><?php echo __('All %1$s: %2$s', $label, total_tours());?></h2>
 		<div id="primary" class="browse">
 			<section id="results">
+			<h2 hidden class="hidden"><?php echo mh_tour_label('plural');?></h2>
 			<nav class="tours-nav navigation secondary-nav">
 			  <?php echo public_nav_tours(); ?>
 			</nav>	

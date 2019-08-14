@@ -18,6 +18,7 @@ echo head(array('maptype'=>$maptype,'title'=>$title,'bodyid'=>'search','bodyclas
 	
 		<div id="primary" class="browse">
 		<section id="results">
+			<h2 hidden class="hidden"><?php echo __('Search Results');?></h2>
 				
 			<nav class="secondary-nav" id="item-browse"> 
 				<?php echo mh_item_browse_subnav();?>

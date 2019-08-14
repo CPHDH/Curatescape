@@ -14,7 +14,7 @@ $pageTitle = __('Update Account');
 echo head(array('bodyclass' => 'update-account', 'title' => $pageTitle));
 ?>
 
-<article class="page show">
+<article class="page show" id="content" role="main">
 	<h1><?php echo $pageTitle; ?></h1>
 	<div id='primary'>
 	<?php echo flash(); ?>

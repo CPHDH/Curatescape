@@ -1,6 +1,6 @@
 <?php echo head(array('maptype'=>'none','title' => html_escape(metadata('exhibit_page', 'title') . ' : '. metadata('exhibit', 'title')), 'bodyclass' => 'exhibits show', 'bodyid' => 'exhibit')); ?>
 
-<div id="content">
+<div id="content" role="main">
 <article class="page show">
 
 	<h2 class="instapaper_title"><?php echo metadata('exhibit_page', 'title'); ?></h2>

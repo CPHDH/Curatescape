@@ -10,6 +10,7 @@
 
 	<div id="primary" class="browse">
 	<section id="tags">
+		<h2 hidden class="hidden"><?php echo __('Tags');?></h2>
 
 	    <nav class="secondary-nav" id="tag-browse"> 
 			<?php mh_item_browse_subnav(); ?>

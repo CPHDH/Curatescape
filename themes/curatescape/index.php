@@ -2,7 +2,7 @@
 $stealthMode=(get_theme_option('stealth_mode')==1)&&(is_allowed('Items', 'edit')!==true) ? true : false;
 $classname='home'.($stealthMode ? ' stealth' : null);
 if ($stealthMode) queue_css_file('stealth');
-echo head(array('maptype'=>'focusarea','bodyid'=>'home','bodyclass'=>$classname)); 
+	echo head(array('maptype'=>'focusarea','bodyid'=>'home','bodyclass'=>$classname)); 
 ?>
 <?php
 if ($stealthMode){
@@ -14,6 +14,8 @@ else{
 
 	<div id="content" role="main">
 	<section class="map">
+		<h2 hidden class="hidden"><?php echo __('Map');?></h2>
+		<nav aria-label="Skip Interactive Map"><a id="skip-map" href="#homepage">Skip Interactive Map</a></nav>
 		<figure>
 			<?php echo mh_map_type('focusarea',null,null); ?>
 		</figure>

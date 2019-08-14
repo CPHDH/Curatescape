@@ -1,4 +1,4 @@
-<nav id="admin-bar">
+<nav id="admin-bar" aria-label="Admin Navigation">
 
 <?php if($user = current_user()) {
 

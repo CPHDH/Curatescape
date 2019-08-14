@@ -11,7 +11,7 @@ echo head(array('maptype'=>'none','title' => $title, 'bodyclass' => $bodyclass, 
 
 ?>
 
-<div id="content">
+<div id="content" role="main">
 <article class="browse collection">			
 	<h2 class="query-header"><?php echo $title.': '.$total;?></h2>
 

@@ -1,7 +1,7 @@
 var theme_name='curatescape';
 jQuery(document).ready(function($) {
 	console.log('MMenu ready...');
-	loadJS('//'+location.host+'/themes/'+theme_name+'/javascripts/jquery.mmenu/jquery.mmenu.all.js',function(){
+	loadJS('//'+location.host+'/themes/'+theme_name+'/javascripts/jquery.mmenu/mmenu.js',function(){
 		// ============================ 
 		// MMENU	
 		var navbars = [
@@ -21,9 +21,10 @@ jQuery(document).ready(function($) {
 		
 		var extensions = [
 				"pagedim-black",
-				"fx-menu-fade",
-			    "shadow-page",
-			    "border-full"
+			    "border-full",
+			    "position-right",
+			    "fx-menu-fade",
+			    "fx-listitems-slide"
 			];
 		
 		var social= new Array();
@@ -73,14 +74,17 @@ jQuery(document).ready(function($) {
 			
 		$("#offscreen-menu").mmenu(
 		{ 	// options
-			slidingSubmenus: false,
-			extensions:extensions, // viewport-dependent
 			offCanvas: {
 				position: "right"
-			},		
+			},	
+			slidingSubmenus: false,
+			extensions:extensions, // viewport-dependent	
 			keyboardNavigation: {
 			    enable:true,
 			    enhance:true,
+			},
+			screenReader:{
+				aria:true,
 			},
 			navbar: {
 				title: null

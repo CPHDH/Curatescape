@@ -1,6 +1,6 @@
 <?php echo head(array('maptype'=>'none','title' => metadata('exhibit', 'title'), 'bodyclass'=>'exhibits summary show','bodyid' => 'exhibit')); ?>
 
-<div id="content">
+<div id="content" role="main">
 <article class="exhibit page show">
 	<h1><?php echo metadata('exhibit', 'title'); ?></h1>
 			

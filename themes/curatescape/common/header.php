@@ -7,7 +7,7 @@
 <head>
 <meta charset="UTF-8">
 
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=5,viewport-fit=cover">
 
 <?php echo auto_discovery_link_tags(); ?>
@@ -55,26 +55,23 @@ $file = (isset($file)) ? $file : null;
 <?php echo mh_web_font_loader();?>
 
 <!-- Assets -->
-<script
-  src="https://code.jquery.com/jquery-3.2.1.min.js"
-  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
-  crossorigin="anonymous"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script>
-	/*! 
+	/*!
 	loadJS: load a JS file asynchronously. 
 	[c]2014 @scottjehl, Filament Group, Inc. (Based on http://goo.gl/REQGQ by Paul Irish). 
 	Licensed MIT 
 	*/
-	
-	function loadJS(src,cb){"use strict";var ref=window.document.getElementsByTagName("script")[0];var script=window.document.createElement("script");script.src=src;script.async=true;ref.parentNode.insertBefore(script,ref);if(cb&&typeof(cb)==="function"){script.onload=cb;}
-	return script;}
+	(function(w){var loadJS=function(src,cb,ordered){"use strict";var tmp;var ref=w.document.getElementsByTagName("script")[0];var script=w.document.createElement("script");if(typeof(cb)==='boolean'){tmp=ordered;ordered=cb;cb=tmp;}
+	script.src=src;script.async=!ordered;ref.parentNode.insertBefore(script,ref);if(cb&&typeof(cb)==="function"){script.onload=cb;}
+	return script;};if(typeof module!=="undefined"){module.exports=loadJS;}
+	else{w.loadJS=loadJS;}}(typeof global!=="undefined"?global:this));
 	
 	/*!
 	loadCSS: load a CSS file asynchronously.
 	[c]2014 @scottjehl, Filament Group, Inc.
 	Licensed MIT
 	*/
-	
 	function loadCSS(href,before,media){"use strict";var ss=window.document.createElement("link");var ref=before||window.document.getElementsByTagName("script")[0];var sheets=window.document.styleSheets;ss.rel="stylesheet";ss.href=href;ss.media="only x";ref.parentNode.insertBefore(ss,ref);function toggleMedia(){var defined;for(var i=0;i<sheets.length;i++){if(sheets[i].href&&sheets[i].href.indexOf(href)>-1){defined=true;}}
 	if(defined){ss.media=media||"all";}
 	else{setTimeout(toggleMedia);}}
@@ -90,7 +87,7 @@ echo head_js(false);
 <script>
 	// Async CSS 	
 	loadCSS('<?php echo src('font-awesome/css/font-awesome.min.css','fonts');?>'); // font awesome css
-	loadCSS('<?php echo src('jquery.mmenu/jquery.mmenu.all.css','javascripts');?>'); // mmenu css
+	loadCSS('<?php echo src('jquery.mmenu/mmenu.css','javascripts');?>'); // mmenu css
 	loadCSS('<?php echo src('photoswipe/dist/photoswipe.all.min.css','javascripts');?>'); // photoswipe css
 	// Async JS 
 	loadJS('<?php echo src('global.js','javascripts');?>'); // global.js
@@ -111,7 +108,7 @@ $bodyStyle= (get_theme_option('bg_img')) ? 'background-image: url('.mh_bg_url().
 
 </head>
 <body id="<?php echo $bodyid;?>" class="<?php echo $bodyclass;?>" style="<?php echo $bodyStyle;?>"> 
-
+<nav aria-label="<?php echo __('Skip Navigation');?>"><a id="skip-nav" href="#content"><?php echo __('Skip to main content');?></a></nav>
 <noscript>
 	<div id="no-js-message">
 		<span><?php echo __('For full functionality please enable JavaScript in your browser settings.');?> <a target="_blank" href="https://goo.gl/koeeaJ"><?php echo __('Need Help?');?></a></span>

@@ -2,10 +2,11 @@
 	</div><!--end wrap-->
 	
 	<footer class="main container">
-		<nav id="footer-nav">
+		<nav id="footer-nav" aria-label="<?php echo __('Footer Navigation');?>">
 		    <?php echo mh_global_nav(); ?> 
-		    <?php echo mh_simple_search('footer-search',array('id'=>'footer-search-form'));?>
-		    <?php echo random_item_link("<i class='fa fa-random fa-lg' aria-hidden='true'></i> View A Random ".mh_item_label('singular'),'random-button button');?>     			<?php echo mh_appstore_downloads();?>
+		    <?php echo mh_simple_search('footer-search',array('id'=>'footer-search-form'),__('Search - Footer'));?>
+		    <?php echo random_item_link("<i class='fa fa-random fa-lg' aria-hidden='true'></i> View A Random ".mh_item_label('singular'),'random-button button');?>
+		    <?php echo mh_appstore_downloads();?>
 	    </nav>	
 	 
 		<div class="default">
@@ -26,8 +27,8 @@
 
 <div hidden class="hidden">
 	<!-- Mmenu Markup -->
-	<?php echo mh_simple_search('sidebar-search',array('id'=>'sidebar-search-form'));?>
-	<nav id="offscreen-menu">
+	<?php echo mh_simple_search('sidebar-search',array('id'=>'sidebar-search-form'),__('Search - Drawer'));?>
+	<nav aria-label="<?php echo __('Drawer Navigation');?>" id="offscreen-menu">
 		<?php echo mh_global_nav(true);?>
 	</nav>
 </div>

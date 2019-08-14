@@ -1,5 +1,5 @@
 <?php echo head(); ?>
-<article class="page show">
+<article class="page show" id="content" role="main">
 <div id="primary">
 <?php echo flash(); ?>
 <form method='post'>

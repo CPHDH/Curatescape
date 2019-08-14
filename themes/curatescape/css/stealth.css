@@ -1,7 +1,12 @@
 body#home.stealth span.flex-nav-container,
 body#home.stealth span.spacer,
-body#home.stealth footer.main nav#footer-nav{
+body#home.stealth footer.main nav#footer-nav,
+body#home.stealth .flex-nav-container{
 	display: none !important;
+	width: 0;
+}
+body#home.stealth #navigation nav{
+	display: block;
 }
 body#home.stealth #navigation nav #home-logo{
 	text-align: center;

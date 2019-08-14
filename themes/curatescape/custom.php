@@ -99,7 +99,7 @@ function mh_seo_pageimg_custom(){
 function mh_theme_css($media='all'){
 	$themeName = Theme::getCurrentThemeName();
 	$theme = Theme::getTheme($themeName);
-	return '<link href="'.WEB_PUBLIC_THEME.'/'.$themeName.'/css/screen.css?v='.$theme->version.'" media="'.$media.'" rel="stylesheet" type="text/css" >';
+	return '<link href="'.WEB_PUBLIC_THEME.'/'.$themeName.'/css/screen.css?v='.$theme->version.'" media="'.$media.'" rel="stylesheet">';
 }
 
 
@@ -223,24 +223,24 @@ function random_item_link($text=null,$class='show',$hasImage=true){
 function mh_global_header($html=null){
 ?>  
 <div id="navigation">
-	<nav>
+	<nav aria-label="<?php echo __('Main Navigation');?>">
 		<?php echo link_to_home_page(mh_the_logo(),array('id'=>'home-logo'));?>
-		<span class="spacer"></span>
-		<span class="flex flex-end flex-grow flex-nav-container <?php echo get_theme_option('stacked_nav')==1 ? 'stacked' : null;?> ">
+		<div class="spacer"></div>
+		<div class="flex flex-end flex-grow flex-nav-container <?php echo get_theme_option('stacked_nav')==1 ? 'stacked' : null;?> ">
 			<?php if(!get_theme_option('hide_primary_nav')):?>
-			<span class="flex priority">
+			<div class="flex priority">
 	  			<a href="<?php echo url('/items/browse/');?>" class="button button-primary"><?php echo mh_item_label('plural');?></a>
 	  			<?php if(plugin_is_active('TourBuilder')): ?>
 	  				<a href="<?php echo url('/tours/browse/');?>" class="button button-primary"><?php echo mh_tour_label('plural');?></a>
 	  			<?php endif;?>
-			</span>
+			</div>
 			<?php endif;?>
-			<span class="flex search-plus flex-grow">
+			<div class="flex search-plus flex-grow">
   			<!--input class="nav-search u-full-width" type="search" placeholder="Search"-->
-  			<?php echo mh_simple_search('header-search',array('id'=>'header-search-form'));?>
+  			<?php echo mh_simple_search('header-search',array('id'=>'header-search-form'),__('Search - Top'));?>
   			<a title="Menu" id="menu-button" href="#offscreen-menu" class="button icon"><i class="fa fa-bars fa-lg" aria-hidden="true"></i></a>	
-			</span>
-		</span>
+			</div>
+		</div>
 	</nav>
 </div>
 <?php
@@ -386,7 +386,7 @@ function mh_display_map($type=null,$item=null,$tour=null){
 			$json_source=WEB_ROOT.'/items/browse?output=mobile-json';
 	}
 	?>
-	<script type="text/javascript" async defer>
+	<script>
 		// PHP Variables
 		var type =  '<?php echo $type ;?>';
 		var color = '<?php echo $color ;?>';
@@ -494,7 +494,7 @@ function mh_display_map($type=null,$item=null,$tour=null){
 						var geolocationControl = L.control({position: 'topleft'});
 						geolocationControl.onAdd = function (map) {
 						    var div = L.DomUtil.create('div', 'leaflet-control leaflet-control-geolocation');
-						    div.innerHTML = '<a class="leaflet-control-geolocation-toggle" href="#" title="Geolocation"><i class="fa fa fa-location-arrow" aria-hidden="true"></i></a>'; 
+						    div.innerHTML = '<a class="leaflet-control-geolocation-toggle" href="#" aria-label="Geolocation" title="Geolocation" role="button"><i class="fa fa fa-location-arrow" aria-hidden="true"></i></a>'; 
 						    return div;
 						};
 						geolocationControl.addTo(map);				
@@ -504,7 +504,7 @@ function mh_display_map($type=null,$item=null,$tour=null){
 					var fullscreenControl = L.control({position: 'topleft'});
 					fullscreenControl.onAdd = function (map) {
 					    var div = L.DomUtil.create('div', 'leaflet-control leaflet-control-fullscreen');
-					    div.innerHTML = '<a class="leaflet-control-fullscreen-toggle" href="#" title="Fullscreen"><i class="fa fa-expand" aria-hidden="true"></i></a>'; 
+					    div.innerHTML = '<a class="leaflet-control-fullscreen-toggle" href="#" aria-label="Fullscreen" title="Fullscreen" role="button"><i class="fa fa-expand" aria-hidden="true"></i></a>'; 
 					    return div;
 					};
 					fullscreenControl.addTo(map);
@@ -573,6 +573,7 @@ function mh_display_map($type=null,$item=null,$tour=null){
 								var marker = L.marker([item.latitude,item.longitude],{
 									icon: icon(c,inner),
 									title: convertHtmlToText(item.title),
+									alt: convertHtmlToText(item.title),
 									}).bindPopup(html);
 								
 								group.push(marker);  
@@ -611,6 +612,7 @@ function mh_display_map($type=null,$item=null,$tour=null){
 							var marker = L.marker([data.latitude,data.longitude],{
 								icon: icon(color,"circle"),
 								title: convertHtmlToText(data.title),
+								alt: convertHtmlToText(data.title),
 								}).bindPopup(html);					
 							
 							marker.addTo(map);
@@ -777,7 +779,7 @@ function mh_map_actions($item=null,$tour=null,$collection=null,$saddr='current',
 	
 	?>
 	
-	<div class="map-actions flex">
+	<div id="map-actions-anchor" class="map-actions flex">
 		
 		<!-- Directions link -->
 		<?php if( $showlink && $coords && ($item || $tour) ):?>
@@ -800,7 +802,7 @@ function mh_map_actions($item=null,$tour=null,$collection=null,$saddr='current',
 ** Includes settings for simple and advanced search via theme options
 */
 
-function mh_simple_search($inputID='search',$formProperties=array()){
+function mh_simple_search($inputID='search',$formProperties=array(),$ariaLabel="Search"){
 	
 	$sitewide = (get_theme_option('use_sitewide_search') == 1) ? 1 : 0;	
 	$qname = ($sitewide==1) ? 'query' : 'search';
@@ -814,7 +816,7 @@ function mh_simple_search($inputID='search',$formProperties=array()){
 	$formProperties['method'] = 'get';
 	$html = '<form ' . tag_attributes($formProperties) . '>' . "\n";
 	$html .= '<fieldset>' . "\n\n";
-	$html .= get_view()->formText('search', $searchQuery, array('aria-label'=>'Search','name'=>$qname,'id'=>$inputID,'class'=>'textinput search','placeholder'=>$placeholder));
+	$html .= get_view()->formText('search', $searchQuery, array('aria-label'=>$ariaLabel,'name'=>$qname,'id'=>$inputID,'class'=>'textinput search','placeholder'=>$placeholder));
 	$html .= '</fieldset>' . "\n\n";
 
 	// add hidden fields for the get parameters passed in uri
@@ -830,6 +832,7 @@ function mh_simple_search($inputID='search',$formProperties=array()){
 			$html .= get_view()->formHidden('record_types[]', $drt,array('id'=>$inputID.'-'.$drt));
 		}
 	}
+	$html .= '<input type="submit" class="submit visuallyhidden" name="submit_'.$inputID.'" id="submit_search_advanced_'.$inputID.'" value="'.__('Submit').'">';
 	
 	$html .= '</form>';
 	return $html;	
@@ -1083,8 +1086,8 @@ function mh_factoid($item='item'){
 			$tw2script=null;
 			$tweetable=get_theme_option('tweetable_factoids');
 			if($tweetable){
-				$tw1script='<script async defer type="text/javascript" src="https://platform.twitter.com/widgets.js"></script>';
-				$tw2script="<script async defer type='text/javascript'>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>";
+				$tw1script='<script async defer src="https://platform.twitter.com/widgets.js"></script>';
+				$tw2script="<script async defer>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>";
 			}
 			$via=get_theme_option('twitter_username') ? 'data-via="'.get_theme_option('twitter_username').'"' : '';
 			foreach($factoids as $factoid){
@@ -1112,7 +1115,7 @@ function mh_related_links(){
 	if ($relations){
 		$html= '<h3>'.__('Related Sources').'</h3><div class="related-resources"><ul>';
 		foreach ($relations as $relation) {
-			$html.= '<li>'.strip_tags($relation,'<a><i><em><b><strong>').'</li>';
+			$html.= '<li>'.strip_tags($relation,'<a><i><cite><em><b><strong>').'</li>';
 		}
 		$html.= '</ul></div>';
 		return $html;
@@ -1235,6 +1238,7 @@ function mh_file_caption($file,$inlineTitle=true){
 */
 function mh_item_images($item,$index=0){
 	$html=null;
+	$captionID=1;
 	foreach (loop('files', $item->Files) as $file){
 		$img = array('image/jpeg','image/jpg','image/png','image/jpeg','image/gif');
 		$mime = metadata($file,'MIME Type');
@@ -1244,10 +1248,11 @@ function mh_item_images($item,$index=0){
 			$desc=metadata($file, array('Dublin Core', 'Description'));
 			$caption=$title_formatted.($desc ? ': ' : ' ~ ').mh_file_caption($file,false);
 			$src=WEB_ROOT.'/files/fullsize/'.str_replace( array('.JPG','.jpeg','.JPEG','.png','.PNG','.gif','.GIF'), '.jpg', $file->filename );
-			$html.= '<figure class="flex-image" itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">';
-				$html.= '<a title="'.$title.'" class="file flex" href="'.$src.'" data-size="" style="background-image: url(\''.$src.'\');"></a>';
-				$html.= '<figcaption hidden class="hidden;">'.strip_tags($caption,'<a><u><strong><em><i>').'</figcaption>';
+			$html.= '<figure class="flex-image" itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject" aria-label="'.$title.'" aria-describedby="caption'.$captionID.'">';
+				$html.= '<a href="'.$src.'" title="'.$title.'" class="file flex" style="background-image: url(\''.$src.'\');" data-size=""></a>';
+				$html.= '<figcaption id="caption'.$captionID.'" hidden class="hidden;">'.strip_tags($caption,'<a><u><strong><em><i><cite>').'</figcaption>';
 			$html.= '</figure>';
+			$captionID++;
 		}		
 	}
 	if($html): ?>
@@ -1310,66 +1315,54 @@ function mh_audio_files($item,$index=0){
 		if ( array_search($mime, $audioTypes) !== false ){
 			$audioTitle = metadata($file,array('Dublin Core','Title')) ? metadata($file,array('Dublin Core','Title')) : 'Audio File '.($index+1);
 			$audioDesc = strip_tags(mh_file_caption($file,false));
-			$html.='<div class="flex media-select" data-source="'.WEB_ROOT.'/files/original/'.$file->filename.'">';
+			$html.='<div class="flex media-select" data-source="'.WEB_ROOT.'/files/original/'.$file->filename.'" role="button" aria-label="click to play '.$audioTitle.'" tabindex="0">';
 				$html.='<div class="media-thumb"><i class="fa fa-lg fa-microphone media-icon" aria-hidden="true"></i></div>';
 				$html.='<div class="media-caption">';
 					$html.='<div class="media-title">'.$audioTitle.'</div>';
 					//$html.='<strong>Duration</strong>: <span class="duration">00:00:00</span><br>';
-					$html.=snippet($audioDesc,0,250,"...").'<br>'.link_to($file,'show',__('View File Record'));
+					$html.=snippet($audioDesc,0,250,"...");
 				$html.='</div>';
 			$html.='</div>';
+			$html.=link_to($file,'show',__('View File Record'));
 		}
 	};
 	if($html): ?>
 		<h3><?php echo __('Audio');?></h3>
 		<figure id="item-audio">	
 			<div class="media-container audio">
-				<audio muted id="curatescape-player-audio" class="video-js" controls preload="auto" type="audio/mp3">
-					<p class="vjs-no-js">To listen to this audio please enable JavaScript, and consider upgrading to a web browser that supports HTML5 audio</p>
+				<audio id="curatescape-player-audio" class="video-js" controls preload="auto">
+					<p class="media-no-js">To listen to this audio please enable JavaScript, and consider upgrading to a web browser that supports HTML5 audio</p>
 				</audio>
-				<div class="flex media-list audio" style="">
+				<div class="flex media-list audio">
 					<?php echo $html;?>		
 				</div>
 			</div>
 		</figure>	
-		<script async defer>
-			jQuery(document).ready(function($) {
-				loadCSS("//vjs.zencdn.net/5.19.2/video-js.css");
-				loadJS("//vjs.zencdn.net/5.19.2/video.js", function(){
-
-					var audioplayer = videojs('curatescape-player-audio',{
-						height:'30',
-						controlBar: {
-							fullscreenToggle: false
-						},
-						autoplay:true,
-						muted:false
-					}).src(
-						$('.media-list.audio .media-select:first-child').attr('data-source')
-					);
-					if(typeof audioplayer == 'object'){
-
-						audioplayer.ready(function(){
-							// load controls
-							setTimeout(function(){ 
-								audioplayer.pause().muted(false);
-							}, 10);
-						});
-						
-						$('.media-list.audio .media-select:first-child').addClass('now-playing');
-						
-						$('.media-list.audio .media-select').on('click',function(e){
-							audioplayer.muted(false);
-							$('.media-list.audio .now-playing').removeClass('now-playing');
-							$(this).addClass('now-playing');
-							audioplayer.src($(this).attr('data-source')).play();
-						});
-						
-
-					}	
-					
-				});
-			});
+		<script>
+		jQuery(document).ready(function($) {
+			var audioplayer = $('#curatescape-player-audio');
+			var src=$('.media-list.audio .media-select:first-child').attr('data-source');
+			audioplayer.html(
+				'<source src="'+src+'" type="audio/mp3"></source>'
+			)
+			if(typeof audioplayer == 'object'){
+				$('.media-list.audio .media-select:first-child').addClass('now-playing');	
+				
+				$('.media-list.audio .media-select').on('click keydown',function(e){	
+					if(( e.type == 'click' ) || ( e.type == 'keydown' && e.which  == 13 )){
+						var newsrc=$(this).attr('data-source');
+						$('.media-list.audio .now-playing').removeClass('now-playing');
+						$(this).addClass('now-playing');
+						audioplayer.html(
+							'<source src="'+newsrc+'" type="audio/mp3"></source>'
+						);
+						audioplayer.get(0).load();
+						audioplayer.get(0).play();
+					}
+				});				
+				
+			}
+		});		
 		</script>
 	<?php endif;
 }
@@ -1390,48 +1383,55 @@ function mh_video_files($item='item',$html=null) {
 		if ( in_array($videoMime,$videoTypes) ){
 			$videoTitle = metadata($file,array('Dublin Core','Title')) ? metadata($file,array('Dublin Core','Title')) : 'Video File '.($videoIndex+1);
 			$videoDesc = strip_tags(mh_file_caption($file,false));
-			$html.='<div class="flex media-select" data-source="'.WEB_ROOT.'/files/original/'.$file->filename.'">';
+			$html.='<div class="flex media-select" data-source="'.WEB_ROOT.'/files/original/'.$file->filename.'" role="button" aria-label="click to play '.$videoTitle.'" tabindex="0">';
 				$html.='<div class="media-thumb"><i class="fa fa-lg fa-film media-icon" aria-hidden="true"></i></div>';
 				$html.='<div class="media-caption">';
 					$html.='<div class="media-title">'.$videoTitle.'</div>';
 					//$html.='<strong>Duration</strong>: <span class="duration">00:00:00</span><br>';
-					$html.=snippet($videoDesc,0,250,"...").'<br>'.link_to($file,'show',__('View File Record'));
+					$html.=snippet($videoDesc,0,250,"...");
 				$html.='</div>';
 			$html.='</div>';
+			$html.=link_to($file,'show',__('View File Record'));
 
 		}
 	}
 	if($html): ?>
 		<h3><?php echo __('Video');?></h3>
 		<figure id="item-video">
-			<div class="media-container video">
-			
-			<video id="curatescape-player" class="video-js vjs-fluid" controls preload="auto">
-				<p class="vjs-no-js">To view this video please enable JavaScript, and consider upgrading to a web browser that supports HTML5 video</p>
-			</video>
-			<div class="flex media-list video" style="">
-				<?php echo $html;?>
+			<div class="media-container video">		
+				<video id="curatescape-player" playsinline controls preload="auto">
+					<p class="media-no-js">To view this video please enable JavaScript, and consider upgrading to a web browser that supports HTML5 video</p>
+				</video>
+				<div class="flex media-list video">
+					<?php echo $html;?>
+				</div>
 			</div>
 		</figure>
-		<script async defer>
-			jQuery(document).ready(function($) {
-				loadCSS("//vjs.zencdn.net/5.19.2/video-js.css");
-				loadJS("//vjs.zencdn.net/5.19.2/video.js", function(){
-					
-					var videoplayer = videojs('curatescape-player').src(
-						$('.media-list.video .media-select:first-child').attr('data-source')
-					);
-					if(typeof videoplayer == 'object'){
-						$('.media-list.video .media-select:first-child').addClass('now-playing');
-						
-						$('.media-list.video .media-select').on('click',function(e){
-							$('.media-list.video .now-playing').removeClass('now-playing');
-							$(this).addClass('now-playing');
-							videoplayer.src($(this).attr('data-source')).play();
-						});
-					}				
-				});
-			});
+		<script>
+		jQuery(document).ready(function($) {
+			var videoplayer = $('#curatescape-player');
+			var src=$('.media-list.video .media-select:first-child').attr('data-source');
+			videoplayer.html(
+				'<source src="'+src+'" type="video/mp4"></source>'
+			)
+			if(typeof videoplayer == 'object'){
+				$('.media-list.video .media-select:first-child').addClass('now-playing');
+				
+				$('.media-list.video .media-select').on('click keydown',function(e){
+					if(( e.type == 'click' ) || ( e.type == 'keydown' && e.which  == 13 )){
+						var newsrc=$(this).attr('data-source');
+						$('.media-list.video .now-playing').removeClass('now-playing');
+						$(this).addClass('now-playing');
+						videoplayer.html(
+							'<source src="'+newsrc+'" type="video/mp4"></source>'
+						);
+						videoplayer.get(0).load();
+						videoplayer.get(0).play();
+					}
+				});				
+				
+			}
+		});
 		</script>			
 	<?php endif;
 }
@@ -1485,35 +1485,11 @@ function mh_single_file_show($file=null){
 			?>
 			<figure id="item-audio">	
 				<div class="media-container audio">
-					<audio muted src="<?php echo file_display_url($file,'original');?>" id="curatescape-player-audio" class="video-js" controls preload="auto" type="audio/mp3">
-						<p class="vjs-no-js">To listen to this audio please enable JavaScript and consider upgrading to a web browser that supports HTML5 audio</p>
+					<audio src="<?php echo file_display_url($file,'original');?>" id="curatescape-player-audio" class="video-js" controls preload="auto">
+						<p class="media-no-js">To listen to this audio please consider upgrading to a web browser that supports HTML5 audio</p>
 					</audio>
 				</div>
-			</figure>				
-			<script async defer>
-			jQuery(document).ready(function($) {
-				
-				loadCSS('//vjs.zencdn.net/5.19.2/video-js.css');
-				loadJS('//vjs.zencdn.net/5.19.2/video.js', function() {
-					var audioplayer = videojs('curatescape-player-audio',{
-						height:'30',
-						controlBar: {
-							fullscreenToggle: false
-						},
-						autoplay: true,
-					});
-					if(typeof audioplayer == 'object'){
-						audioplayer.ready(function(){
-							// load controls
-							setTimeout(function(){ 
-								audioplayer.pause().muted(false)
-							}, 10);
-						});
-					}				
-				});
-			});
-			</script>
-			
+			</figure>
 			<?php
 			
 		
@@ -1529,15 +1505,11 @@ function mh_single_file_show($file=null){
 				// If a video has an embeddable streaming version, use it.
 				$html.= $embeddable;
 			}else{
-				?>
-				<script async defer>
-					loadCSS('//vjs.zencdn.net/5.19.2/video-js.css');
-					loadJS('//vjs.zencdn.net/5.19.2/video.js');
-				</script>	
-				<?php 	
+
 				$html .= '<div class="item-file-container">';
-				$html .= '<video width="725" height="410" class="video-js vjs-default-skin" controls preload="auto" data-setup="{}">';
+				$html .= '<video width="725" height="410" controls preload="auto" data-setup="{}">';
 				$html .= '<source src="'.$videoFile.'" type="video/mp4">';
+				$html .= '<p class="media-no-js">To listen to this audio please consider upgrading to a web browser that supports HTML5 video</p>';
 				$html .= '</video>';
 
 			}	
@@ -1617,7 +1589,7 @@ function mh_share_this($type='Page'){
 				<a class="addthis_button_compact"></a>
 				</div></aside>
 				
-				<script async defer>
+				<script>
 				jQuery(document).ready(function(){
 					loadJS("//s7.addthis.com/js/300/addthis_widget.js#async=1",function(){
 						console.log("Add This ready...");
@@ -1645,7 +1617,7 @@ function mh_disquss_comments($shortname){
 	</div>    
 	
 	
-	<script type="text/javascript" async defer>
+	<script async defer>
 		var disqus_shortname = "<?php echo $shortname;?>";
 		var disqus_loaded = false;
 		
@@ -1685,7 +1657,7 @@ function mh_intensedebate_comments($intensedebate_id){
 		var idcomments_post_url;
 		</script>
 		<span id="IDCommentsPostTitle" style="display:none"></span>
-		<script async defer type='text/javascript' src='https://www.intensedebate.com/js/genericCommentWrapperV2.js'></script>
+		<script async defer src="https://www.intensedebate.com/js/genericCommentWrapperV2.js"></script>
 		<?php
 	}
 }
@@ -1915,7 +1887,7 @@ function mh_home_cta($html=null){
 	$cta_img_src=get_theme_option('cta_img_src');
 	$cta_button_label=get_theme_option('cta_button_label');
 	$cta_button_url=get_theme_option('cta_button_url');
-	$cta_button_url_target=get_theme_option('cta_button_url_target') ? ' target="_blank"' : null;
+	$cta_button_url_target=get_theme_option('cta_button_url_target') ? ' target="_blank" rel="noreferrer noopener"' : null;
 	
 	if($cta_title && $cta_button_label && $cta_button_url){	
 		$html .='<h3 class="result-type-header">'.$cta_title.'</h3>';
@@ -1945,9 +1917,9 @@ function mh_home_cta($html=null){
 function mh_footer_cta($html=null){
 	$footer_cta_button_label=get_theme_option('footer_cta_button_label');
 	$footer_cta_button_url=get_theme_option('footer_cta_button_url');
-	$footer_cta_button_target=get_theme_option('footer_cta_button_target') ? 'target="_blank"' : null;
+	$footer_cta_button_target=get_theme_option('footer_cta_button_target') ? 'target="_blank" rel="noreferrer noopener"' : null;
 	if($footer_cta_button_label && $footer_cta_button_url){
-		$html.= '<aside class="footer_cta"><a class="button button-primary" href="'.$footer_cta_button_url.'" '.$footer_cta_button_target.'>'.$footer_cta_button_label.'</a></aside>';
+		$html.= '<div class="footer_cta"><a class="button button-primary" href="'.$footer_cta_button_url.'" '.$footer_cta_button_target.'>'.$footer_cta_button_label.'</a></div>';
 	}
 	return $html;
 }
@@ -2157,7 +2129,7 @@ function mh_random_or_recent($mode='recent',$num=6){
 			}
 
 			$html.='<article class="item-result'.( $hasImage ? 'has-image' : null ).'">';
-				$html.=( isset($item_image) ? link_to_item('<span class="item-image" style="background-image:url('.$item_image.');"></span>',array('title'=>metadata($item,array('Dublin Core','Title')))) : null );
+				$html.=( isset($item_image) ? link_to_item('<span class="item-image" style="background-image:url('.$item_image.');" role="img" aria-label="'.metadata($item, array('Dublin Core', 'Title')).'"></span>',array('title'=>metadata($item,array('Dublin Core','Title')))) : null );
 				$html.='<h3>'.$titlelink.'</h3>';
 				$html.='<div class="browse-meta-top">'.mh_the_byline($item,false).'</div>';
 				
@@ -2238,12 +2210,11 @@ function mh_configured_css(){
 	$color_primary=mh_link_color();
 	$color_secondary=mh_secondary_link_color();
 	$configured_css = '
-		a,.now-playing .media-caption a{
+		a{
 			color: '.$color_primary.'
 		}
 		a:hover,
 		.item-hero .item-hero-text .byline a,
-		.media-caption a,
 		.pswp__caption a,
 		body#home section#home-popular-tags ul.popularity li a:hover,
 		body#items.tags section#tags ul.popularity li a:hover{
@@ -2279,10 +2250,13 @@ function mh_configured_css(){
 		body#home li.vvvvv-popular a,body#items.tags li.vvvvv-popular a{color: '.$color_secondary.';}
 		body#home li.vvvvvv-popular a,body#items.tags li.vvvvvv-popular a{color: '.adjustBrightness($color_secondary,-15).';}
 		body#home li.vvvvvvv-popular a,body#items.tags li.vvvvvvv-popular a{color: '.adjustBrightness($color_secondary,-20).';}
-		body#home li.vvvvvvvv-popular a,body#items.tags li.vvvvvvvv-popular a{color: '.adjustBrightness($color_secondary,-25).';}			
+		body#home li.vvvvvvvv-popular a,body#items.tags li.vvvvvvvv-popular a{color: '.adjustBrightness($color_secondary,-25).';}
+		.media-list > a:hover{
+			background-color:'.$color_primary.'
+		}
 	';
 	$user_css= get_theme_option('custom_css') ? '/* Theme Option: User CSS */ '.get_theme_option('custom_css') : null;
-	return '<style type="text/css">'.$configured_css.$user_css.'</style>';
+	return '<style>'.$configured_css.$user_css.'</style>';
 }
 
 
@@ -2312,7 +2286,7 @@ function mh_font_config(){
 ** see also screen.css
 */
 function mh_web_font_loader(){ ?>
-<script type="text/javascript">
+<script>
 	WebFontConfig = {
 		<?php echo mh_font_config(); ?>
 	};
@@ -2320,7 +2294,6 @@ function mh_web_font_loader(){ ?>
 		var wf = document.createElement('script');
 		wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
 		'://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
-		wf.type = 'text/javascript';
 		wf.async = 'true';
 		var s = document.getElementsByTagName('script')[0];
 		s.parentNode.insertBefore(wf, s);
@@ -2336,7 +2309,7 @@ function mh_google_analytics($webPropertyID=null){
 	if ($webPropertyID!=null){
 		echo "
 		<!-- Google Analytics -->
-		<script type=\"text/javascript\">
+		<script>
 			var _gaq = _gaq || [];
 			_gaq.push(['_setAccount', '".$webPropertyID."']);
 			_gaq.push(['_trackPageview']);
@@ -2358,7 +2331,7 @@ function mh_about($text=null){
 		// If the 'About Text' option has a value, use it. Otherwise, use default text
 		$text =
 			get_theme_option('about') ?
-			strip_tags(get_theme_option('about'),'<a><em><i><strong><bold><u>') :
+			strip_tags(get_theme_option('about'),'<a><em><i><cite><strong><bold><u>') :
 			__('%s is powered by <a href="http://omeka.org/">Omeka</a> + <a href="http://curatescape.org/">Curatescape</a>, a humanities-centered web and mobile framework available for both Android and iOS devices.',option('site_title'));
 	}
 	return $text;

@@ -212,7 +212,7 @@ function tour_nav( $html=null, $label='Tour' )
 		$html = ''
 			. '<div class="tour-nav">'
 			. "$intlLabel " . __('navigation') . ':&nbsp;&nbsp;'
-			. '<span id="tour-nav-links">';
+			. '<span class="tour-nav-links">';
 
 		// Add the previous item to the navigation if present.
 		if( $prev )
@@ -239,7 +239,6 @@ function tour_nav( $html=null, $label='Tour' )
 		}
 
 		$html .= '</span>'
-			. '<span id="close" style="cursor:pointer;"><span aria-hidden="true" class="icon-close"></span> <span style="display:none" class="text-close">Close</span></span>'
 			. '</div>';
 
 		return $html;

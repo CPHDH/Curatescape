@@ -9,7 +9,7 @@ $bodyid='collections';
 echo head(array('maptype'=>'none','title' => __('Collection').' | '.$title, 'bodyclass' => $bodyclass, 'bodyid' => $bodyid)); 
 ?>
 
-<div id="content">
+<div id="content" role="main">
 <article class="browse collection">			
 	<h2><?php echo $title;?></h2>
 <!-- 	<span class="collection-meta-browse"><?php echo metadata($collection, 'total_items').' Items';?></span> -->

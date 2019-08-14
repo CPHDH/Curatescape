@@ -4,7 +4,7 @@ echo head(array('maptype'=>'none','title' => $title, 'bodyid' => 'exhibit', 'bod
 ?>
 
 
-<div id="content">
+<div id="content" role="main">
 
 <article class="browse tags">	
 	<h2><?php 

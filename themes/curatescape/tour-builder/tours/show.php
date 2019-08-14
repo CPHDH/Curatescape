@@ -9,14 +9,17 @@ if( $tourTitle != '' && $tourTitle != '[Untitled]' ) {
 echo head( array( 'maptype'=>$maptype,'title' => ''.$label.' | '.$tourTitle, 'content_class' => 'horizontal-nav', 'bodyid'=>'tours',
    'bodyclass' => 'show tour', 'tour'=>$tour ) );
 ?>
-<section class="map">
-	<figure>
-		<?php echo mh_map_type($maptype,null,$tour); ?>
-		<?php echo mh_map_actions(null,$tour);?>
-	</figure>
-</section>
 <div id="content">
-	<article class="tour show" role="main">
+	<section class="map">
+		<h2 hidden class="hidden"><?php echo __('Map for %s',mh_tour_label('singular'));?></h2>
+		<nav aria-label="Skip Interactive Map"><a id="skip-map" href="#tour-content">Skip Interactive Map</a></nav>
+		<figure>
+			<?php echo mh_map_type($maptype,null,$tour); ?>
+			<?php echo mh_map_actions(null,$tour);?>
+		</figure>
+	</section>
+	
+	<article id="tour-content" class="tour show" role="main">
 	
 		<header id="tour-header">
 		<h2 class="tour-title"><?php echo $tourTitle; ?></h2>
@@ -32,6 +35,7 @@ echo head( array( 'maptype'=>$maptype,'title' => ''.$label.' | '.$tourTitle, 'co
 	
 		<div id="primary" class="show">
 		    <section id="text">
+			   <h2 hidden class="hidden"><?php echo __('%s Description',mh_tour_label('singular'));?></h2>
 			   <div id="tour-description">
 			    <?php echo htmlspecialchars_decode(nls2p( tour( 'Description' ) )); ?>
 			   </div>
@@ -71,6 +75,7 @@ echo head( array( 'maptype'=>$maptype,'title' => ''.$label.' | '.$tourTitle, 'co
 					endforeach; ?>
 			</section>
 			<section id="tour-postscript">
+				<h2 hidden class="hidden"><?php echo __('%s Postscript',mh_tour_label('singular'));?></h2>
 				<?php echo htmlspecialchars_decode(metadata('tour','Postscript Text')); ?>
 			</section>
 			

@@ -29,7 +29,7 @@ echo head($head); ?>
 enableContributionAjaxForm(<?php echo js_escape(url($contributionPath.'/type-form')); ?>);
 // ]]>
 </script>
-<div id="content">
+<div id="content" role="main">
 	<article class="page show">
 		<div id="primary">
 		<?php echo flash(); ?>

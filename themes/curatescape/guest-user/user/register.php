@@ -7,7 +7,7 @@ $pageTitle = get_option('guest_user_register_text') ? get_option('guest_user_reg
 echo head(array('bodyclass' => 'register', 'title' => $pageTitle));
 ?>
 
-<article class="page show">
+<article class="page show" id="content" role="main">
 	<h1><?php echo $pageTitle; ?></h1>
 	<div id='primary'>
 	<div id='capabilities'>
