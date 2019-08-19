@@ -37,6 +37,12 @@ jQuery(document).ready(function($) {
 			if(typeof $('a.social.twitter').attr('href') !== 'undefined'){
 				social.push('<a class="fa fa-twitter" target="_blank" rel="noopener" href="'+$('a.social.twitter').attr('href')+'"></a>');
 			}
+			if(typeof $('a.social.instagram').attr('href') !== 'undefined'){
+				social.push('<a class="fa fa-instagram" target="_blank" rel="noopener" href="'+$('a.social.instagram').attr('href')+'"></a>');
+			}
+			if(typeof $('a.social.youtube').attr('href') !== 'undefined'){
+				social.push('<a class="fa fa-youtube-play" target="_blank" rel="noopener" href="'+$('a.social.youtube').attr('href')+'"></a>');
+			}
 	
 		var appstores= new Array();
 			if(typeof $('a.appstore.ios').attr('href') !== 'undefined'){

@@ -27,6 +27,10 @@ a:focus,input[type="submit"]:focus,button:focus{
   position: absolute;
   width: 1px;
 }
+/*fixes horizontal scroll on mobile*/
+#page-content{
+	overflow-x: hidden;
+}
 /*fixes background shift on open mmenu*/
 .mm-wrapper_background .mm-page{
 	background: unset;
