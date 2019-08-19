@@ -1930,6 +1930,27 @@ article.page.file.show .item-file a{
 	text-align: center;
 	display: block;
 }
+.additional-elements{
+	padding: 1em;
+	border: 1px solid #ccc;
+	background: #fafafa;
+}
+.additional-elements .additional-element h4{
+	margin-bottom: .5em;
+	color: #555;
+}
+.additional-elements .additional-element:first-child h4{
+	margin-top: 0;
+}
+.additional-element-name {
+    margin-bottom: 0;
+    margin-top: 1em;
+}
+.additional-element .additional-element-value-container .additional-element-value:not(:first-child) {
+	margin-top: 1em;
+	padding-top: 1em;
+	border-top: 1px dashed #ccc;
+}
 
 /*! EXHIBITS */
 #exhibits.browse article h3{

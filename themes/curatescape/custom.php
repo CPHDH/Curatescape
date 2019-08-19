@@ -1521,6 +1521,38 @@ function mh_single_file_show($file=null){
 			return file_markup($file, array('imageSize'=>'fullsize'));
 		}
 }
+/*
+** display additional (non-core) file metadata in FILE TEMPLATE
+*/
+function mh_file_metadata_additional($file='file',$html=null){
+	$fields = all_element_texts($file,array('return_type'=>'array','show_element_sets'=>'Dublin Core')); 
+
+	if($fields['Dublin Core']){
+		
+		// Omit Primary DC Fields
+		$dc = array_filter($fields['Dublin Core'],function($key){
+			$omit=array('Description','Title','Creator','Date','Rights','Source');
+			return !(in_array($key, $omit));
+		},ARRAY_FILTER_USE_KEY); 
+		
+		// Output
+		foreach($dc as $dcname=>$values){
+			$html.='<div class="additional-element">';
+			$html.='<h4 class="additional-element-name">'.$dcname.'</h4>';
+			$html.='<div class="additional-element-value-container">';
+			foreach($values as $value){
+				$html.='<div class="additional-element-value">'.$value.'</div>';
+			}
+			$html.='</div>';
+			$html.='</div>';
+		}
+	}
+	
+	if($html){
+		echo '<h3>'.__('Additional Information').'</h3>';
+		echo '<div class="additional-elements">'.$html.'</div>';
+	}
+} 
 
 /*
 ** Checks file metadata record for embeddable version of video file

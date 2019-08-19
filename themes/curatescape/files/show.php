@@ -24,25 +24,29 @@
 	</header>
 
 	<div id="item-primary" class="show">
-			<hr>
-			<?php 
-			$record=get_record_by_id('Item', $file->item_id);
-			$title=metadata($record,array('Dublin Core','Title'));
-			echo __('This file appears in').': '.link_to_item( $title, array('class'=>'file-appears-in-item'), 'show', $record);	
-			?> 
-			<hr>
-			
-			<figure>
-				<?php echo mh_single_file_show($file); ?>
-				<?php if( $rights = metadata('file', array('Dublin Core','Rights')) ) echo '<figcaption class="rights-caption">'.$rights.'</figcaption>';?>
-			</figure>
-			
-			<div id="key-file-metadata">
-			<?php  
-			echo ($desc=metadata('file', array('Dublin Core','Description'))) ? '<p class="file-desc">'.$desc.'</p>' : null; 
-			?>	
-			</div>	
-	
+		<hr>
+		<?php 
+		$record=get_record_by_id('Item', $file->item_id);
+		$title=metadata($record,array('Dublin Core','Title'));
+		echo __('This file appears in').': '.link_to_item( $title, array('class'=>'file-appears-in-item'), 'show', $record);	
+		?> 
+		<hr>
+		
+		<figure>
+			<?php echo mh_single_file_show($file); ?>
+			<?php if( $rights = metadata('file', array('Dublin Core','Rights')) ) echo '<figcaption class="rights-caption">'.$rights.'</figcaption>';?>
+		</figure>
+		
+		<div id="key-file-metadata">
+		<?php  
+		echo ($desc=metadata('file', array('Dublin Core','Description'))) ? '<p class="file-desc">'.$desc.'</p>' : null; 
+		?>	
+		</div>	
+
+		<div class="additional_file_metadata">
+			<?php mh_file_metadata_additional();?>
+		</div>			
+
 		<hr>	
 		<?php echo __('This file appears in').': '.link_to_item( $title, array('class'=>'file-appears-in-item'), 'show', $record);?> 
 		<hr>

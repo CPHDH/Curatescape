@@ -12,7 +12,7 @@ echo head( array( 'maptype'=>$maptype,'title' => ''.$label.' | '.$tourTitle, 'co
 <div id="content">
 	<section class="map">
 		<h2 hidden class="hidden"><?php echo __('Map for %s',mh_tour_label('singular'));?></h2>
-		<nav aria-label="Skip Interactive Map"><a id="skip-map" href="#tour-content">Skip Interactive Map</a></nav>
+		<nav aria-label="<?php echo __('Skip Interactive Map');?>"><a id="skip-map" href="#tour-content"><?php echo __('Skip Interactive Map');?></a></nav>
 		<figure>
 			<?php echo mh_map_type($maptype,null,$tour); ?>
 			<?php echo mh_map_actions(null,$tour);?>

@@ -49,7 +49,7 @@ echo head(array('maptype'=>$maptype,'title'=>$title,'bodyid'=>'items','bodyclass
 	
 <section class="map">
 	<h2 hidden class="hidden"><?php echo __('Map');?></h2>
-	<nav aria-label="Skip Interactive Map"><a id="skip-map" href="#primary">Skip Interactive Map</a></nav>
+	<nav aria-label="<?php echo __('Skip Interactive Map');?>"><a id="skip-map" href="#primary"><?php echo __('Skip Interactive Map');?></a></nav>
 	<figure>
 		<?php echo mh_map_type($maptype,null,null); ?>
 	</figure>

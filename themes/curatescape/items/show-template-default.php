@@ -41,7 +41,7 @@ echo head(array(
 	<?php if(mh_get_item_json($item)): ?>
 	<section class="map">
 		<h2>Map</h2>
-		<nav aria-label="Skip Interactive Map"><a id="skip-map" href="#map-actions-anchor">Skip Interactive Map</a></nav>
+		<nav aria-label="<?php echo __('Skip Interactive Map');?>"><a id="skip-map" href="#map-actions-anchor"><?php echo __('Skip Interactive Map');?></a></nav>
 		<figure>
 			<?php echo mh_map_type($maptype,$item); ?>
 			<?php echo mh_map_actions($item);?>
