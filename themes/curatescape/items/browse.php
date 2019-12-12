@@ -74,9 +74,7 @@ echo head(array('maptype'=>$maptype,'title'=>$title,'bodyid'=>'items','bodyclass
 			<?php 
 			foreach(loop('Items') as $item): 
 				$item_image=null;
-				$description = mh_the_text($item,array('snippet'=>250));
 				$tags=tag_string(get_current_record('item') , url('items/browse'));
-				$titlelink=link_to_item(metadata($item, array('Dublin Core', 'Title')), array('class'=>'permalink'));
 				$hasImage=metadata($item, 'has thumbnail');
 				if ($hasImage){
 						preg_match('/<img(.*)src(.*)=(.*)"(.*)"/U', item_image('fullsize'), $result);
@@ -86,15 +84,13 @@ echo head(array('maptype'=>$maptype,'title'=>$title,'bodyid'=>'items','bodyclass
 				?>
 				<article class="item-result <?php echo $hasImage ? 'has-image' : null;?>">
 					<?php echo isset($item_image) ? link_to_item('<span class="item-image" style="background-image:url('.$item_image.');" role="img" aria-label="'.metadata($item, array('Dublin Core', 'Title')).'"></span>',array('title'=>metadata($item,array('Dublin Core','Title')))) : null; ?>
-					<h3><?php echo $titlelink; ?></h3>
+					<h3><?php echo mh_the_title_expanded($item); ?></h3>
 					<div class="browse-meta-top"><?php echo mh_the_byline($item,false);?></div>
 					
 					
-					<?php if ($description): ?>
-	    				<div class="item-description">
-	    					<?php echo strip_tags($description); ?>
-	    				</div>
-					<?php endif; ?>
+    				<div class="item-description">
+    					<?php echo mh_snippet_expanded($item); ?>
+    				</div>
 					
 					<?php if(false): /* TODO: make a theme option */ ?>
 						<div class="item-meta-browse">

@@ -62,7 +62,7 @@ echo head( array( 'maptype'=>$maptype,'title' => ''.$label.' | '.$tourTitle, 'co
 								</div>
 						        <article class="item-result <?php echo $hasImage ? 'has-image' : null;?>">
 									<h3><a href="<?php echo url('/') ?>items/show/<?php echo $itemID.'?tour='.tour( 'id' ).'&index='.($i-1).''; ?>">
-										<?php echo metadata( $tourItem, array('Dublin Core', 'Title') ); ?>
+										<?php echo strip_tags(metadata( $tourItem, array('Dublin Core', 'Title') )); ?>
 									</a></h3>
 										         
 							        <div class="item-description"><?php echo snippet(mh_the_text($tourItem),0,250); ?></div>

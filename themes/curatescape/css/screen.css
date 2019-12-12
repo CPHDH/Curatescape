@@ -1771,7 +1771,8 @@ section#about + section{
 	margin-bottom: 0;
 }
 body#tours.browse article span.total,
-#home-tours article span.total{
+#home-tours article span.total,
+body#search article span.total{
 	font-weight: 600;
 }
 

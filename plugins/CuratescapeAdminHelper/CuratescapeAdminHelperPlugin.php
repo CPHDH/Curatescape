@@ -6,7 +6,7 @@ class CuratescapeAdminHelperPlugin extends Omeka_Plugin_AbstractPlugin
 {	
 	
     protected $_hooks = array(
-    	'admin_items_batch_edit_form', 
+    	'admin_items_batch_edit_form',
     	'items_batch_edit_custom',
     	'install',
     	'admin_head',
@@ -14,6 +14,7 @@ class CuratescapeAdminHelperPlugin extends Omeka_Plugin_AbstractPlugin
     	'config',
     	'config_form',
     	'uninstall',
+    	'upgrade',
     	);
 
     protected $_options = array(
@@ -25,6 +26,7 @@ class CuratescapeAdminHelperPlugin extends Omeka_Plugin_AbstractPlugin
         'cah_enable_file_edit_links' => 1,
         'cah_theme_options_accordion'=>1,
         'cah_theme_options_batch_convert'=>0,
+        'cah_hide_add_input_where_unsupported'=>1,
     );
        
         
@@ -38,7 +40,8 @@ class CuratescapeAdminHelperPlugin extends Omeka_Plugin_AbstractPlugin
         set_option('cah_enable_item_file_toggle_dc', (int)(boolean)$_POST['cah_enable_item_file_toggle_dc']);
         set_option('cah_enable_file_edit_links', (int)(boolean)$_POST['cah_enable_file_edit_links']);  
         set_option('cah_theme_options_accordion', (int)(boolean)$_POST['cah_theme_options_accordion']);
-        set_option('cah_theme_options_batch_convert', (int)(boolean)$_POST['cah_theme_options_batch_convert']);    
+        set_option('cah_theme_options_batch_convert', (int)(boolean)$_POST['cah_theme_options_batch_convert']);   
+        set_option('cah_hide_add_input_where_unsupported', (int)(boolean)$_POST['cah_hide_add_input_where_unsupported']);    
     }
 
     public function hookConfigForm()
@@ -71,6 +74,12 @@ class CuratescapeAdminHelperPlugin extends Omeka_Plugin_AbstractPlugin
 		// install scripts: create custom item type and elements
 		require dirname(__FILE__) . '/functions/install.php';
 		
+	}
+	
+	public function hookUpgrade($args){
+        if (version_compare($args['old_version'], '1.1', '<')) {
+            set_option('cah_hide_add_input_where_unsupported', 1);
+        }		
 	}
     
     public function hookAdminItemsBatchEditForm(){

@@ -15,6 +15,7 @@
 	        	array('name'=>'cah_enable_item_file_tab_notes','label'=>__('Helper Notes'),'explanation'=>__('Display Curatescape-related instructions, tips and other notes on the item and file forms.')),
 	        	array('name'=>'cah_enable_item_file_toggle_dc','label'=>__('Toggle Metadata'),'explanation'=>__('By default, only display Curatescape-related metadata fields on the item and file forms. (Other fields are still accessible with a single click.)')),
 	        	array('name'=>'cah_enable_file_edit_links','label'=>__('File Edit Links'),'explanation'=>__('Display "edit" links below each file on item records.')),
+	        	array('name'=>'cah_hide_add_input_where_unsupported','label'=>__('Hide Add Input Buttons'),'explanation'=>__('Show Add Input buttons only on fields that are supported by the Curatescape theme.')),
 	        	),
 	        
 	        __('Theme Option settings')=>
@@ -53,7 +54,4 @@ foreach($options as $section_title=>$infos){
     <?php } ?>
     
 </div>
-<?php
-}    
-    
-?>
+<?php } ?>

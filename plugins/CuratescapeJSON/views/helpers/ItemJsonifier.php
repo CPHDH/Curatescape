@@ -62,6 +62,7 @@ class CuratescapeJSON_View_Helper_ItemJsonifier extends Zend_View_Helper_Abstrac
 			$itemMetadata = array(
 				'id'          => $item->id,
 				'featured'    => $item->featured,
+				'modified'	  => $item->modified,
 				'latitude'    => $location[ 'latitude' ],
 				'longitude'   => $location[ 'longitude' ],
 				'title'       => $titles[0] ? trim(html_entity_decode( strip_formatting( $titles[0] ) )) : 'Untitled',

@@ -246,6 +246,12 @@ function mh_global_header($html=null){
 <?php
 }
 
+/*
+** Sanitize user-input to prevent bad control character messages
+*/	
+function mh_json_plaintextify($text=null){
+	return trim(addslashes(preg_replace( "/\r|\n/", " ",strip_tags( $text ))));
+}
 
 /*
 ** Single Tour JSON
@@ -257,13 +263,14 @@ function mh_get_tour_json($tour=null){
 		foreach($tour->Items as $item){
 			$location = get_db()->getTable( 'Location' )->findLocationByItem( $item, true );
 			$address = ( element_exists('Item Type Metadata','Street Address') ) 
-				? preg_replace( "/\r|\n/", " ",strip_tags(metadata( $item, array( 'Item Type Metadata','Street Address' )) ))
-				: null;
+				? metadata( $item, array( 'Item Type Metadata','Street Address' ))
+				: null;		
+			$title=metadata( $item, array( 'Dublin Core', 'Title' ));
 			if($location && $item->public){
 				$tourItems[] = array(
 					'id'		=> $item->id,
-					'title'		=> trim(addslashes(metadata($item,array('Dublin Core','Title')))),
-					'address'	=> trim(str_replace('\'','',$address)),
+					'title'		=> mh_json_plaintextify($title),
+					'address'	=> mh_json_plaintextify($address),
 					'latitude'	=> $location[ 'latitude' ],
 					'longitude'	=> $location[ 'longitude' ],
 					);
@@ -286,11 +293,11 @@ function mh_get_item_json($item=null){
 			
 	if($item){
 		$location = get_db()->getTable( 'Location' )->findLocationByItem( $item, true );
-		$address= ( element_exists('Item Type Metadata','Street Address') ) 
-			? preg_replace( "/\r|\n/", " ", strip_tags(metadata( 'item', array( 'Item Type Metadata','Street Address' )) ))  
-			: null;
+		$address = ( element_exists('Item Type Metadata','Street Address') ) 
+			? metadata( $item, array( 'Item Type Metadata','Street Address' ))
+			: null;		
+		$title=metadata( $item, array( 'Dublin Core', 'Title' ));
 		$accessinfo= ( element_exists('Item Type Metadata','Access Information') && metadata($item, array('Item Type Metadata','Access Information')) ) ? true : false;
-		$title=html_entity_decode( strip_formatting( metadata( 'item', array( 'Dublin Core', 'Title' ))));
 		if(metadata($item, 'has thumbnail')){
 			$thumbnail = (preg_match('/<img(.*)src(.*)=(.*)"(.*)"/U', item_image('square_thumbnail'), $result)) ? array_pop($result) : null;
 		}else{ 
@@ -302,8 +309,8 @@ function mh_get_item_json($item=null){
 				'featured'    => $item->featured,
 				'latitude'    => $location[ 'latitude' ],
 				'longitude'   => $location[ 'longitude' ],
-				'title'       => trim(addslashes($title)),
-				'address'	  => addslashes($address),
+				'title'       => mh_json_plaintextify($title),
+				'address'	  => mh_json_plaintextify($address),
 				'accessinfo'  => $accessinfo,
 				'thumbnail'   => $thumbnail,
 			);		
@@ -416,17 +423,7 @@ function mh_display_map($type=null,$item=null,$tour=null){
 		
 		// End PHP Variables
 		
-		var isSecure = window.location.protocol == 'https:' ? true : false;
-		function getChromeVersion () {  
-			// Chrome v.50+ requires secure origins for geolocation   
-		    var raw = navigator.userAgent.match(/Chrom(e|ium)\/([0-9]+)\./);
-		    return raw ? parseInt(raw[2], 10) : 0; // return 0 for not-Chrome
-		}
-		function getSafariVersion () {  
-			// Safari v.9.3+ requires secure origins for geolocation   
-		    var raw = navigator.userAgent.match(/Safari\/([-+]?[0-9]*\.?[0-9]+)\./);
-		    return raw ? parseFloat(raw[1]) : 0; // return 0 for not-Safari
-		}		
+		var isSecure = window.location.protocol == 'https:' ? true : false;	
 
 		jQuery(document).ready(function() {
 			loadCSS( leafletcss );
@@ -488,8 +485,8 @@ function mh_display_map($type=null,$item=null,$tour=null){
 					
 					
 					// Geolocation controls
-					if( (getChromeVersion()>=50 && !isSecure) || (getSafariVersion()>=601.6 && !isSecure) || !navigator.geolocation){			
-						// console.warn('Geolocation is not available over insecure origins on this browser.');
+					if( !isSecure || !navigator.geolocation){			
+						console.warn('Geolocation is not available over insecure origins on this browser.');
 					}else{
 						var geolocationControl = L.control({position: 'topleft'});
 						geolocationControl.onAdd = function (map) {
@@ -711,7 +708,11 @@ function mh_display_map($type=null,$item=null,$tour=null){
 								alert(errorMessage);
 							}, 
 							options);
-					});			
+					});	
+					
+					// enable mouse scrollwheel zoom if the user has interacted with the map
+					map.once('focus', function() { map.scrollWheelZoom.enable(); });					
+							
 				}
 
 
@@ -922,7 +923,7 @@ function mh_the_text($item='item',$options=array()){
 ** Title
 */
 function mh_the_title($item='item'){
-	return '<h1 class="title">'.metadata($item, array('Dublin Core', 'Title'), array('index'=>0)).'</h1>';
+	return '<h1 class="title">'.strip_tags(metadata($item, array('Dublin Core', 'Title')), array('index'=>0)).'</h1>';
 }
 
 
@@ -938,16 +939,39 @@ function mh_the_subtitle($item='item'){
 	return  $subtitle ? '<h2 class="subtitle">'.$subtitle.'</h2>' : ($dc_title2!=='[Untitled]' ? '<h2 class="subtitle">'.$dc_title2.'</h2>' : null);
 }
 
-
 /*
-** lede  
+** Lede  
 */
 function mh_the_lede($item='item'){
 	if (element_exists('Item Type Metadata','Lede')){
 		$lede=metadata($item,array('Item Type Metadata', 'Lede'));
-		return  $lede ? '<div class="lede">'.$lede.'</div>' : null;
+		return  $lede ? '<div class="lede">'.strip_tags($lede,'<a><em><i><u><b><strong><strike>').'</div>' : null;
 	}
 		
+}
+
+/*
+** Title + Subtitle (for search/browse/home)
+*/
+function mh_the_title_expanded($item='item'){
+	$title=strip_tags(metadata($item, array('Dublin Core', 'Title')));
+	if(get_theme_option('subtitle_on_browse') && element_exists('Item Type Metadata','Subtitle')){
+		$subtitle = ' – '.strip_tags(metadata($item,array('Item Type Metadata','Subtitle')));
+		$title = $title.$subtitle;
+	}
+	return link_to($item,'show',$title, array('class'=>'permalink'));
+}
+
+/*
+** Snippet: Lede + Story (for search/browse/home)
+*/
+function mh_snippet_expanded($item='item'){
+	$story=element_exists('Item Type Metadata','Story') ? metadata($item,array('Item Type Metadata', 'Story'),array('snippet'=>250)) : null;
+	if(get_theme_option('lede_on_browse') && element_exists('Item Type Metadata','Lede')){
+		$lede = strip_tags(metadata($item,array('Item Type Metadata','Lede'))).' ';
+		$story = $lede.$story;
+	}
+	return snippet($story,0,250,'&hellip;');
 }
 
 
@@ -1729,13 +1753,14 @@ function mh_tour_preview($s){
 	set_current_record( 'tour', $record );
 	$html.=  '<article>';
 	$html.=  '<h3 class="tour-result-title"><a href="'.record_url($record, 'show').'">'.($s['title'] ? $s['title'] : '[Unknown]').'</a></h3>';
-	$html.=  '<span class="tour-meta-browse">';
+	$html.=  '<div class="tour-meta-browse browse-meta-top byline">';
+	$html.= '<span class="total">'.mh_tour_total_items($record).' '.__('Locations').'</span> ~ ';
 	if(tour('Credits') ){
-		$html.=  __('%1s curated by: %2s', mh_tour_label('singular'),tour('Credits') ).' | ';
+		$html.=  __('%1s curated by %2s', mh_tour_label('singular'),tour('Credits') );
 	}elseif(get_theme_option('show_author') == true){
-		$html.=  __('%1s curated by: The %2s Team',mh_tour_label('singular'),option('site_title')).' | ';
+		$html.=  __('%1s curated by The %2s Team',mh_tour_label('singular'),option('site_title'));
 	}		
-	$html.=  mh_tour_total_items($record).' '.__('Locations').'</span><br>';
+	$html.=  '</div>';
 	$html.=  ($text=strip_tags(html_entity_decode(tour('Description')))) ? '<span class="tour-result-snippet">'.snippet($text,0,300).'</span>' : null;
 	if(get_theme_option('show_tour_item_thumbs') == true){
 		$html.=  '<span class="tour-thumbs-container">';
@@ -1827,8 +1852,8 @@ function mh_display_homepage_tours($num=5, $scope='featured'){
 }
 
 function mh_hero_item($item){
-			$itemTitle = metadata($item, array('Dublin Core', 'Title'));
-			$itemDescription = mh_the_text($item,array('snippet'=>200));
+			$itemTitle = mh_the_title_expanded($item);
+			$itemDescription = mh_snippet_expanded($item);
 			$class=get_theme_option('featured_tint')==1 ? 'tint' : 'no-tint';
 			$html=null;
 	
@@ -2151,16 +2176,16 @@ function mh_random_or_recent($mode='recent',$num=6){
 		$html.='<div class="browse-items flex">';
 		foreach(loop('Items') as $item){
 			$item_image=null;
-			$description = mh_the_text($item,array('snippet'=>250));
+			$description = mh_snippet_expanded($item);
 			$tags=tag_string(get_current_record('item') , url('items/browse'));
-			$titlelink=link_to_item(metadata($item, array('Dublin Core', 'Title')), array('class'=>'permalink'));
+			$titlelink=link_to_item(mh_the_title_expanded($item), array('class'=>'permalink'));
 			$hasImage=metadata($item, 'has thumbnail');
 			if ($hasImage){
 					preg_match('/<img(.*)src(.*)=(.*)"(.*)"/U', item_image('fullsize'), $result);
 					$item_image = array_pop($result);				
 			}
 
-			$html.='<article class="item-result'.( $hasImage ? 'has-image' : null ).'">';
+			$html.='<article class="item-result'.( $hasImage ? ' has-image' : null ).'">';
 				$html.=( isset($item_image) ? link_to_item('<span class="item-image" style="background-image:url('.$item_image.');" role="img" aria-label="'.metadata($item, array('Dublin Core', 'Title')).'"></span>',array('title'=>metadata($item,array('Dublin Core','Title')))) : null );
 				$html.='<h3>'.$titlelink.'</h3>';
 				$html.='<div class="browse-meta-top">'.mh_the_byline($item,false).'</div>';
@@ -2363,7 +2388,7 @@ function mh_about($text=null){
 		// If the 'About Text' option has a value, use it. Otherwise, use default text
 		$text =
 			get_theme_option('about') ?
-			strip_tags(get_theme_option('about'),'<a><em><i><cite><strong><bold><u>') :
+			strip_tags(get_theme_option('about'),'<a><em><i><cite><strong><b><u>') :
 			__('%s is powered by <a href="http://omeka.org/">Omeka</a> + <a href="http://curatescape.org/">Curatescape</a>, a humanities-centered web and mobile framework available for both Android and iOS devices.',option('site_title'));
 	}
 	return $text;

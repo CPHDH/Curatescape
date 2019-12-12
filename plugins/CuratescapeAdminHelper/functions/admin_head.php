@@ -2,6 +2,16 @@
 $story_container='div#element-'.cah_get_element_id('Item Type Metadata','Story');
 ?>
 <style>
+	<?php echo $story_container;?> textarea{
+		height:25em;
+	}
+	.curatescape-recommended{}
+	
+	p.cah-helper span.divider{
+		display: block;
+		margin: 15px 0;
+		border-top: 1px dashed #ccc;		
+	}
 	.fa{
 		font-family:"FontAwesome"
 		}
@@ -30,24 +40,23 @@ $story_container='div#element-'.cah_get_element_id('Item Type Metadata','Story')
 		font-style: normal;
 	}	
 	.tab-info{
-		background: #bbb;
+		background: #777;
 		color: #fff;
 		padding: .25em .5em .25em .25em;
 		float: right;	
 		display: inline-block;	
+		border-radius: 0 0 0 7px;
 	}	
-	<?php echo $story_container;?> textarea{
-		height:25em;
-	}
 	p.cah-helper{
-		font-style: italic;
 		padding:1em;
-		background:#fafafa;
+		background:#F1F8E9;
 		margin-bottom: 1.5em;
 		margin-top: 0;
 		border-style: solid;
-		border-color: #bbb;
+		border-color: #777;
+		color: #222;
 		border-width: 7px 1px 1px;
+		border-radius: 3px;
 	}
 	.element-set-description{
 		display: none !important;
@@ -55,13 +64,14 @@ $story_container='div#element-'.cah_get_element_id('Item Type Metadata','Story')
 	#dc-reveal {
 	    clear: both;
 	    cursor: pointer;
-	    text-align: right;
+	    text-align: center;
 	    color: #FFF;
-	    background: #BBB none repeat scroll 0% 0%;
-	    display: inline-block;
-	    float: right;
-	    padding: 0.25em 0.5em;
+	    background: #777;
+	    display: block;
+	    padding: 0.75em 0.5em;
 	    font-style: italic;
+	    border-radius:7px;
+	    margin-bottom: 1em;
 	}
 	a:link.cah-file-edit{
 		text-align: center;

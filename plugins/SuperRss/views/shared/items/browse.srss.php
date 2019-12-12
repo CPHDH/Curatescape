@@ -52,7 +52,7 @@ foreach( loop( 'items' ) as $item )
 	$entry->setDateModified(strtotime($item->modified));
 	$entry->setDateCreated(strtotime($item->added));
 
-	$entry->setContent($content);
+	$entry->setDescription($content);
 
 	$feed->addEntry($entry);
 }
