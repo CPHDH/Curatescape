@@ -2328,8 +2328,8 @@ function mh_font_config(){
 		$config="fontdeck: { id: '".$fd."' }";
 	}elseif($fdc=get_theme_option('fonts_dot_com')){
 		$config="monotype: { projectId: '".$fdc."' }";
-	}elseif($fdc=get_theme_option('google_fonts')){
-		$config="google: { families: [".$fdc."] }";		
+	}elseif($gf=get_theme_option('google_fonts')){
+		$config="google: { families: [".$gf."] }";		
 	}else{
 		$config="google: { families: [ 'Raleway:latin', 'Playfair+Display:latin' ] }";
 	}
@@ -2347,14 +2347,12 @@ function mh_web_font_loader(){ ?>
 	WebFontConfig = {
 		<?php echo mh_font_config(); ?>
 	};
-	(function() {
-		var wf = document.createElement('script');
-		wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
-		'://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
-		wf.async = 'true';
-		var s = document.getElementsByTagName('script')[0];
-		s.parentNode.insertBefore(wf, s);
-	})(); 
+   (function(d) {
+      var wf = d.createElement('script'), s = d.scripts[0];
+      wf.src = 'https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js';
+      wf.async = true;
+      s.parentNode.insertBefore(wf, s);
+   })(document);
 </script>	
 <?php }
 
