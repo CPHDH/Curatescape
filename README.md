@@ -1,6 +1,6 @@
 # About Curatescape
 
-Curatescape is a set of themes and plugins for the [Omeka](http://omeka.org) CMS, and native client applications for Android and iOS devices. For more information, visit [curatescape.org](https://curatescape.org/) or view the [GitHub project wiki](https://github.com/CPHDH/Curatescape/wiki).
+Curatescape is a set of themes and plugins for the [Omeka Classic](https://omeka.org/classic) CMS, and native client applications for Android and iOS devices. For more information, visit [curatescape.org](https://curatescape.org/) or view the [GitHub project wiki](https://github.com/CPHDH/Curatescape/wiki).
 
 # Server-side Setup
 
@@ -43,3 +43,4 @@ The [Curatescape team](http://curatescape.org/about/our-team/) and the [Center f
 - [Stamen Design](https://stamen.com/) and [Carto](https://carto.com/) for sharing their beautiful base maps
 - [Github](https://github.com) for [supporting educational organizations](https://education.github.com/)
 - [Browser Stack](https://www.browserstack.com/) for providing cross-browser testing tools for this open source project
+- [Mapbox Community](https://www.mapbox.com/community/) for supporting our in-app usage of [Mapbox GL](https://docs.mapbox.com/mapbox-gl-js/api/)
