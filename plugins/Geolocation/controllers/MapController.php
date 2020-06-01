@@ -13,7 +13,7 @@ class Geolocation_MapController extends Omeka_Controller_AbstractActionControlle
         $locationTable = $this->_helper->db->getTable('Location');
         
         $params = $this->getAllParams();
-        $params['only_map_items'] = true;
+        $params['geolocation-mapped'] = true;
         $limit = (int) get_option('geolocation_per_page');
         $currentPage = $this->getParam('page', 1);
 

@@ -1,0 +1,10 @@
+[main]
+host = https://www.transifex.com
+
+[omeka.plugin-simplevocab]
+file_filter = languages/<lang>.po
+source_file = languages/template.pot
+source_lang = en
+type = PO
+minimum_perc = 10
+

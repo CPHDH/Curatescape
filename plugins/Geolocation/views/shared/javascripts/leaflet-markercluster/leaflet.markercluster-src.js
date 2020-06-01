@@ -1,5 +1,5 @@
 /*
- * Leaflet.markercluster 1.3.0+master.5b36e91,
+ * Leaflet.markercluster 1.4.1+master.37ab9a2,
  * Provides Beautiful Animated Marker Clustering functionality for Leaflet, a JS library for interactive maps.
  * https://github.com/Leaflet/Leaflet.markercluster
  * (c) 2012-2017, Dave Leaver, smartrak
@@ -428,6 +428,7 @@ var MarkerClusterGroup = L.MarkerClusterGroup = L.FeatureGroup.extend({
 		//If we aren't on the map (yet), blow away the markers we know of
 		if (!this._map) {
 			this._needsClustering = [];
+			this._needsRemoving = [];
 			delete this._gridClusters;
 			delete this._gridUnclustered;
 		}
@@ -719,10 +720,11 @@ var MarkerClusterGroup = L.MarkerClusterGroup = L.FeatureGroup.extend({
 	},
 
 	_childMarkerDragEnd: function (e) {
-		if (e.target.__dragStart) {
-			this._moveChild(e.target, e.target.__dragStart, e.target._latlng);
-		}
+		var dragStart = e.target.__dragStart;
 		delete e.target.__dragStart;
+		if (dragStart) {
+			this._moveChild(e.target, dragStart, e.target._latlng);
+		}		
 	},
 
 
@@ -1411,7 +1413,7 @@ var MarkerCluster = L.MarkerCluster = L.Marker.extend({
 	},
 
 	//Recursively retrieve all child markers of this cluster
-	getAllChildMarkers: function (storageArray) {
+	getAllChildMarkers: function (storageArray, ignoreDraggedMarker) {
 		storageArray = storageArray || [];
 
 		for (var i = this._childClusters.length - 1; i >= 0; i--) {
@@ -1419,6 +1421,9 @@ var MarkerCluster = L.MarkerCluster = L.Marker.extend({
 		}
 
 		for (var j = this._markers.length - 1; j >= 0; j--) {
+			if (ignoreDraggedMarker && this._markers[j].__dragStart) {
+				continue;
+			}
 			storageArray.push(this._markers[j]);
 		}
 
@@ -1769,6 +1774,9 @@ var MarkerCluster = L.MarkerCluster = L.Marker.extend({
 		if (zoom < zoomLevelToStart || zoom < zoomLevelToStop) {
 			for (i = childClusters.length - 1; i >= 0; i--) {
 				c = childClusters[i];
+				if (c._boundsNeedUpdate) {
+					c._recalculateBounds();
+				}
 				if (boundsToApplyTo.intersects(c._bounds)) {
 					c._recursively(boundsToApplyTo, zoomLevelToStart, zoomLevelToStop, runAtEveryLevel, runAtBottomLevel);
 				}
@@ -1787,24 +1795,21 @@ var MarkerCluster = L.MarkerCluster = L.Marker.extend({
 * Extends L.Marker to include two extra methods: clusterHide and clusterShow.
 * 
 * They work as setOpacity(0) and setOpacity(1) respectively, but
-* they will remember the marker's opacity when hiding and showing it again.
+* don't overwrite the options.opacity
 * 
 */
 
-
 L.Marker.include({
-	
 	clusterHide: function () {
-		this.options.opacityWhenUnclustered = this.options.opacity || 1;
-		return this.setOpacity(0);
+		var backup = this.options.opacity;
+		this.setOpacity(0);
+		this.options.opacity = backup;
+		return this;
 	},
 	
 	clusterShow: function () {
-		var ret = this.setOpacity(this.options.opacity || this.options.opacityWhenUnclustered);
-		delete this.options.opacityWhenUnclustered;
-		return ret;
+		return this.setOpacity(this.options.opacity);
 	}
-	
 });
 
 L.DistanceGrid = function (cellSize) {
@@ -2112,7 +2117,7 @@ L.MarkerCluster.include({
 			return;
 		}
 
-		var childMarkers = this.getAllChildMarkers(),
+		var childMarkers = this.getAllChildMarkers(null, true),
 			group = this._group,
 			map = group._map,
 			center = map.latLngToLayerPoint(this._latlng),
@@ -2190,7 +2195,7 @@ L.MarkerCluster.include({
 		var group = this._group,
 			map = group._map,
 			fg = group._featureGroup,
-			childMarkers = this.getAllChildMarkers(),
+			childMarkers = this.getAllChildMarkers(null, true),
 			m, i;
 
 		group._ignoreMove = true;
@@ -2383,7 +2388,7 @@ L.MarkerCluster.include({
 			map = group._map,
 			fg = group._featureGroup,
 			thisLayerPos = zoomDetails ? map._latLngToNewLayerPoint(this._latlng, zoomDetails.zoom, zoomDetails.center) : map.latLngToLayerPoint(this._latlng),
-			childMarkers = this.getAllChildMarkers(),
+			childMarkers = this.getAllChildMarkers(null, true),
 			svg = L.Path.SVG,
 			m, i, leg, legPath, legLength, nonAnimatable;
 

@@ -17,12 +17,15 @@ $options = $this->geolocationMapOptions($options);
         <button type="button" name="geolocation_find_location_by_address" id="geolocation_find_location_by_address"><?php echo __('Find'); ?></button>
     </div>
 </div>
-<div id="omeka-map-form"></div>
+<div id="omeka-map-form" class="geolocation-map"></div>
 
-<?php echo js_tag('geocoder'); ?>
+<?php
+echo js_tag('geocoder');
+$geocoder = json_encode(get_option('geolocation_geocoder'));
+?>
 <script type="text/javascript">
 var omekaGeolocationForm = new OmekaMapForm('omeka-map-form', <?php echo $center; ?>, <?php echo $options; ?>);
-var geocoder = new OmekaGeocoder('photon');
+var geocoder = new OmekaGeocoder(<?php echo $geocoder; ?>);
 jQuery(document).on('omeka:tabselected', function () {
     omekaGeolocationForm.resize();
 });

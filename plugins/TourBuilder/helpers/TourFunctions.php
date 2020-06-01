@@ -187,7 +187,7 @@ function tour_item_id($tour,$i){
 ** Adds a prev/info/next link to items/show for navigating tour locations
 */
 
-function tour_nav( $html=null, $label='Tour' )
+function tour_nav( $html=null, $label='Tour', $alwaysShow=false, $item_id=null )
 {
 	$intlLabel = __($label);
 
@@ -240,8 +240,16 @@ function tour_nav( $html=null, $label='Tour' )
 
 		$html .= '</span>'
 			. '</div>';
-
+			
 		return $html;
+	}else{
+		if($alwaysShow && $item_id){
+			// theme designers can set $alwaysShow to true and $item_id to [an item id] to show the tour info for all items if it exists (e.g. for sites where all items are part of a tour)
+			$html .= cta_tour_for_item($item_id,$intlLabel);
+			return $html;			
+		}else{
+			return null;
+		}
 	}
 }
 
@@ -270,6 +278,31 @@ function tours_for_item($item_id=null,$heading=null){
 				$html.='</a></li>';
 			}
 			$html.='</ul></div>';
+		}
+		return $html;
+	}
+}
+
+/* generate a call to action prompting users to navigate from an item page to the tour page (must be enabled at theme level by setting optional params in tour_nav() function) */
+function cta_tour_for_item($item_id=null,$intlLabel='Tour'){
+
+	if(is_int($item_id)){
+		$db = get_db();
+		$prefix=$db->prefix;
+		$select = $db->select()
+		->from(array('ti' => $prefix.'tour_items')) // SELECT * FROM omeka_tour_items as ti
+		->join(array('t' => $prefix.'tours'),    	// INNER JOIN omeka_tours as t
+			'ti.tour_id = t.id')      				// ON ti.tour_id = t.id
+		->where("item_id=$item_id AND public=1");   // WHERE item_id=$item_id
+		$q = $select->query();
+		$results = $q->fetchAll();
+
+		$html=null;
+		if($results){
+			$html .= '<div class="tour-nav-cta">';
+			$html .= '<p>'.__('This is an entry from a multi-part %1s:<br><strong><em>%2s</em></strong>',strtolower($intlLabel),$results[0]['title']).'</p>';
+			$html .= '<a class="button button-primary" href="/tours/show/'.$results[0]['id'].'" title="'.$results[0]['title'].'">'.__('View %s Info',$intlLabel).'</a>';
+			$html .= '</div>';
 		}
 		return $html;
 	}

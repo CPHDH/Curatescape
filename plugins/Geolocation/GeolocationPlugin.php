@@ -4,6 +4,7 @@ class GeolocationPlugin extends Omeka_Plugin_AbstractPlugin
 {
     const DEFAULT_LOCATIONS_PER_PAGE = 10;
     const DEFAULT_BASEMAP = 'CartoDB.Voyager';
+    const DEFAULT_GEOCODER = 'nominatim';
 
     protected $_hooks = array(
         'install',
@@ -63,6 +64,7 @@ class GeolocationPlugin extends Omeka_Plugin_AbstractPlugin
         set_option('geolocation_default_radius', 10);
         set_option('geolocation_use_metric_distances', '0');
         set_option('geolocation_basemap', self::DEFAULT_BASEMAP);
+        set_option('geolocation_geocoder', self::DEFAULT_GEOCODER);
     }
 
     public function hookUninstall()
@@ -77,6 +79,7 @@ class GeolocationPlugin extends Omeka_Plugin_AbstractPlugin
         delete_option('geolocation_link_to_nav');
         delete_option('geolocation_default_radius');
         delete_option('geolocation_basemap');
+        delete_option('geolocation_geocoder');
         delete_option('geolocation_auto_fit_browse');
         delete_option('geolocation_mapbox_access_token');
         delete_option('geolocation_mapbox_map_id');
@@ -112,6 +115,13 @@ class GeolocationPlugin extends Omeka_Plugin_AbstractPlugin
             delete_option('geolocation_api_key');
             delete_option('geolocation_map_type');
             set_option('geolocation_basemap', self::DEFAULT_BASEMAP);
+        }
+        if (version_compare($args['old_version'], '3.1', '<')) {
+            set_option('geolocation_geocoder', self::DEFAULT_GEOCODER);
+
+            if (get_option('geolocation_basemap') == 'OpenStreetMap.BlackAndWhite') {
+                set_option('geolocation_basemap', self::DEFAULT_BASEMAP);
+            }
         }
     }
 
@@ -151,6 +161,7 @@ class GeolocationPlugin extends Omeka_Plugin_AbstractPlugin
         set_option('geolocation_mapbox_access_token', $_POST['mapbox_access_token']);
         set_option('geolocation_mapbox_map_id', $_POST['mapbox_map_id']);
         set_option('geolocation_cluster', $_POST['cluster']);
+        set_option('geolocation_geocoder', $_POST['geocoder']);
     }
 
     public function hookDefineAcl($args)
@@ -191,14 +202,17 @@ class GeolocationPlugin extends Omeka_Plugin_AbstractPlugin
 
     private function _head()
     {
-        queue_css_file('leaflet/leaflet', null, null, 'javascripts');
-        queue_css_file('geolocation-marker');
-        queue_js_file(array('leaflet/leaflet', 'leaflet/leaflet-providers', 'map'));
+        $pluginLoader = Zend_Registry::get('plugin_loader');
+        $geolocation = $pluginLoader->getPlugin('Geolocation');
+        $version = $geolocation->getIniVersion();
+        queue_css_file('leaflet/leaflet', null, null, 'javascripts', $version);
+        queue_css_file('geolocation-marker', null, null, 'css', $version);
+        queue_js_file(array('leaflet/leaflet', 'leaflet/leaflet-providers', 'map'), 'javascripts', array(), $version);
 
         if (get_option('geolocation_cluster')) {
             queue_css_file(array('MarkerCluster', 'MarkerCluster.Default'), null, null,
-                'javascripts/leaflet-markercluster');
-            queue_js_file('leaflet-markercluster/leaflet.markercluster');
+                'javascripts/leaflet-markercluster', $version);
+            queue_js_file('leaflet-markercluster/leaflet.markercluster', 'javascripts', array(), $version);
         }
     }
 
@@ -299,7 +313,14 @@ class GeolocationPlugin extends Omeka_Plugin_AbstractPlugin
         $db = $this->_db;
         $select = $args['select'];
         $alias = $this->_db->getTable('Location')->getTableAlias();
-        if (!empty($args['params']['only_map_items'])
+        $isMapped = null;
+        if (array_key_exists('geolocation-mapped', $args['params'])
+            && $args['params']['geolocation-mapped'] !== ''
+        ) {
+            $isMapped = (bool) $args['params']['geolocation-mapped'];
+        }
+
+        if ($isMapped === true
             || !empty($args['params']['geolocation-address'])
         ) {
             $select->joinInner(
@@ -307,6 +328,13 @@ class GeolocationPlugin extends Omeka_Plugin_AbstractPlugin
                 "$alias.item_id = items.id",
                 array()
             );
+        } else if ($isMapped === false) {
+            $select->joinLeft(
+                array($alias => $db->Location),
+                "$alias.item_id = items.id",
+                array()
+            );
+            $select->where("$alias.id IS NULL");
         }
         if (!empty($args['params']['geolocation-address'])) {
             // Get the address, latitude, longitude, and the radius from parameters
@@ -385,6 +413,15 @@ class GeolocationPlugin extends Omeka_Plugin_AbstractPlugin
                 $unit,
                 $requestArray['geolocation-address']
             );
+        }
+        if (array_key_exists('geolocation-mapped', $requestArray)
+            && $requestArray['geolocation-mapped'] !== ''
+        ) {
+            if ($requestArray['geolocation-mapped']) {
+                $displayArray['Geolocation Status'] = __('Only Items with Locations');
+            } else {
+                $displayArray['Geolocation Status'] = __('Only Items without Locations');
+            }
         }
         return $displayArray;
     }

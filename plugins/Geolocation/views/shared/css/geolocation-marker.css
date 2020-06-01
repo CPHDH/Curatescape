@@ -14,6 +14,10 @@ div#geolocation {
     clear: both;
 }
 
+.geolocation-map {
+    z-index: 0;
+}
+
 .info-panel .map {
     margin-top:-18px;
     display:block;
