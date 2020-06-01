@@ -131,7 +131,19 @@ jQuery(document).ready(function($) {
 	    }
 	};	
 	curlies( document.body );	
-	
+
+	// ============================ 
+	// TOUR IMAGES
+	if($('.fetch-tour-image').length){
+		var tours_json = window.location.protocol+'//'+window.location.hostname+'/tours/browse?output=mobile-json';
+		$.getJSON(tours_json, function(data) {
+			data.tours.forEach(function(tour){
+				if(tour.tour_img && tour.id){
+					$('.fetch-tour-image[data-tour-id='+tour.id+'] .tour-image-container').css( "background-image", 'url('+tour.tour_img.replace('fullsize', 'square_thumbnails')+')' )
+				}
+			})
+		})		
+	}
 });	
 
 

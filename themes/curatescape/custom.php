@@ -53,7 +53,7 @@ function mh_seo_pagedesc($item=null,$tour=null,$file=null){
 ** SEO Site Description
 */
 function mh_seo_sitedesc(){
-	return mh_about() ? strip_tags(mh_about()) : strip_tags(option('description'));
+	return strip_tags(option('description')) ? strip_tags(option('description')) : (mh_about() ? strip_tags(mh_about()) : null);
 }
 
 /* 
@@ -412,14 +412,14 @@ function mh_display_map($type=null,$item=null,$tour=null){
 		var mapBounds; // keep track of changing bounds
 		var root_url = '<?php echo WEB_ROOT;?>';
 		var geolocation_icon = '<?php echo img('geolocation.png');?>';
-		var mapLayerThemeSetting = '<?php echo get_theme_option('map_style') ? get_theme_option('map_style') : null;?>';
+		var mapLayerThemeSetting = '<?php echo get_theme_option('map_style') ? get_theme_option('map_style') : 'CARTO_VOYAGER';?>';
 		var leafletjs='<?php echo src('leaflet.maki.combined.min.js','javascripts');?>'+'?v=1.1';
 		var leafletcss='<?php echo src('leaflet/leaflet.min.css','javascripts');?>'+'?v=1.1';	
 		var leafletClusterjs='<?php echo src('leaflet.markercluster/leaflet.markercluster.js','javascripts');?>'+'?v=1.1';
 		var leafletClustercss='<?php echo src('leaflet.markercluster/leaflet.markercluster.min.css','javascripts');?>'+'?v=1.1';
 		var mapbox_tile_layer='<?php echo get_theme_option('mapbox_tile_layer');?>';
 		var mapbox_access_token='<?php echo get_theme_option('mapbox_access_token');?>';
-		var mapbox_layer_title='<?php echo get_theme_option('mapbox_tile_layer') ? ucwords( str_replace( '-',' ', get_theme_option('mapbox_tile_layer') ) ) : "Mapbox";?>';
+		var mapbox_layer_title='<?php echo get_theme_option('mapbox_tile_layer') ? ucwords( str_replace( array('-v11','-v10','-v9','-'),' ', get_theme_option('mapbox_tile_layer') ) ) : "Mapbox";?>';
 		
 		// End PHP Variables
 		
@@ -440,34 +440,35 @@ function mh_display_map($type=null,$item=null,$tour=null){
 				    	attribution: '<a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> | <a href="https://cartodb.com/attributions">CartoDB</a>',
 						retina: (L.Browser.retina) ? '@2x' : '',
 					});
-				var wikimedia = L.tileLayer('https://maps.wikimedia.org/osm-intl/{z}/{x}/{y}{retina}.png', {
-						attribution: '<a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> | <a href="https://wikimediafoundation.org/wiki/Maps_Terms_of_Use">Wikimedia</a>',
+				var voyager = L.tileLayer('//cartodb-basemaps-{s}.global.ssl.fastly.net/rastertiles/voyager/{z}/{x}/{y}{retina}.png', {
+				    	attribution: '<a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> | <a href="https://cartodb.com/attributions">CartoDB</a>',
 						retina: (L.Browser.retina) ? '@2x' : '',
-					});
-				var mapbox = L.tileLayer('https://api.mapbox.com/v4/mapbox.'+mapbox_tile_layer+'/{z}/{x}/{y}{retina}.png?access_token={accessToken}', {
+					});					
+				var mapbox = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/'+mapbox_tile_layer+'/tiles/{z}/{x}/{y}?access_token={accessToken}', {
 				    	attribution: '<a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> | <a href="https://www.mapbox.com/feedback/">Mapbox</a>',
-				    	retina: (L.Browser.retina) ? '@2x' : '',
 						accessToken: mapbox_access_token,
+						tileSize: 512,
+						zoomOffset: -1,
 					});	
-
+					
 				var defaultMapLayer;	
 				switch(mapLayerThemeSetting){
 					case 'TERRAIN':
-					defaultMapLayer=terrain;
-					break;
+						defaultMapLayer=terrain;
+						break;
 					case 'CARTO':
-					defaultMapLayer=carto;
-					case 'WIKIMEDIA':
-					defaultMapLayer=wikimedia;
-					break;
+						defaultMapLayer=carto;
+						break;
+					case 'CARTO_VOYAGER':
+						defaultMapLayer=voyager;
+						break;						
 					case 'MAPBOX_TILES':
-					defaultMapLayer=mapbox;
-					break;	
+						defaultMapLayer=mapbox;
+						break;	
 					default:
-					defaultMapLayer=wikimedia;				
-
+						defaultMapLayer=wikimedia;				
 				}
-				
+								
 				// helper for title attributes with encoded HTML
 				function convertHtmlToText(value) {
 				    var d = document.createElement('div');
@@ -508,7 +509,7 @@ function mh_display_map($type=null,$item=null,$tour=null){
 					
 					// Layer controls
 					var allLayers={
-						"Street":(defaultMapLayer == terrain) ? wikimedia : defaultMapLayer,
+						"Street":(defaultMapLayer == terrain) ? voyager : defaultMapLayer,
 						"Terrain":terrain,
 					};
 					if(mapbox_access_token){
@@ -1834,15 +1835,15 @@ function mh_display_homepage_tours($num=5, $scope='featured'){
 				$byline= __('Curated by The %s Team',option('site_title'));
 			}				
 				
-			$html .= '<article class="item-result">';
-			$html .= '<h3 class="home-tour-title"><a href="' . WEB_ROOT . '/tours/show/'. tour('id').'">' . tour('title').'</a></h3><span class="total">'.__('%s Locations',mh_tour_total_items($tour)).'</span> ~ <span>'.$byline.'</span>';
+			$html .= '<article class="item-result '.(get_theme_option('fetch_tour_images') ? 'fetch-tour-image' : null).'" data-tour-id="'.tour('id').'">';
+			$html .= get_theme_option('fetch_tour_images') ? '<div class="tour-image-container"></div>' : null;
+			$html .= '<div><h3 class="home-tour-title"><a href="' . WEB_ROOT . '/tours/show/'. tour('id').'">' . tour('title').'</a></h3><span class="total">'.__('%s Locations',mh_tour_total_items($tour)).'</span> ~ <span>'.$byline.'</span></div>';
 			$html .= '</article>';
+			
 		}
 		if(count($public)>1){
-		
-			
 			$html .= '<p class="view-more-link"><a class="button" href="'.WEB_ROOT.'/tours/browse/">'.__('Browse all <span>%1$s %2$s</span>', count($public), mh_tour_label('plural')).'</a></p>';
-		}
+		}	
 	}else{
 		$html .= '<p>'.__('No tours are available. Publish some now.').'</p>';
 	}
@@ -1925,8 +1926,7 @@ function mh_home_about($length=800,$html=null){
 			$html .= '<div class="about-main"><p>';
 				$html .= substr(mh_about(),0,$length);
 				$html .= ($length < strlen(mh_about())) ? '... ' : null;
-				$html .= ' <a href="'.url('about').'">'.__('Read more <span>About Us</span>').'</a>';
-			$html .= '</p></div>';
+			$html .= '</p><a class="button u-full-width" href="'.url('about').'">'.__('Read more About Us').'</a></div>';
 	
 		$html .= '</article>';
 	$html .= '</div>';
@@ -2386,9 +2386,8 @@ function mh_google_analytics($webPropertyID=null){
 function mh_about($text=null){
 	if (!$text) {
 		// If the 'About Text' option has a value, use it. Otherwise, use default text
-		$text =
-			get_theme_option('about') ?
-			strip_tags(get_theme_option('about'),'<a><em><i><cite><strong><b><u>') :
+		$text = get_theme_option('about') ? 
+			strip_tags(get_theme_option('about'),'<a><em><i><cite><strong><b><u><br><img><video><iframe>') : 
 			__('%s is powered by <a href="http://omeka.org/">Omeka</a> + <a href="http://curatescape.org/">Curatescape</a>, a humanities-centered web and mobile framework available for both Android and iOS devices.',option('site_title'));
 	}
 	return $text;

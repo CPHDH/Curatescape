@@ -19,33 +19,42 @@ echo head( array(
 			<div class="pagination top">
 				<?php echo pagination_links(); ?>
 			</div>
+			<div id="browse-tours-container">
 		    <?php 
+			$html = null;
 		    if( has_tours() ){
 		    if( has_tours_for_loop() ){
 		    	$i=1;
 		    	$tourimg=0;
+		    	
 				foreach( $tours as $tour ){ 
 					set_current_record( 'tour', $tour );
-					$tourdesc = strip_tags( htmlspecialchars_decode(tour( 'description' )) );
-					echo '<article id="item-result-'.$i.'" class="item-result has-image">';
-					echo '<h3>'.link_to_tour(null,array('class'=>'permalink')).'</h3>';
-					echo '<div class="browse-meta-top byline">';
-					echo '<span class="total">'.mh_tour_total_items($tour).' '.__('Locations').'</span> ~ ';
-					if(tour( 'Credits' )){
-						echo __('Curated by %s',tour( 'Credits' ));
-					}elseif(get_theme_option('show_author') == true){
-						echo __('Curated by The %s Team',option('site_title'));
-					}		
-					echo '</div>';
-		
-					echo '<div class="item-description">'.snippet($tourdesc,0,250).'</div>'; 			
-					echo '</article>';
-					$i++;
-				
+					
+
+					if(tour('credits')){
+						$byline= __('Curated by %s',tour('credits'));
+					}else{
+						$byline= __('Curated by The %s Team',option('site_title'));
 					}
+					$tourdesc = strip_tags( htmlspecialchars_decode(tour( 'description' )) );			
+						
+					$html .= '<article class="item-result '.(get_theme_option('fetch_tour_images') ? 'fetch-tour-image' : null).'" data-tour-id="'.tour('id').'">';
+					$html .= get_theme_option('fetch_tour_images') ? '<div class="tour-image-container"></div>' : null;
+					$html .= '<div>';
+					$html .= '<h3 class="home-tour-title"><a href="' . WEB_ROOT . '/tours/show/'. tour('id').'">' . tour('title').'</a></h3><span class="total">'.__('%s Locations',mh_tour_total_items($tour)).'</span> ~ <span>'.$byline.'</span>';
+					$html .= '<div class="item-description">'.snippet($tourdesc,0,250).'</div>'; 
+					$html .= '</div>';
+					$html .= '</article>';		
+						
+					}
+					
+				}else{
+					$html .= '<p>'.__('No tours are available. Publish some now.').'</p>';
 				}
 			}
+			echo $html;	
 			?>
+			</div>
 			</section>
 	    </div>
 	    

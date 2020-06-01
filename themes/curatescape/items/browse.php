@@ -79,11 +79,13 @@ echo head(array('maptype'=>$maptype,'title'=>$title,'bodyid'=>'items','bodyclass
 				if ($hasImage){
 						preg_match('/<img(.*)src(.*)=(.*)"(.*)"/U', item_image('fullsize'), $result);
 						$item_image = array_pop($result);				
+				}else{
+					$item_image='';
 				}
 				
 				?>
-				<article class="item-result <?php echo $hasImage ? 'has-image' : null;?>">
-					<?php echo isset($item_image) ? link_to_item('<span class="item-image" style="background-image:url('.$item_image.');" role="img" aria-label="'.metadata($item, array('Dublin Core', 'Title')).'"></span>',array('title'=>metadata($item,array('Dublin Core','Title')))) : null; ?>
+				<article class="item-result <?php echo $hasImage ? 'has-image' : 'no-image';?>">
+					<?php echo link_to_item('<span class="item-image" style="background-image:url('.$item_image.');" role="img" aria-label="'.metadata($item, array('Dublin Core', 'Title')).'"></span>',array('title'=>metadata($item,array('Dublin Core','Title')))); ?>
 					<h3><?php echo mh_the_title_expanded($item); ?></h3>
 					<div class="browse-meta-top"><?php echo mh_the_byline($item,false);?></div>
 					
