@@ -122,6 +122,20 @@ function cah_item_form_helper_text_array(){
 				cah_get_element_id('Item Type Metadata','Factoid'),
 				cah_get_element_id('Item Type Metadata','Related Resources'),
 			),
+		'use_html_supported'=>
+		array(
+			cah_get_element_id('Dublin Core','Description'),
+			cah_get_element_id('Dublin Core','Source'),
+			cah_get_element_id('Dublin Core','Rights'),
+			cah_get_element_id('Item Type Metadata','Subtitle'),
+			cah_get_element_id('Item Type Metadata','Lede'),
+			cah_get_element_id('Item Type Metadata','Story'),
+			cah_get_element_id('Item Type Metadata','Sponsor'),
+			cah_get_element_id('Item Type Metadata','Related Resources'),
+			cah_get_element_id('Item Type Metadata','Official Website'),
+			cah_get_element_id('Item Type Metadata','Street Address'),
+			cah_get_element_id('Item Type Metadata','Access Information'),
+		),	
 		);
 	
 	return json_encode($mod);

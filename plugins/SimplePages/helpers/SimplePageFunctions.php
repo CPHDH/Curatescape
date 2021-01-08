@@ -137,9 +137,11 @@ function simple_pages_display_breadcrumbs($pageId = null, $seperator=' > ', $inc
             }
         }
         $pageLinks[] = '<a href="'. public_url('') . '">' . __('Home') . '</a>';
+        
+        $seperator = '<span class="separator" aria-hidden="true">' . html_escape($seperator) . '</span>';
 
         // create the bread crumb
-        $html .= implode(html_escape($seperator), array_reverse($pageLinks));
+        $html .= implode($seperator, array_reverse($pageLinks));
     }
     return $html;
 }

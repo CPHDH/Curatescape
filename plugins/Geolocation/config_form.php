@@ -106,7 +106,7 @@
     <div class="inputs five columns omega">
         <p class="explanation">
         <?php
-        echo __('Mapbox Map ID for the map to display as the basemap. The default "mapbox.streets" map will be used if nothing is entered here.');
+        echo __('Mapbox Map ID for the map to display as the basemap. The default street map will be used if nothing is entered here.');
         ?>
         </p>
         <?php echo $view->formText('mapbox_map_id', get_option('geolocation_mapbox_map_id')); ?>

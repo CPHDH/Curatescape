@@ -3,13 +3,15 @@
 # This file is distributed under the same license as the Omeka package.
 # 
 # Translators:
+# Daniele Binaghi, 2019
+# Daniele Binaghi, 2019
 # Guybrush88 <erpizzo@alice.it>, 2014-2015
 msgid ""
 msgstr ""
 "Project-Id-Version: Omeka\n"
 "Report-Msgid-Bugs-To: http://github.com/omeka/plugin-Geolocation/issues\n"
 "POT-Creation-Date: 2012-01-09 21:49-0500\n"
-"PO-Revision-Date: 2018-06-19 16:54+0000\n"
+"PO-Revision-Date: 2020-04-20 18:25+0000\n"
 "Last-Translator: John Flatness <john@zerocrates.org>\n"
 "Language-Team: Italian (http://www.transifex.com/omeka/omeka/language/it/)\n"
 "MIME-Version: 1.0\n"
@@ -18,47 +20,55 @@ msgstr ""
 "Language: it\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: GeolocationPlugin.php:250 GeolocationPlugin.php:268
+#: GeolocationPlugin.php:264 GeolocationPlugin.php:282
 msgid "Geolocation"
-msgstr ""
+msgstr "Geolocazione"
 
-#: GeolocationPlugin.php:379
+#: GeolocationPlugin.php:407
 msgid "kilometers"
 msgstr "chilometri"
 
-#: GeolocationPlugin.php:381
+#: GeolocationPlugin.php:409
 msgid "miles"
 msgstr "miglia"
 
-#: GeolocationPlugin.php:383
+#: GeolocationPlugin.php:411
 #, php-format
 msgid "within %1$s %2$s of \"%3$s\""
+msgstr "all'interno di %1$s %2$s di \"%3$s\""
+
+#: GeolocationPlugin.php:421 views/shared/map/advanced-search-partial.php:34
+msgid "Only Items with Locations"
 msgstr ""
 
-#: GeolocationPlugin.php:403 GeolocationPlugin.php:409
+#: GeolocationPlugin.php:423 views/shared/map/advanced-search-partial.php:35
+msgid "Only Items without Locations"
+msgstr ""
+
+#: GeolocationPlugin.php:440 GeolocationPlugin.php:446
 msgid "Map"
 msgstr "Mappa"
 
-#: GeolocationPlugin.php:442
+#: GeolocationPlugin.php:479
 msgid "Browse Map"
 msgstr "Esplora la mappa"
 
-#: GeolocationPlugin.php:497
+#: GeolocationPlugin.php:534
 #, php-format
 msgid "Find A Geographic Location For The %s:"
-msgstr ""
+msgstr "Trova una posizione geografica per %s:"
 
-#: GeolocationPlugin.php:509
+#: GeolocationPlugin.php:546
 msgid "Geolocation Map"
-msgstr ""
+msgstr "Mappa geolocazione"
 
-#: GeolocationPlugin.php:510
+#: GeolocationPlugin.php:547
 msgid "Show attached items on a map"
-msgstr ""
+msgstr "Mostra i documenti attaccati su una mappa"
 
-#: GeolocationPlugin.php:609
+#: GeolocationPlugin.php:646
 msgid "Find a Location by Address:"
-msgstr ""
+msgstr "Trova un luogo in base all'indirizzo:"
 
 #: config_form.php:3
 msgid "General Settings"
@@ -72,7 +82,7 @@ msgstr "Latitudine predefinita"
 msgid ""
 "Latitude of the map's initial center point, in degrees. Must be between -90 "
 "and 90."
-msgstr ""
+msgstr "Latitudine del punto iniziale della mappa, in gradi. Deve essere tra -90 e 90."
 
 #: config_form.php:17
 msgid "Default Longitude"
@@ -82,298 +92,310 @@ msgstr "Longitudine predefinita"
 msgid ""
 "Longitude of the map's initial center point, in degrees. Must be between "
 "-180 and 180."
-msgstr ""
+msgstr "Longitudine del punto iniziale della mappa, in gradi. Deve essere tra -180 e 180."
 
 #: config_form.php:27
 msgid "Default Zoom Level"
-msgstr ""
+msgstr "Livello zoom di default"
 
 #: config_form.php:30
 msgid ""
 "An integer greater than or equal to 0, where 0 represents the most zoomed "
 "out scale."
-msgstr ""
+msgstr "Un intero maggiore o uguale a 0, dove 0 rappresenta l'ingrandimento minimo."
 
 #: config_form.php:37
 msgid "Base Map"
-msgstr ""
+msgstr "Mappa base"
 
 #: config_form.php:40
 msgid "The type of map to display"
-msgstr ""
+msgstr "Il tipo di mappa da mostrare"
 
 #: config_form.php:43
 msgid "OpenStreetMap"
-msgstr ""
+msgstr "OpenStreetMap"
 
 #: config_form.php:44
 msgid "Standard"
-msgstr ""
+msgstr "Standard"
 
 #: config_form.php:45
-msgid "Grayscale"
-msgstr ""
-
-#: config_form.php:46
 msgid "Humanitarian"
-msgstr ""
+msgstr "Umanitaria"
 
-#: config_form.php:48 config_form.php:49
+#: config_form.php:47 config_form.php:48
 msgid "OpenTopoMap"
-msgstr ""
+msgstr "OpenTopoMap"
+
+#: config_form.php:50
+msgid "Stamen"
+msgstr "Stamen"
 
 #: config_form.php:51
-msgid "Stamen"
-msgstr ""
+msgid "Toner"
+msgstr "Toner"
 
 #: config_form.php:52
-msgid "Toner"
-msgstr ""
+msgid "Toner (background)"
+msgstr "Toner (sfondo)"
 
 #: config_form.php:53
-msgid "Toner (background)"
-msgstr ""
+msgid "Toner (lite)"
+msgstr "Toner (leggera)"
 
 #: config_form.php:54
-msgid "Toner (lite)"
-msgstr ""
+msgid "Watercolor"
+msgstr "Acquerello"
 
 #: config_form.php:55
-msgid "Watercolor"
-msgstr ""
-
-#: config_form.php:56
 msgid "Terrain"
 msgstr "Terreno"
 
-#: config_form.php:57
+#: config_form.php:56
 msgid "Terrain (background)"
-msgstr ""
+msgstr "Terreno (sfondo)"
+
+#: config_form.php:58
+msgid "Esri"
+msgstr "Esri"
 
 #: config_form.php:59
-msgid "Esri"
-msgstr ""
+msgid "World Street Map"
+msgstr "Mappa stradale mondiale"
 
 #: config_form.php:60
-msgid "World Street Map"
-msgstr ""
+msgid "DeLorme"
+msgstr "DeLorme"
 
 #: config_form.php:61
-msgid "DeLorme"
-msgstr ""
+msgid "World Topographic Map"
+msgstr "Mappa topografica mondiale"
 
 #: config_form.php:62
-msgid "World Topographic Map"
-msgstr ""
+msgid "World Imagery"
+msgstr "World Imagery"
 
 #: config_form.php:63
-msgid "World Imagery"
-msgstr ""
+msgid "World Terrain"
+msgstr "Mappa terreni mondiale"
 
 #: config_form.php:64
-msgid "World Terrain"
-msgstr ""
+msgid "World Shaded Relief"
+msgstr "Mappa mondiale con rilievi ombreggiati"
 
 #: config_form.php:65
-msgid "World Shaded Relief"
-msgstr ""
+msgid "World Physical Map"
+msgstr "Mappa fisica mondiale"
 
 #: config_form.php:66
-msgid "World Physical Map"
-msgstr ""
+msgid "Ocean Basemap"
+msgstr "Mappa base degli oceani"
 
 #: config_form.php:67
-msgid "Ocean Basemap"
-msgstr ""
+msgid "National Geographic World Map"
+msgstr "Mappa mondiale National Geographic"
 
 #: config_form.php:68
-msgid "National Geographic World Map"
-msgstr ""
-
-#: config_form.php:69
 msgid "Light Gray Canvas"
-msgstr ""
+msgstr "Tela grigio chiaro"
+
+#: config_form.php:70
+msgid "CartoDB"
+msgstr "CartoDB"
 
 #: config_form.php:71
-msgid "CartoDB"
-msgstr ""
+msgid "Voyager"
+msgstr "Voyager"
 
 #: config_form.php:72
-msgid "Voyager"
-msgstr ""
+msgid "Voyager (no labels)"
+msgstr "Voyager (senza etichette)"
 
 #: config_form.php:73
-msgid "Voyager (no labels)"
-msgstr ""
+msgid "Positron"
+msgstr "Positron"
 
 #: config_form.php:74
-msgid "Positron"
-msgstr ""
+msgid "Positron (no labels)"
+msgstr "Positron (senza etichette)"
 
 #: config_form.php:75
-msgid "Positron (no labels)"
-msgstr ""
+msgid "Dark Matter"
+msgstr "Materia oscura"
 
 #: config_form.php:76
-msgid "Dark Matter"
-msgstr ""
-
-#: config_form.php:77
 msgid "Dark Matter (no labels)"
-msgstr ""
+msgstr "Materia oscura (senza etichette)"
+
+#: config_form.php:78
+msgid "Mapbox"
+msgstr "Mapbox"
 
 #: config_form.php:79
-msgid "Mapbox"
-msgstr ""
-
-#: config_form.php:80
 msgid "Mapbox (see settings below)"
-msgstr ""
+msgstr "Mapbox (vedere configurazione più sotto)"
 
-#: config_form.php:89
+#: config_form.php:88
 msgid "Mapbox Access Token"
-msgstr ""
+msgstr "Token di accesso Mapbox"
 
-#: config_form.php:94
+#: config_form.php:93
 #, php-format
 msgid ""
 "Mapbox access token. A token is required when Mapbox is selected as the "
 "basemap. Get your token at %s."
-msgstr ""
+msgstr "Token di accesso Mapbox. Un token è richiesto quando Mapbox è selezionata come mappa base. Recupera il tuo token su %s."
 
-#: config_form.php:105
+#: config_form.php:104
 msgid "Mapbox Map ID"
-msgstr ""
+msgstr "ID mappa Mapbox"
 
-#: config_form.php:110
+#: config_form.php:109
 msgid ""
 "Mapbox Map ID for the map to display as the basemap. The default "
 "\"mapbox.streets\" map will be used if nothing is entered here."
-msgstr ""
+msgstr "ID Mapbox della mappa da mostare come mappa base. La mappa predefinita \"mapbox.streets\" verrà usata se qui non viene indicato nulla."
 
-#: config_form.php:119
-msgid "Browse Map Settings"
-msgstr "Esplora le impostazioni della mappa"
+#: config_form.php:118
+msgid "Geocoder"
+msgstr ""
 
 #: config_form.php:122
-msgid "Number of Locations Per Page"
+msgid "Service to use for looking up coordinates from addresses."
 msgstr ""
 
-#: config_form.php:125
-msgid "The number of locations displayed per page when browsing the map."
+#: config_form.php:126
+msgid "OpenStreetMap Nominatim"
 msgstr ""
 
-#: config_form.php:131
-msgid "Auto-fit to Locations"
+#: config_form.php:127
+msgid "Photon"
 msgstr ""
 
 #: config_form.php:135
+msgid "Browse Map Settings"
+msgstr "Esamina le impostazioni della mappa"
+
+#: config_form.php:138
+msgid "Number of Locations Per Page"
+msgstr "Numero di località per pagina"
+
+#: config_form.php:141
+msgid "The number of locations displayed per page when browsing the map."
+msgstr "Il numero di località mostrate in ogni pagina quando si sfoglia la mappa."
+
+#: config_form.php:147
+msgid "Auto-fit to Locations"
+msgstr "Auto-aggiusta a località"
+
+#: config_form.php:151
 msgid ""
 "If checked, the default location and zoom settings will be ignored on the "
 "browse map. Instead, the map will automatically pan and zoom to fit the "
 "locations displayed on each page."
-msgstr ""
+msgstr "Se selezionato, la località predefinita e i parametri di ingrandimento saranno ignorati quando si sfoglia la mappa. Invece, la mappa si sposterà ed ingrandirà automaticamente per includere le località mostrate in ogni pagina."
 
-#: config_form.php:149
+#: config_form.php:165
 msgid "Default Radius"
 msgstr "Raggio predefinito"
 
-#: config_form.php:152
+#: config_form.php:168
 msgid ""
 "The size of the default radius to use on the items advanced search page. See"
 " below for whether to measure in miles or kilometers."
-msgstr ""
+msgstr "La dimensione dle raggio predefinito da usarsi nella pagina di ricerca avanzata dei documenti. Vedere sotto per indicare se misurare in miglia o chilometri."
 
-#: config_form.php:158
+#: config_form.php:174
 msgid "Use metric distances"
 msgstr "Utilizza le distanze metriche"
 
-#: config_form.php:161
+#: config_form.php:177
 msgid "Use metric distances in proximity search."
-msgstr ""
-
-#: config_form.php:170
-msgid "Enable marker clustering"
-msgstr ""
-
-#: config_form.php:173
-msgid "Show close or overlapping markers as clusters."
-msgstr ""
-
-#: config_form.php:183
-msgid "Item Map Settings"
-msgstr ""
+msgstr "Utilizza le distanze metriche nella ricerca di prossimità"
 
 #: config_form.php:186
-msgid "Width for Item Map"
-msgstr ""
+msgid "Enable marker clustering"
+msgstr "Abilita raggruppamento marcatori"
 
 #: config_form.php:189
+msgid "Show close or overlapping markers as clusters."
+msgstr "Mostra i marcatori vicini o sovrapposti come gruppi."
+
+#: config_form.php:199
+msgid "Item Map Settings"
+msgstr "Configurazione mappa documenti"
+
+#: config_form.php:202
+msgid "Width for Item Map"
+msgstr "Largezza mappa documenti"
+
+#: config_form.php:205
 msgid ""
 "The width of the map displayed on your items/show page. If left blank, the "
 "default width of 100% will be used."
-msgstr ""
+msgstr "La larghezza della mappa mostrata nella pagina items/show. Se vuoto, verrà usata la larghezza predefinita pari al 100%."
 
-#: config_form.php:196
+#: config_form.php:212
 msgid "Height for Item Map"
-msgstr ""
+msgstr "Altezza mappa documenti"
 
-#: config_form.php:199
+#: config_form.php:215
 msgid ""
 "The height of the map displayed on your items/show page. If left blank, the "
 "default height of 300px will be used."
-msgstr ""
-
-#: config_form.php:206
-msgid "Map Integration"
-msgstr ""
-
-#: config_form.php:209
-msgid "Add Link to Map on Items/Browse Navigation"
-msgstr ""
-
-#: config_form.php:212
-msgid "Add a link to the items map on all the items/browse pages."
-msgstr ""
+msgstr "L'altezza della mappa mostrata nella pagina items/show. Se vuoto, verrà usata la larghezza predefinita pari a 300px."
 
 #: config_form.php:222
-msgid "Add Map To Contribution Form"
-msgstr ""
+msgid "Map Integration"
+msgstr "Integrazione mappa"
 
 #: config_form.php:225
+msgid "Add Link to Map on Items/Browse Navigation"
+msgstr "Aggiungi un collegamento alla mappa nella navigazione Items/Browse"
+
+#: config_form.php:228
+msgid "Add a link to the items map on all the items/browse pages."
+msgstr "Aggiungi un collegamento alla mappa doxumenti in tutte le pagine items/browse"
+
+#: config_form.php:238
+msgid "Add Map To Contribution Form"
+msgstr "Aggiungi mappa al modulo contributi"
+
+#: config_form.php:241
 msgid ""
 "If the Contribution plugin is installed and activated, Geolocation  will add"
 " a geolocation map field to the contribution form to associate a location to"
 " a contributed item."
-msgstr ""
+msgstr "Se il plugin Contributi è installato e attivo, Geolocazione aggiungerà un campo mappa geolocazione al modulo contributi per associare una località a un documento contribuito."
 
 #: models/Location.php:35
 msgid "Location requires an item ID."
-msgstr ""
+msgstr "La località necessità di un ID documento."
 
 #: models/Location.php:39
 msgid "Location requires a valid item ID."
-msgstr ""
+msgstr "La località necessità di un ID documento valido."
 
 #: models/Location.php:44
 msgid "A location already exists for the provided item."
-msgstr ""
+msgstr "Esiste già una località per il documento fornito."
 
 #: models/Location.php:47
 msgid "Location requires a latitude."
-msgstr "La posizione richiede una latitudine."
+msgstr "La località richiede una latitudine."
 
 #: models/Location.php:50
 msgid "Location requires a longitude."
-msgstr "La posizione richiede una longitudine."
+msgstr "La località richiede una longitudine."
 
 #: models/Location.php:53
 msgid "Location requires a zoom level."
-msgstr ""
+msgstr "La località richiede un livello di ingrandimento."
 
 #: views/admin/map/browse.php:4 views/public/map/browse.php:4
 msgid "Browse Items on the Map"
-msgstr ""
+msgstr "Sfoglia documenti sulla mappa"
 
 #: views/admin/map/browse.php:4
 msgid "total"
@@ -385,17 +407,21 @@ msgstr "Trova un oggetto sulla mappa"
 
 #: views/helpers/GeolocationMapSingle.php:36
 msgid "This item has no location info associated with it."
-msgstr ""
+msgstr "Questo documento non ha informazioni di località associate."
 
-#: views/shared/map/advanced-search-partial.php:16
+#: views/shared/map/advanced-search-partial.php:19
 msgid "Geographic Radius (kilometers)"
-msgstr ""
+msgstr "Raggio geografico (km)"
 
-#: views/shared/map/advanced-search-partial.php:18
+#: views/shared/map/advanced-search-partial.php:21
 msgid "Geographic Radius (miles)"
+msgstr "Raggio geografico (miglia)"
+
+#: views/shared/map/advanced-search-partial.php:29
+msgid "Geolocation Status"
 msgstr ""
 
-#: views/shared/map/advanced-search-partial.php:25
+#: views/shared/map/advanced-search-partial.php:43
 msgid "Geographic Address"
 msgstr "Indirizzo geografico"
 

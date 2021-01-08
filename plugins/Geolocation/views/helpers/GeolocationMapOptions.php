@@ -32,20 +32,20 @@ class Geolocation_View_Helper_GeolocationMapOptions extends Zend_View_Helper_Abs
     {
         switch ($mapType) {
             case 'roadmap':
-                return 'mapbox.streets';
+                return 'mapbox/streets-v11';
             case 'satellite':
-                return 'mapbox.satellite';
+                return 'mapbox/satellite-v9';
             case 'hybrid':
-                return 'mapbox.streets-satellite';
+                return 'mapbox/satellite-streets-v11';
             case 'terrain':
-                return 'mapbox.outdoors';
+                return 'mapbox/outdoors-v11';
             default:
                 // empty case, fallthrough
         }
 
         $mapId = get_option('geolocation_mapbox_map_id');
         if (!$mapId) {
-            $mapId = 'mapbox.streets';
+            $mapId = 'mapbox/streets-v11';
         }
         return $mapId;
     }

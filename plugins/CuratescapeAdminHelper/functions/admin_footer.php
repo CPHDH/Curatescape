@@ -19,6 +19,7 @@
 	var cah_enable_file_edit_links= <?php echo get_option('cah_enable_file_edit_links');?>;
 	var cah_theme_options_accordion= <?php echo get_option('cah_theme_options_accordion');?>;
 	var cah_hide_add_input_where_unsupported = <?php echo get_option('cah_hide_add_input_where_unsupported');?>;
+	var cah_hide_html_checkbox_where_unsupported = <?php echo get_option('cah_hide_html_checkbox_where_unsupported');?>;
 		
 	// Dashboard
 	var stats = jQuery('body.index #stats');
@@ -109,6 +110,25 @@
 		jQuery.each(form_mod_array.add_input_supported, function(i,id){
 			jQuery('.items #edit-form #element-'+id+' button.add-element').addClass('add_input_supported').show();
 		});			
+	}
+
+	if(cah_hide_html_checkbox_where_unsupported==1){
+		// hide all
+		jQuery('label.use-html').hide();
+		// show supported
+		jQuery.each(form_mod_array.use_html_supported, function(i,id){
+			jQuery('.items #edit-form #element-'+id+' label.use-html').addClass('use_html_supported').show();
+			jQuery('.files #edit-form #element-'+id+' label.use-html').addClass('use_html_supported').show();
+		});	
+		// fix unsupported on save 
+		jQuery.each(jQuery('label.use-html'),function(i,el){
+			 if(!jQuery(el).hasClass('use_html_supported')){
+				 var uncheck = jQuery(el).children('.use-html-checkbox:checked');
+				 if(uncheck.length){
+					 uncheck[0].value=0;
+				 }
+			 }
+		})
 	}
 	
 	if(cah_enable_file_edit_links){

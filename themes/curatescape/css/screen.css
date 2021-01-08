@@ -233,7 +233,7 @@ h2.query-header{
 	h2{
 		font-size: 3rem;
 	}
-	p{
+	p,blockquote{
 		font-size: 105%;
 	}
 }
