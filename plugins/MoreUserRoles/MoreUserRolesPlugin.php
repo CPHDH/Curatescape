@@ -57,7 +57,8 @@ class MoreUserRolesPlugin extends Omeka_Plugin_AbstractPlugin
     public function hookUninstall(){
 	    // Upon uninstalling the plugin, revert the roles of Authors and Editors back to Contributor
         $db = $this->_db;
-        $sql = "UPDATE `omeka_users` SET `role`='contributor' WHERE `role`= 'author' or `role`='editor' ";
+        $prefix = $db->prefix;
+        $sql = "UPDATE ".$prefix."users SET role='contributor' WHERE role= 'author' or role='editor' ";
         $db->query($sql);
     }
 
