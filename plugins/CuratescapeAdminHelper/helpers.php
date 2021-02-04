@@ -133,7 +133,6 @@ function cah_item_form_helper_text_array(){
 			cah_get_element_id('Item Type Metadata','Sponsor'),
 			cah_get_element_id('Item Type Metadata','Related Resources'),
 			cah_get_element_id('Item Type Metadata','Official Website'),
-			cah_get_element_id('Item Type Metadata','Street Address'),
 			cah_get_element_id('Item Type Metadata','Access Information'),
 		),	
 		);

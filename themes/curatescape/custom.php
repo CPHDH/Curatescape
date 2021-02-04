@@ -756,7 +756,7 @@ function mh_map_actions($item=null,$tour=null,$collection=null,$saddr='current',
 			// get the destination coordinates for the item
 			$location = get_db()->getTable('Location')->findLocationByItem($item, true);
 			$coords=$location[ 'latitude' ].','.$location[ 'longitude' ];
-			$street_address=mh_street_address($item,false);
+			$street_address=mh_street_address($item);
 			
 			$showlink=true;
 		
@@ -767,7 +767,7 @@ function mh_map_actions($item=null,$tour=null,$collection=null,$saddr='current',
 			foreach( $tour->Items as $item ){
 				set_current_record( 'item', $item );
 				$location = get_db()->getTable('Location')->findLocationByItem($item, true);
-				$coords[] = mh_street_address($item,false) ? urlencode(mh_street_address($item,false)) : $location['latitude'].','.$location['longitude'];
+				$coords[] = mh_street_address($item) ? urlencode(strip_tags(mh_street_address($item))) : $location['latitude'].','.$location['longitude'];
 			}
 			
 			$daddr=end($coords);
@@ -785,7 +785,7 @@ function mh_map_actions($item=null,$tour=null,$collection=null,$saddr='current',
 		
 		<!-- Directions link -->
 		<?php if( $showlink && $coords && ($item || $tour) ):?>
-				<a onclick="jQuery(\'body\').removeClass(\'fullscreen-map\')" class="directions" title="<?php echo __('Get Directions on Google Maps');?>" target="_blank" rel="noopener" href="https://maps.google.com/maps?saddr=<?php echo $saddr;?>+location&daddr=<?php echo $street_address ? urlencode($street_address) : $coords;?>">
+				<a onclick="jQuery(\'body\').removeClass(\'fullscreen-map\')" class="directions" title="<?php echo __('Get Directions on Google Maps');?>" target="_blank" rel="noopener" href="https://maps.google.com/maps?saddr=<?php echo $saddr;?>+location&daddr=<?php echo $street_address ? urlencode(strip_tags($street_address)) : $coords;?>">
 				<i class="fa fa-lg fa-external-link-square" aria-hidden="true"></i> <span class="label"><?php echo __('Get Directions');?></span>
 		</a>
 		<?php endif;?>		
@@ -1062,12 +1062,12 @@ function mh_official_website($item='item'){
 /*
 ** Display the street address
 */
-function mh_street_address($item='item',$formatted=true){
+function mh_street_address($item='item'){
 
 	if (element_exists('Item Type Metadata','Street Address')){
 		$address=metadata($item,array('Item Type Metadata','Street Address'));
-		$map_link='<a target="_blank" rel="noopener" href="https://maps.google.com/maps?saddr=current+location&daddr='.urlencode($address).'">map</a>';
-		return $address ? ( $formatted ? '<h3>'.__('Street Address').'</h3><div>'.$address.' ['.$map_link.']</div>' : $address ) : null;	
+		$map_link='<a target="_blank" rel="noopener" href="https://maps.google.com/maps?saddr=current+location&daddr='.urlencode(strip_tags($address)).'">map</a>';
+		return $address ? $address : null;	
 	}else{
 		return null;
 	} 
@@ -1093,7 +1093,7 @@ function mh_access_information($item='item',$formatted=true){
 
 function mh_map_caption($item='item'){
 	$caption=array();
-	if($addr=mh_street_address($item,false)) $caption[]=strip_tags($addr,'<a>');
+	if($addr=mh_street_address($item)) $caption[]=strip_tags($addr,'<a>');
 	if($accs=mh_access_information($item,false)) $caption[]=strip_tags($accs,'<a>');
 	return implode( ' ~ ', $caption );
 }
