@@ -55,4 +55,4 @@ $metadata = array(
 	'total_items'  => count( $multipleItemMetadata )
 );
 
-echo Zend_Json_Encoder::encode( $metadata );
+echo json_encode( $metadata );

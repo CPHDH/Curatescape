@@ -5,6 +5,6 @@ if(metadata('simple_pages_page', 'is_published')){
 		'updated' => metadata('simple_pages_page', 'updated'),
 		'text'  => metadata('simple_pages_page', 'text', array('no_escape' => true)),
 	);
-	echo Zend_Json_Encoder::encode( $pageData );
+	echo json_encode( $pageData );
 }
 ?>

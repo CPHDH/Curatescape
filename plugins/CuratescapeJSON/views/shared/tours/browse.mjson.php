@@ -14,7 +14,7 @@ foreach( $tours as $tour )
 
 	set_current_record( 'tour', $tour );
 	$tourMetadata = $this->tourJsonifier( $tour );
-	echo Zend_Json_Encoder::encode( $tourMetadata );
+	echo json_encode( $tourMetadata );
 
 	$tourCount += 1;
 }

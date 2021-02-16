@@ -6,6 +6,7 @@
 	$default_text_file=__("Reveal <strong>additional</strong> Dublin Core fields");
 	$default_text_file_hide=__("Hide <strong>additional</strong> Dublin Core fields");	
 	$edit_file=__('Edit File');
+	$html_warning=__('HTML is not recommended in this field when using the Curatescape theme. <a title="View the Curatescape Admin Helper plugin settings" href="/admin/plugins/config?name=CuratescapeAdminHelper">Disable this warning.</a>');
 	$howto=__('How-to');
 ?>
 <script>
@@ -113,22 +114,30 @@
 	}
 
 	if(cah_hide_html_checkbox_where_unsupported==1){
-		// hide all
-		jQuery('label.use-html').hide();
-		// show supported
-		jQuery.each(form_mod_array.use_html_supported, function(i,id){
-			jQuery('.items #edit-form #element-'+id+' label.use-html').addClass('use_html_supported').show();
-			jQuery('.files #edit-form #element-'+id+' label.use-html').addClass('use_html_supported').show();
-		});	
-		// fix unsupported on save 
-		jQuery.each(jQuery('label.use-html'),function(i,el){
-			 if(!jQuery(el).hasClass('use_html_supported')){
-				 var uncheck = jQuery(el).children('.use-html-checkbox:checked');
-				 if(uncheck.length){
-					 uncheck[0].value=0;
-				 }
-			 }
-		})
+		var htmlWhitelist = function(){
+			// hide all
+			jQuery('label.use-html').hide();
+			// show supported
+			jQuery.each(form_mod_array.use_html_supported, function(i,id){
+				jQuery('.items #edit-form #element-'+id+' label.use-html').addClass('use_html_supported').show();
+				jQuery('.files #edit-form #element-'+id+' label.use-html').addClass('use_html_supported').show();
+			});
+			// show warning (and checkbox) if using HTML in unsupported field 
+			var conflicts = jQuery("label.use-html").not(".use_html_supported").children('.use-html-checkbox:checked');
+			jQuery.each(conflicts, function(i,el){
+				jQuery(el).after('<span class="cah-warning"><?php echo $html_warning;?></span>');
+				jQuery(el).parent('label').show();
+			});
+		}
+		// on item type form select
+		jQuery("select#item-type").on("click",function(){
+			setTimeout(function(){
+				htmlWhitelist();
+			},500);
+			
+		});
+		// on load
+		htmlWhitelist();
 	}
 	
 	if(cah_enable_file_edit_links){

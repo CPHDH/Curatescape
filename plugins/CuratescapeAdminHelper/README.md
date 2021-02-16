@@ -27,5 +27,5 @@ After installation, you may disable or remove the plugin if you like, but keepin
 - Display _only_ the main Curatescape-related metadata fields on the item and file forms (other fields are still accessible with a single click)
 - Display "Edit" links below each file on item records
 - Display Add Input buttons _only_ on fields that are supported by the Curatescape theme.
-- Display "Use HTML" checkboxes _only_ on fields that are supported by the Curatescape theme (unsupported fields will be reverted to plain text on save).
+- Display "Use HTML" checkboxes _only_ on fields that are supported by the Curatescape theme (unsupported fields containing HTML will display an admin-only warning).
 - Display an option to batch-convert existing items to the Curatescape Story item type, migrating content from Dublin Core fields to related custom Item Type fields (mainly for one-time use by legacy projects)

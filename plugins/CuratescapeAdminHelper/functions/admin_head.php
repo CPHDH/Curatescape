@@ -5,12 +5,26 @@ $story_container='div#element-'.cah_get_element_id('Item Type Metadata','Story')
 	<?php echo $story_container;?> textarea{
 		height:25em;
 	}
-	.curatescape-recommended{}
+	<?php if (get_option('cah_hide_html_checkbox_where_unsupported')=='1'): ?>
+		/* prevent "add input" from adding back */	
+		#element-49 label.use-html,
+		#element-39 label.use-html{
+			display:none !important;
+		}
+	<?php endif;?>
+
+	span.cah-warning{
+		display: block;
+		background: lightyellow;
+		margin:0;
+		padding: 3px 7px;
+		line-height:normal;
+	}
 	
 	p.cah-helper span.divider{
 		display: block;
 		margin: 15px 0;
-		border-top: 1px dashed #ccc;		
+		border-top: 1px dashed #ccc;
 	}
 	.fa{
 		font-family:"FontAwesome"

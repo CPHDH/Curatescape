@@ -39,7 +39,7 @@ echo head(array('maptype'=>$maptype,'title'=>$title,'bodyid'=>'search','bodyclas
 				echo '<form id="sitewide-search-filters" class="hidden">';
 				$filters='<div class="fieldset flex">';
 				foreach($searchable_types as $record_type=>$record_label){
-					$checked = (count($active_types) && in_array($record_type,$active_types)) ? "checked" : count($active_types)<=0 ? "checked" : null;
+					$checked = (count($active_types) && in_array($record_type,$active_types)) ? "checked" : (count($active_types)<=0 ? "checked" : null);
 					$filters.= '<div><input type="checkbox" '.$checked.' id="'.$record_type.'" value="'.$record_type.'" name="record_types[]"/><label for="'.$record_type.'" class="record_types">'.$record_label.'</label></div>';
 				}
 				echo $filters.'</div>'; 
