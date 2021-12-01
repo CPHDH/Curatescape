@@ -11,17 +11,17 @@ To get started, install Omeka and the Curatescape theme and plugins on the serve
     - [Installation instructions (omeka.org)](http://omeka.org/codex/Installation)
     - [Server requirements](https://github.com/CPHDH/Curatescape/wiki/Server-requirements)
 2.  **Add the Curatescape theme** to the `/themes/` directory
-    - Curatescape: [repo](https://github.com/CPHDH/theme-curatescape) | [download](https://github.com/CPHDH/theme-curatescape/archive/master.zip)
+    - Curatescape Classic: [repo](https://github.com/CPHDH/theme-curatescape) | [download](https://github.com/CPHDH/theme-curatescape/releases)
     - Curatescape Echo: [repo](https://github.com/CPHDH/theme-curatescape-echo) | [download](https://github.com/CPHDH/theme-curatescape-echo/releases)
 3.  **Add the required plugins** to the `/plugins/` directory
-    - CuratescapeJSON: [repo](https://github.com/CPHDH/CuratescapeJSON) | [download](https://github.com/CPHDH/CuratescapeJSON/archive/master.zip)
-    - CuratescapeAdminHelper: [repo](https://github.com/CPHDH/CuratescapeAdminHelper) | [download](https://github.com/CPHDH/CuratescapeAdminHelper/archive/master.zip)
-    - TourBuilder: [repo](https://github.com/CPHDH/plugin-TourBuilder) | [download](https://github.com/CPHDH/plugin-TourBuilder/archive/master.zip)
+    - CuratescapeJSON: [repo](https://github.com/CPHDH/CuratescapeJSON) | [download](https://github.com/CPHDH/CuratescapeJSON/releases)
+    - CuratescapeAdminHelper: [repo](https://github.com/CPHDH/CuratescapeAdminHelper) | [download](https://github.com/CPHDH/CuratescapeAdminHelper/releases.zip)
+    - TourBuilder: [repo](https://github.com/CPHDH/plugin-TourBuilder) | [download](https://github.com/CPHDH/plugin-TourBuilder/releases)
     - Geolocation: [instructions](https://omeka.org/classic/docs/Plugins/Geolocation/) | [repo](https://github.com/omeka/plugin-Geolocation) | [download](http://omeka.org/add-ons/plugins/geolocation/)
     - SimplePages: [instructions](http://omeka.org/codex/Plugins/SimplePages) | [repo](https://github.com/omeka/plugin-SimplePages) | [download](http://omeka.org/add-ons/plugins/simple-pages/)
 4.  Optionally, add additional recommended plugins to the `/plugins/` directory:
-    - SuperRSS: [repo](https://github.com/CPHDH/SuperRss) | [download](https://github.com/CPHDH/SuperRss/archive/master.zip)
-    - MoreUserRoles: [repo](https://github.com/ebellempire/MoreUserRoles) | [download](https://github.com/ebellempire/MoreUserRoles/archive/master.zip)
+    - SuperRSS: [repo](https://github.com/CPHDH/SuperRss) | [download](https://github.com/CPHDH/SuperRss/releases)
+    - MoreUserRoles: [repo](https://github.com/ebellempire/MoreUserRoles) | [download](https://github.com/ebellempire/MoreUserRoles/releases)
     - SimpleVocab: [instructions](https://omeka.org/classic/docs/Plugins/SimpleVocab/) | [repo](https://github.com/omeka/plugin-SimpleVocab) | [download](http://omeka.org/add-ons/plugins/simple-vocab/)
 
 # Native client apps
