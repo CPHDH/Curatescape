@@ -408,7 +408,7 @@ figure#item-photos .flex-image .file{
 }
 @media all and (min-width:880px){
 	#menu-button i:after{
-		content:'Menu';
+		content:attr(data-title);
 		display: inline-block;
 		padding-left: 8px;
 		font-size: 11px;
