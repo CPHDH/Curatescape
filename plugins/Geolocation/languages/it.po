@@ -4,15 +4,16 @@
 # 
 # Translators:
 # Daniele Binaghi, 2019
-# Daniele Binaghi, 2019
+# Daniele Binaghi, 2019,2021
 # Guybrush88 <erpizzo@alice.it>, 2014-2015
+# Joe Mauri <asbruff@gmail.com>, 2021
 msgid ""
 msgstr ""
-"Project-Id-Version: Omeka\n"
+"Project-Id-Version: Omeka Classic\n"
 "Report-Msgid-Bugs-To: http://github.com/omeka/plugin-Geolocation/issues\n"
 "POT-Creation-Date: 2012-01-09 21:49-0500\n"
-"PO-Revision-Date: 2020-04-20 18:25+0000\n"
-"Last-Translator: John Flatness <john@zerocrates.org>\n"
+"PO-Revision-Date: 2021-06-25 09:48+0000\n"
+"Last-Translator: Daniele Binaghi\n"
 "Language-Team: Italian (http://www.transifex.com/omeka/omeka/language/it/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -20,53 +21,53 @@ msgstr ""
 "Language: it\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: GeolocationPlugin.php:264 GeolocationPlugin.php:282
+#: GeolocationPlugin.php:279 GeolocationPlugin.php:297
 msgid "Geolocation"
-msgstr "Geolocazione"
+msgstr "Geolocalizzazione"
 
-#: GeolocationPlugin.php:407
+#: GeolocationPlugin.php:422
 msgid "kilometers"
 msgstr "chilometri"
 
-#: GeolocationPlugin.php:409
+#: GeolocationPlugin.php:424
 msgid "miles"
 msgstr "miglia"
 
-#: GeolocationPlugin.php:411
+#: GeolocationPlugin.php:426
 #, php-format
 msgid "within %1$s %2$s of \"%3$s\""
 msgstr "all'interno di %1$s %2$s di \"%3$s\""
 
-#: GeolocationPlugin.php:421 views/shared/map/advanced-search-partial.php:34
+#: GeolocationPlugin.php:436 views/shared/map/advanced-search-partial.php:34
 msgid "Only Items with Locations"
-msgstr ""
+msgstr "Solo documenti con posizione"
 
-#: GeolocationPlugin.php:423 views/shared/map/advanced-search-partial.php:35
+#: GeolocationPlugin.php:438 views/shared/map/advanced-search-partial.php:35
 msgid "Only Items without Locations"
-msgstr ""
+msgstr "Solo documenti senza posizione"
 
-#: GeolocationPlugin.php:440 GeolocationPlugin.php:446
+#: GeolocationPlugin.php:455 GeolocationPlugin.php:461
 msgid "Map"
 msgstr "Mappa"
 
-#: GeolocationPlugin.php:479
+#: GeolocationPlugin.php:494
 msgid "Browse Map"
 msgstr "Esplora la mappa"
 
-#: GeolocationPlugin.php:534
+#: GeolocationPlugin.php:549
 #, php-format
 msgid "Find A Geographic Location For The %s:"
 msgstr "Trova una posizione geografica per %s:"
 
-#: GeolocationPlugin.php:546
+#: GeolocationPlugin.php:561
 msgid "Geolocation Map"
-msgstr "Mappa geolocazione"
+msgstr "Mappa geolocalizzazione"
 
-#: GeolocationPlugin.php:547
+#: GeolocationPlugin.php:562
 msgid "Show attached items on a map"
 msgstr "Mostra i documenti attaccati su una mappa"
 
-#: GeolocationPlugin.php:646
+#: GeolocationPlugin.php:661
 msgid "Find a Location by Address:"
 msgstr "Trova un luogo in base all'indirizzo:"
 
@@ -253,25 +254,25 @@ msgstr "ID mappa Mapbox"
 
 #: config_form.php:109
 msgid ""
-"Mapbox Map ID for the map to display as the basemap. The default "
-"\"mapbox.streets\" map will be used if nothing is entered here."
-msgstr "ID Mapbox della mappa da mostare come mappa base. La mappa predefinita \"mapbox.streets\" verrà usata se qui non viene indicato nulla."
+"Mapbox Map ID for the map to display as the basemap. The default street map "
+"will be used if nothing is entered here."
+msgstr "Mapbox Map ID per la mappa da mostrare come base. Verrà utilizzata la mappa stradale predefinita se non viene inserito nulla."
 
 #: config_form.php:118
 msgid "Geocoder"
-msgstr ""
+msgstr "Geocoder"
 
 #: config_form.php:122
 msgid "Service to use for looking up coordinates from addresses."
-msgstr ""
+msgstr "Servizio da usare per trovare le coordinate di un indirizzo."
 
 #: config_form.php:126
 msgid "OpenStreetMap Nominatim"
-msgstr ""
+msgstr "OpenStreetMap Nominatim"
 
 #: config_form.php:127
 msgid "Photon"
-msgstr ""
+msgstr "Photon"
 
 #: config_form.php:135
 msgid "Browse Map Settings"
@@ -367,7 +368,7 @@ msgid ""
 "If the Contribution plugin is installed and activated, Geolocation  will add"
 " a geolocation map field to the contribution form to associate a location to"
 " a contributed item."
-msgstr "Se il plugin Contributi è installato e attivo, Geolocazione aggiungerà un campo mappa geolocazione al modulo contributi per associare una località a un documento contribuito."
+msgstr "Se il plugin Contributi è installato e attivo, Geolocation aggiungerà un campo mappa geolocalizzazione al modulo contributi per associare una località a un documento contribuito."
 
 #: models/Location.php:35
 msgid "Location requires an item ID."
@@ -419,7 +420,7 @@ msgstr "Raggio geografico (miglia)"
 
 #: views/shared/map/advanced-search-partial.php:29
 msgid "Geolocation Status"
-msgstr ""
+msgstr "Stato della geolocalizzazione"
 
 #: views/shared/map/advanced-search-partial.php:43
 msgid "Geographic Address"

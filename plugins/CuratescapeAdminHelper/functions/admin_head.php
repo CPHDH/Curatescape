@@ -27,7 +27,7 @@ $story_container='div#element-'.cah_get_element_id('Item Type Metadata','Story')
 		border-top: 1px dashed #ccc;
 	}
 	.fa{
-		font-family:"FontAwesome"
+		font-family:"Font Awesome 5 Free"
 		}
 	.fa-exclamation-triangle:after,	 
 	.fa-check-circle:after{
@@ -40,7 +40,7 @@ $story_container='div#element-'.cah_get_element_id('Item Type Metadata','Story')
 		text-shadow:0 0 2px #fff;		
 	}
 	.fa-exclamation-triangle:after{
-		content:"\f071";
+		content:"\f256";
 		color:#AD6345;
 	}	
 	.fa-check-circle:after{
@@ -63,7 +63,7 @@ $story_container='div#element-'.cah_get_element_id('Item Type Metadata','Story')
 	}	
 	p.cah-helper{
 		padding:1em;
-		background:#F1F8E9;
+		background:lightyellow;
 		margin-bottom: 1.5em;
 		margin-top: 0;
 		border-style: solid;

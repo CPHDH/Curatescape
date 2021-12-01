@@ -7,7 +7,7 @@
 # Jiří Vírava <appukonrad@gmail.com>, 2014,2017
 msgid ""
 msgstr ""
-"Project-Id-Version: Omeka\n"
+"Project-Id-Version: Omeka Classic\n"
 "Report-Msgid-Bugs-To: http://github.com/omeka/plugin-SimpleVocab/issues\n"
 "POT-Creation-Date: 2012-11-28 21:49-0500\n"
 "PO-Revision-Date: 2017-11-15 16:56+0000\n"

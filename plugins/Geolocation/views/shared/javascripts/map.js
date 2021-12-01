@@ -110,7 +110,7 @@ OmekaMapBrowse.prototype = {
         }
         var listDiv = jQuery('#' + this.options.list);
 
-        if (!listDiv.size()) {
+        if (!listDiv.length) {
             alert('Error: You have no map links div!');
         } else {
             //Create HTML links for each of the markers
@@ -140,7 +140,7 @@ OmekaMapBrowse.prototype = {
                 var placeMarks = xml.find('Placemark');
         
                 // If we have some placemarks, load them
-                if (placeMarks.size()) {
+                if (placeMarks.length) {
                     // Retrieve the balloon styling from the KML file
                     that.browseBalloon = that.getBalloonStyling(xml);
                 

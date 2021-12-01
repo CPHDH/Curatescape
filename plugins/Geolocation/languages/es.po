@@ -7,13 +7,14 @@
 # Darío Hereñú, 2014,2016
 # Francisco Gálvez Prada <iguannaweb@gmail.com>, 2013
 # John Flatness <john@zerocrates.org>, 2016
+# Tierra Común, 2021
 msgid ""
 msgstr ""
-"Project-Id-Version: Omeka\n"
+"Project-Id-Version: Omeka Classic\n"
 "Report-Msgid-Bugs-To: http://github.com/omeka/plugin-Geolocation/issues\n"
 "POT-Creation-Date: 2012-01-09 21:49-0500\n"
-"PO-Revision-Date: 2020-04-20 18:25+0000\n"
-"Last-Translator: John Flatness <john@zerocrates.org>\n"
+"PO-Revision-Date: 2021-02-17 18:47+0000\n"
+"Last-Translator: Tierra Común\n"
 "Language-Team: Spanish (http://www.transifex.com/omeka/omeka/language/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -21,53 +22,53 @@ msgstr ""
 "Language: es\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: GeolocationPlugin.php:264 GeolocationPlugin.php:282
+#: GeolocationPlugin.php:279 GeolocationPlugin.php:297
 msgid "Geolocation"
 msgstr "Geolocalización"
 
-#: GeolocationPlugin.php:407
+#: GeolocationPlugin.php:422
 msgid "kilometers"
 msgstr "kilómetros"
 
-#: GeolocationPlugin.php:409
+#: GeolocationPlugin.php:424
 msgid "miles"
 msgstr "millas"
 
-#: GeolocationPlugin.php:411
+#: GeolocationPlugin.php:426
 #, php-format
 msgid "within %1$s %2$s of \"%3$s\""
 msgstr "dentro %1$s %2$s de \"%3$s\""
 
-#: GeolocationPlugin.php:421 views/shared/map/advanced-search-partial.php:34
+#: GeolocationPlugin.php:436 views/shared/map/advanced-search-partial.php:34
 msgid "Only Items with Locations"
-msgstr ""
+msgstr "Solo elementos con ubicaciones."
 
-#: GeolocationPlugin.php:423 views/shared/map/advanced-search-partial.php:35
+#: GeolocationPlugin.php:438 views/shared/map/advanced-search-partial.php:35
 msgid "Only Items without Locations"
-msgstr ""
+msgstr "Solo elementos sin ubicaciones."
 
-#: GeolocationPlugin.php:440 GeolocationPlugin.php:446
+#: GeolocationPlugin.php:455 GeolocationPlugin.php:461
 msgid "Map"
 msgstr "Mapa"
 
-#: GeolocationPlugin.php:479
+#: GeolocationPlugin.php:494
 msgid "Browse Map"
 msgstr "Explorar mapa"
 
-#: GeolocationPlugin.php:534
+#: GeolocationPlugin.php:549
 #, php-format
 msgid "Find A Geographic Location For The %s:"
 msgstr "Encontrar una localización geográfica para el %s:"
 
-#: GeolocationPlugin.php:546
+#: GeolocationPlugin.php:561
 msgid "Geolocation Map"
 msgstr "Mapa de geolocalización"
 
-#: GeolocationPlugin.php:547
+#: GeolocationPlugin.php:562
 msgid "Show attached items on a map"
 msgstr "Mostrar elementos adjuntos en un mapa"
 
-#: GeolocationPlugin.php:646
+#: GeolocationPlugin.php:661
 msgid "Find a Location by Address:"
 msgstr "Encontrar una localización por dirección:"
 
@@ -254,25 +255,25 @@ msgstr "Mapbox Map ID"
 
 #: config_form.php:109
 msgid ""
-"Mapbox Map ID for the map to display as the basemap. The default "
-"\"mapbox.streets\" map will be used if nothing is entered here."
-msgstr "Mapbox Map ID para el mapa a mostrar como el mapa base.  El mapa por omisión \"mapbox.streets\" será usado si nada se introduce aquí"
+"Mapbox Map ID for the map to display as the basemap. The default street map "
+"will be used if nothing is entered here."
+msgstr "ID del Mapa Mapbox para mostrar como mapa de base. El mapa de calle por defecto será usado si este campo se deja vacío."
 
 #: config_form.php:118
 msgid "Geocoder"
-msgstr ""
+msgstr "Geocoder"
 
 #: config_form.php:122
 msgid "Service to use for looking up coordinates from addresses."
-msgstr ""
+msgstr "Servicio a usar para buscar coordenadas a partir de direcciones."
 
 #: config_form.php:126
 msgid "OpenStreetMap Nominatim"
-msgstr ""
+msgstr "Nominatim para OpenStreetMap"
 
 #: config_form.php:127
 msgid "Photon"
-msgstr ""
+msgstr "Photon"
 
 #: config_form.php:135
 msgid "Browse Map Settings"
@@ -420,7 +421,7 @@ msgstr "Radio geográfico (millas)"
 
 #: views/shared/map/advanced-search-partial.php:29
 msgid "Geolocation Status"
-msgstr ""
+msgstr "Estado de Geolocalización."
 
 #: views/shared/map/advanced-search-partial.php:43
 msgid "Geographic Address"

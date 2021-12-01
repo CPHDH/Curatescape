@@ -5,13 +5,14 @@
 # Translators:
 # Alexios Dimitropoulos <alexios.dimitropoulos@gmail.com>, 2012
 # stauros gkinis <gkista@yahoo.gr>, 2012
+# T.G. Dallas, 2021
 msgid ""
 msgstr ""
-"Project-Id-Version: Omeka\n"
+"Project-Id-Version: Omeka Classic\n"
 "Report-Msgid-Bugs-To: http://github.com/omeka/plugin-SimplePages/issues\n"
 "POT-Creation-Date: 2012-01-09 21:49-0500\n"
-"PO-Revision-Date: 2018-05-02 15:01+0000\n"
-"Last-Translator: John Flatness <john@zerocrates.org>\n"
+"PO-Revision-Date: 2021-01-21 08:13+0000\n"
+"Last-Translator: T.G. Dallas\n"
 "Language-Team: Greek (Greece) (http://www.transifex.com/omeka/omeka/language/el_GR/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -25,11 +26,11 @@ msgstr "Απλές Σελίδες"
 
 #: SimplePagesPlugin.php:272
 msgid "Simple Page"
-msgstr ""
+msgstr "Απλή σελίδα"
 
 #: controllers/IndexController.php:67
 msgid "Name and heading for the page (required)"
-msgstr ""
+msgstr "Όνομα και τίτλος για τη σελίδα (υποχρεωτικό)"
 
 #: controllers/IndexController.php:77 views/admin/index/browse-list.php:6
 msgid "Slug"
@@ -40,15 +41,15 @@ msgid ""
 "The slug is the part of the URL for this page. A slug will be created "
 "automatically from the title if one is not entered. Letters, numbers, "
 "underscores, dashes, and forward slashes are allowed."
-msgstr ""
+msgstr "Το Slug είναι το μέρος του URL που αφορά τη συγκεκριμένη σελίδα. Δημιουργείται αυτόματα από τον τίτλο αν δεν εισαχθεί. Χαρακτήρες που επιτρέπονται: αλφαριθμητικοί, κάτω παύλες, παύλες, και κάθετες."
 
 #: controllers/IndexController.php:93
 msgid "Use HTML editor?"
-msgstr ""
+msgstr "Χρήση HTML editor;"
 
 #: controllers/IndexController.php:95
 msgid "Check this to add an HTML editor bar for easily creating HTML."
-msgstr ""
+msgstr "Επιλέξετε αυτό για να προσθέσετε έναν HTML editor για εύκολη δημιουργία HTML."
 
 #: controllers/IndexController.php:106
 msgid "Text"
@@ -67,15 +68,15 @@ msgstr "Parent"
 
 #: controllers/IndexController.php:120
 msgid "The parent page"
-msgstr ""
+msgstr "Η γονική σελίδα."
 
 #: controllers/IndexController.php:128
 msgid "Order"
-msgstr ""
+msgstr "Σειρά Ταξινόμησης"
 
 #: controllers/IndexController.php:130
 msgid "The order of the page relative to the other pages with the same parent"
-msgstr ""
+msgstr "Η σειρά ταξινόμισης της σελίδας σε σχέση με τις άλλες σελίδες που έχουν την ίδια γονική σελίδα"
 
 #: controllers/IndexController.php:142
 msgid "Publish this page?"
@@ -83,7 +84,7 @@ msgstr "Δημοσίευση αυτής της σελίδας;"
 
 #: controllers/IndexController.php:143
 msgid "Checking this box will make the page public"
-msgstr ""
+msgstr "Επιλέγοντας αυτό το κουτί, η σελίδα θα γίνει δημόσια."
 
 #: controllers/IndexController.php:171
 #, php-format
@@ -102,7 +103,7 @@ msgstr "Η σελίδα \"%s\" έχει διαγραφεί."
 
 #: helpers/SimplePageFunctions.php:139
 msgid "Home"
-msgstr ""
+msgstr "Αρχική σελίδα"
 
 #: helpers/SimplePageFunctions.php:184
 msgid "Main Page (No Parent)"
@@ -160,7 +161,7 @@ msgstr "Μη δημοσιευμένο"
 
 #: views/admin/index/browse-list.php:7
 msgid "Last Modified"
-msgstr ""
+msgstr "Τελευταία τροποποίηση"
 
 #: views/admin/index/browse.php:3
 msgid "Simple Pages | Browse"

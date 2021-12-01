@@ -8,10 +8,10 @@
 # John Flatness <john@zerocrates.org>, 2016
 msgid ""
 msgstr ""
-"Project-Id-Version: Omeka\n"
+"Project-Id-Version: Omeka Classic\n"
 "Report-Msgid-Bugs-To: http://github.com/omeka/plugin-Geolocation/issues\n"
 "POT-Creation-Date: 2012-01-09 21:49-0500\n"
-"PO-Revision-Date: 2020-04-20 18:25+0000\n"
+"PO-Revision-Date: 2020-06-03 20:17+0000\n"
 "Last-Translator: John Flatness <john@zerocrates.org>\n"
 "Language-Team: Portuguese (Portugal) (http://www.transifex.com/omeka/omeka/language/pt_PT/)\n"
 "MIME-Version: 1.0\n"
@@ -20,53 +20,53 @@ msgstr ""
 "Language: pt_PT\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: GeolocationPlugin.php:264 GeolocationPlugin.php:282
+#: GeolocationPlugin.php:279 GeolocationPlugin.php:297
 msgid "Geolocation"
 msgstr "Geolocalização"
 
-#: GeolocationPlugin.php:407
+#: GeolocationPlugin.php:422
 msgid "kilometers"
 msgstr "quilómetros"
 
-#: GeolocationPlugin.php:409
+#: GeolocationPlugin.php:424
 msgid "miles"
 msgstr "milhas"
 
-#: GeolocationPlugin.php:411
+#: GeolocationPlugin.php:426
 #, php-format
 msgid "within %1$s %2$s of \"%3$s\""
 msgstr "a %1$s %2$s de \"%3$s\""
 
-#: GeolocationPlugin.php:421 views/shared/map/advanced-search-partial.php:34
+#: GeolocationPlugin.php:436 views/shared/map/advanced-search-partial.php:34
 msgid "Only Items with Locations"
 msgstr ""
 
-#: GeolocationPlugin.php:423 views/shared/map/advanced-search-partial.php:35
+#: GeolocationPlugin.php:438 views/shared/map/advanced-search-partial.php:35
 msgid "Only Items without Locations"
 msgstr ""
 
-#: GeolocationPlugin.php:440 GeolocationPlugin.php:446
+#: GeolocationPlugin.php:455 GeolocationPlugin.php:461
 msgid "Map"
 msgstr "Mapa"
 
-#: GeolocationPlugin.php:479
+#: GeolocationPlugin.php:494
 msgid "Browse Map"
 msgstr "Explorar Mapa"
 
-#: GeolocationPlugin.php:534
+#: GeolocationPlugin.php:549
 #, php-format
 msgid "Find A Geographic Location For The %s:"
 msgstr "Encontrar uma Localização Geográfica para a %s:"
 
-#: GeolocationPlugin.php:546
+#: GeolocationPlugin.php:561
 msgid "Geolocation Map"
 msgstr "Mapa de Geolocalização"
 
-#: GeolocationPlugin.php:547
+#: GeolocationPlugin.php:562
 msgid "Show attached items on a map"
 msgstr "Mostrar itens anexos num mapa"
 
-#: GeolocationPlugin.php:646
+#: GeolocationPlugin.php:661
 msgid "Find a Location by Address:"
 msgstr "Encontrar uma Localização pela Morada:"
 
@@ -253,9 +253,9 @@ msgstr "ID do Mapa Mapbox"
 
 #: config_form.php:109
 msgid ""
-"Mapbox Map ID for the map to display as the basemap. The default "
-"\"mapbox.streets\" map will be used if nothing is entered here."
-msgstr "ID do Mapa Mapbox para o mapa aparecer como mapa de base. O mapa \"mapbox.streets\" por defeito será usado se nada for registado aqui."
+"Mapbox Map ID for the map to display as the basemap. The default street map "
+"will be used if nothing is entered here."
+msgstr ""
 
 #: config_form.php:118
 msgid "Geocoder"

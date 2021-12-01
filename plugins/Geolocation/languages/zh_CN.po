@@ -3,14 +3,14 @@
 # This file is distributed under the same license as the Omeka package.
 # 
 # Translators:
-# Hong Zhang <zhangh@unlv.nevada.edu>, 2018
+# Hong Zhang <zhangh@unlv.nevada.edu>, 2018,2021
 msgid ""
 msgstr ""
-"Project-Id-Version: Omeka\n"
+"Project-Id-Version: Omeka Classic\n"
 "Report-Msgid-Bugs-To: http://github.com/omeka/plugin-Geolocation/issues\n"
 "POT-Creation-Date: 2012-01-09 21:49-0500\n"
-"PO-Revision-Date: 2020-04-20 18:25+0000\n"
-"Last-Translator: John Flatness <john@zerocrates.org>\n"
+"PO-Revision-Date: 2021-03-29 16:42+0000\n"
+"Last-Translator: Hong Zhang <zhangh@unlv.nevada.edu>\n"
 "Language-Team: Chinese (China) (http://www.transifex.com/omeka/omeka/language/zh_CN/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -18,53 +18,53 @@ msgstr ""
 "Language: zh_CN\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: GeolocationPlugin.php:264 GeolocationPlugin.php:282
+#: GeolocationPlugin.php:279 GeolocationPlugin.php:297
 msgid "Geolocation"
 msgstr "地理定位"
 
-#: GeolocationPlugin.php:407
+#: GeolocationPlugin.php:422
 msgid "kilometers"
 msgstr "公里"
 
-#: GeolocationPlugin.php:409
+#: GeolocationPlugin.php:424
 msgid "miles"
 msgstr "英哩"
 
-#: GeolocationPlugin.php:411
+#: GeolocationPlugin.php:426
 #, php-format
 msgid "within %1$s %2$s of \"%3$s\""
 msgstr "介于“%3$s”的%1$s%2$s之间"
 
-#: GeolocationPlugin.php:421 views/shared/map/advanced-search-partial.php:34
+#: GeolocationPlugin.php:436 views/shared/map/advanced-search-partial.php:34
 msgid "Only Items with Locations"
-msgstr ""
+msgstr "只有有地址的条目"
 
-#: GeolocationPlugin.php:423 views/shared/map/advanced-search-partial.php:35
+#: GeolocationPlugin.php:438 views/shared/map/advanced-search-partial.php:35
 msgid "Only Items without Locations"
-msgstr ""
+msgstr "只有无地址的条目"
 
-#: GeolocationPlugin.php:440 GeolocationPlugin.php:446
+#: GeolocationPlugin.php:455 GeolocationPlugin.php:461
 msgid "Map"
 msgstr "地图"
 
-#: GeolocationPlugin.php:479
+#: GeolocationPlugin.php:494
 msgid "Browse Map"
 msgstr "浏览地图"
 
-#: GeolocationPlugin.php:534
+#: GeolocationPlugin.php:549
 #, php-format
 msgid "Find A Geographic Location For The %s:"
 msgstr "为%s寻找一个地理位置："
 
-#: GeolocationPlugin.php:546
+#: GeolocationPlugin.php:561
 msgid "Geolocation Map"
 msgstr "地理定位地图"
 
-#: GeolocationPlugin.php:547
+#: GeolocationPlugin.php:562
 msgid "Show attached items on a map"
 msgstr "在地图上显示附属条目"
 
-#: GeolocationPlugin.php:646
+#: GeolocationPlugin.php:661
 msgid "Find a Location by Address:"
 msgstr "按地址寻找位置"
 
@@ -104,7 +104,7 @@ msgstr "大于等于零的整数，0代表最大放大倍数。"
 
 #: config_form.php:37
 msgid "Base Map"
-msgstr ""
+msgstr "基准地图"
 
 #: config_form.php:40
 msgid "The type of map to display"
@@ -112,39 +112,39 @@ msgstr "显示的地图类型"
 
 #: config_form.php:43
 msgid "OpenStreetMap"
-msgstr ""
+msgstr "开放街道图"
 
 #: config_form.php:44
 msgid "Standard"
-msgstr ""
+msgstr "标准"
 
 #: config_form.php:45
 msgid "Humanitarian"
-msgstr ""
+msgstr "人道的"
 
 #: config_form.php:47 config_form.php:48
 msgid "OpenTopoMap"
-msgstr ""
+msgstr "开放地形图"
 
 #: config_form.php:50
 msgid "Stamen"
-msgstr ""
+msgstr "Stamen"
 
 #: config_form.php:51
 msgid "Toner"
-msgstr ""
+msgstr "墨粉"
 
 #: config_form.php:52
 msgid "Toner (background)"
-msgstr ""
+msgstr "墨粉（背景）"
 
 #: config_form.php:53
 msgid "Toner (lite)"
-msgstr ""
+msgstr "墨粉（精简版）"
 
 #: config_form.php:54
 msgid "Watercolor"
-msgstr ""
+msgstr "水彩"
 
 #: config_form.php:55
 msgid "Terrain"
@@ -152,124 +152,124 @@ msgstr "地形"
 
 #: config_form.php:56
 msgid "Terrain (background)"
-msgstr ""
+msgstr "地形（背景）"
 
 #: config_form.php:58
 msgid "Esri"
-msgstr ""
+msgstr "Esri"
 
 #: config_form.php:59
 msgid "World Street Map"
-msgstr ""
+msgstr "世界街道图"
 
 #: config_form.php:60
 msgid "DeLorme"
-msgstr ""
+msgstr "DeLorme"
 
 #: config_form.php:61
 msgid "World Topographic Map"
-msgstr ""
+msgstr "世界地形地图"
 
 #: config_form.php:62
 msgid "World Imagery"
-msgstr ""
+msgstr "世界成像"
 
 #: config_form.php:63
 msgid "World Terrain"
-msgstr ""
+msgstr "世界地形"
 
 #: config_form.php:64
 msgid "World Shaded Relief"
-msgstr ""
+msgstr "世界阴影浮雕"
 
 #: config_form.php:65
 msgid "World Physical Map"
-msgstr ""
+msgstr "世界物理地图"
 
 #: config_form.php:66
 msgid "Ocean Basemap"
-msgstr ""
+msgstr "海洋基准图"
 
 #: config_form.php:67
 msgid "National Geographic World Map"
-msgstr ""
+msgstr "国家地理世界地图"
 
 #: config_form.php:68
 msgid "Light Gray Canvas"
-msgstr ""
+msgstr "淡灰色画布"
 
 #: config_form.php:70
 msgid "CartoDB"
-msgstr ""
+msgstr "CartoDB"
 
 #: config_form.php:71
 msgid "Voyager"
-msgstr ""
+msgstr "旅行者"
 
 #: config_form.php:72
 msgid "Voyager (no labels)"
-msgstr ""
+msgstr "旅行者（无标签）"
 
 #: config_form.php:73
 msgid "Positron"
-msgstr ""
+msgstr "正电子"
 
 #: config_form.php:74
 msgid "Positron (no labels)"
-msgstr ""
+msgstr "正电子（无标签）"
 
 #: config_form.php:75
 msgid "Dark Matter"
-msgstr ""
+msgstr "暗物质"
 
 #: config_form.php:76
 msgid "Dark Matter (no labels)"
-msgstr ""
+msgstr "暗物质（无标签）"
 
 #: config_form.php:78
 msgid "Mapbox"
-msgstr ""
+msgstr "Mapbox"
 
 #: config_form.php:79
 msgid "Mapbox (see settings below)"
-msgstr ""
+msgstr "Mapbox（参见以下设置）"
 
 #: config_form.php:88
 msgid "Mapbox Access Token"
-msgstr ""
+msgstr "Mapbox访问令牌"
 
 #: config_form.php:93
 #, php-format
 msgid ""
 "Mapbox access token. A token is required when Mapbox is selected as the "
 "basemap. Get your token at %s."
-msgstr ""
+msgstr "Mapbox访问令牌。当Mapbox被选为基准图时必须有令牌。在%s获取您的令牌。"
 
 #: config_form.php:104
 msgid "Mapbox Map ID"
-msgstr ""
+msgstr "Mapbox地图ID"
 
 #: config_form.php:109
 msgid ""
-"Mapbox Map ID for the map to display as the basemap. The default "
-"\"mapbox.streets\" map will be used if nothing is entered here."
-msgstr ""
+"Mapbox Map ID for the map to display as the basemap. The default street map "
+"will be used if nothing is entered here."
+msgstr "显示为基准图的地图使用的Mapbox地图ID。如此处为空，将使用默认街道图。"
 
 #: config_form.php:118
 msgid "Geocoder"
-msgstr ""
+msgstr "地理编码器"
 
 #: config_form.php:122
 msgid "Service to use for looking up coordinates from addresses."
-msgstr ""
+msgstr "用来按地址查找坐标的服务。"
 
 #: config_form.php:126
 msgid "OpenStreetMap Nominatim"
-msgstr ""
+msgstr "开放街道图的Nominatim工具"
 
 #: config_form.php:127
 msgid "Photon"
-msgstr ""
+msgstr "光子"
 
 #: config_form.php:135
 msgid "Browse Map Settings"
@@ -314,11 +314,11 @@ msgstr "临近搜索时使用公制距离。"
 
 #: config_form.php:186
 msgid "Enable marker clustering"
-msgstr ""
+msgstr "启用记号聚合簇"
 
 #: config_form.php:189
 msgid "Show close or overlapping markers as clusters."
-msgstr ""
+msgstr "把接近或重叠的记号显示为聚合簇。"
 
 #: config_form.php:199
 msgid "Item Map Settings"
@@ -417,7 +417,7 @@ msgstr "地理半径（英哩）"
 
 #: views/shared/map/advanced-search-partial.php:29
 msgid "Geolocation Status"
-msgstr ""
+msgstr "地理定位状态"
 
 #: views/shared/map/advanced-search-partial.php:43
 msgid "Geographic Address"

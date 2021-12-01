@@ -4,7 +4,7 @@ echo head($head);
 ?>
 <script type="text/javascript" charset="utf-8">
 //<![CDATA[
-jQuery(window).load(function () {
+jQuery(document).ready(function () {
   jQuery('#element-id').change(function() {
     var elementId = jQuery('#element-id').val();
     var submitButton = jQuery('#edit_vocab');

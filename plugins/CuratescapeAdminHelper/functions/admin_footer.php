@@ -1,10 +1,10 @@
 <?php
 	$it_info=cah_item_type();
 	$it_name=$it_info['name'];
-	$default_text_item=__("Reveal <strong>unused</strong> Dublin Core fields");
-	$default_text_item_hide=__("Hide <strong>unused</strong> Dublin Core fields");
-	$default_text_file=__("Reveal <strong>additional</strong> Dublin Core fields");
-	$default_text_file_hide=__("Hide <strong>additional</strong> Dublin Core fields");	
+	$default_text_item=__("Reveal unused Dublin Core fields");
+	$default_text_item_hide=__("Hide unused Dublin Core fields");
+	$default_text_file=__("Reveal additional Dublin Core fields");
+	$default_text_file_hide=__("Hide additional Dublin Core fields");	
 	$edit_file=__('Edit File');
 	$html_warning=__('HTML is not recommended in this field when using the Curatescape theme. <a title="View the Curatescape Admin Helper plugin settings" href="/admin/plugins/config?name=CuratescapeAdminHelper">Disable this warning.</a>');
 	$howto=__('How-to');
@@ -43,9 +43,7 @@
 	        results = regex.exec(location.search);
 	    return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
 	}
-	if( (cah_theme_options_accordion==1) && (getParameterByName('name')=='curatescape') ){
-
-		
+	if( (cah_theme_options_accordion==1) && (getParameterByName('name').includes('curatescape')) ){
 			jQuery(".theme-configuration [id^='fieldset-']").each(function(i){
 				jQuery(this).children('.field').wrapAll('<div />');
 			 });
@@ -55,7 +53,8 @@
 				active: false,
 				heightStyleType: 'content',
 				});
-			jQuery('legend').css('width','92.6%');	
+			jQuery('fieldset').css('border-bottom','1px solid #ccc');
+			jQuery('fieldset').css('width','100%');
 			jQuery('.ui-accordion .ui-accordion-content').css('height','auto');
 	}
 	

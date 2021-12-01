@@ -7,10 +7,10 @@
 # 71a481fa74f95b7a30d922756a7fc96f_4a72ccb <2f03312e2b91275d182ee8dc2fe128b1_108386>, 2014
 msgid ""
 msgstr ""
-"Project-Id-Version: Omeka\n"
+"Project-Id-Version: Omeka Classic\n"
 "Report-Msgid-Bugs-To: http://github.com/omeka/plugin-Geolocation/issues\n"
 "POT-Creation-Date: 2012-01-09 21:49-0500\n"
-"PO-Revision-Date: 2020-04-20 18:25+0000\n"
+"PO-Revision-Date: 2020-06-03 20:17+0000\n"
 "Last-Translator: John Flatness <john@zerocrates.org>\n"
 "Language-Team: Japanese (http://www.transifex.com/omeka/omeka/language/ja/)\n"
 "MIME-Version: 1.0\n"
@@ -19,53 +19,53 @@ msgstr ""
 "Language: ja\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: GeolocationPlugin.php:264 GeolocationPlugin.php:282
+#: GeolocationPlugin.php:279 GeolocationPlugin.php:297
 msgid "Geolocation"
 msgstr "地理位置情報"
 
-#: GeolocationPlugin.php:407
+#: GeolocationPlugin.php:422
 msgid "kilometers"
 msgstr "キロメートル"
 
-#: GeolocationPlugin.php:409
+#: GeolocationPlugin.php:424
 msgid "miles"
 msgstr "マイル"
 
-#: GeolocationPlugin.php:411
+#: GeolocationPlugin.php:426
 #, php-format
 msgid "within %1$s %2$s of \"%3$s\""
 msgstr ""
 
-#: GeolocationPlugin.php:421 views/shared/map/advanced-search-partial.php:34
+#: GeolocationPlugin.php:436 views/shared/map/advanced-search-partial.php:34
 msgid "Only Items with Locations"
 msgstr ""
 
-#: GeolocationPlugin.php:423 views/shared/map/advanced-search-partial.php:35
+#: GeolocationPlugin.php:438 views/shared/map/advanced-search-partial.php:35
 msgid "Only Items without Locations"
 msgstr ""
 
-#: GeolocationPlugin.php:440 GeolocationPlugin.php:446
+#: GeolocationPlugin.php:455 GeolocationPlugin.php:461
 msgid "Map"
 msgstr "地図"
 
-#: GeolocationPlugin.php:479
+#: GeolocationPlugin.php:494
 msgid "Browse Map"
 msgstr "地図"
 
-#: GeolocationPlugin.php:534
+#: GeolocationPlugin.php:549
 #, php-format
 msgid "Find A Geographic Location For The %s:"
 msgstr "%s の地理位置を場所を探す："
 
-#: GeolocationPlugin.php:546
+#: GeolocationPlugin.php:561
 msgid "Geolocation Map"
 msgstr "地理位置図"
 
-#: GeolocationPlugin.php:547
+#: GeolocationPlugin.php:562
 msgid "Show attached items on a map"
 msgstr "マップに添付されたアイテムを表示する"
 
-#: GeolocationPlugin.php:646
+#: GeolocationPlugin.php:661
 msgid "Find a Location by Address:"
 msgstr "住所で場所を検索"
 
@@ -252,9 +252,9 @@ msgstr "Mapbox Map ID"
 
 #: config_form.php:109
 msgid ""
-"Mapbox Map ID for the map to display as the basemap. The default "
-"\"mapbox.streets\" map will be used if nothing is entered here."
-msgstr "Mapboxベースマップとして表示するマップのマップID。 何も入力しないと、デフォルトの \"mapbox.streets\"マップが使用されます。"
+"Mapbox Map ID for the map to display as the basemap. The default street map "
+"will be used if nothing is entered here."
+msgstr ""
 
 #: config_form.php:118
 msgid "Geocoder"

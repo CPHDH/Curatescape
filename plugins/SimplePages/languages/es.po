@@ -3,15 +3,15 @@
 # This file is distributed under the same license as the Omeka package.
 # 
 # Translators:
-# begona.soto <begona.soto@urjc.es>, 2012
+# de148a9e0633a0be667369ac2c03daf6_5a8cfdc <d8151a948fde1b5417f093d15bff5f57_18371>, 2012
 # Dani Garcia <danimontesgarcia@gmail.com>, 2012
-# Darío Hereñú <magallania@gmail.com>, 2014
+# Darío Hereñú, 2014
 # Fran Pérez <fperezrodri@gmail.com>, 2012
 # Pablo Laguna <pablolaguna@vera.com.uy>, 2014
 # Rubén Alcaraz Martínez <rubenalcarazmartinez@gmail.com>, 2013
 msgid ""
 msgstr ""
-"Project-Id-Version: Omeka\n"
+"Project-Id-Version: Omeka Classic\n"
 "Report-Msgid-Bugs-To: http://github.com/omeka/plugin-SimplePages/issues\n"
 "POT-Creation-Date: 2012-01-09 21:49-0500\n"
 "PO-Revision-Date: 2018-05-02 15:01+0000\n"
