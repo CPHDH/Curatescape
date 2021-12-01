@@ -12,6 +12,7 @@ To get started, install Omeka and the Curatescape theme and plugins on the serve
     - [Server requirements](https://github.com/CPHDH/Curatescape/wiki/Server-requirements)
 2.  **Add the Curatescape theme** to the `/themes/` directory
     - Curatescape: [repo](https://github.com/CPHDH/theme-curatescape) | [download](https://github.com/CPHDH/theme-curatescape/archive/master.zip)
+    - Curatescape Echo: [repo](https://github.com/CPHDH/theme-curatescape-echo) | [download](https://github.com/CPHDH/theme-curatescape-echo/releases)
 3.  **Add the required plugins** to the `/plugins/` directory
     - CuratescapeJSON: [repo](https://github.com/CPHDH/CuratescapeJSON) | [download](https://github.com/CPHDH/CuratescapeJSON/archive/master.zip)
     - CuratescapeAdminHelper: [repo](https://github.com/CPHDH/CuratescapeAdminHelper) | [download](https://github.com/CPHDH/CuratescapeAdminHelper/archive/master.zip)
