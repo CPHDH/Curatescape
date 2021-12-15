@@ -45,7 +45,7 @@ echo head(
                                 }
                             }
                             $html .= '<article class="item-result tour">';
-                            $html .= '<a class="tour-image '.(count($bg) < 4 ? 'single' : 'multi').'" style="background-image:'.implode(',', $bg).'" href="'.WEB_ROOT.'/tours/show/'.tour('id').'"></a><div class="separator thin flush-bottom flush-top"></div>';
+                            $html .= '<a aria-label="'.tour('title').'" class="tour-image '.(count($bg) < 4 ? 'single' : 'multi').'" style="background-image:'.implode(',', $bg).'" href="'.WEB_ROOT.'/tours/show/'.tour('id').'"></a><div class="separator thin flush-bottom flush-top"></div>';
                             $html .= '<div class="tour-inner">';
                             $html .= '<a class="permalink" href="' . WEB_ROOT . '/tours/show/'. tour('id').'"><h3 class="title">' . tour('title').'</h3></a>'.
                                 '<span class="byline">'.rl_icon('compass').__('%s Locations', rl_tour_total_items($tour)).'</span>';

@@ -85,7 +85,7 @@ const loadMapMulti = (requested_id = null, isHomePage = false) => {
   const jsonPath = isQuery ? "&output=mobile-json" : "?output=mobile-json";
   const isSecure = window.location.protocol == "https:" ? true : false;
   const mapfigure = document.querySelector("figure#multi-map");
-  const map_title = container.getAttribute("aria-label");
+  const map_title = container.getAttribute("data-label");
 
   const dataSource = isHomePage
     ? window.location.protocol +

@@ -625,7 +625,7 @@ function rl_homepage_map($ishome=true)
     $zoom=(get_option('geolocation_default_zoom_level')) ? get_option('geolocation_default_zoom_level') : 12; ?>
     <section id="home-map" class="inner-padding browse">
       <h2 class="query-header"><?php echo __('%s Map',rl_item_label());?></h2>
-      <div id="home-map-container" aria-label="All Stories: 783">
+      <div id="home-map-container" data-label="All Stories: 783">
         <figure id="multi-map" data-json-source="/items/browse?output=mobile-json" data-lat="<?php echo $pluginlat; ?>" data-lon="<?php echo $pluginlon; ?>" data-zoom="<?php echo $zoom; ?>" data-default-layer="<?php echo get_theme_option('map_style') ? get_theme_option('map_style') : 'CARTO_VOYAGER'; ?>" data-color="<?php echo get_theme_option('marker_color'); ?>" data-featured-color="<?php echo get_theme_option('featured_marker_color'); ?>" data-featured-star="<?php echo get_theme_option('featured_marker_star'); ?>" data-root-url="<?php echo WEB_ROOT; ?>" data-maki-js="<?php echo src('maki/maki.min.js', 'javascripts'); ?>" data-providers="<?php echo src('providers.js', 'javascripts'); ?>" data-leaflet-js="<?php echo src('theme-leaflet/leaflet.js', 'javascripts'); ?>" data-leaflet-css="<?php echo src('theme-leaflet/leaflet.css', 'javascripts'); ?>" data-cluster-css="<?php echo src('leaflet.markercluster/leaflet.markercluster.min.css', 'javascripts'); ?>" data-cluster-js="<?php echo src('leaflet.markercluster/leaflet.markercluster.js', 'javascripts'); ?>" data-cluster="<?php echo $tour && get_theme_option('tour_clustering') ? '1' : get_theme_option('clustering'); ?>" data-fitbounds-label="<?php echo __('Zoom to fit all locations'); ?>">
              <div class="curatescape-map">
                 <div id="curatescape-map-canvas"></div>
@@ -652,7 +652,7 @@ function multimap_markup($tour=false, $map_label=null, $button_label=null)
     if (!$map_label) {
         $map_label = __('Map');
     } ?>
-    <div id="multi-map-container" aria-label="<?php echo htmlentities(strip_tags($map_label)); ?>">
+    <div id="multi-map-container" data-label="<?php echo htmlentities(strip_tags($map_label)); ?>">
         <?php echo rl_story_map_multi($tour); ?>
     </div>
     <div id="multi-map-overlay"></div>
@@ -850,7 +850,7 @@ function rl_filed_under($item = null, $maxlength = 35)
         $link .= htmlentities('&search=&advanced[0][element_id]=49&advanced[0][type]=contains&advanced[0][terms]=');
         $link .= urlencode(str_replace('&amp;', '&', $subject));
         $label = trim($subject);
-        $node = '<a title="Subject: '.$label.'" class="tag tag-alt" href="'.$link.'">'.snippet($label,0,$maxlength).'</a>';
+        $node = '<a title="Subject: '.$label.'" class="tag tag-alt" href="'.w3_valid_url($link).'">'.snippet($label,0,$maxlength).'</a>';
     } elseif (metadata($item, 'has tags') && $tag = $item->Tags[0]) {
         $link = WEB_ROOT;
         $link .= htmlentities('/items/browse?tags=');
@@ -861,7 +861,7 @@ function rl_filed_under($item = null, $maxlength = 35)
         $label = trim(rl_item_label('singular'));
         $node = link_to('items', 'browse', snippet($label,0,$maxlength), array('title'=>'Type: '.$label, 'class'=>'tag tag-alt'));
     }
-    return '<div class="title-card-subject '.text_to_id($label,'subject').'" aria-label="'. __('Filed Under').'">'.$node.'</div>';
+    return '<div class="title-card-subject '.text_to_id($label,'subject').'"><span class="screen-reader">'.__('Filed Under').'</span> '.$node.'</div>';
 }
 
 /*
@@ -882,7 +882,7 @@ function rl_subjects($raw=false, $rawfirst=false)
             $link .= htmlentities('&search=&advanced[0][element_id]=49&advanced[0][type]=contains&advanced[0][terms]=');
             $link .= urlencode(str_replace('&amp;', '&', $subject));
             $node = '
-<li><a title="'.__('Subject').': '.$subject.'" class="tag tag-alt" href="'.$link.'">'.$subject.'</a></li>';
+<li><a title="'.__('Subject').': '.$subject.'" class="tag tag-alt" href="'.w3_valid_url($link).'">'.$subject.'</a></li>';
             array_push($array, $node);
         }
         $html .= '<div id="subjects">';
@@ -970,6 +970,7 @@ function rl_get_first_image_src($item, $size='fullsize')
       $select->where('item_id = '.$item->id);
       $select->where('has_derivative_image = 1');
       $select->where('mime_type LIKE "image%"');
+      $select->order('order ASC');
       $q = $select->query();
       $results = $q->fetchAll();
       if ($results) {
@@ -1106,6 +1107,19 @@ function rl_related_links()
     }
 }
 
+/*
+** w3_valid_url
+** For when url() is not the right tool
+** Just escaping common chars that trigger the validator.
+*/
+function w3_valid_url($string){
+  $string = str_replace('[', '%5B', $string);
+  $string = str_replace(']', '%5D', $string);
+  $string = str_replace('|', '%7C', $string);
+  $string = str_replace(' ', '%20', $string);
+  $string = str_replace('&quot;', '%22', $string);
+  return $string;
+}
 
 /*
 ** Author Byline
@@ -1120,7 +1134,7 @@ function rl_the_byline($itemObj='item', $include_sponsor=false)
         $authlink=1;
         foreach ($authors as $author) {
             if ($authlink==1) {
-                $href='/items/browse?search=&advanced[0][element_id]=39&advanced[0][type]=is+exactly&advanced[0][terms]='.$author;
+                $href=w3_valid_url('/items/browse?search=&advanced[0][element_id]=39&advanced[0][type]=is+exactly&advanced[0][terms]='.$author);
                 $author='<a href="'.$href.'">'.$author.'</a>';
             }
             switch ($index) {
@@ -1175,7 +1189,7 @@ function rl_file_caption($file, $includeTitle=true)
     $caption=array();
 
     $title = metadata($file, array( 'Dublin Core', 'Title' ));
-    $caption[] = '<span class="file-title"><cite><a title="'.__('View File Record').'" href="/files/show/'.$file->id.'">'.($title ? $title : __('Untitled')).'</a></cite></span>';
+    $caption[] = '<span class="file-title"><cite><a itemprop="contentUrl" title="'.__('View File Record').'" href="/files/show/'.$file->id.'">'.($title ? $title : __('Untitled')).'</a></cite></span>';
 
     if ($description = metadata($file, array( 'Dublin Core', 'Description' ))) {
         $caption[]= '<span class="file-description">'.strip_tags($description, '<a><u><strong><em><i><cite>').'</span>';
@@ -1212,12 +1226,12 @@ function rl_streaming_files($filesArray=null, $type=null, $openFirst=false)
       $html.='<div>';
       $html.='<div class="media-player '.$type.' '.($openFirst && $index==1 ? 'active' : '').'" data-type="'.$type.'" data-index="'.$index.'" data-src="'.WEB_ROOT.'/files/original/'.$file['src'].'">';
       if ($type == 'audio') {
-        $html.='<audio controls preload="auto">
-            <p class="media-no-support">'.__('Your web browser does not support HTML5 audio').'</p>
+        $html.='<audio itemprop="associatedMedia" controls preload="auto">
             <source src="'.WEB_ROOT.'/files/original/'.$file['src'].'" type="audio/mp3">
+            <p class="media-no-support">'.__('Your web browser does not support HTML5 audio').'</p>
         </audio>';
       } elseif ($type="video") {
-        $html.='<video playsinline controls preload="auto">
+        $html.='<video itemprop="associatedMedia" playsinline controls preload="auto">
             <source src="'.WEB_ROOT.'/files/original/'.$file['src'].'" type="video/mp4">
             <p class="media-no-support">'.__('Your web browser does not support HTML5 video').'</p>
         </video>';
@@ -1230,7 +1244,7 @@ function rl_streaming_files($filesArray=null, $type=null, $openFirst=false)
       $html.='</div>';
    };
     if ($html): ?>
-   <figure id="item-media" class="<?php echo $type; ?>">
+   <figure class="item-media <?php echo $type; ?>" itemscope itemtype="http://schema.org/<?php echo ucfirst($type);?>Object">
        <div class="media-container">
            <div class="media-list">
                <?php echo $html; ?>
@@ -1403,9 +1417,9 @@ function rl_disquss_comments($shortname)
    if ($shortname) {
       ?>
       <div id="disqus_thread" class="inner-padding max-content-width">
-       <a class="load-comments button" title="Click to load the comments section" href="javascript:void(0)" onclick="disqus();return false;"><i aria-hidden="true" class="fa fa-comments"></i>Show Comments</a>
+       <a class="load-comments button" title="Click to load the comments section" href="javascript:void(0)" onclick="disqus();return false;"><?php echo rl_icon('chatbubbles')?> Show Comments</a>
       </div>
-      <script async defer>
+      <script>
       var disqus_shortname = "<?php echo $shortname; ?>";
       var disqus_loaded = false;
       
@@ -1741,7 +1755,7 @@ function rl_homepage_tours($html=null, $num=4, $scope='featured')
             }
         }
         $html .= '<article class="item-result tour">';
-          $html .= '<a class="tour-image '.(count($bg) < 4 ? 'single' : 'multi').'" style="background-image:'.implode(',', $bg).'" href="'.WEB_ROOT.'/tours/show/'.tour('id').'"></a><div class="separator thin flush-bottom flush-top"></div>';
+          $html .= '<a aria-label="'.tour('title').'" class="tour-image '.(count($bg) < 4 ? 'single' : 'multi').'" style="background-image:'.implode(',', $bg).'" href="'.WEB_ROOT.'/tours/show/'.tour('id').'"></a><div class="separator thin flush-bottom flush-top"></div>';
           $html .= '<div class="tour-inner">';
             $html .= '<a class="permalink" href="' . WEB_ROOT . '/tours/show/'. tour('id').'"><h3 class="title">' . tour('title').'</h3></a>'.
                 '<span class="byline">'.rl_icon('compass').__('%s Locations', rl_tour_total_items($tours[$i])).'</span>';
@@ -1795,7 +1809,7 @@ function rl_story_nav($has_images=0, $has_audio=0, $has_video=0, $has_other=0, $
         $prev = tour_item_id($tour, $prevIndex);
 
         $tournav .= '<ul class="tour-nav">';
-        $tournav .= '<li class="head"><a title="'.__('%s Navigation', rl_tour_label('singular')).'" class="icon-capsule label" href="javascript:void(0)">'.rl_icon("list").'<span class="label">'.__('%s Navigation', rl_tour_label('singular')).'</span></a></li>';
+        $tournav .= '<li class="head"><span title="'.__('%s Navigation', rl_tour_label('singular')).'" class="icon-capsule label">'.rl_icon("list").'<span class="label">'.__('%s Navigation', rl_tour_label('singular')).'</span></span></li>';
         $tournav .= $prev ? '<li><a title="'.__('Previous Loction').'" class="icon-capsule" href="'.public_url("items/show/$prev?tour=$tour_id&index=$prevIndex").'">'.rl_icon("arrow-back").'<span class="label">'.__('Previous').'</span></a></li>' : null;
         $tournav .= '<li class="info"><a title="'.__('%s Info', rl_tour_label('singular')).': '.$tourTitle.'" class="icon-capsule" href="'.$tourURL.'">'.rl_icon("compass").'<span class="label">'.__('%s Info', rl_tour_label('singular')).'</span></a></li>';
         $tournav .= $next ? '<li><a title="'.__('Next Location').'" class="icon-capsule" href="'.public_url("items/show/$next?tour=$tour_id&index=$nextIndex").'">'.rl_icon("arrow-forward").'<span class="label">'.__('Next').'</span></a></li>' : null;
@@ -1810,7 +1824,7 @@ function rl_story_nav($has_images=0, $has_audio=0, $has_video=0, $has_other=0, $
 
     // Output HTML
     $html .= '<nav class="rl-toc"><ul>'.
-      '<li class="head"><a title="'.__('%s Contents', rl_item_label('singular')).'" class="icon-capsule label" href="javascript:void(0)">'.rl_icon("list").'<span class="label">'.__('%s Contents', rl_item_label('singular')).'</span></a></li>'.
+      '<li class="head"><span title="'.__('%s Contents', rl_item_label('singular')).'" class="icon-capsule label">'.rl_icon("list").'<span class="label">'.__('%s Contents', rl_item_label('singular')).'</span></span></li>'.
       '<li><a title="'.__('Skip to Main Text').'" class="icon-capsule" href="#text-section">'.rl_icon("book").'<span class="label">'.__('Main Text').'</span></a></li>'.
       $media_list.
       $location.
@@ -1865,7 +1879,7 @@ function rl_item_files_by_type($item=null, $output=null)
 }
 
 /*
-These images load via js unless the $class is set to "featured" (i.e. in header)
+These images load via js unless the $class is set to "featured" (i.e. in article header)
 Should be used with rl_nojs_images() for users w/o js
 */
 function rl_gallery_figure($image=null, $class=null, $hrefOverride=null)
@@ -1874,9 +1888,15 @@ function rl_gallery_figure($image=null, $class=null, $hrefOverride=null)
         $src = WEB_ROOT.'/files/fullsize/'.$image['src'];
         $url = WEB_ROOT.'/files/show/'.$image['id'];
         $data_or_style_attr = $class == 'featured' ? 'style' : 'data-style';
-        return '<figure class="image-figure '.$class.'" itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
-          <a itemprop="contentUrl" aria-label="Image: '.$image['title'].'" href="'.($hrefOverride ? $hrefOverride : $src).'" class="gallery-image '.$image['orientation'].' file-'.$image['id'].'" '.$data_or_style_attr.'="background-image:url('.$src.')" data-pswp-width="'.$image['size'][0].'" data-pswp-height="'.$image['size'][1].'"></a>
-          <figcaption>'.$image['caption'].'</figcaption></figure>';
+        $html = '<figure class="image-figure '.$class.'" itemscope itemtype="http://schema.org/ImageObject">';
+          if($hrefOverride){
+            $html .= '<div itemprop="associatedMedia" class="gallery-image '.$image['orientation'].' file-'.$image['id'].'" '.$data_or_style_attr.'="background-image:url('.$src.')" data-pswp-width="'.$image['size'][0].'" data-pswp-height="'.$image['size'][1].'"></div>';
+          }else{
+            $html .= '<a itemprop="associatedMedia" aria-label="Image: '.$image['title'].'" href="'.$src.'" class="gallery-image '.$image['orientation'].' file-'.$image['id'].'" '.$data_or_style_attr.'="background-image:url('.$src.')" data-pswp-width="'.$image['size'][0].'" data-pswp-height="'.$image['size'][1].'"></a>';
+          }
+          $html .= '<figcaption>'.$image['caption'].'</figcaption>';
+        $html .= '</figure>';
+        return $html;
     }
 }
 
@@ -1968,7 +1988,7 @@ function rl_footer_cta($html=null)
 function rl_social_array($max=5)
 {
    $services=array();
-   ($email=get_theme_option('contact_email') ? get_theme_option('contact_email') : get_option('administrator_email')) ? array_push($services, '<a target="_blank" rel="noopener" title="email" href="mailto:'.$email.'" class="button social icon-round email">'.rl_icon("mail").'</i></a>') : null;
+   ($email=get_theme_option('contact_email') ? get_theme_option('contact_email') : get_option('administrator_email')) ? array_push($services, '<a target="_blank" rel="noopener" title="email" href="mailto:'.$email.'" class="button social icon-round email">'.rl_icon("mail").'</a>') : null;
    ($facebook=get_theme_option('facebook_link')) ? array_push($services, '<a target="_blank" rel="noopener" title="facebook" href="'.$facebook.'" class="button social icon-round facebook">'.rl_icon("logo-facebook", null).'</a>') : null;
    ($twitter=get_theme_option('twitter_username')) ? array_push($services, '<a target="_blank" rel="noopener" title="twitter" href="https://twitter.com/'.$twitter.'" class="button social icon-round twitter">'.rl_icon("logo-twitter", null).'</a>') : null;
    ($youtube=get_theme_option('youtube_username')) ? array_push($services, '<a target="_blank" rel="noopener" title="youtube" href="'.$youtube.'" class="button social icon-round youtube">'.rl_icon("logo-youtube", null).'</a>') : null;
@@ -2008,7 +2028,7 @@ function rl_story_actions($class=null, $title=null, $id=null)
    $url=WEB_ROOT.'/items/show/'.$id;
    $actions = array(
       '<a rel="noopener" title="print" href="javascript:void" onclick="window.print();" class="button social icon-round">'.rl_icon("print").'</a>',
-      '<a target="_blank" rel="noopener" title="email" href="mailto:?subject='.$title.'&body='.$url.'" class="button social icon-round">'.rl_icon("mail").'</a>',
+      '<a target="_blank" rel="noopener" title="email" href="'.w3_valid_url('mailto:?subject='.$title.'&body='.$url).'" class="button social icon-round">'.rl_icon("mail").'</a>',
       '<a target="_blank" rel="noopener" title="facebook" href="https://www.facebook.com/sharer/sharer.php?u='.urlencode($url).'" class="button social icon-round">'.rl_icon("logo-facebook", null).'</a>',
       '<a target="_blank" rel="noopener" title="twitter" href="https://twitter.com/intent/tweet?text='.urlencode($url).'" class="button social icon-round">'.rl_icon("logo-twitter", null).'</a>'
    );

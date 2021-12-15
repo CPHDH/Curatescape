@@ -1,15 +1,7 @@
 <?php
+// SETUP
 $tour = isset($_GET['tour']) ? $_GET['tour'] : null;
 $tour_index = isset($_GET['index']) ? $_GET['index'] : null;
-echo head(array(
-    'item'=>$item,
-    'maptype'=>$maptype,
-    'bodyid'=>'items',
-    'bodyclass'=>'show item-story item-'.$item->id.($tour ? ' tour-'.$tour : null).(isset($tour_index) ? ' tour-index-'.$tour_index : null),
-    'title' => metadata($item, array('Dublin Core', 'Title')),
-    ));
-
-// SETUP
 $maptype = 'story';
 $filesforitem = rl_item_files_by_type($item);
 if (isset($filesforitem['images'][0]['src'])) {
@@ -34,6 +26,14 @@ $address = (element_exists('Item Type Metadata', 'Street Address'))
 ? metadata($item, array( 'Item Type Metadata','Street Address' ))
 : null;
 $has_location = ($location[ 'latitude' ] && $location[ 'longitude' ]) ? true : false;
+echo head(array(
+    'item'=>$item,
+    'maptype'=>$maptype,
+    'bodyid'=>'items',
+    'bodyclass'=>'show item-story item-'.$item->id.($tour ? ' tour-'.$tour : null).(isset($tour_index) ? ' tour-index-'.$tour_index : null),
+    'title' => metadata($item, array('Dublin Core', 'Title')),
+    'noscript_styles' => rl_nojs_images($filesforitem['images'])
+    ));
 ?>
 
 <article class="story item show wide <?php echo $hero_class;?>" role="main" id="content">
@@ -50,7 +50,7 @@ $has_location = ($location[ 'latitude' ] && $location[ 'longitude' ]) ? true : f
                 <?php echo rl_the_byline($item, true);?>
             </div>
             <div class="title-card-image">
-                <?php echo rl_gallery_figure($filesforitem['images'][0], 'featured', 'javascript:void(0)');?>
+                <?php echo rl_gallery_figure($filesforitem['images'][0], 'featured', '#images');?>
             </div>
         </div>
     </header>
@@ -93,9 +93,7 @@ $has_location = ($location[ 'latitude' ] && $location[ 'longitude' ]) ? true : f
                 <?php if ($has_image_count):?>
                 <div itemscope itemtype="http://schema.org/ImageGallery" id="images" data-toc="#images" data-pswp="<?php echo src('photoswipe.min.js', 'javascripts/pswp');?>" data-pswp-ui="<?php echo src('photoswipe-ui-default.min.js', 'javascripts/pswp');?>" data-pswp-css="<?php echo src('photoswipe.css', 'javascripts/pswp');?>" data-pswp-skin-css="<?php echo src('default-skin.css', 'javascripts/pswp/default-skin');?>">
                     <h2><?php echo __('Images');?></h2>
-                    <noscript>
-                        <?php echo rl_nojs_images($filesforitem['images']);?>
-                    </noscript>
+
                     <?php foreach ($filesforitem['images'] as $image) {
                         echo rl_gallery_figure($image, 'border');
                     }?>
@@ -143,7 +141,7 @@ $has_location = ($location[ 'latitude' ] && $location[ 'longitude' ]) ? true : f
     </div>
 
     <?php if (get_theme_option('comments_id')):?>
-    <section id="comments-section">
+    <section aria-label="<?php echo __('Comments');?>" id="comments-section">
         <?php echo rl_display_comments();?>
     </section>
     <?php endif;?>

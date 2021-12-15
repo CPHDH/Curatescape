@@ -156,6 +156,9 @@
     
     <noscript>
         <link href="<?php echo css_src('noscript'); ?>" media="all" rel="stylesheet" type="text/css" />
+        <?php if(isset($noscript_styles)){
+            echo $noscript_styles;
+        } ?>
     </noscript>
 </head>
 
