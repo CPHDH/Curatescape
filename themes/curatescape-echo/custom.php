@@ -50,7 +50,7 @@ function rl_admin_message($which=null, $roles=array('admin','super','contributor
           break;
         
         case 'home-recent-random':
-          $html = '<div class="warning message">'.$icon.'<div>'.$title.': <span>'.__('This section is reserved for Recent/Random Items. <a href="%s">Publish some now</a>. Note that Featured Items will be omitted in this section.', admin_url('items/browse')).'</span> '.$ps.'<div></div>';
+          $html = '<div class="warning message">'.$icon.'<div>'.$title.': <span>'.__('This section is reserved for Recent/Random Items. <a href="%s">Publish some now</a>. Note that Featured Items will be omitted in this section.', admin_url('items/browse')).'</span> '.$ps.'</div></div>';
           break;
         
         case 'home-tags':
@@ -617,15 +617,26 @@ function rl_story_map_multi($tour=false)
 /*
 ** Story Map - HOME
 */
-function rl_homepage_map($ishome=true)
+function rl_homepage_map($ishome=true,$totalItems=null)
 {
   if(plugin_is_active('Geolocation') && plugin_is_active('CuratescapeJSON')):
+
+    if(!isset($totalItems)){
+      $db = get_db();
+      $table = $db->getTable('Location');
+      $select = $table->getSelect();
+      $q = $select->query();
+      $results = $q->fetchAll();
+      $totalItems = count($results);    
+    }
+
     $pluginlat=(get_option('geolocation_default_latitude')) ? get_option('geolocation_default_latitude') : null;
     $pluginlon=(get_option('geolocation_default_longitude')) ? get_option('geolocation_default_longitude') : null;
     $zoom=(get_option('geolocation_default_zoom_level')) ? get_option('geolocation_default_zoom_level') : 12; ?>
+    
     <section id="home-map" class="inner-padding browse">
       <h2 class="query-header"><?php echo __('%s Map',rl_item_label());?></h2>
-      <div id="home-map-container" data-label="All Stories: 783">
+      <div id="home-map-container" data-label="All Stories: <?php echo $totalItems;?>">
         <figure id="multi-map" data-json-source="/items/browse?output=mobile-json" data-lat="<?php echo $pluginlat; ?>" data-lon="<?php echo $pluginlon; ?>" data-zoom="<?php echo $zoom; ?>" data-default-layer="<?php echo get_theme_option('map_style') ? get_theme_option('map_style') : 'CARTO_VOYAGER'; ?>" data-color="<?php echo get_theme_option('marker_color'); ?>" data-featured-color="<?php echo get_theme_option('featured_marker_color'); ?>" data-featured-star="<?php echo get_theme_option('featured_marker_star'); ?>" data-root-url="<?php echo WEB_ROOT; ?>" data-maki-js="<?php echo src('maki/maki.min.js', 'javascripts'); ?>" data-providers="<?php echo src('providers.js', 'javascripts'); ?>" data-leaflet-js="<?php echo src('theme-leaflet/leaflet.js', 'javascripts'); ?>" data-leaflet-css="<?php echo src('theme-leaflet/leaflet.css', 'javascripts'); ?>" data-cluster-css="<?php echo src('leaflet.markercluster/leaflet.markercluster.min.css', 'javascripts'); ?>" data-cluster-js="<?php echo src('leaflet.markercluster/leaflet.markercluster.js', 'javascripts'); ?>" data-cluster="<?php echo $tour && get_theme_option('tour_clustering') ? '1' : get_theme_option('clustering'); ?>" data-fitbounds-label="<?php echo __('Zoom to fit all locations'); ?>">
              <div class="curatescape-map">
                 <div id="curatescape-map-canvas"></div>
@@ -1189,7 +1200,7 @@ function rl_file_caption($file, $includeTitle=true)
     $caption=array();
 
     $title = metadata($file, array( 'Dublin Core', 'Title' ));
-    $caption[] = '<span class="file-title"><cite><a itemprop="contentUrl" title="'.__('View File Record').'" href="/files/show/'.$file->id.'">'.($title ? $title : __('Untitled')).'</a></cite></span>';
+    $caption[] = '<span class="file-title" itemprop="name"><cite><a itemprop="contentUrl" title="'.__('View File Record').'" href="/files/show/'.$file->id.'">'.($title ? $title : __('Untitled')).'</a></cite></span>';
 
     if ($description = metadata($file, array( 'Dublin Core', 'Description' ))) {
         $caption[]= '<span class="file-description">'.strip_tags($description, '<a><u><strong><em><i><cite>').'</span>';
@@ -1223,14 +1234,16 @@ function rl_streaming_files($filesArray=null, $type=null, $openFirst=false)
    $audioTypes = array('audio/mp3'); // @todo: in_array($file['mime'],$videoTypes)
    foreach ($filesArray as $file) {
       $index++;
-      $html.='<div>';
+      $html.='<div itemscope itemtype="http://schema.org/'.ucfirst($type).'Object">';
       $html.='<div class="media-player '.$type.' '.($openFirst && $index==1 ? 'active' : '').'" data-type="'.$type.'" data-index="'.$index.'" data-src="'.WEB_ROOT.'/files/original/'.$file['src'].'">';
       if ($type == 'audio') {
+        $thumb = WEB_PUBLIC_THEME.'/'.Theme::getCurrentThemeName().'/images/ionicons/headset-sharp.svg';
         $html.='<audio itemprop="associatedMedia" controls preload="auto">
             <source src="'.WEB_ROOT.'/files/original/'.$file['src'].'" type="audio/mp3">
             <p class="media-no-support">'.__('Your web browser does not support HTML5 audio').'</p>
         </audio>';
       } elseif ($type="video") {
+        $thumb = WEB_PUBLIC_THEME.'/'.Theme::getCurrentThemeName().'/images/ionicons/film-sharp.svg';
         $html.='<video itemprop="associatedMedia" playsinline controls preload="auto">
             <source src="'.WEB_ROOT.'/files/original/'.$file['src'].'" type="video/mp4">
             <p class="media-no-support">'.__('Your web browser does not support HTML5 video').'</p>
@@ -1239,12 +1252,14 @@ function rl_streaming_files($filesArray=null, $type=null, $openFirst=false)
       $html .='</div>';
       $html.='<div class="media-select">';
       $html.='<div class="media-thumb"><a tabindex="0" data-type="'.$type.'" data-index="'.$index.'" title="play" class="button icon-round media-button"></a></div>';
-      $html.='<div class="media-caption">'.$file['caption'].'</div>';
+      $html.='<div class="media-caption" itemprop="description">'.$file['caption'].'</div>';
+      $html.='<meta itemprop="uploadDate" content="'.$file['date'].'">';
+      $html.='<meta itemprop="thumbnailUrl" content="'.$thumb.'">';
       $html.='</div>';
       $html.='</div>';
    };
     if ($html): ?>
-   <figure class="item-media <?php echo $type; ?>" itemscope itemtype="http://schema.org/<?php echo ucfirst($type);?>Object">
+   <figure class="item-media <?php echo $type; ?>">
        <div class="media-container">
            <div class="media-list">
                <?php echo $html; ?>
@@ -1865,10 +1880,10 @@ function rl_item_files_by_type($item=null, $output=null)
                );
                break;
                case strpos($mime, 'audio') !== false:
-               array_push($output['audio'], array('id'=>$file->id, 'src'=>$file->filename,'caption'=>rl_file_caption($file)));
+               array_push($output['audio'], array('id'=>$file->id, 'src'=>$file->filename,'caption'=>rl_file_caption($file), 'date'=>$file->added));
                break;
                case strpos($mime, 'video') !== false:
-               array_push($output['video'], array('id'=>$file->id, 'src'=>$file->filename,'caption'=>rl_file_caption($file)));
+               array_push($output['video'], array('id'=>$file->id, 'src'=>$file->filename,'caption'=>rl_file_caption($file), 'date'=>$file->added));
                break;
                default:
                array_push($output['other'], array('id'=>$file->id, 'src'=>$file->filename,'size'=>$file->size,'title'=>metadata($file, array('Dublin Core','Title')),'filename'=>$file->original_filename));
