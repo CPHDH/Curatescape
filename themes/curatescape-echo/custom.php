@@ -2098,6 +2098,7 @@ function rl_configured_css($vars=null, $output=null)
     $output .= '@media screen and (prefers-color-scheme: dark) {:root {--link-text: var(--link-text-on-dark) !important;--link-text-hover: var(--link-text-on-dark-hover) !important;--bg-body: var(--bg-body-dark);--bg-article: var(--bg-article-dark);--featured-one: #000 !important;--site-footer-bg-color: #000;--text-base: var(--text-base-on-dark);--text-heading: var(--text-heading-on-dark);--text-subheading: var(--text-subheading-on-dark);--text-caption: var(--text-caption-on-dark);--deco-color: var(--dark-primary);--deco-color-subtle: var(--dark-tertiary);--deco-frame: 10px solid var(--dark-secondary);--deco-frame-small: 3px solid var(--dark-secondary);--light-secondary: var(--dark-tertiary);--light-primary-subtle: var(--dark-tertiary);--article-header-bg-gradient: linear-gradient(to top,rgba(34, 34, 34, 1) 50%,rgba(34, 34, 34, 0.95),rgba(34, 34, 34, 0.9),rgba(34, 34, 34, 0.75),rgba(34, 34, 34, 0.5));}article header .background-image {filter: grayscale(1) brightness(0.8);}.gallery-image {filter: brightness(0.8);}.browse .item-image {filter: brightness(0.8);}.item-result.tour .tour-image {filter: brightness(0.8);}form.capsule input.search,form.capsule input.search:focus::placeholder, form.capsule input.search:hover::placeholder,form.capsule input.search:hover, form.capsule input.search:focus{color:#000;}}';
   }
   if (get_theme_option('custom_css')) {
+    $output .= get_theme_option('custom_css');
   }
   return $output;
 }

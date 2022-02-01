@@ -260,6 +260,21 @@ ol,
 ul {
   list-style: none;
 }
+.page-inner-content ul,
+.page-inner-content ol,
+.text-section ul,
+.text-section ol {
+  list-style-position: outside;
+  margin-left: 1em;
+}
+.text-section ul,
+.page-inner-content ul {
+  list-style-type: square;
+}
+.text-section ol,
+.page-inner-content ol {
+  list-style-type: decimal;
+}
 blockquote,
 q {
   quotes: none;
@@ -2001,6 +2016,8 @@ figure .gallery-image + figcaption {
     margin-left: 1em;
   }
 }
+figure.item-media .media-caption > span > cite,
+figure.item-media .media-caption > span > span,
 figure .gallery-image + figcaption cite,
 figure .gallery-image + figcaption > span > span {
   font-weight: 800;
@@ -3289,6 +3306,7 @@ body.exhibits.summary .exhibit-summary-link a {
 
 .page-inner-content {
   flex-shrink: 0;
+  max-width: 37em;
 }
 
 .page-inner-sidebar {
@@ -3347,7 +3365,7 @@ body#home.stealth section:not(#home-stealth) {
 }
 #home-stealth a,
 #home-stealth img {
-  height: 130px;
+  max-height: 130px;
   margin: 0 auto;
 }
 
