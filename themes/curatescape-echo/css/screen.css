@@ -262,18 +262,24 @@ ul {
 }
 .page-inner-content ul,
 .page-inner-content ol,
-.text-section ul,
-.text-section ol {
+#text-section ul,
+#text-section ol {
   list-style-position: outside;
   margin-left: 1em;
 }
-.text-section ul,
+#text-section ul,
 .page-inner-content ul {
   list-style-type: square;
 }
-.text-section ol,
+#text-section ol,
 .page-inner-content ol {
   list-style-type: decimal;
+}
+.page-inner-content ul ::marker,
+.page-inner-content ol ::marker,
+#text-section ul ::marker,
+#text-section ol ::marker {
+  color: inherit;
 }
 blockquote,
 q {
