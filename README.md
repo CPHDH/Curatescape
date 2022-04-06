@@ -15,7 +15,7 @@ To get started, install Omeka and the Curatescape theme and plugins on the serve
     - Curatescape Echo: [repo](https://github.com/CPHDH/theme-curatescape-echo) | [download](https://github.com/CPHDH/theme-curatescape-echo/releases)
 3.  **Add the required plugins** to the `/plugins/` directory
     - CuratescapeJSON: [repo](https://github.com/CPHDH/CuratescapeJSON) | [download](https://github.com/CPHDH/CuratescapeJSON/releases)
-    - CuratescapeAdminHelper: [repo](https://github.com/CPHDH/CuratescapeAdminHelper) | [download](https://github.com/CPHDH/CuratescapeAdminHelper/releases.zip)
+    - CuratescapeAdminHelper: [repo](https://github.com/CPHDH/CuratescapeAdminHelper) | [download](https://github.com/CPHDH/CuratescapeAdminHelper/releases)
     - TourBuilder: [repo](https://github.com/CPHDH/plugin-TourBuilder) | [download](https://github.com/CPHDH/plugin-TourBuilder/releases)
     - Geolocation: [instructions](https://omeka.org/classic/docs/Plugins/Geolocation/) | [repo](https://github.com/omeka/plugin-Geolocation) | [download](http://omeka.org/add-ons/plugins/geolocation/)
     - SimplePages: [instructions](http://omeka.org/codex/Plugins/SimplePages) | [repo](https://github.com/omeka/plugin-SimplePages) | [download](http://omeka.org/add-ons/plugins/simple-pages/)
