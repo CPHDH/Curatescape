@@ -123,13 +123,13 @@ if
 
 		function sortByTitleIndex($a, $b)
 		{
-			return $a['title_index'] < $b['title_index'];
+			return $a['title_index'] <=> $b['title_index'];
 		}
 
 
 		function sortById($a, $b)
 		{
-			return $a['id'] < $b['id'];
+			return $a['id'] <=> $b['id'];
 		}
 
 
