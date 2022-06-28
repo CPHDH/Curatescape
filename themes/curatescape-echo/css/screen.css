@@ -1708,6 +1708,9 @@ header.primary nav #nav-interactive a > i {
   #home-featured .secondary article:last-child {
     border-bottom: none;
   }
+  .featured-card-container .secondary {
+    flex-grow: 1;
+  }
   .browse .featured-card.featured-1 .image-container,
   .browse .featured-card.featured-1 .featured-card-image {
     height: 400px;

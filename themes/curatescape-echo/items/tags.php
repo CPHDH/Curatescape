@@ -22,7 +22,7 @@
         </div>
         <div id="primary" class="">
             <section id="tags" aria-label="<?php echo __('Tags');?>">
-                <?php echo tag_cloud($tags, url('items/browse'), 9, true, 'after'); ?>
+                <?php echo tag_cloud($tags, 'items/browse', 9, true, 'after'); ?>
             </section>
         </div><!-- end primary -->
 

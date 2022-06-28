@@ -75,7 +75,7 @@ echo head(array('maptype'=>$maptype,'title'=>$title,'bodyid'=>'items','bodyclass
                 $tags=tag_string(get_current_record('item'), url('items/browse'));
                 $hasImage=metadata($item, 'has thumbnail');
                 $location = get_db()->getTable('Location')->findLocationByItem($item, true);
-                $has_location = ($location[ 'latitude' ] && $location[ 'longitude' ]) ? true : false;
+                $has_location = (isset($location) && $location[ 'latitude' ] && $location[ 'longitude' ]) ? true : false;
                 if ($item_image = rl_get_first_image_src($item)) {
                     $size=getimagesize($item_image);
                     $orientation = $size && ($size[0] > $size[1]) ? 'landscape' : 'portrait';
@@ -87,6 +87,7 @@ echo head(array('maptype'=>$maptype,'title'=>$title,'bodyid'=>'items','bodyclass
                     $orientation = $size && ($size[0] > $size[1]) ? 'landscape' : 'portrait';
                 }else{
                     $item_image=null;
+                    $orientation=null;
                 }
                 ?>
                     <article class="item-result <?php echo $hasImage ? 'has-image' : 'no-image';?>">
@@ -104,7 +105,7 @@ echo head(array('maptype'=>$maptype,'title'=>$title,'bodyid'=>'items','bodyclass
 
                     <?php if ($query && !$total_results) {?>
                     <div id="no-results">
-                        <p><?php echo ($query) ? '<em>'.__('Your query returned <strong>no results.</strong>').'</em><br><span class="caption">'.rl_icon('information-circle').__('Try using <a href="'.url('items/search').'">Advanced %s Search</a> or <a href="'.url('search').'">Sitewide Search</a>.</span>',rl_item_label()) : null;?></p>
+                        <p><?php echo ($query) ? '<em>'.__('Your query returned <strong>no results.</strong>').'</em><br><span class="caption">'.rl_icon('information-circle').__('Try using <a href="%1$s">Advanced %2$s Search</a> or <a href="%3$s">Sitewide Search</a>.',url('items/search'),rl_item_label(),url('search')).'</span>' : null;?></p>
                     </div>
                     <?php }else{ ?>
                     <article class="item-result" style="visibility:hidden"></article>

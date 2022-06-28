@@ -1,5 +1,17 @@
 <?php
 /*
+** Translations
+*/
+add_translation_source(dirname(__FILE__) . '/languages');
+if(get_theme_option('stealth_mode')=='1' && get_html_lang() !== 'en_US'){
+  // disable the translations cache while in stealth mode
+  try{
+    $cache = Zend_Registry::get('Zend_Translate');
+    $cache::clearCache();
+  }catch(exception $e){}
+}
+
+/*
 ** Fallback images
 */
 add_file_fallback_image('audio', 'ionicons/headset-sharp.svg');
@@ -644,7 +656,7 @@ function rl_homepage_map($ishome=true,$totalItems=null)
         </figure>
       </div>
       <?php if($ishome):?>
-      <div class="view-more-link"><a class="button" href="/items/map"><?php echo __('View Map Page');?></a></div>
+      <div class="view-more-link"><a class="button" href=<?php echo url('items/map').'>'.__('View Map Page');?></a></div>
       <?php endif;?>
     </section>
     <?php
@@ -958,7 +970,7 @@ $q = $select->query();
           if ($results) {
               $html.='<div id="tour-for-item"><ul>';
               foreach ($results as $result) {
-                  $html.='<li><a class="tag tag-alt" href="/tours/show/'.$result['id'].'">';
+                  $html.='<li><a class="tag tag-alt" href="'.url('tours/show/').$result['id'].'">';
                   $html.=$result['title'];
                   $html.='</a></li>';
               }
@@ -1200,7 +1212,7 @@ function rl_file_caption($file, $includeTitle=true)
     $caption=array();
 
     $title = metadata($file, array( 'Dublin Core', 'Title' ));
-    $caption[] = '<span class="file-title" itemprop="name"><cite><a itemprop="contentUrl" title="'.__('View File Record').'" href="/files/show/'.$file->id.'">'.($title ? $title : __('Untitled')).'</a></cite></span>';
+    $caption[] = '<span class="file-title" itemprop="name"><cite><a itemprop="contentUrl" title="'.__('View File Record').'" href="'.url('files/show/').$file->id.'">'.($title ? $title : __('Untitled')).'</a></cite></span>';
 
     if ($description = metadata($file, array( 'Dublin Core', 'Description' ))) {
         $caption[]= '<span class="file-description">'.strip_tags($description, '<a><u><strong><em><i><cite>').'</span>';
@@ -1574,7 +1586,7 @@ function rl_homepage_featured($num=4,$html=null,$index=1)
         }
       $html .= $primary.'<div class="secondary">'.$secondary.'</div>';
       $html .= '</div>';
-      $html .= '<div class="view-more-link"><a class="button" href="/items/browse?featured=1">'.__('Browse All Featured %2s', rl_item_label('plural')).'</a></div>';
+      $html .= '<div class="view-more-link"><a class="button" href="'.url('items').'?featured=1">'.__('Browse All Featured %2s', rl_item_label('plural')).'</a></div>';
       return '<section id="home-featured" class="inner-padding browse">'.$html.'</section>';
     }else{
       return rl_admin_message('home-featured',array('admin','super'));
@@ -1630,7 +1642,7 @@ function rl_homepage_recent_random($num=3,$html=null,$index=1)
           $html .= '</article>';
         }
       $html .= '</div>';
-      $html .= '<div class="view-more-link"><a class="button" href="/items/browse/">'.__('Browse All %2s', rl_item_label('plural')).'</a></div>';
+      $html .= '<div class="view-more-link"><a class="button" href="'.url('items').'">'.__('Browse All %2s', rl_item_label('plural')).'</a></div>';
       return '<section id="home-recent-random" class="browse inner-padding">'.$html.'</section>';
     }else{
       return rl_admin_message('home-recent-random',array('admin','super'));
@@ -1647,8 +1659,8 @@ function rl_homepage_tags($num=25)
     $tags=get_records('Tag', array('sort_field' => 'count', 'sort_dir' => 'd'), $num);
     if(count($tags)){
       $html = '<h2 class="query-header">'.__('Popular Tags').'</h2>';
-      $html.=tag_cloud($tags, url('items/browse'));
-      $html.='<div class="view-more-link"><a class="button" href="/items/tags/">'.__('Browse All Tags').'</a></div>';
+      $html.=tag_cloud($tags, 'items/browse');
+      $html.='<div class="view-more-link"><a class="button" href="'.url('items/tags').'">'.__('Browse All Tags').'</a></div>';
       return '<section id="home-tags" class="inner-padding">'.$html.'</section>';    
     }else{
       return rl_admin_message('home-tags',array('admin','super'));
@@ -1838,7 +1850,7 @@ function rl_story_nav($has_images=0, $has_audio=0, $has_video=0, $has_other=0, $
     }
 
     // Output HTML
-    $html .= '<nav class="rl-toc"><ul>'.
+    $html = '<nav class="rl-toc"><ul>'.
       '<li class="head"><span title="'.__('%s Contents', rl_item_label('singular')).'" class="icon-capsule label">'.rl_icon("list").'<span class="label">'.__('%s Contents', rl_item_label('singular')).'</span></span></li>'.
       '<li><a title="'.__('Skip to Main Text').'" class="icon-capsule" href="#text-section">'.rl_icon("book").'<span class="label">'.__('Main Text').'</span></a></li>'.
       $media_list.
@@ -1899,7 +1911,7 @@ Should be used with rl_nojs_images() for users w/o js
 */
 function rl_gallery_figure($image=null, $class=null, $hrefOverride=null)
 {
-    if ($image['src']) {
+    if (isset($image) && $image['src']) {
         $src = WEB_ROOT.'/files/fullsize/'.$image['src'];
         $url = WEB_ROOT.'/files/show/'.$image['id'];
         $data_or_style_attr = $class == 'featured' ? 'style' : 'data-style';
@@ -1912,6 +1924,8 @@ function rl_gallery_figure($image=null, $class=null, $hrefOverride=null)
           $html .= '<figcaption>'.$image['caption'].'</figcaption>';
         $html .= '</figure>';
         return $html;
+    }else{
+      return null;
     }
 }
 
@@ -1975,7 +1989,7 @@ function rl_display_random_featured_item($withImage=false, $num=1)
                      $html .=rl_hero_item($item);
         endforeach;
 
-        $html.='<p class="view-more-link"><a class="button" href="/items/browse?featured=1">'.__('Browse Featured %s', rl_item_label('plural')).'</a></p>';
+        $html.='<p class="view-more-link"><a class="button" href="'.url('items').'?featured=1">'.__('Browse Featured %s', rl_item_label('plural')).'</a></p>';
     } else {
         $html .= '<article class="featured-story-result none">';
         $html .= '<p>'.__('No featured items are available. Publish some now.').'</p>';

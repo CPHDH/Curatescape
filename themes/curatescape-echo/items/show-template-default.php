@@ -25,7 +25,7 @@ $location = get_db()->getTable('Location')->findLocationByItem($item, true);
 $address = (element_exists('Item Type Metadata', 'Street Address'))
 ? metadata($item, array( 'Item Type Metadata','Street Address' ))
 : null;
-$has_location = ($location[ 'latitude' ] && $location[ 'longitude' ]) ? true : false;
+$has_location = (isset($location) && $location[ 'latitude' ] && $location[ 'longitude' ]) ? true : false;
 echo head(array(
     'item'=>$item,
     'maptype'=>$maptype,
@@ -50,7 +50,7 @@ echo head(array(
                 <?php echo rl_the_byline($item, true);?>
             </div>
             <div class="title-card-image">
-                <?php echo rl_gallery_figure($filesforitem['images'][0], 'featured', '#images');?>
+                <?php echo isset($filesforitem['images'][0]) ? rl_gallery_figure($filesforitem['images'][0], 'featured', '#images') : null;?>
             </div>
         </div>
     </header>
