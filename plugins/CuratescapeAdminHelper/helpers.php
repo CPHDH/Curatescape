@@ -1,10 +1,9 @@
 <?php
 function cah_item_type(){
 	$itemTypeMeta = array(
-		  'name'=> 'Curatescape Story',
-		  'description' => 'A narrative body of text being sent to Curatescape mobile applications or being displayed using Curatescape themes. Please use relevant Dublin Core fields for Title, Creator, and other key elements as needed.',
-		);	
-	
+		'name'=> 'Curatescape Story',
+		'description' => 'A narrative body of text being sent to Curatescape mobile applications or being displayed using Curatescape themes. Please use relevant Dublin Core fields for Title, Creator, and other key elements as needed.',
+	);	
 	return $itemTypeMeta;
 }
 
@@ -51,23 +50,20 @@ function cah_elements(){
 			'name'=>'Official Website',
 			'description'=>'An official website related to the entry. Use HTML to create an active link.',
 			'order'=>7
-			),	
+			),
 		array(
 			'name'=>'Street Address',
 			'description'=>'A detailed street/mailing address for a physical location.',
 			'order'=>8
-			),							
+			),				
 		array(
 			'name'=>'Access Information',
 			'description'=>'Information regarding physical access to a location, including restrictions (e.g. "Private Property"), walking directions (e.g. "To reach the peak, take the trail on the left"), or other useful details (e.g. "Location is approximate").',
 			'order'=>9
-			),	
-	
-	); 		
-	
+			),
+	);
 	return $elements;
 }
-
 
 function cah_item_form_helper_text_array(){
 	$it=cah_item_type();
@@ -102,46 +98,44 @@ function cah_item_form_helper_text_array(){
 			),
 		'item_fields'=> 
 			array( // key fields to reorder, etc...
-				cah_get_element_id('Dublin Core','Title'),
-				cah_get_element_id('Dublin Core','Creator'),
-				cah_get_element_id('Dublin Core','Subject')
+			cah_get_element_id('Dublin Core','Title'),
+			cah_get_element_id('Dublin Core','Creator'),
+			cah_get_element_id('Dublin Core','Subject')
 			),
 		'file_fields'=> 
 			array( // key fields to reorder, etc...
-				cah_get_element_id('Dublin Core','Title'),
-				cah_get_element_id('Dublin Core','Description'),
-				cah_get_element_id('Dublin Core','Creator'),
-				cah_get_element_id('Dublin Core','Source'),
-				cah_get_element_id('Dublin Core','Date'),
-				cah_get_element_id('Dublin Core','Rights'),				
+			cah_get_element_id('Dublin Core','Title'),
+			cah_get_element_id('Dublin Core','Description'),
+			cah_get_element_id('Dublin Core','Creator'),
+			cah_get_element_id('Dublin Core','Source'),
+			cah_get_element_id('Dublin Core','Date'),
+			cah_get_element_id('Dublin Core','Rights'),				
 			),
 		'add_input_supported'=>
 			array(
-				cah_get_element_id('Dublin Core','Subject'),
-				cah_get_element_id('Dublin Core','Creator'),
-				cah_get_element_id('Item Type Metadata','Factoid'),
-				cah_get_element_id('Item Type Metadata','Related Resources'),
+			cah_get_element_id('Dublin Core','Subject'),
+			cah_get_element_id('Dublin Core','Creator'),
+			cah_get_element_id('Item Type Metadata','Factoid'),
+			cah_get_element_id('Item Type Metadata','Related Resources'),
 			),
 		'use_html_supported'=>
 		array(
-			cah_get_element_id('Dublin Core','Description'),
-			cah_get_element_id('Dublin Core','Publisher'),
-			cah_get_element_id('Dublin Core','Relation'),
-			cah_get_element_id('Dublin Core','Source'),
-			cah_get_element_id('Dublin Core','Rights'),
-			cah_get_element_id('Item Type Metadata','Lede'),
-			cah_get_element_id('Item Type Metadata','Story'),
-			cah_get_element_id('Item Type Metadata','Sponsor'),
-			cah_get_element_id('Item Type Metadata','Factoid'),
-			cah_get_element_id('Item Type Metadata','Related Resources'),
-			cah_get_element_id('Item Type Metadata','Official Website'),
-			cah_get_element_id('Item Type Metadata','Access Information'),
+		cah_get_element_id('Dublin Core','Description'),
+		cah_get_element_id('Dublin Core','Publisher'),
+		cah_get_element_id('Dublin Core','Relation'),
+		cah_get_element_id('Dublin Core','Source'),
+		cah_get_element_id('Dublin Core','Rights'),
+		cah_get_element_id('Item Type Metadata','Lede'),
+		cah_get_element_id('Item Type Metadata','Story'),
+		cah_get_element_id('Item Type Metadata','Sponsor'),
+		cah_get_element_id('Item Type Metadata','Factoid'),
+		cah_get_element_id('Item Type Metadata','Related Resources'),
+		cah_get_element_id('Item Type Metadata','Official Website'),
+		cah_get_element_id('Item Type Metadata','Access Information'),
 		),	
 		);
-	
 	return json_encode($mod);
 }
-
 
 /* Get some info about the files to display on admin dahboard*/
 function cah_get_file_info(){
@@ -155,39 +149,30 @@ function cah_get_file_info(){
 		$dir = opendir($file_dir);
 		while ($file = readdir($dir)) {
 			$ext=strtolower(pathinfo($file, PATHINFO_EXTENSION));
-		
 		    if ($file == '.' || $file == '..' || in_array($ext, array(null,'','html','htaccess'))) {
-		        continue;
+		    	continue;
 		    }
-		    
 			elseif(in_array($ext, array('jpg','jpeg','png','gif','tif','tiff'))){
 				$images++;
 			}
-
-
 			elseif(in_array($ext, array('mp4','m4v','mov'))){
 				$video++;
 			}
-
 			elseif(in_array($ext, array('mp3','wav','ogg'))){
 				$audio++;
 			}
 			else{
 				$uncounted++;
 			}
-
-			
-		    $files++;		    
+		    $files++;
 		}
 		return 'Total Files: '.$files.' ('.$images.' images, '.$audio.' audio, '.$video.' video, '.$uncounted.' other)';
 	}else{
 		return null;
 	}
-	
 }
 
 function cah_resources_guide(){
-
 	$html  = null;
 	$html .= '<section class="five columns alpha"><div class="panel">';
 	$html .= '<h2>'.__('Curatescape Resources').'</h2><br>';
@@ -196,21 +181,15 @@ function cah_resources_guide(){
 	$html .= '<h4>'.__('User Community').'</h4>';
 	$html .= '<p>'.__('Curatescape users are invited to join the <a href="https://forum.curatescape.org/">Curatescape Forum</a>. Curatescape is also on <a href="https://www.facebook.com/curatescape">Facebook</a> and <a href="https://twitter.com/curatescape">Twitter</a>').' .</p>';
 	$html .= '</div></section>';
-	
 	return $html;
-
 }
 
 function cah_components_guide(){
-	
 	// Theme
 	$theme = (strpos(Theme::getTheme(Theme::getCurrentThemeName('public'))->title, 'Curatescape') === 0);
-	
-	$text_theme = $theme ? '<li>'.__('The Curatescape theme is currently active.').' '.__('<a class="config" href="%s">Configure theme settings</a>',WEB_ROOT.'/admin/themes/config?name=curatescape').'</li>' : '<li>'.__('The Curatescape theme is not activated. Activate theme in <a href="%s">Appearance settings</a>.',WEB_ROOT.'/admin/themes/').'</li>';
-	
+	$text_theme = $theme ? '<li>'.__('The Curatescape theme is currently active.').' '.__('<a class="config" href="%s">Configure theme settings</a>',WEB_ROOT.'/admin/themes').'</li>' : '<li>'.__('The Curatescape theme is not activated. Activate theme in <a href="%s">Appearance settings</a>.',WEB_ROOT.'/admin/themes/').'</li>';
 	$icon_ok = '<i class="fa fa-check-circle"></i>';
 	$icon_warning = '<i class="fa fa-exclamation-triangle"></i>';
-	
 	$html  = null;
 	$html .= '<section class="five columns omega"><div class="panel">';
 	$html .= '<h2>'.__('Curatescape Components').'</h2><br>';
@@ -218,13 +197,10 @@ function cah_components_guide(){
 	$html .= '<ul>';
 	$html .= $text_theme;
 	$html .= '</ul>';
-	
-	
 	// Plugins
 	$required_plugins=array('Geolocation'=>true, 'SimplePages'=>false, 'TourBuilder'=>false, 'CuratescapeJSON'=>false);
 	$active=0;
 	$text_plugin=null;
-	
 	foreach($required_plugins as $name=>$config){
 		if(plugin_is_active($name)){
 			$active++;
@@ -234,15 +210,11 @@ function cah_components_guide(){
 			$text_plugin.='<li>'.__('The %s plugin is <strong>not activated</strong>. Activate plugin in <a href="'.WEB_ROOT.'/admin/plugins/">Plugins settings</a>.',$name).'</li>';
 		}
 	}
-	
 	$html .= '<h4>'.__('Required Plugins').' '.( (count($required_plugins) == $active ) ? $icon_ok : $icon_warning ).'</h4>';
 	$html .= '<ul>';
 	$html .= $text_plugin;
 	$html .= '</ul>';
-	
-	
 	// Item Type 
-
 	$it_info=cah_item_type();
 	$it_name=$it_info['name'];	
 	$it=get_record('ItemType',array('name'=>$it_name));
@@ -250,43 +222,30 @@ function cah_components_guide(){
 	$text_type = ($type_exists) ? '<li>'.__('The "%s" item type exists.',$it_name).'</li>' : '<li>'.__('Please create the "%s" item type.',$it_name).'</li>';
 	$missing_elements=0;
 	$text_elements=null;
-
 	if($type_exists){
-		
 		// array of currently assigned elements
 		$elementsForType=$it->Elements;
 		$a=array();
 		foreach($elementsForType as $e) {
 			$a[]=$e['name']; 
 		}
-		
 		// array of required elements
-
 		$reqElementsForType = cah_elements();
-		
 		// check to see if the required elements exist AND are assigned to the item type
 		foreach($reqElementsForType as $element){
 			if(element_exists('Item Type Metadata',$element['name'])){
-				
 				$assigned=(bool)in_array($element['name'], $a);
 				$text_elements .='<li>The "'.$element['name'].'" element exists'.($assigned ? ' and is properly assigned' : ' but <strong>MAY NOT BE PROPERLY ASSIGNED</strong> to the item type').'. </li>';
-			
 			}else{
-				
 				$missing_elements++;
 				$text_elements .='<li>'.__('The "%s" element <strong>does not exist</strong>.',$element['name']).' '.__('Please update the item type record to include the element "%s".',$element['name']).'</li>';	
-				
 			}
 		}
 	}
-			
 	$html .= '<h4>'.__('Required Item Type and Elements').' '.( ( $type_exists && ($missing_elements==0) ) ? $icon_ok : $icon_warning ).'</h4>';
-
 	$html .= '<ul>';
 	$html .= $text_type;
 	$html .= '<ul>'.$text_elements.'</ul>';	
 	$html .= '</ul>';
-	
 	echo $html;
-
 }

@@ -10,7 +10,6 @@
 	$howto=__('How-to');
 ?>
 <script>
-	
 	// Plugin Options
 	var cah_enable_item_file_tab_notes = <?php echo get_option('cah_enable_item_file_tab_notes');?>;
 	var cah_enable_item_file_toggle_dc = <?php echo get_option('cah_enable_item_file_toggle_dc');?>;
@@ -21,13 +20,11 @@
 	var cah_theme_options_accordion= <?php echo get_option('cah_theme_options_accordion');?>;
 	var cah_hide_add_input_where_unsupported = <?php echo get_option('cah_hide_add_input_where_unsupported');?>;
 	var cah_hide_html_checkbox_where_unsupported = <?php echo get_option('cah_hide_html_checkbox_where_unsupported');?>;
-		
 	// Dashboard
 	var stats = jQuery('body.index #stats');
 	if(cah_enable_dashboard_stats==1) stats.append('<div id="file_stats"><p>'+'<?php echo cah_get_file_info();?>'+'</p><div>');
 	if(cah_enable_dashboard_components==1) stats.after('<?php echo cah_components_guide();?>');
 	if(cah_enable_dashboard_resources==1) stats.after('<?php echo cah_resources_guide();?>');
-	
 	// Tab text on item and file forms
 	if(cah_enable_item_file_tab_notes==1){
 		var form_mod_array=<?php echo cah_item_form_helper_text_array();?>;
@@ -35,7 +32,6 @@
 			jQuery(data.insert_point).after('<span class="tab-info"><span class="fa fa-question-circle"></span> <?php echo __('How-to');?></span>'+data.text);
 		});
 	}
-
 	// Use jQueryUI to create theme options accordion
 	function getParameterByName(name) {
 	    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
@@ -44,28 +40,24 @@
 	    return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
 	}
 	if( (cah_theme_options_accordion==1) && (getParameterByName('name').includes('curatescape')) ){
-			jQuery(".theme-configuration [id^='fieldset-']").each(function(i){
-				jQuery(this).children('.field').wrapAll('<div />');
-			 });
-			jQuery('fieldset').accordion({
-				header:'legend',
-				collapsible: true,
-				active: false,
-				heightStyleType: 'content',
-				});
-			jQuery('fieldset').css('border-bottom','1px solid #ccc');
-			jQuery('fieldset').css('width','100%');
-			jQuery('.ui-accordion .ui-accordion-content').css('height','auto');
+		jQuery(".theme-configuration [id^='fieldset-']").each(function(i){
+			jQuery(this).children('.field').wrapAll('<div />');
+		});
+		jQuery('fieldset').accordion({
+			header:'legend',
+			collapsible: true,
+			active: false,
+			heightStyleType: 'content',
+			});
+		jQuery('fieldset').css('border-bottom','1px solid #ccc');
+		jQuery('fieldset').css('width','100%');
+		jQuery('.ui-accordion .ui-accordion-content').css('height','auto');
 	}
-	
 	// Re-order and re-style elements for items and files
 	if(cah_enable_item_file_toggle_dc==1){
 		jQuery('.items #dublin-core-metadata .field,.files #dublin-core-metadata .field').addClass('toggle-me').hide();
-		
 		jQuery('.items #dublin-core-metadata .element-set-description').after('<div id="dc-reveal" class="items"><?php echo $default_text_item;?></div>');
 		jQuery('.files #dublin-core-metadata .element-set-description').after('<div id="dc-reveal" class="files"><?php echo $default_text_file;?></div>');
-
-		
 	    jQuery('#dc-reveal.items').click(function(){
 	        jQuery('#dublin-core-metadata .field.toggle-me').slideToggle();
 	        jQuery(this).html(function(i,text){
@@ -77,7 +69,6 @@
 			    }
 	        });
 	    });
-
 	    jQuery('#dc-reveal.files').click(function(){
 	        jQuery('#dublin-core-metadata .field.toggle-me').slideToggle();
 	        jQuery(this).html(function(i,text){
@@ -89,21 +80,17 @@
 			    }
 	        });
 	    });
-	    
 	    // items
 		jQuery.each(form_mod_array.item_fields, function(i,id){
 			jQuery('.items #edit-form #element-'+id).addClass('curatescape-recommended');
 			jQuery('.items #edit-form #element-'+id).removeClass('toggle-me').insertBefore('#dc-reveal').show();
 		});
-	
 	    // fields
 		jQuery.each(form_mod_array.file_fields, function(i,id){
 			jQuery('.files #edit-form #element-'+id).addClass('curatescape-recommended');
 			jQuery('.files #edit-form #element-'+id).removeClass('toggle-me').insertBefore('#dc-reveal').show();
 		});
-		
 	}
-	
 	if(cah_hide_add_input_where_unsupported==1){
 		// add input
 		jQuery('.field button.add-element').hide();
@@ -111,7 +98,6 @@
 			jQuery('.items #edit-form #element-'+id+' button.add-element').addClass('add_input_supported').show();
 		});			
 	}
-
 	if(cah_hide_html_checkbox_where_unsupported==1){
 		var htmlWhitelist = function(){
 			// hide all
@@ -133,12 +119,10 @@
 			setTimeout(function(){
 				htmlWhitelist();
 			},500);
-			
 		});
 		// on load
 		htmlWhitelist();
 	}
-	
 	if(cah_enable_file_edit_links){
 		// file edit links
 		jQuery('.admin-thumb.panel a').each(function(){
@@ -146,8 +130,6 @@
 			jQuery(this).parentsUntil('#item-images').append('<a target="_blank" class="cah-file-edit" href="'+href+'"><?php echo $edit_file;?></a>');
 		});		
 	}
-
 	// Highlight the Curatescape item type in the dropdown
 	jQuery('select#item-type option:contains("<?php echo $it_name;?>")').css("background-color","yellow");
-	
 </script>

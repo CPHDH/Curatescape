@@ -12,7 +12,6 @@ $story_container='div#element-'.cah_get_element_id('Item Type Metadata','Story')
 			display:none !important;
 		}
 	<?php endif;?>
-
 	span.cah-warning{
 		display: block;
 		background: lightyellow;
@@ -20,7 +19,6 @@ $story_container='div#element-'.cah_get_element_id('Item Type Metadata','Story')
 		padding: 3px 7px;
 		line-height:normal;
 	}
-	
 	p.cah-helper span.divider{
 		display: block;
 		margin: 15px 0;
@@ -28,7 +26,7 @@ $story_container='div#element-'.cah_get_element_id('Item Type Metadata','Story')
 	}
 	.fa{
 		font-family:"Font Awesome 5 Free"
-		}
+	}
 	.fa-exclamation-triangle:after,	 
 	.fa-check-circle:after{
 		font-style: normal;

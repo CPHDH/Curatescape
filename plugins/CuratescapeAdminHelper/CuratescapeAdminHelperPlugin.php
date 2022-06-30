@@ -5,8 +5,6 @@ include dirname(__FILE__) . '/helpers.php';
 class CuratescapeAdminHelperPlugin extends Omeka_Plugin_AbstractPlugin
 {
     protected $_hooks = array(
-        'admin_items_batch_edit_form',
-        'items_batch_edit_custom',
         'install',
         'admin_head',
         'admin_footer',
@@ -14,7 +12,7 @@ class CuratescapeAdminHelperPlugin extends Omeka_Plugin_AbstractPlugin
         'config_form',
         'uninstall',
         'upgrade',
-        );
+    );
 
     protected $_options = array(
         'cah_enable_dashboard_stats' => 1,
@@ -24,7 +22,6 @@ class CuratescapeAdminHelperPlugin extends Omeka_Plugin_AbstractPlugin
         'cah_enable_item_file_toggle_dc' => 1,
         'cah_enable_file_edit_links' => 1,
         'cah_theme_options_accordion'=>1,
-        'cah_theme_options_batch_convert'=>0,
         'cah_hide_add_input_where_unsupported'=>1,
         'cah_hide_html_checkbox_where_unsupported'=>1
     );
@@ -40,7 +37,6 @@ class CuratescapeAdminHelperPlugin extends Omeka_Plugin_AbstractPlugin
         set_option('cah_enable_item_file_toggle_dc', (int)(boolean)$_POST['cah_enable_item_file_toggle_dc']);
         set_option('cah_enable_file_edit_links', (int)(boolean)$_POST['cah_enable_file_edit_links']);
         set_option('cah_theme_options_accordion', (int)(boolean)$_POST['cah_theme_options_accordion']);
-        set_option('cah_theme_options_batch_convert', (int)(boolean)$_POST['cah_theme_options_batch_convert']);
         set_option('cah_hide_add_input_where_unsupported', (int)(boolean)$_POST['cah_hide_add_input_where_unsupported']);
         set_option('cah_hide_html_checkbox_where_unsupported', (int)(boolean)$_POST['cah_hide_html_checkbox_where_unsupported']);
     }
@@ -54,21 +50,18 @@ class CuratescapeAdminHelperPlugin extends Omeka_Plugin_AbstractPlugin
         
     public function hookAdminHead()
     {
-        
         // header scripts: admin styles
         require dirname(__FILE__) . '/functions/admin_head.php';
     }
 
     public function hookAdminFooter()
     {
-        
         // footer scripts: admin dashboard enhancements
         require dirname(__FILE__) . '/functions/admin_footer.php';
     }
 
     public function hookInstall()
     {
-        
         // install scripts: plugin options
         $this->_installOptions();
         
@@ -83,22 +76,6 @@ class CuratescapeAdminHelperPlugin extends Omeka_Plugin_AbstractPlugin
         }
         if (version_compare($args['old_version'], '1.2', '<')) {
             set_option('cah_hide_html_checkbox_where_unsupported', 1);
-        }
-    }
-    
-    public function hookAdminItemsBatchEditForm()
-    {
-        if (get_option('cah_theme_options_batch_convert')==1) {
-            // extend batch edit form: add option to convert to custom item type
-            require dirname(__FILE__) . '/functions/admin_items_batch_edit_form.php';
-        }
-    }
-    
-    public function hookItemsBatchEditCustom($args)
-    {
-        if (get_option('cah_theme_options_batch_convert')==1) {
-            // save batch edit form: convert item to custom item type and cross-walk elements
-            require dirname(__FILE__) . '/functions/items_batch_edit_custom.php';
         }
     }
     
