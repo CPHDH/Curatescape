@@ -50,6 +50,8 @@ function rl_admin_message($which=null, $roles=array('admin','super','contributor
         case 'items-browse':
           if (intval(option('per_page_public')) % 6 > 0) {
             $html = '<div class="warning message">'.$icon.'<div>'.$title.': <span>'.__('To ensure the optimal user experience at all screen sizes, please <a href="%s">update your site settings</a> so that the value of <em>Results Per Page (Public)</em> is a number divisible by both 2 and 3 (for example, 12 or 18).', admin_url('appearance/edit-settings')).'</span> '.$ps.'</div></div>';
+          }else{
+            $html = null;
           }
           break;
         case 'home-featured':
@@ -424,7 +426,7 @@ function rl_global_nav($nested=false)
     if ($curatenav==1 || !isset($curatenav)) {
       $navArray = array();
       $navArray[] = array('label'=>__('Home'),'uri' => url('/'));
-      $navArray[] = array('label'=>rl_item_label('plural'),'uri' => url('items/browse'));
+      $navArray[] = array('label'=>rl_item_label('plural'),'uri' => rl_stories_url());
       if(plugin_is_active('TourBuilder')){
         $navArray[] = array('label'=>rl_tour_label('plural'),'uri' => url('tours/browse/'));
       }
@@ -445,11 +447,15 @@ function rl_global_nav($nested=false)
 */
 function rl_item_browse_subnav()
 {
-   echo nav(array(
-      array('label'=>__('All') ,'uri'=> url('items/browse')),
-      array('label'=>__('Featured') ,'uri'=> url('items/browse?featured=1')),
-      array('label'=>__('Tags'), 'uri'=> url('items/tags')),
-   ));
+  $nav = array(
+    array('label'=>__('All') ,'uri'=> rl_stories_url()),
+    array('label'=>__('Featured') ,'uri'=> url('items/browse?featured=1')),
+    array('label'=>__('Tags'), 'uri'=> url('items/tags')),
+  );
+  if(plugin_is_active('SubjectsBrowse')){
+    array_push($nav,array('label'=>__('Subjects'), 'uri'=> url('items/subjects')));
+  }
+  echo nav($nav);
 }
 
 /*
@@ -476,12 +482,52 @@ function rl_collection_browse_subnav()
    ));
 }
 
+/*
+** Subnavigation for tours/browse
+*/ 
 function rl_tour_browse_subnav()
 {
    echo nav(array(
       array('label'=>__('All') ,'uri'=> url('tours/browse')),
       array('label'=>__('Featured') ,'uri'=> url('tours/browse?featured=1')),
+      array('label'=>__('Tags'), 'uri'=> url('tours/tags')),
    ));
+}
+
+/*
+** filter browse_sort_links for tours/browse
+** prevents omission of /browse in urls
+** hacks in default active sorting class for 'added' as needed
+** makes reverse sort work on first click
+*/ 
+function rl_tours_browse_sort_links($sort=array(null,null)){
+  // add /browse to path
+  $nav = str_replace('tours?','tours/browse?',browse_sort_links(array(__('Title')=>'title',__('Date Added')=>'id')));
+  
+  if($sort[0]==null && $sort[1]==null){
+    $dom = new DOMDocument;
+    $dom->loadHTML($nav);
+    $li = $dom->getElementsByTagName('li')->item(1);
+    // add sorting class
+    $li->setAttribute('class', 'sorting asc');
+    // sort direction toggle fix
+    $href=$li->firstChild->getAttribute('href');
+    if($href){
+      $li->firstChild->setAttribute('href', $href.'&sort_dir=d');
+    }
+    return $dom->saveHTML();
+  }else{
+    return $nav;
+  }
+}
+
+/*
+** used on tours/browse
+*/ 
+function rl_sort_objects_array(&$array, $prop='id', $ascending=true) {
+    usort($array, function($a, $b) use ($prop, $ascending) {
+        return ($ascending) ? strcmp($a->$prop, $b->$prop) : -strcmp($a->$prop, $b->$prop);
+    });
 }
 
 /*
@@ -534,6 +580,14 @@ function rl_icon($name=null, $variant="-sharp")
 }
 
 /*
+** Stories link
+** theme option: default story sort by date modified
+*/
+function rl_stories_url(){
+  return get_theme_option('stories_modified') ? url('items/browse?sort_field=modified&sort_dir=d') : url('items/browse');
+}
+
+/*
 ** Global header
 */
 function rl_global_header($html=null)
@@ -544,7 +598,7 @@ function rl_global_header($html=null)
         <!-- Home / Logo -->
         <?php echo link_to_home_page(rl_the_logo(), array('id'=>'home-logo', 'aria-label'=>'Home')); ?>
         <div id="nav-desktop">
-            <?php echo get_theme_option('quicklink_story') ? '<a class="button transparent '.((is_current_url('/items/browse')) ? 'active' : null).'" href="'.url('items/browse').'">'.rl_icon("location").rl_item_label('plural').'</a>' : null; ?>
+            <?php echo get_theme_option('quicklink_story') ? '<a class="button transparent '.((is_current_url('/items/browse')) ? 'active' : null).'" href="'.rl_stories_url().'">'.rl_icon("location").rl_item_label('plural').'</a>' : null; ?>
             <?php echo get_theme_option('quicklink_tour') && plugin_is_active('TourBuilder') ? '<a class="button transparent '.((is_current_url('/tours/browse')) ? 'active' : null).'" href="'.url('tours/browse').'">'.rl_icon("compass").rl_tour_label('plural').'</a>' : null; ?>
             <?php echo get_theme_option('quicklink_map') && plugin_is_active('Geolocation') ? '<a class="button transparent '.((is_current_url('/items/map')) ? 'active' : null).'" href="'.url('items/map').'">'.rl_icon("map").__('Map').'</a>' : null; ?>
         </div>
@@ -648,7 +702,7 @@ function rl_homepage_map($ishome=true,$totalItems=null)
     
     <section id="home-map" class="inner-padding browse">
       <h2 class="query-header"><?php echo __('%s Map',rl_item_label());?></h2>
-      <div id="home-map-container" data-label="All Stories: <?php echo $totalItems;?>">
+      <div id="home-map-container" data-label="<?php echo __('All %s',rl_item_label('plural')).': '.$totalItems;?>">
         <figure id="multi-map" data-json-source="/items/browse?output=mobile-json" data-lat="<?php echo $pluginlat; ?>" data-lon="<?php echo $pluginlon; ?>" data-zoom="<?php echo $zoom; ?>" data-default-layer="<?php echo get_theme_option('map_style') ? get_theme_option('map_style') : 'CARTO_VOYAGER'; ?>" data-color="<?php echo get_theme_option('marker_color'); ?>" data-featured-color="<?php echo get_theme_option('featured_marker_color'); ?>" data-featured-star="<?php echo get_theme_option('featured_marker_star'); ?>" data-root-url="<?php echo WEB_ROOT; ?>" data-maki-js="<?php echo src('maki/maki.min.js', 'javascripts'); ?>" data-providers="<?php echo src('providers.js', 'javascripts'); ?>" data-leaflet-js="<?php echo src('theme-leaflet/leaflet.js', 'javascripts'); ?>" data-leaflet-css="<?php echo src('theme-leaflet/leaflet.css', 'javascripts'); ?>" data-cluster-css="<?php echo src('leaflet.markercluster/leaflet.markercluster.min.css', 'javascripts'); ?>" data-cluster-js="<?php echo src('leaflet.markercluster/leaflet.markercluster.js', 'javascripts'); ?>" data-cluster="<?php echo $tour && get_theme_option('tour_clustering') ? '1' : get_theme_option('clustering'); ?>" data-fitbounds-label="<?php echo __('Zoom to fit all locations'); ?>">
              <div class="curatescape-map">
                 <div id="curatescape-map-canvas"></div>
@@ -860,13 +914,24 @@ function rl_the_sponsor($item='item')
 /*
 ** Filed Under
 ** returns link to: (public) collection for item, or first subject, or first tag
+** configurable in theme settings
 */
 function rl_filed_under($item = null, $maxlength = 35)
 {
-    if ($collection = get_collection_for_item() && $collection->public) {
+    $useCollection = get_theme_option('item_topic_collection') !== null ?
+      get_theme_option('item_topic_collection') :
+      true;
+    $useSubject = get_theme_option('item_topic_subject') !== null ?
+      get_theme_option('item_topic_subject') :
+      true;
+    $useTag = get_theme_option('item_topic_tag') !== null ?
+      get_theme_option('item_topic_tag') :
+      true;
+    
+    if ($useCollection && $collection = get_collection_for_item() && $collection->public) {
         $label = trim($collection->display_name);
         $node = link_to_collection_for_item(snippet($label,0,$maxlength), array('title'=>'Collection: '.$label, 'class'=>'tag tag-alt'), 'show');
-    } elseif ($subject = metadata('item', array('Dublin Core', 'Subject'), 0)) {
+    } elseif ($useSubject && $subject = metadata('item', array('Dublin Core', 'Subject'), 0)) {
         $link = WEB_ROOT;
         $link .= htmlentities('/items/browse?term=');
         $link .= rawurlencode($subject);
@@ -874,7 +939,7 @@ function rl_filed_under($item = null, $maxlength = 35)
         $link .= urlencode(str_replace('&amp;', '&', $subject));
         $label = trim($subject);
         $node = '<a title="Subject: '.$label.'" class="tag tag-alt" href="'.w3_valid_url($link).'">'.snippet($label,0,$maxlength).'</a>';
-    } elseif (metadata($item, 'has tags') && $tag = $item->Tags[0]) {
+    } elseif ($useTag && metadata($item, 'has tags') && $tag = $item->Tags[0]) {
         $link = WEB_ROOT;
         $link .= htmlentities('/items/browse?tags=');
         $link .= rawurlencode($tag);
@@ -1344,10 +1409,11 @@ function rl_single_file_show($file=null)
             $html.= $embeddable;
         } else {
             $html .= '<div class="item-file-container">';
-            $html .= '<video width="725" height="410" controls preload="auto" data-setup="{}">';
-            $html .= '<source src="'.$videoFile.'" type="video/mp4">';
-            $html .= '<p class="media-no-js">To listen to this audio please consider upgrading to a web browser that supports HTML5 video</p>';
-            $html .= '</video>';
+              $html .= '<video width="725" height="410" controls preload="auto" data-setup="{}">';
+                $html .= '<source src="'.$videoFile.'" type="video/mp4">';
+                $html .= '<p class="media-no-js">To listen to this audio please consider upgrading to a web browser that supports HTML5 video</p>';
+              $html .= '</video>';
+            $html .= '</div>';
         }
 
         return $html;
@@ -1610,6 +1676,10 @@ function rl_homepage_recent_random($num=3,$html=null,$index=1)
         $items=get_records('Item', array('featured'=>false,'hasImage'=>true,'sort_field' => 'random', 'sort_dir' => 'd','public'=>true), $num);;
         $param=__("Discover");
         break;
+      case 'modified':
+        $items=get_records('Item', array('featured'=>false,'hasImage'=>true,'sort_field' => 'modified', 'sort_dir' => 'd','public'=>true), $num);
+        $param=__("Discover");
+        break;
     }
     if(count($items)){
       $html = '<h2 class="query-header">'.$param.' '.rl_item_label('plural').'</h2>';
@@ -1642,7 +1712,7 @@ function rl_homepage_recent_random($num=3,$html=null,$index=1)
           $html .= '</article>';
         }
       $html .= '</div>';
-      $html .= '<div class="view-more-link"><a class="button" href="'.url('items').'">'.__('Browse All %2s', rl_item_label('plural')).'</a></div>';
+      $html .= '<div class="view-more-link"><a class="button" href="'.rl_stories_url().'">'.__('Browse All %2s', rl_item_label('plural')).'</a></div>';
       return '<section id="home-recent-random" class="browse inner-padding">'.$html.'</section>';
     }else{
       return rl_admin_message('home-recent-random',array('admin','super'));

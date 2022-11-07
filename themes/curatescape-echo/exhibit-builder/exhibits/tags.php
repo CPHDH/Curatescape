@@ -34,7 +34,7 @@ echo head(array('maptype'=>'none','title' => $title, 'bodyid' => 'exhibit', 'bod
             <div id="helper-links">
                 <span class="helper-label"><?php echo rl_icon('funnel').'&nbsp;'.__("Sort by: "); ?>
                 </span>
-                <?php echo browse_sort_links(array('Name'=>'name','Count'=>'count')); ?>
+                <?php echo browse_sort_links(array(__('Name')=>'name',__('Count')=>'count')); ?>
             </div>
         </div>
 

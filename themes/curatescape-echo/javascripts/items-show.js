@@ -379,5 +379,8 @@ document.onreadystatechange = () => {
       loadPhotoSwipe(document.querySelector('[data-toc="#images"'));
       loadMapSingle();
     }
+    addEventListener("beforeprint", (event) => {
+      loadImages();
+    });
   }
 };

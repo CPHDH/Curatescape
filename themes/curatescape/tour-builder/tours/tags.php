@@ -1,5 +1,5 @@
 <?php 
-	$tags=get_records('Tag',array('sort_field' => 'count', 'sort_dir' => 'd','type'=>'item'),0);
+	$tags=get_records('Tag',array('sort_field' => 'count', 'sort_dir' => 'd','type'=>'tour'),0);
 	echo head(array('maptype'=>'none', 'title'=>'Browse by Tag','bodyid'=>'items','bodyclass'=>'browse tags')); 
 	?>
 
@@ -13,10 +13,10 @@
 		<h2 hidden class="hidden"><?php echo __('Tags');?></h2>
 
 	    <nav class="secondary-nav" id="tag-browse"> 
-			<?php mh_item_browse_subnav(); ?>
+			<?php echo public_nav_tours(); ?>
 	    </nav>
 	
-	    <?php echo tag_cloud($tags,url('items/browse')); ?>
+	    <?php echo tag_cloud($tags,url('tours/browse')); ?>
 
 	</section> 
 	</div><!-- end primary -->

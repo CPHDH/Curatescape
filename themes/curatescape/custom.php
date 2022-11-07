@@ -2295,7 +2295,7 @@ function mh_configured_css(){
 		    background-color: '.$color_secondary.';
 		    border-color: '.$color_secondary.';
 		}
-		.secondary-nav ul li.active a, body#tours .secondary-nav ul li a:first-child{
+		.secondary-nav ul li.active a{
 			color: '.$color_primary.';
 			border-bottom: 4px solid '.$color_secondary.';			
 		}	

@@ -23,7 +23,7 @@
 	        </nav>
 
 	        <div class="footer-random">
-	            <?php echo  random_item_link(rl_icon("dice")."View A Random ".rl_item_label('singular'), 'random-button button');?>
+	            <?php echo  random_item_link(rl_icon("dice").__("View a Random %s",rl_item_label('singular')), 'random-button button');?>
 	        </div>
 
 	        <div id="project-meta">

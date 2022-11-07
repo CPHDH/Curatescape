@@ -227,6 +227,10 @@ const loadMapMulti = (requested_id = null, isHomePage = false) => {
               // Remove Loading
               loader.classList.remove("spin");
               loader.parentElement.parentElement.classList.add("fade");
+              setTimeout(() => {
+                loader.parentElement.parentElement.remove();
+              }, 4000);
+
               // Open Requested Marker
               if (requestedMarker) {
                 pauseInteraction(map, isHomePage);

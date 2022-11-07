@@ -59,7 +59,7 @@ echo head(array('maptype'=>'none','title'=>$title,'bodyid'=>'exhibits','bodyclas
             <div id="helper-links">
                 <span class="helper-label"><?php echo rl_icon('funnel').'&nbsp;'.__("Sort by: "); ?>
                 </span>
-                <?php echo browse_sort_links(array('Title'=>'title','Date Added'=>'added')); ?>
+                <?php echo browse_sort_links(array(__('Title')=>'title',__('Date Added')=>'added')); ?>
             </div>
         </div>
 

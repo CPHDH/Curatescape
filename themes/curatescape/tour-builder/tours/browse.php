@@ -1,5 +1,11 @@
 <?php
 $label=mh_tour_label('plural');
+if(isset($_GET['tags'])){
+	$queryheader = __('%1$s tagged "%2$s": %3$s', $label, htmlspecialchars($_GET['tags']), total_tours()); 
+}else{
+	$queryheader = __('All %1$s: %2$s', $label, total_tours());
+}
+
 echo head( array(
 	'maptype'=>'none', 
 	'title' => $label, 
@@ -9,7 +15,7 @@ echo head( array(
 ?>
 <div id="content">
 	<article class="browse tour">			
-	<h2 class="query-header"><?php echo __('All %1$s: %2$s', $label, total_tours());?></h2>
+	<h2 class="query-header"><?php echo $queryheader;?></h2>
 		<div id="primary" class="browse">
 			<section id="results">
 			<h2 hidden class="hidden"><?php echo mh_tour_label('plural');?></h2>

@@ -436,6 +436,11 @@ small,
   font-family: var(--font-ui);
   letter-spacing: 0.015em;
 }
+.byline {
+  line-height: 1.25;
+  padding-top: 0.5em;
+  padding-right: 0.75em;
+}
 header,
 footer,
 .additional-elements,
@@ -1848,6 +1853,10 @@ header.primary nav #nav-interactive a > i {
   background: var(--site-header-bg-color-2);
 }
 
+#home-cta .cta-main a {
+  color: var(--text-base-on-dark);
+}
+
 @media all and (max-width: 950px) {
   .home-project-meta {
     flex-direction: column;
@@ -2108,6 +2117,10 @@ body#map.item-map .query-header {
 .leaflet-popup-content-wrapper {
   min-width: 200px;
   max-width: 275px;
+}
+.leaflet-control-container .leaflet-top,
+.leaflet-control-container .leaflet-bottom {
+  will-change: transform;
 }
 .leaflet-control-layers label {
   margin-top: 0;
@@ -2492,13 +2505,13 @@ div.meta-style > .related-resources {
 .tag:focus {
   color: var(--link-text-hover);
 }
-.hTagcloud ul li a span.count {
+ul li a > span.count {
   vertical-align: super;
   font-size: 0.833rem;
   color: var(--text-caption);
 }
 @media screen and (max-width: 600px) {
-  .hTagcloud ul li a span.count {
+  .hTagcloud ul li a > span.count {
     display: none;
   }
 }
@@ -2578,6 +2591,9 @@ div.meta-style > .related-resources {
 }
 
 /* Comments */
+#disqus_thread a:not(.button) {
+  color: #fff;
+}
 #comments-section {
   background-color: var(--site-header-active-menu-bg);
   padding-bottom: 0.5em;
@@ -2730,6 +2746,9 @@ footer form {
 #helper-links-list li.sorting.asc a:before,
 #sort-links-list li.sorting.asc a:before {
   transform: rotate(180deg);
+  display: inline-block;
+}
+.helper-label {
   display: inline-block;
 }
 
@@ -3379,6 +3398,13 @@ body#home.stealth section:not(#home-stealth) {
 }
 
 @media print {
+  article header .title-card {
+    flex-direction: column;
+  }
+  article header .title-card-main,
+  article header .title-card-image {
+    width: 100%;
+  }
   .featured-image,
   figure > .file {
     -webkit-print-color-adjust: exact;
@@ -3396,7 +3422,10 @@ body#home.stealth section:not(#home-stealth) {
   .background-image,
   .title-card-subject,
   .separator,
-  .tour-image {
+  .tour-image,
+  .readmore,
+  .sep-bar,
+  #comments-section {
     display: none;
   }
   figcaption,
