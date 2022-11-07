@@ -18,8 +18,6 @@
 	var cah_enable_dashboard_stats = <?php echo get_option('cah_enable_dashboard_stats');?>;
 	var cah_enable_file_edit_links= <?php echo get_option('cah_enable_file_edit_links');?>;
 	var cah_theme_options_accordion= <?php echo get_option('cah_theme_options_accordion');?>;
-	var cah_hide_add_input_where_unsupported = <?php echo get_option('cah_hide_add_input_where_unsupported');?>;
-	var cah_hide_html_checkbox_where_unsupported = <?php echo get_option('cah_hide_html_checkbox_where_unsupported');?>;
 	// Dashboard
 	var stats = jQuery('body.index #stats');
 	if(cah_enable_dashboard_stats==1) stats.append('<div id="file_stats"><p>'+'<?php echo cah_get_file_info();?>'+'</p><div>');
@@ -90,38 +88,6 @@
 			jQuery('.files #edit-form #element-'+id).addClass('curatescape-recommended');
 			jQuery('.files #edit-form #element-'+id).removeClass('toggle-me').insertBefore('#dc-reveal').show();
 		});
-	}
-	if(cah_hide_add_input_where_unsupported==1){
-		// add input
-		jQuery('.field button.add-element').hide();
-		jQuery.each(form_mod_array.add_input_supported, function(i,id){
-			jQuery('.items #edit-form #element-'+id+' button.add-element').addClass('add_input_supported').show();
-		});			
-	}
-	if(cah_hide_html_checkbox_where_unsupported==1){
-		var htmlWhitelist = function(){
-			// hide all
-			jQuery('label.use-html').hide();
-			// show supported
-			jQuery.each(form_mod_array.use_html_supported, function(i,id){
-				jQuery('.items #edit-form #element-'+id+' label.use-html').addClass('use_html_supported').show();
-				jQuery('.files #edit-form #element-'+id+' label.use-html').addClass('use_html_supported').show();
-			});
-			// show warning (and checkbox) if using HTML in unsupported field 
-			var conflicts = jQuery("label.use-html").not(".use_html_supported").children('.use-html-checkbox:checked');
-			jQuery.each(conflicts, function(i,el){
-				jQuery(el).after('<span class="cah-warning"><?php echo $html_warning;?></span>');
-				jQuery(el).parent('label').show();
-			});
-		}
-		// on item type form select
-		jQuery("select#item-type").on("click",function(){
-			setTimeout(function(){
-				htmlWhitelist();
-			},500);
-		});
-		// on load
-		htmlWhitelist();
 	}
 	if(cah_enable_file_edit_links){
 		// file edit links

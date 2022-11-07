@@ -9,4 +9,11 @@ class TourBuilder_ToursController extends Omeka_Controller_AbstractActionControl
 		$this->_helper->db->setDefaultModelName( 'Tour' );
 	}
 	
+	public function tagsAction()
+	{
+		$params = array_merge($this->_getAllParams(), array('type'=>'Tour'));
+		$tags = $this->_helper->db->getTable('Tag')->findBy($params);
+		$this->view->assign(compact('tags'));
+	}
+	
 }

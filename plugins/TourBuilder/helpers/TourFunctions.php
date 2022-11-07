@@ -114,9 +114,7 @@ function total_tours()
 
 function nls2p($str) {
 	$str = str_replace('<p></p>', '', '<p>'
-		. preg_replace('#([
-]\s*?[
-]){2,}#', '</p><p>', $str)
+		. preg_replace('#([]\s*?[]){2,}#', '</p><p>', $str)
 		. '</p>');
 	return $str;
 }
@@ -125,16 +123,15 @@ function public_nav_tours( array $navArray = null, $maxDepth = 0 )
 {
 	if( !$navArray )
 	{
-		$navArray = array();
-
-		$navArray[] = array(
+		$navArray = array(
+			array(
 			'label' => __('All'),
-			'uri' => url('tours/browse') );
-
-		/* TODO: Tour Tags */
-
+			'uri' => url('tours/browse') ),
+			array(
+			'label' => __('Tags'),
+			'uri' => url('tours/tags') )
+		);
 	}
-
 	return nav( $navArray );
 }
 

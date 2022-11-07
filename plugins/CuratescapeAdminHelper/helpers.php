@@ -65,7 +65,7 @@ function cah_elements(){
 	return $elements;
 }
 
-function cah_item_form_helper_text_array(){
+function cah_item_form_helper_text_array($json_encode=true){
 	$it=cah_item_type();
 	$it_name=$it['name'];
 	$mod = array(
@@ -134,7 +134,7 @@ function cah_item_form_helper_text_array(){
 		cah_get_element_id('Item Type Metadata','Access Information'),
 		),	
 		);
-	return json_encode($mod);
+	return $json_encode ? json_encode($mod) : $mod;
 }
 
 /* Get some info about the files to display on admin dahboard*/

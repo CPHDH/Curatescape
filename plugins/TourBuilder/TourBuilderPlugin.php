@@ -29,26 +29,26 @@ class TourBuilderPlugin extends Omeka_Plugin_AbstractPlugin
 		$db = $this->_db;
 
 		$tourQuery = "
-         CREATE TABLE IF NOT EXISTS `$db->Tour` (
-            `id` int( 10 ) unsigned NOT NULL auto_increment,
-            `title` varchar( 255 ) collate utf8_unicode_ci default NULL,
-            `description` text collate utf8_unicode_ci NOT NULL,
-            `credits` text collate utf8_unicode_ci,
-            `postscript_text` text collate utf8_unicode_ci,
-            `featured` tinyint( 1 ) default '0',
-            `public` tinyint( 1 ) default '0',
-            PRiMARY KEY( `id` )
-         ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ";
+		CREATE TABLE IF NOT EXISTS `$db->Tour` (
+		`id` int( 10 ) unsigned NOT NULL auto_increment,
+		`title` varchar( 255 ) collate utf8_unicode_ci default NULL,
+		`description` text collate utf8_unicode_ci NOT NULL,
+		`credits` text collate utf8_unicode_ci,
+		`postscript_text` text collate utf8_unicode_ci,
+		`featured` tinyint( 1 ) default '0',
+		`public` tinyint( 1 ) default '0',
+		PRiMARY KEY( `id` )
+		) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ";
 
 		$tourItemQuery = "
-         CREATE TABLE IF NOT EXISTS `$db->TourItem` (
-            `id` INT( 10 ) UNSIGNED NOT NULL AUTO_INCREMENT,
-            `tour_id` INT( 10 ) UNSIGNED NOT NULL,
-            `ordinal` INT NOT NULL,
-            `item_id` INT( 10 ) UNSIGNED NOT NULL,
-            PRIMARY KEY( `id` ),
-            KEY `tour` ( `tour_id` )
-         ) ENGINE=InnoDB ";
+		CREATE TABLE IF NOT EXISTS `$db->TourItem` (
+		`id` INT( 10 ) UNSIGNED NOT NULL AUTO_INCREMENT,
+		`tour_id` INT( 10 ) UNSIGNED NOT NULL,
+		`ordinal` INT NOT NULL,
+		`item_id` INT( 10 ) UNSIGNED NOT NULL,
+		PRIMARY KEY( `id` ),
+		KEY `tour` ( `tour_id` )
+		) ENGINE=InnoDB ";
 
 		$db->query( $tourQuery );
 		$db->query( $tourItemQuery );
@@ -63,31 +63,29 @@ class TourBuilderPlugin extends Omeka_Plugin_AbstractPlugin
 
     public function hookUpgrade($args)
     {
-        $oldVersion = $args['old_version'];
-        $newVersion = $args['new_version'];
-        $db = $this->_db;
-        $prefix=$db->prefix;
-        
-        if ($oldVersion < '1.4') {
-            
-            $sql = "ALTER TABLE `$db->Tour` ADD COLUMN `postscript_text` text collate utf8_unicode_ci default NULL";
-            $db->query($sql);
-          	        
-	    }
-	    
-	    if ($oldVersion < '1.5') {
-            $sql = "ALTER TABLE `$db->Tour` DROP COLUMN `slug`";
-            $db->query($sql);  
+		$oldVersion = $args['old_version'];
+		$newVersion = $args['new_version'];
+		$db = $this->_db;
+		$prefix=$db->prefix;
 
-            $sql = "ALTER TABLE `$db->Tour` DROP COLUMN `tour_image`";
-            $db->query($sql);  
-            		    
-	    }
+		if ($oldVersion < '1.4') {
+			$sql = "ALTER TABLE `$db->Tour` ADD COLUMN `postscript_text` text collate utf8_unicode_ci default NULL";
+			$db->query($sql);
+		}
+
+		if ($oldVersion < '1.5') {
+			$sql = "ALTER TABLE `$db->Tour` DROP COLUMN `slug`";
+			$db->query($sql);  
+
+			$sql = "ALTER TABLE `$db->Tour` DROP COLUMN `tour_image`";
+			$db->query($sql);  
+		}
+		
 	    if($oldVersion < '1.6'){
 			Zend_Registry::get('bootstrap')->getResource('jobs')->sendLongRunning('Job_SearchTextIndex');
-	    }
-	    
-	    if($oldVersion < '1.7'){
+		}
+
+		if($oldVersion < '1.7'){
 			// Get rid of orphan tour_items that weren't being deleted along with their respective tours in previous versions		
 			$sql = "DELETE ".$prefix."tour_items 
 			FROM ".$prefix."tour_items
@@ -96,7 +94,7 @@ class TourBuilderPlugin extends Omeka_Plugin_AbstractPlugin
 			WHERE ".$prefix."tours.id IS NULL";
 			
 			$db->query($sql);     
-	    }
+		}
 	}
 	
 	public function hookDefineAcl( $args )
@@ -107,7 +105,7 @@ class TourBuilderPlugin extends Omeka_Plugin_AbstractPlugin
 		$acl->addResource( 'TourBuilder_Tours' );
 		
 		// Allow anyone to look but not touch
-		$acl->allow( null, 'TourBuilder_Tours', array('browse', 'show') );
+		$acl->allow( null, 'TourBuilder_Tours', array('browse', 'show', 'tags') );
 		
 		// Allow contributor (and better) to do anything with tours
 		$acl->allow( 'contributor','TourBuilder_Tours');
@@ -180,19 +178,18 @@ class TourBuilderPlugin extends Omeka_Plugin_AbstractPlugin
 
 	public function hookAdminHead()
 	{
-	    $request = Zend_Controller_Front::getInstance()->getRequest();
-	    $module = $request->getModuleName();
-	    $controller = $request->getControllerName();
-	
-	    if ($module == 'tour-builder' && $controller == 'tours') {
-	        queue_css_file('tour-1.7');
-	    }		
+		$request = Zend_Controller_Front::getInstance()->getRequest();
+		$module = $request->getModuleName();
+		$controller = $request->getControllerName();
+		if ($module == 'tour-builder' && $controller == 'tours') {
+			queue_css_file('tourbuilder');
+		}		
 	}
 
 
 	public function filterSearchRecordTypes($recordTypes){
-	    $recordTypes['Tour'] = __('Tour');
-	    return $recordTypes;		
+		$recordTypes['Tour'] = __('Tour');
+		return $recordTypes;		
 	}
 
 

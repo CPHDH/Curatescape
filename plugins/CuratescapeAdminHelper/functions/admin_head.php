@@ -1,16 +1,42 @@
 <?php 
 $story_container='div#element-'.cah_get_element_id('Item Type Metadata','Story');
+$element_info = cah_item_form_helper_text_array(false);
+$add_input_supported = $element_info['add_input_supported'];
+$use_html_supported = $element_info['use_html_supported'];
 ?>
 <style>
 	<?php echo $story_container;?> textarea{
 		height:25em;
 	}
 	<?php if (get_option('cah_hide_html_checkbox_where_unsupported')=='1'): ?>
-		/* prevent "add input" from adding back */	
-		#element-49 label.use-html,
-		#element-39 label.use-html{
-			display:none !important;
+		/* selective "use html" */	
+		label.use-html{
+			display: none !important;
 		}
+		<?php 
+			$selectors=[];
+			foreach($use_html_supported as $id){
+				$selectors[] = 'label[id^=Elements-'.$id.'].use-html';
+			}
+			echo implode(',', $selectors).'{
+				display:block !important;
+			}';
+		?>
+	<?php endif;?>
+	<?php if (get_option('cah_hide_add_input_where_unsupported')=='1'): ?>
+		/* selective "add input" */	
+		button.add-element{
+			display: none !important;
+		}
+		<?php 
+			$selectors=[];
+			foreach($add_input_supported as $id){
+				$selectors[] = 'button#add_element_'.$id.'.add-element';
+			}
+			echo implode(',', $selectors).'{
+				display:block !important;
+			}';
+		?>
 	<?php endif;?>
 	span.cah-warning{
 		display: block;

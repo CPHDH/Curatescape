@@ -7,8 +7,7 @@ if( $tourTitle != '' && $tourTitle != '[Untitled]' ) {
 }
 $tourTitle = 'Tour #' . tour( 'id' ) . $tourTitle;
 
-echo head( array( 'title' => $tourTitle,
-		'bodyclass' => 'show','bodyid'=>'tour' ) );
+echo head( array( 'title' => $tourTitle,'bodyclass' => 'show','bodyid'=>'tour' ) );
 echo flash();
 ?>
 
@@ -20,7 +19,7 @@ echo flash();
     <div class="element-text">
       <?php echo nls2p( metadata( 'tour', 'Title' ) ); ?>
     </div>
-  </div>
+    </div>
   <?php endif; ?>
 
   <?php if( metadata( 'tour', 'Credits' ) ): ?>
@@ -49,6 +48,15 @@ echo flash();
     </div>
   </div>
   <?php endif; ?>
+  
+  <?php if($tour->Tags):?>
+    <div id="tour_tags" class="element">
+      <h2>Tags</h2>
+      <div class="element-text">
+        <?php echo tag_string($tour, 'tours'); ; ?>
+      </div>
+    </div>
+  <?php endif; ?>
 
   
   <?php
@@ -58,9 +66,8 @@ if( $tour->getItems() ): ?>
     <h2>Items</h2>
     <div class="element-text">
       <ul>
-        <?php foreach( $items as $item ):
-		set_current_record( 'item', $item, true );
-?>
+        <?php foreach( $items as $item ):?>
+        <?php set_current_record( 'item', $item, true );?>
         <li>
           <?php echo link_to_item(); ?>
         </li>
