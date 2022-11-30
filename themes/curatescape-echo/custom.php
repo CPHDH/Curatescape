@@ -645,7 +645,7 @@ function rl_story_map_single($title=null, $location=null, $address=null, $hero_i
 if(plugin_is_active('Geolocation')):
 ?>
   <nav aria-label="<?php echo __('Skip Interactive Map');?>"><a id="skip-map" href="#map-actions"><?php echo __('Skip Interactive Map');?></a></nav>
-  <figure id="story-map" data-default-layer="<?php echo get_theme_option('map_style') ? get_theme_option('map_style') : 'CARTO_VOYAGER';?>" data-lat="<?php echo $location[ 'latitude' ];?>" data-lon="<?php echo $location[ 'longitude' ];?>" data-zoom="<?php echo $location['zoom_level'];?>" data-title="<?php echo strip_tags($title);?>" data-image="<?php echo $hero_img;?>" data-orientation="<?php echo $hero_orientation;?>" data-address="<?php echo strip_tags($address);?>" data-color="<?php echo get_theme_option('marker_color');?>" data-featured-color="<?php echo get_theme_option('featured_marker_color');?>" data-featured-star="<?php echo get_theme_option('featured_marker_star');?>" data-root-url="<?php echo WEB_ROOT;?>" data-maki-js="<?php echo src('maki/maki.min.js', 'javascripts');?>" data-providers="<?php echo src('providers.js', 'javascripts');?>" data-leaflet-js="<?php echo src('theme-leaflet/leaflet.js', 'javascripts');?>" data-leaflet-css="<?php echo src('theme-leaflet/leaflet.css', 'javascripts');?>">
+  <figure id="story-map" data-default-layer="<?php echo get_theme_option('map_style') ? get_theme_option('map_style') : 'CARTO_VOYAGER';?>" data-lat="<?php echo $location[ 'latitude' ];?>" data-lon="<?php echo $location[ 'longitude' ];?>" data-zoom="<?php echo $location['zoom_level'];?>" data-title="<?php echo strip_tags($title);?>" data-image="<?php echo $hero_img;?>" data-orientation="<?php echo $hero_orientation;?>" data-address="<?php echo strip_tags($address);?>" data-color="<?php echo get_theme_option('marker_color');?>" data-root-url="<?php echo WEB_ROOT;?>" data-maki-js="<?php echo src('maki/maki.min.js', 'javascripts');?>" data-providers="<?php echo src('providers.js', 'javascripts');?>" data-leaflet-js="<?php echo src('theme-leaflet/leaflet.js', 'javascripts');?>" data-leaflet-css="<?php echo src('theme-leaflet/leaflet.css', 'javascripts');?>">
       <div class="curatescape-map">
           <div id="curatescape-map-canvas"></div>
       </div>
@@ -1726,7 +1726,7 @@ function rl_homepage_recent_random($num=3,$html=null,$index=1)
 function rl_homepage_tags($num=25)
 {
   if(get_theme_option("homepage_tags") == "1"){
-    $tags=get_records('Tag', array('sort_field' => 'count', 'sort_dir' => 'd'), $num);
+    $tags=get_records('Tag', array('sort_field' => 'count', 'sort_dir' => 'd','type'=>'item'), $num);
     if(count($tags)){
       $html = '<h2 class="query-header">'.__('Popular Tags').'</h2>';
       $html.=tag_cloud($tags, 'items/browse');
@@ -1743,11 +1743,12 @@ function rl_homepage_tags($num=25)
 */
 function rl_homepage_projectmeta($html=null,$length=800)
 {
+  $heading = get_theme_option('homepage_meta_placement') == 'top' ? option('site_title') : __('Project Meta');
   $cta = rl_homepage_cta();
   $text = get_theme_option('about') 
     ? strip_tags(get_theme_option('about'), '<a><em><i><cite><strong><b><u>') 
     : __('%s is powered by <a href="http://omeka.org/">Omeka</a> + <a href="http://curatescape.org/">Curatescape</a>, a humanities-centered web and mobile app framework available for both Android and iOS devices.', option('site_title'));
-  $html .= '<h2 class="query-header">'.__('Project Meta').'</h2>';
+  $html .= '<h2 class="query-header">'.$heading.'</h2>';
   $html .= '<div class="home-project-meta">';
     $html .= '<div id="home-about-main" class="inner-padding">'; 
       $html .= '<h3 class="query-header">'.__('About').'</h3>';

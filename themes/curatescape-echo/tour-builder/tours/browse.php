@@ -1,11 +1,17 @@
 <?php
 $label=rl_tour_label('plural');
 if (isset($_GET['tags'])) {
-   $title = __('%1$s tagged "%2$s"', rl_tour_label('plural'), htmlspecialchars($_GET['tags']));
+   $title = __('%1$s tagged "%2$s": %3$s', rl_tour_label('plural'), htmlspecialchars($_GET['tags']),'<span class="item-number">'.total_tours().'</span>');
+   $title_facet = ' | '.htmlspecialchars($_GET['tags']);
+   $scroll_to = 'content';
 }elseif (isset($_GET['featured']) && $_GET['featured'] == 1) {
-    $title = __('Featured %1$s: %2$s', $label, total_tours());
+    $title = __('Featured %1$s: %2$s', $label, '<span class="item-number">'.total_tours().'</span>');
+    $title_facet = ' | '.__('Featured');
+    $scroll_to = null;
 } else {
-    $title = __('All %1$s: %2$s', $label, total_tours());
+    $title = __('All %1$s: %2$s', $label, '<span class="item-number">'.total_tours().'</span>');
+    $title_facet = null;
+    $scroll_to = null;
 }
 $sort_field = (isset($_GET['sort_field']) ? htmlspecialchars($_GET['sort_field']) : null);
 $sort_dir = (isset($_GET['sort_dir']) ? htmlspecialchars($_GET['sort_dir']) : null);
@@ -36,13 +42,13 @@ if($tours){
 echo head(
     array(
     'maptype'=>'none',
-    'title' => $label,
+    'title' => $label.$title_facet,
     'bodyid'=>'tours',
     'bodyclass' => 'browse' )
 );
 
 ?>
-<div id="content" role="main">
+<div id="content" role="main" data-scrollto="<?php echo $scroll_to;?>">
     <article class="browse tour">
         <div class="browse-header">
             <h2 class="query-header"><?php echo $title;?></h2>

@@ -98,7 +98,7 @@ const loadMapMulti = (requested_id = null, isHomePage = false) => {
     const map_attr = mapfigure.dataset;
     let loader = null;
     loadCSS(map_attr.leafletCss);
-    if (map_attr.cluster) {
+    if (map_attr.cluster == "1") {
       loadCSS(map_attr.clusterCss);
     }
     loadJS(map_attr.leafletJs, () => {
@@ -183,7 +183,7 @@ const loadMapMulti = (requested_id = null, isHomePage = false) => {
                   }
                 });
               }
-              if (map_attr.cluster && !istour) {
+              if (map_attr.cluster == "1") {
                 markerRequestZoom = 18;
                 loadJS(map_attr.clusterJs, () => {
                   // Clusters...
