@@ -1,6 +1,6 @@
 <?php
     $options = array(
-        __('Admin Dashboard Settings')=>
+        __('Admin Dashboard settings')=>
         array(
             array('name'=>'cah_enable_dashboard_stats','label'=>__('File Statistics'),'explanation'=>__('Display file statistics on the dashboard.')),
             array('name'=>'cah_enable_dashboard_resources','label'=>__('Resources'),'explanation'=>__('Display the Curatescape Resources widget on the dashboard.')),
@@ -17,6 +17,10 @@
         __('Theme Option settings')=>
         array(
             array('name'=>'cah_theme_options_accordion','label'=>__('Enhance form'),'explanation'=>__('Display theme options as a collapsible list of sections.')),
+        ),
+        __('User Management settings')=>
+        array(
+            array('name'=>'cah_inactive_users_helper','label'=>__('Inactive Users Link'),'explanation'=>__('Display an option next to inactive users allowing a site administrator to copy the activation link (in order to send via alternate means).')),
         ),
     );
     

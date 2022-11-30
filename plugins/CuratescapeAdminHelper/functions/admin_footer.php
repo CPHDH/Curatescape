@@ -8,9 +8,33 @@
 	$edit_file=__('Edit File');
 	$html_warning=__('HTML is not recommended in this field when using the Curatescape theme. <a title="View the Curatescape Admin Helper plugin settings" href="/admin/plugins/config?name=CuratescapeAdminHelper">Disable this warning.</a>');
 	$howto=__('How-to');
+	
+	$copyLink=__('Copy Activation Link');
+	$copied=__('Copied!');
+	$inactive_users_helper = get_option('cah_inactive_users_helper'); 
+	if(is_current_url('/admin/users') && $inactive_users_helper){
+		$protocol = $_SERVER['HTTPS'] == 'on' ? 'https' : 'http';
+		$host = $_SERVER['HTTP_HOST'];
+		$user_activations = array();
+		$u = get_records('User',array(
+			'active'=>'0'),false);
+		foreach($u as $user){
+			$ua = get_record('UsersActivations',array(
+				'user_id'=>$user['id'],
+				'sort_field'=>'added',
+				'sort_dir'=>'d'));
+			if($ua){
+				$user_activations[] = array('id'=>$user['id'],'url'=>$protocol.'://'.$host.'/admin/users/activate?u='.$ua['url']);
+			}
+			
+		}
+		$inactive_users = json_encode($user_activations);
+	}
+
 ?>
 <script>
 	// Plugin Options
+	var cah_inactive_users = <?php echo $inactive_users ? $inactive_users : json_encode([]);?>;
 	var cah_enable_item_file_tab_notes = <?php echo get_option('cah_enable_item_file_tab_notes');?>;
 	var cah_enable_item_file_toggle_dc = <?php echo get_option('cah_enable_item_file_toggle_dc');?>;
 	var cah_enable_dashboard_components = <?php echo get_option('cah_enable_dashboard_components');?>;
@@ -95,6 +119,45 @@
 			var href = jQuery(this).attr('href').replace('show','edit');
 			jQuery(this).parentsUntil('#item-images').append('<a target="_blank" class="cah-file-edit" href="'+href+'"><?php echo $edit_file;?></a>');
 		});		
+	}
+	
+	// add links to copy user activation links for inactive users
+	if(cah_inactive_users.length){
+		cah_inactive_users.forEach((user)=>{
+			let user_delete_button = jQuery('.inactive li a[href="/admin/users/delete-confirm/'+user['id']+'"]');
+			if(user_delete_button){
+				user_delete_button = user_delete_button.parent();
+				let li = document.createElement('li');
+				li.setAttribute('class','activation-link');
+				let confirmation = document.createElement('i');
+				confirmation.setAttribute('class','fa fa-check-circle');
+				confirmation.setAttribute('title','<?php echo $copied;?>');
+				confirmation.style.opacity = 0;
+				confirmation.style.paddingLeft = '.25em';
+				let link = document.createElement('a');
+				link.setAttribute('href',user['url']);
+				link.setAttribute('data-href',user['url']);
+				link.innerText = '<?php echo $copyLink;?>';
+				link.addEventListener('click',(e)=>{
+					e.preventDefault();
+					if(navigator && navigator.clipboard && navigator.clipboard.writeText){
+						navigator.clipboard.writeText(e.target.dataset.href);
+						confirmation.style.transition = 'none';
+						confirmation.style.opacity = 1;
+						setTimeout(()=>{
+							confirmation.style.transition = 'opacity .15s linear'
+							confirmation.style.opacity = 0;
+						},1500)
+					}else{
+						alert(e.target.dataset.href);
+					}
+					
+				})
+				li.appendChild(link)
+				li.appendChild(confirmation)
+				jQuery(user_delete_button).after(li)
+			}
+		});
 	}
 	// Highlight the Curatescape item type in the dropdown
 	jQuery('select#item-type option:contains("<?php echo $it_name;?>")').css("background-color","yellow");

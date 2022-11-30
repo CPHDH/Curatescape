@@ -23,7 +23,8 @@ class CuratescapeAdminHelperPlugin extends Omeka_Plugin_AbstractPlugin
         'cah_enable_file_edit_links' => 1,
         'cah_theme_options_accordion'=>1,
         'cah_hide_add_input_where_unsupported'=>1,
-        'cah_hide_html_checkbox_where_unsupported'=>1
+        'cah_hide_html_checkbox_where_unsupported'=>1,
+        'cah_inactive_users_helper'=>1
     );
        
         
@@ -39,6 +40,7 @@ class CuratescapeAdminHelperPlugin extends Omeka_Plugin_AbstractPlugin
         set_option('cah_theme_options_accordion', (int)(boolean)$_POST['cah_theme_options_accordion']);
         set_option('cah_hide_add_input_where_unsupported', (int)(boolean)$_POST['cah_hide_add_input_where_unsupported']);
         set_option('cah_hide_html_checkbox_where_unsupported', (int)(boolean)$_POST['cah_hide_html_checkbox_where_unsupported']);
+        set_option('cah_inactive_users_helper', (int)(boolean)$_POST['cah_inactive_users_helper']);
     }
 
     public function hookConfigForm()
@@ -76,6 +78,9 @@ class CuratescapeAdminHelperPlugin extends Omeka_Plugin_AbstractPlugin
         }
         if (version_compare($args['old_version'], '1.2', '<')) {
             set_option('cah_hide_html_checkbox_where_unsupported', 1);
+        }
+        if (version_compare($args['old_version'], '1.6', '<')) {
+            set_option('cah_inactive_users_helper', 1);
         }
     }
     

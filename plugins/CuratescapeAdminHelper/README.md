@@ -28,3 +28,4 @@ After installation, you may disable or remove the plugin if you like, but keepin
 - Display "Edit" links below each file on item records
 - Display Add Input buttons _only_ on fields that are supported by the Curatescape theme.
 - Display "Use HTML" checkboxes _only_ on fields that are supported by the Curatescape theme (unsupported fields containing HTML will display an admin-only warning).
+- Display "Copy Activation Link" next to inactive users, allowing site admins to eaily (re-) send the activation link via alternate means.
