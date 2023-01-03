@@ -630,6 +630,15 @@ function rl_global_header($html=null)
             </nav>
             <div class="menu-random-container"><?php echo random_item_link(rl_icon('dice').__("View a Random %s", rl_item_label('singular')), $class='button transparent', $hasImage=true); ?></div>
             <div class="menu-appstore-container"><?php echo rl_appstore_downloads(); ?></div>
+            <div class="menu-darkmode-container">
+              <?php
+              $dm_allowed = isset($_COOKIE['neverdarkmode']) && $_COOKIE['neverdarkmode']==1 ? false : true;
+              ?>
+              <label for="dm">
+                <span>Allow Dark Mode?</span>
+              </label>
+              <input type="checkbox" <?php echo $dm_allowed ? 'checked' : null;?> id="dm">
+            </div>
         </div>
         <div class="overlay" onclick="overlayClick()"></div>
     </div>
@@ -927,10 +936,10 @@ function rl_filed_under($item = null, $maxlength = 35)
     $useTag = get_theme_option('item_topic_tag') !== null ?
       get_theme_option('item_topic_tag') :
       true;
-    
-    if ($useCollection && $collection = get_collection_for_item() && $collection->public) {
-        $label = trim($collection->display_name);
-        $node = link_to_collection_for_item(snippet($label,0,$maxlength), array('title'=>'Collection: '.$label, 'class'=>'tag tag-alt'), 'show');
+          
+    if ($useCollection && ($collection = get_collection_for_item()) && $collection->public) {
+        $label = metadata($collection,array('Dublin Core','Title'));
+        $node = link_to_collection_for_item(snippet($label,0,$maxlength), array('title'=>__('Collection: %s', $label), 'class'=>'tag tag-alt'), 'show');
     } elseif ($useSubject && $subject = metadata('item', array('Dublin Core', 'Subject'), 0)) {
         $link = WEB_ROOT;
         $link .= htmlentities('/items/browse?term=');
@@ -938,16 +947,16 @@ function rl_filed_under($item = null, $maxlength = 35)
         $link .= htmlentities('&search=&advanced[0][element_id]=49&advanced[0][type]=contains&advanced[0][terms]=');
         $link .= urlencode(str_replace('&amp;', '&', $subject));
         $label = trim($subject);
-        $node = '<a title="Subject: '.$label.'" class="tag tag-alt" href="'.w3_valid_url($link).'">'.snippet($label,0,$maxlength).'</a>';
+        $node = '<a title="'.__('Subject: %s', $label).'" class="tag tag-alt" href="'.w3_valid_url($link).'">'.snippet($label,0,$maxlength).'</a>';
     } elseif ($useTag && metadata($item, 'has tags') && $tag = $item->Tags[0]) {
         $link = WEB_ROOT;
         $link .= htmlentities('/items/browse?tags=');
         $link .= rawurlencode($tag);
         $label = trim($tag);
-        $node = '<a title="Tag: '.$label.'" class="tag tag-alt" href="'.$link.'">'.snippet($label,0,$maxlength).'</a>';
+        $node = '<a title="'.__('Tag: %s', $label).'" class="tag tag-alt" href="'.$link.'">'.snippet($label,0,$maxlength).'</a>';
     } else {
         $label = trim(rl_item_label('singular'));
-        $node = link_to('items', 'browse', snippet($label,0,$maxlength), array('title'=>'Type: '.$label, 'class'=>'tag tag-alt'));
+        $node = link_to('items', 'browse', snippet($label,0,$maxlength), array('title'=>__('Type: %s', $label), 'class'=>'tag tag-alt'));
     }
     return '<div class="title-card-subject '.text_to_id($label,'subject').'"><span class="screen-reader">'.__('Filed Under').'</span> '.$node.'</div>';
 }
@@ -2147,13 +2156,33 @@ function rl_owner_link()
 }
 
 /*
-** Icon file for mobile devices
+** Icon PNG file for mobile device bookmarks
 */
-function rl_browser_icon_url()
+function rl_touch_icon_url()
 {
-   $apple_icon_logo = get_theme_option('apple_icon_144');
-   $logo_img = $apple_icon_logo ? WEB_ROOT.'/files/theme_uploads/'.$apple_icon_logo : img('favicon.png');
-   return $logo_img;
+   $touch_icon = get_theme_option('apple_icon_144');
+   $url = $touch_icon ? WEB_ROOT.'/files/theme_uploads/'.$touch_icon : img('favicon.png');
+   return $url;
+}
+
+/*
+** Icon SVG file for modern browser tabs
+*/
+function rl_favicon_svg_url()
+{
+   $favicon_svg = get_theme_option('favicon_svg');
+   $url = $favicon_svg ? WEB_ROOT.'/files/theme_uploads/'.$favicon_svg : img('favicon.svg');
+   return $url;
+}
+
+/*
+** Icon ICO file for older browser tabs
+*/
+function rl_favicon_ico_url()
+{
+   $favicon = get_theme_option('favicon');
+   $url = $favicon ? WEB_ROOT.'/files/theme_uploads/'.$favicon : img('favicon.ico');
+   return $url;
 }
 
 
@@ -2180,7 +2209,15 @@ function rl_configured_css($vars=null, $output=null)
     $output .= ':root {'.$vars.'}';
   }
   if(get_theme_option('enable_dark_mode')){
-    $output .= '@media screen and (prefers-color-scheme: dark) {:root {--link-text: var(--link-text-on-dark) !important;--link-text-hover: var(--link-text-on-dark-hover) !important;--bg-body: var(--bg-body-dark);--bg-article: var(--bg-article-dark);--featured-one: #000 !important;--site-footer-bg-color: #000;--text-base: var(--text-base-on-dark);--text-heading: var(--text-heading-on-dark);--text-subheading: var(--text-subheading-on-dark);--text-caption: var(--text-caption-on-dark);--deco-color: var(--dark-primary);--deco-color-subtle: var(--dark-tertiary);--deco-frame: 10px solid var(--dark-secondary);--deco-frame-small: 3px solid var(--dark-secondary);--light-secondary: var(--dark-tertiary);--light-primary-subtle: var(--dark-tertiary);--article-header-bg-gradient: linear-gradient(to top,rgba(34, 34, 34, 1) 50%,rgba(34, 34, 34, 0.95),rgba(34, 34, 34, 0.9),rgba(34, 34, 34, 0.75),rgba(34, 34, 34, 0.5));}article header .background-image {filter: grayscale(1) brightness(0.8);}.gallery-image {filter: brightness(0.8);}.browse .item-image {filter: brightness(0.8);}.item-result.tour .tour-image {filter: brightness(0.8);}form.capsule input.search,form.capsule input.search:focus::placeholder, form.capsule input.search:hover::placeholder,form.capsule input.search:hover, form.capsule input.search:focus{color:#000;}}';
+    $output .= '@media screen and (prefers-color-scheme: dark) {
+      :root.darkallowed {
+      --link-text: var(--link-text-on-dark) !important;--link-text-hover: var(--link-text-on-dark-hover) !important;--bg-body: var(--bg-body-dark);--bg-article: var(--bg-article-dark);--text-base: var(--text-base-on-dark);--text-heading: var(--text-heading-on-dark);--text-subheading: var(--text-subheading-on-dark);--text-caption: var(--text-caption-on-dark);--deco-color: var(--dark-primary);--deco-color-subtle: var(--dark-tertiary);--deco-frame: 10px solid var(--dark-secondary);--deco-frame-small: 3px solid var(--dark-secondary);--light-secondary: var(--dark-tertiary);--light-primary-subtle: var(--dark-tertiary);--article-header-bg-gradient: linear-gradient(to top,rgba(34, 34, 34, 1) 50%,rgba(34, 34, 34, 0.95),rgba(34, 34, 34, 0.9),rgba(34, 34, 34, 0.75),rgba(34, 34, 34, 0.5));
+      }
+      .darkallowed .featured-card.featured-1 .separator,.darkallowed footer .separator {background: var(--link-text) !important;}
+      .darkallowed article header .background-image {filter: grayscale(1) brightness(0.8);}
+      .darkallowed .gallery-image,.darkallowed .curatescape-map,.darkallowed .browse .item-image,.darkallowed .item-result.tour .tour-image {filter: brightness(0.8);}
+      .darkallowed form.capsule input.search,.darkallowed form.capsule input.search:focus::placeholder, .darkallowed form.capsule input.search:hover::placeholder,.darkallowed form.capsule input.search:hover, .darkallowed form.capsule input.search:focus{color:#000;}
+    }';
   }
   if (get_theme_option('custom_css')) {
     $output .= get_theme_option('custom_css');

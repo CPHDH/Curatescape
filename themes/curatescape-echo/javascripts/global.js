@@ -10,6 +10,32 @@ const secondary_nav_actives = document.querySelectorAll(
   ".secondary-nav li.active"
 );
 // GLOBAL HELPERS
+const getCookie = (cookie_name) => {
+  let c_name = cookie_name + "=";
+  let cookie_decoded = decodeURIComponent(document.cookie);
+  let cookie_parts = cookie_decoded.split(";");
+  for (let i = 0; i < cookie_parts.length; i++) {
+    let c = cookie_parts[i];
+    while (c.charAt(0) == " ") {
+      c = c.substring(1);
+    }
+    if (c.indexOf(c_name) == 0) {
+      return c.substring(c_name.length, c.length);
+    }
+  }
+  return null;
+};
+const setCookie = (name, value, exdays = 365) => {
+  const d = new Date();
+  d.setTime(d.getTime() + exdays * 24 * 60 * 60 * 1000);
+  let expires = "expires=" + d.toUTCString();
+  document.cookie =
+    name + "=" + value + "; " + expires + "; Path=/;SameSite=Strict";
+};
+const deleteCookie = (name) => {
+  document.cookie =
+    name + "=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;SameSite=Strict;";
+};
 const checkVisible = (elm, threshold, mode) => {
   threshold = threshold || 0;
   mode = mode || "visible";
@@ -27,7 +53,6 @@ const safeText = (value) => {
   d.innerHTML = value;
   return d.innerText;
 };
-
 // MAP PAUSE/RESUME FUNCTIONS
 const pauseInteraction = (map, ignore = false) => {
   if (map && !ignore) {
@@ -44,7 +69,6 @@ const resumeInteraction = (map, scrollable = true, ignore = false) => {
     if (scrollable) map.scrollWheelZoom.enable();
   }
 };
-
 // CLOSE FUNCTIONS
 const closeMapSingle = () => {
   if (map_container && map_container.classList.contains("fullscreen")) {
@@ -170,10 +194,33 @@ document.onreadystatechange = () => {
     }
   }
 };
-// FIX DOUBLE ACTIVE CLASS
-// https://github.com/omeka/Omeka/issues/952
+// FIX DOUBLE ACTIVE CLASS (https://github.com/omeka/Omeka/issues/952)
 if (secondary_nav_actives.length) {
   if (secondary_nav_actives.length > 1) {
     secondary_nav_actives[0].classList.remove("active");
   }
+}
+// DARK MODE USER SETTINGS MANAGEMENT
+const dark_browsercompatible = CSS.supports("color-scheme", "dark"); // @todo: browser compat!!!
+const html = document.querySelector("html");
+if (dark_browsercompatible) {
+  // set initial cookie?
+  if (getCookie("neverdarkmode") == null) {
+    document.querySelector("html").classList.add("darkallowed");
+    setCookie("neverdarkmode", "0");
+  }
+  // manage user prefs cookie and html class
+  document.querySelector("input#dm").addEventListener("change", (e) => {
+    if (e.target.checked) {
+      html.classList.add("darkallowed");
+      html.classList.remove("darkdisabled_user");
+      setCookie("neverdarkmode", "0");
+    } else {
+      html.classList.remove("darkallowed");
+      html.classList.add("darkdisabled_user");
+      setCookie("neverdarkmode", "1");
+    }
+  });
+} else {
+  document.querySelector(".menu-darkmode-container").remove();
 }

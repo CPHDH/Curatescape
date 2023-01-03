@@ -12,7 +12,7 @@
             <?php
             $info = array();
             ($fileid=metadata('file', 'id')) ? $info[]='<span class="file-id">ID: '.$fileid.'</span>' : null;
-            ($record=get_record_by_id('Item', $file->item_id)) ? $info[]=__('This file appears in').': '.link_to_item(strip_tags($title), array('class'=>'file-appears-in-item'), 'show', $record) : null;
+            ($record=get_record_by_id('Item', $file->item_id)) ? $info[]=__('This file appears in').': '.link_to_item(strip_tags($record->display_title), array('class'=>'file-appears-in-item'), 'show', $record) : null;
             echo count($info) ? '<span id="file-header-info" class="byline">'.implode(" | ", $info).'</span>' : null;
             
             ?>
@@ -44,7 +44,7 @@
  
             
             <div class="separator"></div>
-            <div class="byline"><?php echo ($record=get_record_by_id('Item', $file->item_id)) ? __('"%s" appears in',strip_tags($fileTitle)).': '.link_to_item(strip_tags($title), array('class'=>'file-appears-in-item'), 'show', $record) : null;?></div>
+            <div class="byline"><?php echo ($record=get_record_by_id('Item', $file->item_id)) ? __('"%s" appears in',strip_tags($fileTitle)).': '.link_to_item(strip_tags($record->display_title), array('class'=>'file-appears-in-item'), 'show', $record) : null;?></div>
 
         </div><!-- end primary -->
 
