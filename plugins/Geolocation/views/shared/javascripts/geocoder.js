@@ -1,6 +1,6 @@
 function OmekaGeocoder(geocoder) {
     function photon(query) {
-        var url = 'https://photon.komoot.de/api/';
+        var url = 'https://photon.komoot.io/api/';
         return jQuery.getJSON(url, {q: query, limit: 1})
             .then(function (data) {
                 if (!data.features.length) {

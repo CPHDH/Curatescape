@@ -119,4 +119,7 @@ $use_html_supported = $element_info['use_html_supported'];
 	.ui-widget-content p.explanation a{
 		text-decoration: underline;
 	}
+	.theme-file img{
+		background: #eaeaea;
+	}
 </style>

@@ -1,5 +1,5 @@
 <style>
-.child{padding:1em;background: #eaeaea;display: inline-block;}
+.child{padding:1em;background: #eaeaea;display: inline-block;width:calc(100% - 2em);}
 .child .columns.omega{margin-left: 0;}
 </style>
 
@@ -38,7 +38,7 @@
       </div>
   </div>
 
-  <div class="field linkback child">
+  <div class="field linkback">
       <div class="two columns alpha">
           <label for="srss_include_mediastats_footer"><?php echo __('Include media stats in link back to item?'); ?></label>
       </div>

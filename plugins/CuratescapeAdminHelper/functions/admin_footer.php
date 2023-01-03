@@ -34,7 +34,7 @@
 ?>
 <script>
 	// Plugin Options
-	var cah_inactive_users = <?php echo $inactive_users ? $inactive_users : json_encode([]);?>;
+	var cah_inactive_users = <?php echo isset($inactive_users) ? $inactive_users : json_encode([]);?>;
 	var cah_enable_item_file_tab_notes = <?php echo get_option('cah_enable_item_file_tab_notes');?>;
 	var cah_enable_item_file_toggle_dc = <?php echo get_option('cah_enable_item_file_toggle_dc');?>;
 	var cah_enable_dashboard_components = <?php echo get_option('cah_enable_dashboard_components');?>;
@@ -43,10 +43,9 @@
 	var cah_enable_file_edit_links= <?php echo get_option('cah_enable_file_edit_links');?>;
 	var cah_theme_options_accordion= <?php echo get_option('cah_theme_options_accordion');?>;
 	// Dashboard
-	var stats = jQuery('body.index #stats');
-	if(cah_enable_dashboard_stats==1) stats.append('<div id="file_stats"><p>'+'<?php echo cah_get_file_info();?>'+'</p><div>');
-	if(cah_enable_dashboard_components==1) stats.after('<?php echo cah_components_guide();?>');
-	if(cah_enable_dashboard_resources==1) stats.after('<?php echo cah_resources_guide();?>');
+	if(cah_enable_dashboard_stats==1) jQuery('body.index #stats').append('<div id="file_stats"><p>'+'<?php echo cah_get_file_info();?>'+'</p><div>');
+	if(cah_enable_dashboard_components==1) jQuery('body.index .panels').prepend('<?php echo cah_components_guide();?>');
+	if(cah_enable_dashboard_resources==1) jQuery('body.index .panels').prepend('<?php echo cah_resources_guide();?>');
 	// Tab text on item and file forms
 	if(cah_enable_item_file_tab_notes==1){
 		var form_mod_array=<?php echo cah_item_form_helper_text_array();?>;

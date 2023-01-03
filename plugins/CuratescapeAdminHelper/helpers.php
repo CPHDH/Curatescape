@@ -174,24 +174,24 @@ function cah_get_file_info(){
 
 function cah_resources_guide(){
 	$html  = null;
-	$html .= '<section class="five columns alpha"><div class="panel">';
+	$html .= '<section class="panel five columns alpha">';
 	$html .= '<h2>'.__('Curatescape Resources').'</h2><br>';
 	$html .= '<h4>'.__('Documentation').'</h4>';
 	$html .= '<p>'.__('For detailed information on setup, deployment, and usage, please visit <a href="https://curatescape.org/docs/">curatescape.org/docs</a> or contact your project manager').'</p>';
 	$html .= '<h4>'.__('User Community').'</h4>';
 	$html .= '<p>'.__('Curatescape users are invited to join the <a href="https://forum.curatescape.org/">Curatescape Forum</a>. Curatescape is also on <a href="https://www.facebook.com/curatescape">Facebook</a> and <a href="https://twitter.com/curatescape">Twitter</a>').' .</p>';
-	$html .= '</div></section>';
+	$html .= '</section>';
 	return $html;
 }
 
 function cah_components_guide(){
 	// Theme
 	$theme = (strpos(Theme::getTheme(Theme::getCurrentThemeName('public'))->title, 'Curatescape') === 0);
-	$text_theme = $theme ? '<li>'.__('The Curatescape theme is currently active.').' '.__('<a class="config" href="%s">Configure theme settings</a>',WEB_ROOT.'/admin/themes').'</li>' : '<li>'.__('The Curatescape theme is not activated. Activate theme in <a href="%s">Appearance settings</a>.',WEB_ROOT.'/admin/themes/').'</li>';
+	$text_theme = $theme ? '<li>'.__('A Curatescape theme is currently active.').' '.__('<a class="config" href="%s">Configure theme settings</a>',WEB_ROOT.'/admin/themes').'</li>' : '<li>'.__('The Curatescape theme is not activated. Activate theme in <a href="%s">Appearance settings</a>.',WEB_ROOT.'/admin/themes/').'</li>';
 	$icon_ok = '<i class="fa fa-check-circle"></i>';
 	$icon_warning = '<i class="fa fa-exclamation-triangle"></i>';
 	$html  = null;
-	$html .= '<section class="five columns omega"><div class="panel">';
+	$html .= '<section class="panel five columns omega">';
 	$html .= '<h2>'.__('Curatescape Components').'</h2><br>';
 	$html .= '<h4>'.__('Theme Settings').' '.($theme ? $icon_ok : $icon_warning).'</h4>';
 	$html .= '<ul>';
@@ -247,5 +247,7 @@ function cah_components_guide(){
 	$html .= $text_type;
 	$html .= '<ul>'.$text_elements.'</ul>';	
 	$html .= '</ul>';
+	
+	$html .= '</section>';
 	echo $html;
 }

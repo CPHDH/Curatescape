@@ -3,15 +3,15 @@
 # This file is distributed under the same license as the Omeka package.
 # 
 # Translators:
-# John Flatness <john@zerocrates.org>, 2016
-# Rivo Zängov <eraser@eraser.ee>, 2015-2017,2020
+# John Flatness <john@omeka.org>, 2016
+# Rivo Zängov <eraser@eraser.ee>, 2015-2017,2020-2022
 msgid ""
 msgstr ""
 "Project-Id-Version: Omeka Classic\n"
 "Report-Msgid-Bugs-To: http://github.com/omeka/plugin-Geolocation/issues\n"
 "POT-Creation-Date: 2012-01-09 21:49-0500\n"
-"PO-Revision-Date: 2020-07-13 16:44+0000\n"
-"Last-Translator: Rivo Zängov <eraser@eraser.ee>\n"
+"PO-Revision-Date: 2013-06-06 15:48+0000\n"
+"Last-Translator: Rivo Zängov <eraser@eraser.ee>, 2015-2017,2020-2022\n"
 "Language-Team: Estonian (http://www.transifex.com/omeka/omeka/language/et/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -34,7 +34,7 @@ msgstr "miilid"
 #: GeolocationPlugin.php:426
 #, php-format
 msgid "within %1$s %2$s of \"%3$s\""
-msgstr ""
+msgstr "%1$s %2$s / \"%3$s\""
 
 #: GeolocationPlugin.php:436 views/shared/map/advanced-search-partial.php:34
 msgid "Only Items with Locations"
@@ -101,7 +101,7 @@ msgstr "Vaikimisi suurenduse tase"
 msgid ""
 "An integer greater than or equal to 0, where 0 represents the most zoomed "
 "out scale."
-msgstr ""
+msgstr "Täisarv, mis on suurem või võrdne kui 0, kus 0 tähendab kõige enam väljasuumituse taset."
 
 #: config_form.php:37
 msgid "Base Map"
@@ -121,7 +121,7 @@ msgstr "Tavaline"
 
 #: config_form.php:45
 msgid "Humanitarian"
-msgstr ""
+msgstr "Humanitaarlane"
 
 #: config_form.php:47 config_form.php:48
 msgid "OpenTopoMap"
@@ -129,19 +129,19 @@ msgstr "OpenTopoMap"
 
 #: config_form.php:50
 msgid "Stamen"
-msgstr ""
+msgstr "Tolmukas"
 
 #: config_form.php:51
 msgid "Toner"
-msgstr ""
+msgstr "Toner"
 
 #: config_form.php:52
 msgid "Toner (background)"
-msgstr ""
+msgstr "Tooner (taust)"
 
 #: config_form.php:53
 msgid "Toner (lite)"
-msgstr ""
+msgstr "Tooner (hele)"
 
 #: config_form.php:54
 msgid "Watercolor"
@@ -157,7 +157,7 @@ msgstr "Maastik (taust)"
 
 #: config_form.php:58
 msgid "Esri"
-msgstr ""
+msgstr "Esri"
 
 #: config_form.php:59
 msgid "World Street Map"
@@ -193,11 +193,11 @@ msgstr "Ookeani baaskaart"
 
 #: config_form.php:67
 msgid "National Geographic World Map"
-msgstr ""
+msgstr "National Geographicu maailmakaart"
 
 #: config_form.php:68
 msgid "Light Gray Canvas"
-msgstr ""
+msgstr "Helehall lõuend"
 
 #: config_form.php:70
 msgid "CartoDB"
@@ -213,11 +213,11 @@ msgstr "Voyager (ilma siltideta)"
 
 #: config_form.php:73
 msgid "Positron"
-msgstr ""
+msgstr "Positron"
 
 #: config_form.php:74
 msgid "Positron (no labels)"
-msgstr ""
+msgstr "Positron (silte pole)"
 
 #: config_form.php:75
 msgid "Dark Matter"
@@ -244,17 +244,17 @@ msgstr "Mapboxi ligipääsukood"
 msgid ""
 "Mapbox access token. A token is required when Mapbox is selected as the "
 "basemap. Get your token at %s."
-msgstr ""
+msgstr "Mapboxi ligipääsukood. Seda on vaja, kui Mapbox kasutatakse põhikaardina. Hangi oma ligipääsukood aadressilt %s."
 
 #: config_form.php:104
 msgid "Mapbox Map ID"
-msgstr ""
+msgstr "Mapbox Map ID"
 
 #: config_form.php:109
 msgid ""
 "Mapbox Map ID for the map to display as the basemap. The default street map "
 "will be used if nothing is entered here."
-msgstr ""
+msgstr "Mapbox Map ID kaardile, mida kasutatakse põhikaardina. Kui siia pole midagi sisestatud, siis kasutatakse vaikimisi tänavate kaarti."
 
 #: config_form.php:118
 msgid "Geocoder"
@@ -262,15 +262,15 @@ msgstr "Geocoder"
 
 #: config_form.php:122
 msgid "Service to use for looking up coordinates from addresses."
-msgstr ""
+msgstr "Teenus, mida kasutatakse koordinaatide kontrollimiseks aadressidelt."
 
 #: config_form.php:126
 msgid "OpenStreetMap Nominatim"
-msgstr ""
+msgstr "OpenStreetMap Nominatim"
 
 #: config_form.php:127
 msgid "Photon"
-msgstr ""
+msgstr "Photon"
 
 #: config_form.php:135
 msgid "Browse Map Settings"
@@ -303,7 +303,7 @@ msgstr "Vaikimisi raadius"
 msgid ""
 "The size of the default radius to use on the items advanced search page. See"
 " below for whether to measure in miles or kilometers."
-msgstr ""
+msgstr "Vaikimisi raadius, mida kasutatakse laiendatud otsingu lehel. Määra allpool, kas kasutatakse miile või kilomeetreid."
 
 #: config_form.php:174
 msgid "Use metric distances"
@@ -315,11 +315,11 @@ msgstr "Kasuta lähiümbruse otsingu korral  meetermõõdustikku"
 
 #: config_form.php:186
 msgid "Enable marker clustering"
-msgstr ""
+msgstr "Markeri gruppide kasutamine"
 
 #: config_form.php:189
 msgid "Show close or overlapping markers as clusters."
-msgstr ""
+msgstr "Näida lähestikku olevaid markereid grupina."
 
 #: config_form.php:199
 msgid "Item Map Settings"
@@ -351,26 +351,26 @@ msgstr "Kaardi integreerimine"
 
 #: config_form.php:225
 msgid "Add Link to Map on Items/Browse Navigation"
-msgstr ""
+msgstr "Lisa ühikute ja navigeerimise juurde link kaardile"
 
 #: config_form.php:228
 msgid "Add a link to the items map on all the items/browse pages."
-msgstr ""
+msgstr "Lisa kõigi ühikute ja sirvimise lehekülgede juurde link kaardile."
 
 #: config_form.php:238
 msgid "Add Map To Contribution Form"
-msgstr ""
+msgstr "Lisa annetamise lehele kaart"
 
 #: config_form.php:241
 msgid ""
 "If the Contribution plugin is installed and activated, Geolocation  will add"
 " a geolocation map field to the contribution form to associate a location to"
 " a contributed item."
-msgstr ""
+msgstr "Kui annetamise plugin on paigaldatud ja aktiveeritud, siis lisab Geolocation annetamise vormile kaardi, millel saab märkida annetatud ühikuga seotud asukoha."
 
 #: models/Location.php:35
 msgid "Location requires an item ID."
-msgstr "Adukoht vajab ühiku ID-d."
+msgstr "Asukoht vajab ühiku ID-d."
 
 #: models/Location.php:39
 msgid "Location requires a valid item ID."
@@ -406,7 +406,7 @@ msgstr "Leia ühik kaardil"
 
 #: views/helpers/GeolocationMapSingle.php:36
 msgid "This item has no location info associated with it."
-msgstr ""
+msgstr "Selle ühikuga pole seotud mingit asukoha infot."
 
 #: views/shared/map/advanced-search-partial.php:19
 msgid "Geographic Radius (kilometers)"
@@ -418,7 +418,7 @@ msgstr "Geograafiline raadius (miilides)"
 
 #: views/shared/map/advanced-search-partial.php:29
 msgid "Geolocation Status"
-msgstr ""
+msgstr "Geolocation staatus"
 
 #: views/shared/map/advanced-search-partial.php:43
 msgid "Geographic Address"

@@ -3,15 +3,15 @@
 # This file is distributed under the same license as the Omeka package.
 # 
 # Translators:
-# John Flatness <john@zerocrates.org>, 2016
+# John Flatness <john@omeka.org>, 2016
 # Rubén Alcaraz Martínez <rubenalcarazmartinez@gmail.com>, 2013-2016,2019,2021
 msgid ""
 msgstr ""
 "Project-Id-Version: Omeka Classic\n"
 "Report-Msgid-Bugs-To: http://github.com/omeka/plugin-Geolocation/issues\n"
 "POT-Creation-Date: 2012-01-09 21:49-0500\n"
-"PO-Revision-Date: 2021-02-15 12:49+0000\n"
-"Last-Translator: Rubén Alcaraz Martínez <rubenalcarazmartinez@gmail.com>\n"
+"PO-Revision-Date: 2013-06-06 15:48+0000\n"
+"Last-Translator: Rubén Alcaraz Martínez <rubenalcarazmartinez@gmail.com>, 2013-2016,2019,2021\n"
 "Language-Team: Catalan (Spain) (http://www.transifex.com/omeka/omeka/language/ca_ES/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -121,31 +121,31 @@ msgstr "Estàndard"
 
 #: config_form.php:45
 msgid "Humanitarian"
-msgstr ""
+msgstr "Humanitarian"
 
 #: config_form.php:47 config_form.php:48
 msgid "OpenTopoMap"
-msgstr ""
+msgstr "OpenTopoMap"
 
 #: config_form.php:50
 msgid "Stamen"
-msgstr ""
+msgstr "Stamen"
 
 #: config_form.php:51
 msgid "Toner"
-msgstr ""
+msgstr "Toner"
 
 #: config_form.php:52
 msgid "Toner (background)"
-msgstr ""
+msgstr "Toner (fons)"
 
 #: config_form.php:53
 msgid "Toner (lite)"
-msgstr ""
+msgstr "Toner (lite)"
 
 #: config_form.php:54
 msgid "Watercolor"
-msgstr ""
+msgstr "Watercolor"
 
 #: config_form.php:55
 msgid "Terrain"
@@ -153,43 +153,43 @@ msgstr "Terreny"
 
 #: config_form.php:56
 msgid "Terrain (background)"
-msgstr ""
+msgstr "Terrain (fons)"
 
 #: config_form.php:58
 msgid "Esri"
-msgstr ""
+msgstr "Esri"
 
 #: config_form.php:59
 msgid "World Street Map"
-msgstr ""
+msgstr "World Street Map"
 
 #: config_form.php:60
 msgid "DeLorme"
-msgstr ""
+msgstr "DeLorme"
 
 #: config_form.php:61
 msgid "World Topographic Map"
-msgstr ""
+msgstr "Mapa topogràfic mundial"
 
 #: config_form.php:62
 msgid "World Imagery"
-msgstr ""
+msgstr "World Imagery"
 
 #: config_form.php:63
 msgid "World Terrain"
-msgstr ""
+msgstr "World Terrain"
 
 #: config_form.php:64
 msgid "World Shaded Relief"
-msgstr ""
+msgstr "World Shaded Relief"
 
 #: config_form.php:65
 msgid "World Physical Map"
-msgstr ""
+msgstr "World Physical Map"
 
 #: config_form.php:66
 msgid "Ocean Basemap"
-msgstr ""
+msgstr "Ocean Basemap"
 
 #: config_form.php:67
 msgid "National Geographic World Map"
@@ -197,7 +197,7 @@ msgstr "Mapa mundial National Geographic"
 
 #: config_form.php:68
 msgid "Light Gray Canvas"
-msgstr ""
+msgstr "Light Gray Canvas"
 
 #: config_form.php:70
 msgid "CartoDB"
@@ -213,19 +213,19 @@ msgstr "Voyager (sense etiquetes)"
 
 #: config_form.php:73
 msgid "Positron"
-msgstr ""
+msgstr "Positron"
 
 #: config_form.php:74
 msgid "Positron (no labels)"
-msgstr ""
+msgstr "Positron (sense etiquetes)"
 
 #: config_form.php:75
 msgid "Dark Matter"
-msgstr ""
+msgstr "Dark Matter"
 
 #: config_form.php:76
 msgid "Dark Matter (no labels)"
-msgstr ""
+msgstr "Dark Matter (sense etiquetes)"
 
 #: config_form.php:78
 msgid "Mapbox"
@@ -244,7 +244,7 @@ msgstr "Mapbox Access Token"
 msgid ""
 "Mapbox access token. A token is required when Mapbox is selected as the "
 "basemap. Get your token at %s."
-msgstr ""
+msgstr "El token d'accés al Mapbox. Es requereix un token si el Mapbox se selecciona com a mapa base. Podeu aconseguir un token a %s."
 
 #: config_form.php:104
 msgid "Mapbox Map ID"
@@ -254,23 +254,23 @@ msgstr "ID del Mapbox Map"
 msgid ""
 "Mapbox Map ID for the map to display as the basemap. The default street map "
 "will be used if nothing is entered here."
-msgstr ""
+msgstr "L'ID del mapa del Mapbox que voleu mostrar. Si no s'emplena aquest camp, s'utilitzarà el mapa per defecte."
 
 #: config_form.php:118
 msgid "Geocoder"
-msgstr ""
+msgstr "Geocoder"
 
 #: config_form.php:122
 msgid "Service to use for looking up coordinates from addresses."
-msgstr ""
+msgstr "El servei que s'utilitzarà per trobar les coordenades de les adreces."
 
 #: config_form.php:126
 msgid "OpenStreetMap Nominatim"
-msgstr ""
+msgstr "OpenStreetMap Nominatim"
 
 #: config_form.php:127
 msgid "Photon"
-msgstr ""
+msgstr "Photon"
 
 #: config_form.php:135
 msgid "Browse Map Settings"
@@ -315,11 +315,11 @@ msgstr "Utilitza distàncies mètriques en cerques per proximitat."
 
 #: config_form.php:186
 msgid "Enable marker clustering"
-msgstr ""
+msgstr "Activa el clusteritzat dels marcadors"
 
 #: config_form.php:189
 msgid "Show close or overlapping markers as clusters."
-msgstr ""
+msgstr "Visualitza els marcadors propers o que se superposen com a clústers."
 
 #: config_form.php:199
 msgid "Item Map Settings"

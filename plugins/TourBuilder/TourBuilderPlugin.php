@@ -125,9 +125,11 @@ class TourBuilderPlugin extends Omeka_Plugin_AbstractPlugin
 	{
 		if( is_allowed( 'TourBuilder_Tours', 'browse' ) )
 		{
-			$stats[] = array( link_to( 'tours', array(),
-					total_records( 'Tours' ) ),
-				__('tours') );
+			if(version_compare(OMEKA_VERSION,'3.1') >= 0){
+				$stats['tours'] = array(total_records( 'Tours' ), __('tours') );
+			}else{
+				$stats[] = array( link_to( 'tours', array(),total_records( 'Tours' ) ),__('tours') );
+			}
 		}
 		return $stats;
 	}
@@ -161,16 +163,18 @@ class TourBuilderPlugin extends Omeka_Plugin_AbstractPlugin
 
 		for($i=0;$i<=5;$i++){
 			if(array_key_exists($i,$results) && is_object($results[$i])){
-				$tourItems .='<div class="recent-row"><p class="recent"><a href="/admin/tours/show/'.$results[$i]->id.'">'
-					.$results[$i]->title.'</a></p><p class="dash-edit"><a href="/admin/tours/edit/'.$results[$i]->id.'">Edit</a></p></div>';
+				$tourItems .='<p class="recent"><a href="/admin/tours/show/'.$results[$i]->id.'">'
+				.$results[$i]->title.'</a></p><p class="dash-edit"><a href="/admin/tours/edit/'.$results[$i]->id.'">Edit</a></p>';
 			}
 		}
 
-		$html .= '<section class="five columns alpha"><div class="panel">';
+		$html .= '<section class="panel five columns omega">';
 		$html .= '<h2>'.__('Recent Tours').'</h2>';
+		$html .= '<div class="recent-row">';
 		$html .= ''.$tourItems.'';
-		$html .= '<p><a class="add-new-item" href="'.html_escape(url('tour-builder/tours/add/')).'">'.__('Add a new tour').'</a></p>';
-		$html .= '</div></section>';
+		$html .= '</div>';
+		$html .= '<div class="add-new-link"><p><a class="add-tour green button" href="'.html_escape(url('tour-builder/tours/add/')).'">'.__('Add a new tour').'</a></p></div>';
+		$html .= '</section>';
 
 		echo $html;
 

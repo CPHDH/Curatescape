@@ -4,15 +4,15 @@
 # 
 # Translators:
 # Gabriel Radev <gabosss@gmail.com>, 2014-2015,2017
-# John Flatness <john@zerocrates.org>, 2016
+# John Flatness <john@omeka.org>, 2016
 # Svetaketi Aruni <svetliok26@gmail.com>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: Omeka Classic\n"
 "Report-Msgid-Bugs-To: http://github.com/omeka/plugin-Geolocation/issues\n"
 "POT-Creation-Date: 2012-01-09 21:49-0500\n"
-"PO-Revision-Date: 2020-06-03 20:17+0000\n"
-"Last-Translator: John Flatness <john@zerocrates.org>\n"
+"PO-Revision-Date: 2013-06-06 15:48+0000\n"
+"Last-Translator: Gabriel Radev <gabosss@gmail.com>, 2014-2015,2017\n"
 "Language-Team: Bulgarian (Bulgaria) (http://www.transifex.com/omeka/omeka/language/bg_BG/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"

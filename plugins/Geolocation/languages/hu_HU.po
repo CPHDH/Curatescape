@@ -3,14 +3,14 @@
 # This file is distributed under the same license as the Omeka package.
 # 
 # Translators:
-# Dora Nagy, 2019
+# Dora Nagy, 2019,2022
 msgid ""
 msgstr ""
 "Project-Id-Version: Omeka Classic\n"
 "Report-Msgid-Bugs-To: http://github.com/omeka/plugin-Geolocation/issues\n"
 "POT-Creation-Date: 2012-01-09 21:49-0500\n"
-"PO-Revision-Date: 2020-06-03 20:17+0000\n"
-"Last-Translator: John Flatness <john@zerocrates.org>\n"
+"PO-Revision-Date: 2013-06-06 15:48+0000\n"
+"Last-Translator: Dora Nagy, 2019,2022\n"
 "Language-Team: Hungarian (Hungary) (http://www.transifex.com/omeka/omeka/language/hu_HU/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -37,11 +37,11 @@ msgstr ""
 
 #: GeolocationPlugin.php:436 views/shared/map/advanced-search-partial.php:34
 msgid "Only Items with Locations"
-msgstr ""
+msgstr "Csak helymegjelöléssel rendelkező elemek"
 
 #: GeolocationPlugin.php:438 views/shared/map/advanced-search-partial.php:35
 msgid "Only Items without Locations"
-msgstr ""
+msgstr "Csak helymegjelölés nélküli elemek"
 
 #: GeolocationPlugin.php:455 GeolocationPlugin.php:461
 msgid "Map"
@@ -417,7 +417,7 @@ msgstr "Földrajzi hatósugár (mérföldben)"
 
 #: views/shared/map/advanced-search-partial.php:29
 msgid "Geolocation Status"
-msgstr ""
+msgstr "Térkép állapota"
 
 #: views/shared/map/advanced-search-partial.php:43
 msgid "Geographic Address"

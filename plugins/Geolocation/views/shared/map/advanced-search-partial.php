@@ -5,10 +5,10 @@ $request = Zend_Controller_Front::getInstance()->getRequest();
 $isMapRequest = $request->getModuleName() == 'geolocation';
 
 // Get the address, latitude, longitude, and the radius from parameters
-$address = trim($request->getParam('geolocation-address'));
-$currentLat = trim($request->getParam('geolocation-latitude'));
-$currentLng = trim($request->getParam('geolocation-longitude'));
-$radius = trim($request->getParam('geolocation-radius'));
+$address = trim((string) $request->getParam('geolocation-address'));
+$currentLat = trim((string) $request->getParam('geolocation-latitude'));
+$currentLng = trim((string) $request->getParam('geolocation-longitude'));
+$radius = trim((string) $request->getParam('geolocation-radius'));
 $mapped = $request->getParam('geolocation-mapped');
 
 if (empty($radius)) {
