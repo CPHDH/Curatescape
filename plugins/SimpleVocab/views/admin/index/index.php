@@ -41,10 +41,10 @@ jQuery(document).ready(function () {
 <form method="post" action="<?php echo url('simple-vocab/index/edit-element-terms'); ?>">
 <section class="seven columns alpha">
     <div class="field">
-        <div id="element-id-label" class="one column alpha">
+        <div id="element-id-label" class="field-meta">
             <label for="element-id"><?php echo __('Element'); ?></label>
         </div>
-        <div class="inputs six columns omega">
+        <div class="inputs">
             <?php echo $this->formSelect('element_id', null, array('id' => 'element-id'), $options_for_select) ?>
             <p class="explanation"><?php echo __('Select an element to manage its ' 
             . 'custom vocabulary. Elements with a custom vocabulary are marked with ' 
@@ -52,7 +52,9 @@ jQuery(document).ready(function () {
         </div>
     </div>
     <div class="field">
-        <label for="terms"><?php echo __('Vocabulary Terms'); ?></label>
+        <div class="field-meta">
+            <label for="terms"><?php echo __('Vocabulary Terms'); ?></label>
+        </div>
         <div class="inputs">
             <?php echo $this->formTextarea('terms', null, array('id' => 'terms', 'rows' => '10', 'disabled' => true)) ?>
             <p class="explanation"><?php echo __('Enter the custom vocabulary ' 
@@ -82,5 +84,5 @@ jQuery(document).ready(function () {
     </div>
 </section>
 </form>
-<section id="texts" class="ten columns alpha"></section>
+<section id="texts" style="clear:both"></section>
 <?php echo foot(); ?>

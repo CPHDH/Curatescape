@@ -17,8 +17,19 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: SimpleVocabPlugin.php:80 views/admin/index/index.php:2
+#: SimpleVocabPlugin.php:112 views/admin/index/index.php:2
 msgid "Simple Vocab"
+msgstr ""
+
+#: config_form.php:3
+msgid "Apply to Files"
+msgstr ""
+
+#: config_form.php:14
+msgid ""
+"By default, your simple vocabularies will only apply to item metadata. Check "
+"the above box if you want to apply your vocabularies to file metadata as "
+"well."
 msgstr ""
 
 #: controllers/IndexController.php:57
@@ -49,10 +60,6 @@ msgstr ""
 msgid "No texts for the selected element exist in Omeka."
 msgstr ""
 
-#: views/admin/index/element-texts.ajax.php:6
-msgid "Count"
-msgstr ""
-
 #: views/admin/index/element-texts.ajax.php:7
 msgid "Warnings"
 msgstr ""
@@ -61,27 +68,27 @@ msgstr ""
 msgid "Text"
 msgstr ""
 
-#: views/admin/index/index.php:34
+#: views/admin/index/index.php:45
 msgid "Element"
 msgstr ""
 
-#: views/admin/index/index.php:38
+#: views/admin/index/index.php:49
 msgid ""
 "Select an element to manage its custom vocabulary. Elements with a custom "
 "vocabulary are marked with an asterisk (*)."
 msgstr ""
 
-#: views/admin/index/index.php:44
+#: views/admin/index/index.php:56
 msgid "Vocabulary Terms"
 msgstr ""
 
-#: views/admin/index/index.php:47
+#: views/admin/index/index.php:60
 msgid ""
 "Enter the custom vocabulary terms for this element, one per line. To delete "
 "the vocabulary, simply remove the terms and submit this form."
 msgstr ""
 
-#: views/admin/index/index.php:52
+#: views/admin/index/index.php:65
 #, php-format
 msgid ""
 "%sClick here%s to display a list of texts for the selected element that "
@@ -89,27 +96,23 @@ msgid ""
 "vocabulary, but be aware of some caveats:"
 msgstr ""
 
-#: views/admin/index/index.php:58
+#: views/admin/index/index.php:71
 msgid "Vocabulary terms must not contain newlines (line breaks)."
 msgstr ""
 
-#: views/admin/index/index.php:59
+#: views/admin/index/index.php:72
 msgid ""
 "Vocabulary terms are typically short and concise. If your existing texts are "
 "otherwise, avoid using a controlled vocabulary for this element."
 msgstr ""
 
-#: views/admin/index/index.php:62
+#: views/admin/index/index.php:75
 msgid "Vocabulary terms must be identical to their corresponding texts."
 msgstr ""
 
-#: views/admin/index/index.php:63
+#: views/admin/index/index.php:76
 msgid ""
 "Existing texts that are not in the vocabulary will be preserved — however, "
 "they cannot be selected in the item edit page, and will be deleted once you "
 "save the item."
-msgstr ""
-
-#: views/admin/index/index.php:70
-msgid "Add/Edit Vocabulary"
 msgstr ""
