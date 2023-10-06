@@ -23,6 +23,7 @@ To get started, install Omeka and the Curatescape theme and plugins on the serve
     - SuperRSS: [repo](https://github.com/CPHDH/SuperRss) | [download](https://github.com/CPHDH/SuperRss/releases)
     - MoreUserRoles: [repo](https://github.com/ebellempire/MoreUserRoles) | [download](https://github.com/ebellempire/MoreUserRoles/releases)
     - SimpleVocab: [instructions](https://omeka.org/classic/docs/Plugins/SimpleVocab/) | [repo](https://github.com/omeka/plugin-SimpleVocab) | [download](http://omeka.org/add-ons/plugins/simple-vocab/)
+    - SubjectsBrowse: [repo](https://github.com/ebellempire/SubjectsBrowse) | [download](https://github.com/ebellempire/SubjectsBrowse/releases)
 
 # Native client apps
 
