@@ -87,6 +87,14 @@ const loadMapSingle = () => {
             Terrain: stamen_terrain,
           };
           L.control.layers(allLayers).addTo(map);
+          // fallback for terrain map coverage errors
+          Object.values(allLayers).forEach((layer) => {
+            layer.on("tileerror", (err) => {
+              if (!map.hasLayer(carto_voyager)) {
+                carto_voyager.addTo(map);
+              }
+            });
+          });
           // Geolocation controls
           if (isSecure && navigator.geolocation) {
             var geolocationControl = L.control({ position: "topleft" });

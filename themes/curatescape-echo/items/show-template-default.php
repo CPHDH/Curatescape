@@ -48,6 +48,7 @@ echo head(array(
                 <?php echo rl_the_subtitle();?>
                 <div class="separator"></div>
                 <?php echo rl_the_byline($item, true);?>
+                <?php echo rl_post_date_header();?>
             </div>
             <div class="title-card-image">
                 <?php echo isset($filesforitem['images'][0]) ? rl_gallery_figure($filesforitem['images'][0], 'featured', '#images') : null;?>

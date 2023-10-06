@@ -136,6 +136,7 @@
   --instagram: #000;
   --youtube: #de2826;
   --pinterest: #c82828;
+  --mastodon: #595aff;
   --reddit: #ff4501;
   --tumblr: #36465d;
   --wordpress: #0087be;
@@ -371,6 +372,7 @@ h5,
   font-weight: 400;
   line-height: 1.3;
   letter-spacing: inherit;
+  text-wrap: balance; /* blink only */
 }
 
 h1,
@@ -842,6 +844,12 @@ input[type="submit"].icon-round,
   color: #fff;
   border-color: #fff;
   background: var(--pinterest);
+}
+.button[title="mastodon"]:hover,
+.button[title="mastodon"]:focus {
+  color: #fff;
+  border-color: #fff;
+  background: var(--mastodon);
 }
 .button[title="reddit"]:hover,
 .button[title="reddit"]:focus {
@@ -2124,6 +2132,11 @@ body#map.item-map .curatescape-map {
   height: calc(100vh - var(--site-header-height, 85px) - 4em);
   margin-top: 1em;
 }
+@media all and (max-width: 500px){
+  body#map.item-map .curatescape-map{
+   height: calc(100vh - var(--site-header-height, 85px) - 8em);
+ }
+}
 body#map.item-map .query-header {
   font-size: 0;
   height: 0;
@@ -2176,6 +2189,7 @@ body#map.item-map .query-header {
 .curatescape-infowindow {
   font-family: var(--font-body);
   padding: 1em;
+  text-wrap: balance;
 }
 .leaflet-container .curatescape-infowindow-title {
   font-weight: 800;
@@ -2229,9 +2243,47 @@ body#map.item-map .query-header {
 }
 .leaflet-touch .leaflet-control-geolocation-toggle:hover,
 .leaflet-touch .leaflet-control-fullscreen-toggle:hover,
-.leaflet-touch .leaflet-control-fitbounds-toggle:hover {
+.leaflet-touch .leaflet-control-fitbounds-toggle:hover,
+.leaflet-touch .leaflet-control-layers:hover {
   cursor: pointer;
   background-color: #f4f4f4;
+}
+
+figure#multi-map select{
+  -moz-appearance: none;
+  -webkit-appearance:none;
+  appearance: none;
+  position: absolute;
+  top: 10px;
+  right: 68px;
+  font-size: 16px;
+  max-width: calc(100% - 122px);
+  z-index: 999;
+  height: 48px;
+  background-color: white;
+  border: 2px solid rgba(0,0,0,.2);
+  background-clip: padding-box;
+  border-radius: 5px;
+  padding-left: 30px; 
+  background-image: url("../images/ionicons/checkmark-circle-sharp.svg");
+  background-size: 18px; 
+  background-position: 7px center;
+  background-repeat: no-repeat;
+}
+figure#multi-map select:hover{
+  cursor:pointer;
+  background-color: #f4f4f4;
+}
+
+@media all and (max-width: 500px){
+  figure#multi-map select,
+  .leaflet-bar a,
+  .leaflet-control-layers,
+  .leaflet-touch .leaflet-control-geolocation-toggle, 
+  .leaflet-touch .leaflet-control-fullscreen-toggle, 
+  .leaflet-touch .leaflet-control-fitbounds-toggle{
+    background-color: rgba(256,256,256,.95)
+  }
 }
 
 figure#story-map figcaption {
@@ -2373,6 +2425,10 @@ nav.rl-toc ul {
   width: 100%;
   border-bottom: 1px solid var(--bg-article);
   color: var(--text-base);
+}
+.icon-capsule:hover,
+.icon-capsule:active {
+  color: inherit;
 }
 .icon-capsule .icon {
   width: 2em;

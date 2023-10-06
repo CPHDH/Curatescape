@@ -273,6 +273,27 @@ function rl_relabel_type($type=null)
          return $type;
    }
 }
+
+/*
+** Determine when to load jQuery
+** usage: head_js(rl_jquery_whitelist(current_url()))
+*/
+function rl_jquery_whitelist($current_url=null){
+    if(!$current_url) return;
+    $whitelist = array(
+        '/items/search',
+        '/guest-user/',
+        '/contribution/',
+        '/exhibits/',
+        '/neatline/',
+        '/users/login',
+    );
+    foreach($whitelist as $allowed){
+        if(0 === strpos($current_url, $allowed)) return true;
+    }
+    return false;
+}
+
 /*
 ** Remove select plugin/core assets from queue
 ** view: $this
@@ -285,11 +306,13 @@ function rl_assets_blacklist($view=null, $paths=array())
       foreach ($scripts as $key=>$file) {
          foreach ($paths as $path) {
             if(0 === strpos(current_url(), '/exhibits/show') && $path == '/plugins/Geolocation'){
-               // do nothing if this is an exhibit... might need the Geolocation plugin assets
-            }elseif (strpos($file->attributes['src'], $path) !== false) {
-               $scripts[$key]->type = null;
-               $scripts[$key]->attributes['src'] = null;
-               $scripts[$key]->attributes['source'] = null;
+               // do nothing if this is an exhibit (allow map)
+            }elseif(0 === strpos(current_url(), '/guest-user/') && $path == '/plugins/GuestUser/views/public/javascripts'){
+              // do nothing if this is a guest user page
+            }elseif (isset($file->attributes['src']) && strpos($file->attributes['src'], $path) !== false) {
+                 $scripts[$key]->type = null;
+                 $scripts[$key]->attributes['src'] = null;
+                 $scripts[$key]->attributes['source'] = null;
             }
          }
       }
@@ -297,8 +320,8 @@ function rl_assets_blacklist($view=null, $paths=array())
       foreach ($styles as $key=>$file) {
          foreach ($paths as $path) {
             if(0 === strpos(current_url(), '/exhibits/show') && $path == '/plugins/Geolocation'){
-               // do nothing if this is an exhibit... might need the Geolocation plugin assets
-            }elseif (strpos($file->href, $path) !== false) {
+               // do nothing if this is an exhibit (allow map)
+            }elseif ($file->href && strpos($file->href, $path) !== false) {
                $styles[$key]->href = null;
                $styles[$key]->type = null;
                $styles[$key]->rel = null;
@@ -350,7 +373,7 @@ function rl_seo_pagetitle($title, $item)
 /*
 ** SEO Page Image
 */
-function rl_seo_pageimg($item=null, $file=null)
+function rl_seo_pageimg($item=null, $file=null, $tour = null)
 {
     if ($item) {
         if (metadata($item, 'has thumbnail')) {
@@ -362,6 +385,10 @@ function rl_seo_pageimg($item=null, $file=null)
         if ($itemimg=file_image('fullsize')) {
             preg_match('/<img(.*)src(.*)=(.*)"(.*)"/U', $itemimg, $result);
             $itemimg=array_pop($result);
+        }
+    } elseif ($tour) {
+        if ($touritems = $tour->getItems()) {
+          $itemimg = rl_get_first_image_src($touritems[0], 'fullsize');
         }
     }
     return isset($itemimg) ? $itemimg : rl_seo_pageimg_custom();
@@ -644,7 +671,40 @@ function rl_global_header($html=null)
     </div>
     <?php
 }
+/*
+** Get Subject Terms
+*/
+function rl_get_subjects(){
+  $db = get_db();
+  $prefix=$db->prefix;
+  $select = "
+  SELECT TRIM(et.text) as text, count(*) as total, LOWER(LEFT(text, 1)) as letter
+  FROM {$prefix}items as i
+  INNER JOIN {$prefix}element_texts as et ON i.id = et.record_id
+  WHERE public = 1 AND element_id = 49
+  GROUP BY text
+  ORDER BY text ASC
+  ";
+  $sql = $select;
+  $q = $db->query($sql);
+  $subjects = $q->fetchAll();
+  return $subjects;
+}
 
+/*
+** Get Subjects Select
+*/
+function rl_subjects_select($subjects,$num){
+  if($subjects){
+    $html = '<select hidden>';
+    $html .= '<option value="">'.__('All %s',rl_item_label('plural')).': '.$num.'</option>';
+    foreach($subjects as $subject){
+      $html .= '<option value="'.strip_tags(urlencode($subject['text'])).'">'.strip_tags($subject['text']).': '.$subject['total'].'</option>';
+    }
+    $html .= '</select>';
+    return $html;
+  }
+}
 
 /*
 ** Story Map - Single
@@ -654,7 +714,7 @@ function rl_story_map_single($title=null, $location=null, $address=null, $hero_i
 if(plugin_is_active('Geolocation')):
 ?>
   <nav aria-label="<?php echo __('Skip Interactive Map');?>"><a id="skip-map" href="#map-actions"><?php echo __('Skip Interactive Map');?></a></nav>
-  <figure id="story-map" data-default-layer="<?php echo get_theme_option('map_style') ? get_theme_option('map_style') : 'CARTO_VOYAGER';?>" data-lat="<?php echo $location[ 'latitude' ];?>" data-lon="<?php echo $location[ 'longitude' ];?>" data-zoom="<?php echo $location['zoom_level'];?>" data-title="<?php echo strip_tags($title);?>" data-image="<?php echo $hero_img;?>" data-orientation="<?php echo $hero_orientation;?>" data-address="<?php echo strip_tags($address);?>" data-color="<?php echo get_theme_option('marker_color');?>" data-root-url="<?php echo WEB_ROOT;?>" data-maki-js="<?php echo src('maki/maki.min.js', 'javascripts');?>" data-providers="<?php echo src('providers.js', 'javascripts');?>" data-leaflet-js="<?php echo src('theme-leaflet/leaflet.js', 'javascripts');?>" data-leaflet-css="<?php echo src('theme-leaflet/leaflet.css', 'javascripts');?>">
+  <figure id="story-map" data-default-layer="<?php echo get_theme_option('map_style') ? get_theme_option('map_style') : 'CARTO_VOYAGER';?>" data-lat="<?php echo $location[ 'latitude' ];?>" data-lon="<?php echo $location[ 'longitude' ];?>" data-zoom="<?php echo $location['zoom_level'];?>" data-title="<?php echo $title ? strip_tags($title) : null;?>" data-image="<?php echo $hero_img;?>" data-orientation="<?php echo $hero_orientation;?>" data-address="<?php echo $address ? strip_tags($address) : null;?>" data-color="<?php echo get_theme_option('marker_color');?>" data-root-url="<?php echo WEB_ROOT;?>" data-maki-js="<?php echo src('maki/maki.min.js', 'javascripts');?>" data-providers="<?php echo src('providers.js', 'javascripts');?>" data-leaflet-js="<?php echo src('theme-leaflet/leaflet.js', 'javascripts');?>" data-leaflet-css="<?php echo src('theme-leaflet/leaflet.css', 'javascripts');?>">
       <div class="curatescape-map">
           <div id="curatescape-map-canvas"></div>
       </div>
@@ -712,10 +772,13 @@ function rl_homepage_map($ishome=true,$totalItems=null)
     <section id="home-map" class="inner-padding browse">
       <h2 class="query-header"><?php echo __('%s Map',rl_item_label());?></h2>
       <div id="home-map-container" data-label="<?php echo __('All %s',rl_item_label('plural')).': '.$totalItems;?>">
-        <figure id="multi-map" data-json-source="/items/browse?output=mobile-json" data-lat="<?php echo $pluginlat; ?>" data-lon="<?php echo $pluginlon; ?>" data-zoom="<?php echo $zoom; ?>" data-default-layer="<?php echo get_theme_option('map_style') ? get_theme_option('map_style') : 'CARTO_VOYAGER'; ?>" data-color="<?php echo get_theme_option('marker_color'); ?>" data-featured-color="<?php echo get_theme_option('featured_marker_color'); ?>" data-featured-star="<?php echo get_theme_option('featured_marker_star'); ?>" data-root-url="<?php echo WEB_ROOT; ?>" data-maki-js="<?php echo src('maki/maki.min.js', 'javascripts'); ?>" data-providers="<?php echo src('providers.js', 'javascripts'); ?>" data-leaflet-js="<?php echo src('theme-leaflet/leaflet.js', 'javascripts'); ?>" data-leaflet-css="<?php echo src('theme-leaflet/leaflet.css', 'javascripts'); ?>" data-cluster-css="<?php echo src('leaflet.markercluster/leaflet.markercluster.min.css', 'javascripts'); ?>" data-cluster-js="<?php echo src('leaflet.markercluster/leaflet.markercluster.js', 'javascripts'); ?>" data-cluster="<?php echo $tour && get_theme_option('tour_clustering') ? '1' : get_theme_option('clustering'); ?>" data-fitbounds-label="<?php echo __('Zoom to fit all locations'); ?>">
-             <div class="curatescape-map">
-                <div id="curatescape-map-canvas"></div>
-            </div>
+        <figure id="multi-map" data-json-source="/items/browse?output=mobile-json" data-lat="<?php echo $pluginlat; ?>" data-lon="<?php echo $pluginlon; ?>" data-zoom="<?php echo $zoom; ?>" data-default-layer="<?php echo get_theme_option('map_style') ? get_theme_option('map_style') : 'CARTO_VOYAGER'; ?>" data-color="<?php echo get_theme_option('marker_color'); ?>" data-featured-color="<?php echo get_theme_option('featured_marker_color'); ?>" data-featured-star="<?php echo get_theme_option('featured_marker_star'); ?>" data-root-url="<?php echo WEB_ROOT; ?>" data-maki-js="<?php echo src('maki/maki.min.js', 'javascripts'); ?>" data-providers="<?php echo src('providers.js', 'javascripts'); ?>" data-leaflet-js="<?php echo src('theme-leaflet/leaflet.js', 'javascripts'); ?>" data-leaflet-css="<?php echo src('theme-leaflet/leaflet.css', 'javascripts'); ?>" data-cluster-css="<?php echo src('leaflet.markercluster/leaflet.markercluster.min.css', 'javascripts'); ?>" data-cluster-js="<?php echo src('leaflet.markercluster/leaflet.markercluster.js', 'javascripts'); ?>" data-cluster="<?php echo isset($tour) && get_theme_option('tour_clustering') ? '1' : get_theme_option('clustering'); ?>" data-fitbounds-label="<?php echo __('Zoom to fit all locations'); ?>">
+          <div class="curatescape-map">
+            <?php echo (get_theme_option('map_subjects') == 1) 
+            ? rl_subjects_select(rl_get_subjects(),$totalItems) 
+            : null;?>
+            <div id="curatescape-map-canvas"></div>
+          </div>
         </figure>
       </div>
       <?php if($ishome):?>
@@ -1021,7 +1084,7 @@ function rl_tags($item)
 */
 function rl_collection($item)
 {
-  if ($collection = get_collection_for_item() && $collection->public) {
+  if ($collection = get_collection_for_item() && isset($collection) && $collection->public) {
       return '<div id="collection">'.link_to_collection_for_item(null, array('class'=>'tag tag-alt','title'=>__('Collection')), 'show').'</div>';
   }
 }
@@ -1034,11 +1097,11 @@ function rl_tours_for_item($item_id=null, $html=null)
           $db = get_db();
           $prefix=$db->prefix;
           $select = $db->select()
-->from(array('ti' => $prefix.'tour_items')) // SELECT * FROM omeka_tour_items as ti
-->join(array('t' => $prefix.'tours'), // INNER JOIN omeka_tours as t
-'ti.tour_id = t.id') // ON ti.tour_id = t.id
-->where("item_id=$item_id AND public=1"); // WHERE item_id=$item_id
-$q = $select->query();
+          ->from(array('ti' => $prefix.'tour_items')) // SELECT * FROM omeka_tour_items as ti
+          ->join(array('t' => $prefix.'tours'), // INNER JOIN omeka_tours as t
+          'ti.tour_id = t.id') // ON ti.tour_id = t.id
+          ->where("item_id=$item_id AND public=1"); // WHERE item_id=$item_id
+          $q = $select->query();
           $results = $q->fetchAll();
 
           if ($results) {
@@ -1121,8 +1184,7 @@ function rl_official_website($item='item')
 */
 function rl_street_address($item='item')
 {
-   if (element_exists('Item Type Metadata', 'Street Address')) {
-      $address=metadata($item, array('Item Type Metadata','Street Address'));
+   if (element_exists('Item Type Metadata', 'Street Address') && $address=metadata($item, array('Item Type Metadata','Street Address'))) {
       $map_link='<a target="_blank" rel="noopener" href="https://maps.google.com/maps?saddr=current+location&daddr='.urlencode(strip_tags($address)).'">map</a>';
       return $address ? $address : null;
    } else {
@@ -1228,12 +1290,14 @@ function rl_the_byline($itemObj='item', $include_sponsor=false)
         $authors=metadata($itemObj, array('Dublin Core', 'Creator'), array('all'=>true));
         $total=count($authors);
         $index=1;
-        $authlink=1;
+        $authlink=get_theme_option('author_links');
         foreach ($authors as $author) {
-            if ($authlink==1) {
-                $href=w3_valid_url('/items/browse?search=&advanced[0][element_id]=39&advanced[0][type]=is+exactly&advanced[0][terms]='.$author);
-                $author='<a href="'.$href.'">'.$author.'</a>';
+            if ($authlink > 0) {
+                $href=w3_valid_url('/items/browse?search=&advanced[0][element_id]=39&advanced[0][type]=is+exactly&advanced[0][terms]='.strip_tags($author));
+            }else{
+              $href='javascript:void(0)';
             }
+            $author='<a href="'.$href.'">'.$author.'</a>';
             switch ($index) {
                case ($total):
                $delim ='';
@@ -1271,10 +1335,18 @@ function rl_item_citation()
 */
 function rl_post_date()
 {
-   if (get_theme_option('show_datestamp')==1) {
+   if (get_theme_option('show_datestamp') > 0) {
       $a=format_date(metadata('item', 'added'));
       $m=format_date(metadata('item', 'modified'));
-      return '<div class="item-post-date">'.__('Published on %s.', $a).(($a!==$m) ? ' '.__('Last updated on %s.', $m) : null).'</div>';
+      return '<div class="item-post-date">'.__('Published %s.', $a).(($a!==$m) ? ' '.__('Last updated %s.', $m) : null).'</div>';
+   }
+}
+function rl_post_date_header()
+{
+   if (get_theme_option('show_datestamp_header') > 0) {
+      $a=format_date(metadata('item', 'added'));
+      $m=format_date(metadata('item', 'modified'));
+      return '<div class="item-post-date byline">'.__('Published %s.', $a).(($a!==$m) ? ' '.__('Last updated %s.', $m) : null).'</div>';
    }
 }
 
@@ -2102,6 +2174,8 @@ function rl_social_array($max=5)
    ($twitter=get_theme_option('twitter_username')) ? array_push($services, '<a target="_blank" rel="noopener" title="twitter" href="https://twitter.com/'.$twitter.'" class="button social icon-round twitter">'.rl_icon("logo-twitter", null).'</a>') : null;
    ($youtube=get_theme_option('youtube_username')) ? array_push($services, '<a target="_blank" rel="noopener" title="youtube" href="'.$youtube.'" class="button social icon-round youtube">'.rl_icon("logo-youtube", null).'</a>') : null;
    ($instagram=get_theme_option('instagram_username')) ? array_push($services, '<a target="_blank" rel="noopener" title="instagram" href="https://www.instagram.com/'.$instagram.'" class="button social icon-round instagram">'.rl_icon("logo-instagram", null).'</a>') : null;
+   ($mastodon=get_theme_option('mastodon_link')) ? array_push($services, '<a target="_blank" rel="noopener" title="mastodon" href="'.$mastodon.'" class="button social icon-round mastodon">'.rl_icon("logo-mastodon", null).'</a>') : null;
+   ($tiktok=get_theme_option('tiktok_link')) ? array_push($services, '<a target="_blank" rel="noopener" title="tiktok" href="'.$tiktok.'" class="button social icon-round tiktok">'.rl_icon("logo-tiktok", null).'</a>') : null;
    ($pinterest=get_theme_option('pinterest_username')) ? array_push($services, '<a target="_blank" rel="noopener" title="pinterest" href="https://www.pinterest.com/'.$pinterest.'" class="button social icon-round pinterest">'.rl_icon("logo-pinterest", null).'</a>') : null;
    ($tumblr=get_theme_option('tumblr_link')) ? array_push($services, '<a target="_blank" rel="noopener" title="tumblr" href="'.$tumblr.'" class="button social icon-round tumblr">'.rl_icon("logo-tumblr", null).'</a>') : null;
    ($reddit=get_theme_option('reddit_link')) ? array_push($services, '<a target="_blank" rel="noopener" title="reddit" href="'.$reddit.'" class="button social icon-round reddit">'.rl_icon("logo-reddit", null).'</a>') : null;
@@ -2202,7 +2276,7 @@ function rl_configured_css($vars=null, $output=null)
   $vars .= get_theme_option('cluster_medium_color') ? '--cluster-medium-color:'.get_theme_option('cluster_medium_color').';' : null; 
   $vars .= get_theme_option('cluster_small_color') ? '--cluster-small-color:'.get_theme_option('cluster_small_color').';' : null;
   $vars .= get_theme_option('header_footer_color') ? '--featured-one: '.get_theme_option('header_footer_color').';' : null;
-  $vars .= get_theme_option('logo_size_adjust') ? '--site-header-height: var(--site-header-height-tall)' : null;
+  $vars .= get_theme_option('logo_size_adjust') ? '--site-header-height: var(--site-header-height-tall);' : null;
   $vars .= get_theme_option('logo_background_color') ? '--site-header-bg-logo: '.get_theme_option('logo_background_color').';' : null;
   
   if ($vars) {

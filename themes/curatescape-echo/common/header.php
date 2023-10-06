@@ -29,7 +29,7 @@ if(isset($_COOKIE['neverdarkmode']) && $_COOKIE['neverdarkmode']=="1"){
 
     <!-- FB Open Graph stuff -->
     <meta property="og:title" content="<?php echo rl_seo_pagetitle($title, $item); ?>" />
-    <meta property="og:image" content="<?php echo rl_seo_pageimg($item, $file);?>" />
+    <meta property="og:image" content="<?php echo rl_seo_pageimg($item, $file, $tour);?>" />
     <meta property="og:site_name" content="<?php echo option('site_title');?>" />
     <meta property="og:description" content="<?php echo rl_seo_pagedesc($item, $tour, $file); ?>" />
 
@@ -37,7 +37,7 @@ if(isset($_COOKIE['neverdarkmode']) && $_COOKIE['neverdarkmode']=="1"){
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="<?php echo rl_seo_pagetitle($title, $item); ?>">
     <meta name="twitter:description" content="<?php echo rl_seo_pagedesc($item, $tour, $file); ?>">
-    <meta name="twitter:image" content="<?php echo rl_seo_pageimg($item, $file);?>">
+    <meta name="twitter:image" content="<?php echo rl_seo_pageimg($item, $file, $tour);?>">
     <?php echo ($twitter=get_theme_option('twitter_username')) ? '<meta name="twitter:site" content="@'.$twitter.'"> ' : '';?>
 
     <!-- Favicons -->
@@ -58,18 +58,16 @@ if(isset($_COOKIE['neverdarkmode']) && $_COOKIE['neverdarkmode']=="1"){
     <script>window.MSInputMethodContext && document.documentMode && document.write('<script src="https://cdn.jsdelivr.net/gh/nuxodin/ie11CustomProperties@4.1.0/ie11CustomProperties.min.js"><\/script>');</script>
 
     <!-- Assets -->
-    <?php
-    $includeJQuery = ((0 === strpos(current_url(), '/items/search')) || (0 === strpos(current_url(), '/guest-user/')) || (0 === strpos(current_url(), '/contribution/'))) ? true : false;
+    <?php  
     fire_plugin_hook('public_head', array('view'=>$this));
-    rl_assets_blacklist($this, array('/plugins/Geolocation','admin-bar','family=Arvo:400'));
+    rl_assets_blacklist($this, array('/plugins/Geolocation','/plugins/GuestUser/views/public/javascripts','admin-bar','family=Arvo:400'));
     rl_theme_css();
     echo head_css();
-    echo head_js($includeJQuery);
+    echo head_js(rl_jquery_whitelist(current_url()));
     ?>
 
     <style>
-    <?php echo rl_configured_css();
-    ?>
+    <?php echo rl_configured_css();?>
     </style>
     
     <!-- Preconnect to Map JSON -->
