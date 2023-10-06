@@ -10,7 +10,7 @@ $options = $this->geolocationMapOptions($options);
 
 <div class="field">
     <div id="location_form" class="two columns alpha">
-        <label><?php echo html_escape($label); ?></label>
+        <label for="geolocation_address"><?php echo html_escape($label); ?></label>
     </div>
     <div class="inputs five columns omega">
         <input type="text" name="geolocation[address]" id="geolocation_address" value="<?php echo $address; ?>">

@@ -291,8 +291,8 @@ class GeolocationPlugin extends Omeka_Plugin_AbstractPlugin
         $location = $this->_db->getTable('Location')->findLocationByItem($item, true);
 
         if ($location) {
-            $width = get_option('geolocation_item_map_width') ? get_option('geolocation_item_map_width') : '';
-            $height = get_option('geolocation_item_map_height') ? get_option('geolocation_item_map_height') : '300px';
+            $width = $this->_filterCssLength(get_option('geolocation_item_map_width'), '100%');
+            $height = $this->_filterCssLength(get_option('geolocation_item_map_height'), '300px');
             $html = "<div id='geolocation'>";
             $html .= '<h2>'.__('Geolocation').'</h2>';
             $html .= $view->geolocationMapSingle($item, $width, $height);
@@ -619,19 +619,8 @@ class GeolocationPlugin extends Omeka_Plugin_AbstractPlugin
             $options['params']['tags'] = $args['tags'];
         }
 
-        $pattern = '#^[0-9]*(px|%)$#';
-
-        if (isset($args['height']) && preg_match($pattern, $args['height'])) {
-            $height = $args['height'];
-        } else {
-            $height = '436px';
-        }
-
-        if (isset($args['width']) && preg_match($pattern, $args['width'])) {
-            $width = $args['width'];
-        } else {
-            $width = '100%';
-        }
+        $height = $this->_filterCssLength(isset($args['height']) ? $args['height'] : '', '436px');
+        $width = $this->_filterCssLength(isset($args['width']) ? $args['width'] : '', '100%');
 
         $attrs = array('style' => "height:$height;width:$width");
         return get_view()->geolocationMapBrowse("geolocation-shortcode-$index", $options, $attrs, $center);
@@ -721,5 +710,21 @@ class GeolocationPlugin extends Omeka_Plugin_AbstractPlugin
             'longitude'=> (double) get_option('geolocation_default_longitude'),
             'zoomLevel'=> (double) get_option('geolocation_default_zoom_level'),
         );
+    }
+
+    protected function _filterCssLength($length, $default)
+    {
+        $length = trim((string) $length);
+
+        // Treat bare numbers as pixel dimensions
+        if (ctype_digit($length)) {
+            $length .= 'px';
+        }
+
+        if (!preg_match('/^[0-9]+(px|%)$/', $length)) {
+            return $default;
+        }
+
+        return $length;
     }
 }

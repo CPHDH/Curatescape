@@ -22,15 +22,22 @@ class Geolocation_View_Helper_GeolocationMapSingle extends Zend_View_Helper_Abst
                                       . '<div class="geolocation_balloon_thumbnail">' . $thumbnailLink . '</div>'
                                       . '<p class="geolocation_balloon_description">' . $description . '</p></div>';
             }
+
             $options = array();
             $options['basemap'] = get_option('geolocation_basemap');
-            $center = js_escape($center);
             $options = $this->view->geolocationMapOptions($options);
-            $style = "width: $width; height: $height";
-            $html = '<div id="' . $divId . '" class="map geolocation-map" style="' . $style . '"></div>';
-            
-            $js = "var " . Inflector::variablize($divId) . ";";
-            $js .= "OmekaMapSingle = new OmekaMapSingle(" . js_escape($divId) . ", $center, $options); ";
+            $center = js_escape($center);
+            $varDivId = Inflector::variablize($divId);
+
+            $style = "width:$width;height:$height";
+            $divAttrs = array(
+                'id' => $divId,
+                'class' => 'map geolocation-map',
+                'style' => $style,
+            );
+
+            $html = '<div ' . tag_attributes($divAttrs) .  '></div>';
+            $js = "var $varDivId" . "OmekaMapSingle = new OmekaMapSingle(" . js_escape($divId) . ", $center, $options); ";
             $html .= "<script type='text/javascript'>$js</script>";
         } else {
             $html = '<p class="map-notification">'.__('This item has no location info associated with it.').'</p>';
