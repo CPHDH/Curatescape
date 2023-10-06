@@ -250,7 +250,7 @@ function mh_global_header($html=null){
 ** Sanitize user-input to prevent bad control character messages
 */	
 function mh_json_plaintextify($text=null){
-	return trim(addslashes(preg_replace( "/\r|\n/", " ",strip_tags( $text ))));
+	return $text ? trim(addslashes(preg_replace( "/\r|\n/", " ",strip_tags( $text )))) : null;
 }
 
 /*
@@ -1066,7 +1066,7 @@ function mh_street_address($item='item'){
 
 	if (element_exists('Item Type Metadata','Street Address')){
 		$address=metadata($item,array('Item Type Metadata','Street Address'));
-		$map_link='<a target="_blank" rel="noopener" href="https://maps.google.com/maps?saddr=current+location&daddr='.urlencode(strip_tags($address)).'">map</a>';
+		$map_link= $address ? '<a target="_blank" rel="noopener" href="https://maps.google.com/maps?saddr=current+location&daddr='.urlencode(strip_tags($address)).'">map</a>' : null;
 		return $address ? $address : null;	
 	}else{
 		return null;
