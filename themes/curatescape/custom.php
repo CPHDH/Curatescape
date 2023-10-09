@@ -432,10 +432,10 @@ function mh_display_map($type=null,$item=null,$tour=null){
 			loadJS( leafletjs, function(){
 				console.log('Leaflet ready...');
 				
-				var terrain = L.tileLayer('//stamen-tiles-{s}.a.ssl.fastly.net/terrain/{z}/{x}/{y}{retina}.jpg', {
-						attribution: '<a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> | Map Tiles by <a href="http://stamen.com/">Stamen Design</a>',
+				var terrain = L.tileLayer('//tiles.stadiamaps.com/tiles/stamen_terrain/{z}/{x}/{y}{retina}.png', {
+						attribution: '<a href="https://stadiamaps.com/" target="_blank">Stadia Maps</a> | <a href="https://stamen.com/" target="_blank">Stamen Design</a> | <a href="https://openmaptiles.org/" target="_blank">OpenMapTiles</a> | <a href="https://www.openstreetmap.org/about" target="_blank">OpenStreetMap</a>',
 						retina: (L.Browser.retina) ? '@2x' : '',
-					});		
+					});
 				var carto = L.tileLayer('//cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}{retina}.png', {
 				    	attribution: '<a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> | <a href="https://cartodb.com/attributions">CartoDB</a>',
 						retina: (L.Browser.retina) ? '@2x' : '',
