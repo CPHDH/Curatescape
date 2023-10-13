@@ -6,10 +6,10 @@
 add_filter('search_record_types', 'mh_search_record_types');
 function mh_search_record_types($recordTypes)
 {
-    if(plugin_is_active('SimplePages')) $recordTypes['SimplePagesPage'] = __('Page');
-    $recordTypes['Item'] = mh_item_label('singular');
-    if(plugin_is_active('TourBuilder','1.6','>=')) $recordTypes['Tour'] = mh_tour_label('singular');
-    return $recordTypes;
+	if(plugin_is_active('SimplePages')) $recordTypes['SimplePagesPage'] = __('Page');
+	$recordTypes['Item'] = mh_item_label('singular');
+	if(plugin_is_active('TourBuilder','1.6','>=')) $recordTypes['Tour'] = mh_tour_label('singular');
+	return $recordTypes;
 }
 
 /*
@@ -19,18 +19,18 @@ add_filter('search_form_default_record_types', 'mh_search_form_default_record_ty
 function mh_search_form_default_record_types()
 {
 	$recordTypes=array();
-    $recordTypes[]='Item';
-    if(plugin_is_active('TourBuilder','1.6','>=') && get_theme_option('default_tour_search')) $recordTypes[]='Tour';
+	$recordTypes[]='Item';
+	if(plugin_is_active('TourBuilder','1.6','>=') && get_theme_option('default_tour_search')) $recordTypes[]='Tour';
 	if(plugin_is_active('SimplePages') && get_theme_option('default_page_search')) $recordTypes[]='SimplePagesPage';
 	if(get_theme_option('default_file_search')) $recordTypes[]='File';
-    return $recordTypes;
+	return $recordTypes;
 }	
 /*
 ** Set Fallback Thumbnails
 */
 add_file_fallback_image('audio','audio.png');
 add_file_fallback_image('video','video.png');
-	
+
 /*
 ** SEO Page Description
 */
@@ -65,7 +65,7 @@ function mh_seo_pagetitle($title,$item){
 	return strip_tags($pt);
 }
 
-/* 
+/*
 ** SEO Page Image
 */
 function mh_seo_pageimg($item=null,$file=null){
@@ -93,7 +93,7 @@ function mh_seo_pageimg_custom(){
 	return $custom_img_url;
 }
 
-/* 
+/*
 ** Get theme CSS link with version number
 */
 function mh_theme_css($media='all'){
@@ -101,7 +101,6 @@ function mh_theme_css($media='all'){
 	$theme = Theme::getTheme($themeName);
 	return '<link href="'.WEB_PUBLIC_THEME.'/'.$themeName.'/css/screen.css?v='.$theme->version.'" media="'.$media.'" rel="stylesheet">';
 }
-
 
 /* 
 ** Custom Label for Items/Stories
@@ -130,7 +129,6 @@ function mh_tour_label($which=null){
 		return __('Tour');
 	}
 }
-
 
 /*
 ** Global navigation
@@ -163,11 +161,9 @@ function mh_item_browse_subnav(){
 		));
 }
 
-
 /*
 ** Subnavigation for collections/browse
 */
-
 function mh_collection_browse_subnav(){
 	echo nav(array(
 			array('label'=>__('All') ,'uri'=> url('collections/browse')),
@@ -229,16 +225,16 @@ function mh_global_header($html=null){
 		<div class="flex flex-end flex-grow flex-nav-container <?php echo get_theme_option('stacked_nav')==1 ? 'stacked' : null;?> ">
 			<?php if(!get_theme_option('hide_primary_nav')):?>
 			<div class="flex priority">
-	  			<a href="<?php echo url('/items/browse/');?>" class="button button-primary"><?php echo mh_item_label('plural');?></a>
-	  			<?php if(plugin_is_active('TourBuilder')): ?>
-	  				<a href="<?php echo url('/tours/browse/');?>" class="button button-primary"><?php echo mh_tour_label('plural');?></a>
-	  			<?php endif;?>
+				<a href="<?php echo url('/items/browse/');?>" class="button button-primary"><?php echo mh_item_label('plural');?></a>
+				<?php if(plugin_is_active('TourBuilder')): ?>
+				<a href="<?php echo url('/tours/browse/');?>" class="button button-primary"><?php echo mh_tour_label('plural');?></a>
+				<?php endif;?>
 			</div>
 			<?php endif;?>
 			<div class="flex search-plus flex-grow">
-  			<!--input class="nav-search u-full-width" type="search" placeholder="Search"-->
-  			<?php echo mh_simple_search('header-search',array('id'=>'header-search-form'),__('Search - Top'));?>
-  			<a title="<?php echo __('Menu');?>" id="menu-button" href="#offscreen-menu" class="button icon"><i data-title="<?php echo __('Menu');?>" class="fa fa-bars fa-lg" aria-hidden="true"></i></a>	
+			<!--input class="nav-search u-full-width" type="search" placeholder="Search"-->
+			<?php echo mh_simple_search('header-search',array('id'=>'header-search-form'),__('Search - Top'));?>
+			<a title="<?php echo __('Menu');?>" id="menu-button" href="#offscreen-menu" class="button icon"><i data-title="<?php echo __('Menu');?>" class="fa fa-bars fa-lg" aria-hidden="true"></i></a>	
 			</div>
 		</div>
 	</nav>
@@ -277,11 +273,10 @@ function mh_get_tour_json($tour=null){
 				}
 		}
 		$tourMetadata = array(
-		     'id'           => $tour->id,
-		     'items'        => $tourItems,
-		     );
+			'id' => $tour->id,
+			'items' => $tourItems,
+		);
 		return json_encode($tourMetadata);
-	
 	}	
 }
 
@@ -313,12 +308,12 @@ function mh_get_item_json($item=null){
 				'address'	  => mh_json_plaintextify($address),
 				'accessinfo'  => $accessinfo,
 				'thumbnail'   => $thumbnail,
-			);		
+			);
 			return json_encode($itemMetadata);
 		}else{
 			return false;
-		}	
-	}	
+		}
+	}
 }
 
 /*
@@ -326,7 +321,6 @@ function mh_get_item_json($item=null){
 ** Uses variable set in each page template 
 */
 function mh_map_type($maptype='none',$item=null,$tour=null){
-	
 	if ($maptype == 'focusarea') {
 		return mh_display_map('focusarea',null,null);
 	}
@@ -349,7 +343,6 @@ function mh_map_type($maptype='none',$item=null,$tour=null){
 		return null;
 	}
 }
-
 
 /*
 ** Render the map
@@ -423,7 +416,6 @@ function mh_display_map($type=null,$item=null,$tour=null){
 		var mapbox_layer_title='<?php echo get_theme_option('mapbox_tile_layer') ? ucwords( str_replace( array('-v11','-v10','-v9','-'),' ', get_theme_option('mapbox_tile_layer') ) ) : "Mapbox";?>';
 
 		// End PHP Variables
-		
 		var isSecure = window.location.protocol == 'https:' ? true : false;	
 
 		jQuery(document).ready(function() {
@@ -545,24 +537,24 @@ function mh_display_map($type=null,$item=null,$tour=null){
 					// Center marker and popup on open
 					map.on('popupopen', function(e) {
 						// find the pixel location on the map where the popup anchor is
-					    var px = map.project(e.popup._latlng); 
-					    // find the height of the popup container, divide by 2, subtract from the Y axis of marker location
-					    px.y -= e.popup._container.clientHeight/2;
-					    // pan to new center
-					    map.panTo(map.unproject(px),{animate: true}); 
-					});				
+						var px = map.project(e.popup._latlng); 
+						// find the height of the popup container, divide by 2, subtract from the Y axis of marker location
+						px.y -= e.popup._container.clientHeight/2;
+						// pan to new center
+						map.panTo(map.unproject(px),{animate: true}); 
+					});
 					// Add Markers
 					var addMarkers = function(data){				
-					    function icon(color,markerInner){ 
-					        return L.MakiMarkers.icon({
-					        	icon: markerInner, 
+						function icon(color,markerInner){ 
+							return L.MakiMarkers.icon({
+								icon: markerInner, 
 								color: color, 
 								size: markerSize,
 								accessToken: "pk.eyJ1IjoiZWJlbGxlbXBpcmUiLCJhIjoiY2ludWdtOHprMTF3N3VnbHlzODYyNzh5cSJ9.w3AyewoHl8HpjEaOel52Eg"
-					    		});	
-					    }				
+								});	
+						}
 						if(typeof(data.items)!="undefined"){ // tours and other multi-item maps
-							
+
 							var group=[];
 							if(useClusters==true){
 								var markers = L.markerClusterGroup({
@@ -576,104 +568,103 @@ function mh_display_map($type=null,$item=null,$tour=null){
 									}
 								});
 							}
-							
-					        jQuery.each(data.items,function(i,item){
+
+							jQuery.each(data.items,function(i,item){
 								var appendQueryParams=(type=='tour') ? '?tour='+data.id+'&index='+i : '';
-						        var address = item.address ? item.address : '';
+								var address = item.address ? item.address : '';
 								var c = (item.featured==1 && featured_color) ? featured_color : color;
 								var inner = (item.featured==1 && featuredStar) ? "star" : "circle";
-						        if(typeof(item.thumbnail)!="undefined"){
-							        var image = '<a href="'+root_url+'/items/show/'+item.id+'" class="curatescape-infowindow-image '+(!item.thumbnail ? 'no-img' : '')+'" style="background-image:url('+item.thumbnail+');"></a>';
-							    }else{
-								    var image = '';
-							    }
-							    var number = (type=='tour') ? '<span class="number">'+(i+1)+'</span>' : '';
-						        var html = image+number+'<span><a class="curatescape-infowindow-title" href="'+root_url+'/items/show/'+item.id+appendQueryParams+'">'+item.title+'</a><br>'+'<div class="curatescape-infowindow-address">'+address.replace(/(<([^>]+)>)/ig,"")+'</div></span>';
-																
+								if(typeof(item.thumbnail)!="undefined"){
+									var image = '<a href="'+root_url+'/items/show/'+item.id+'" class="curatescape-infowindow-image '+(!item.thumbnail ? 'no-img' : '')+'" style="background-image:url('+item.thumbnail+');"></a>';
+								}else{
+									var image = '';
+								}
+								var number = (type=='tour') ? '<span class="number">'+(i+1)+'</span>' : '';
+								var html = image+number+'<span><a class="curatescape-infowindow-title" href="'+root_url+'/items/show/'+item.id+appendQueryParams+'">'+item.title+'</a><br>'+'<div class="curatescape-infowindow-address">'+address.replace(/(<([^>]+)>)/ig,"")+'</div></span>';
+
 								var marker = L.marker([item.latitude,item.longitude],{
 									icon: icon(c,inner),
 									title: convertHtmlToText(item.title),
 									alt: convertHtmlToText(item.title),
 									}).bindPopup(html);
-								
-								group.push(marker);  
-								
+
+								group.push(marker);
+
 								if(useClusters==true) markers.addLayer(marker);
 					
-					        });
-					        
-					        if(useClusters==true && type!=='tour' || type=='tour' && clusterTours==true){
-						        map.addLayer(markers);
-						        mapBounds = markers.getBounds();
-						    }else{
-					        	group=new L.featureGroup(group); 
-								group.addTo(map);	
-								mapBounds = group.getBounds();				    
-						    }
-					        
-							// Fit map to markers as needed			        
-					        if((type == 'queryresults'|| type == 'tour') || alwaysFit==true){
-						        if(useClusters==true){
-							        map.fitBounds(markers.getBounds());
-							    }else{
-								    map.fitBounds(group.getBounds());
-							    }
-					        }
-					        
-					        
+							});
+
+							if(useClusters==true && type!=='tour' || type=='tour' && clusterTours==true){
+								map.addLayer(markers);
+								mapBounds = markers.getBounds();
+							}else{
+								group=new L.featureGroup(group); 
+								group.addTo(map);
+								mapBounds = group.getBounds();
+							}
+
+							// Fit map to markers as needed
+							if((type == 'queryresults'|| type == 'tour') || alwaysFit==true){
+								if(useClusters==true){
+								map.fitBounds(markers.getBounds());
+								}else{
+									map.fitBounds(group.getBounds());
+								}
+							}
+
+
 						}else{ // single items
 							map.setView([data.latitude,data.longitude],defaultItemZoom);	
-					        var address = data.address ? data.address : data.latitude+','+data.longitude;
-					
-					        var image = (typeof(data.thumbnail)!="undefined") ? '<a href="" class="curatescape-infowindow-image '+(!data.thumbnail ? 'no-img' : '')+'" style="background-image:url('+data.thumbnail+');" title="'+data.title+'"></a>' : '';
-					
-					        var html = image+'<div class="curatescape-infowindow-address single-item"><span class="icon-map-marker" aria-hidden="true"></span> '+address.replace(/(<([^>]+)>)/ig,"")+'</div>';
-							
+							var address = data.address ? data.address : data.latitude+','+data.longitude;
+
+							var image = (typeof(data.thumbnail)!="undefined") ? '<a href="" class="curatescape-infowindow-image '+(!data.thumbnail ? 'no-img' : '')+'" style="background-image:url('+data.thumbnail+');" title="'+data.title+'"></a>' : '';
+
+							var html = image+'<div class="curatescape-infowindow-address single-item"><span class="icon-map-marker" aria-hidden="true"></span> '+address.replace(/(<([^>]+)>)/ig,"")+'</div>';
+
 							var marker = L.marker([data.latitude,data.longitude],{
 								icon: icon(color,"circle"),
 								title: convertHtmlToText(data.title),
 								alt: convertHtmlToText(data.title),
-								}).bindPopup(html);					
-							
+								}).bindPopup(html);
+
 							marker.addTo(map);
 
 							mapBounds = map.getBounds();
-						
 						}
-						
-					}		
-					
+
+					}
+
 					if(type=='story'){
 						var data = jQuery.parseJSON(source);
 						if(data){
 							addMarkers(data);
 						}
-						
+
 					}else if(type=='tour'){
 						var data = jQuery.parseJSON(source);
 						addMarkers(data);
-						
+
 					}else if(type=='focusarea'){
 						jQuery.getJSON( source, function(data) {
 							var data = data;
 							addMarkers(data);
 						});
-						
+
 					}else if(type=='queryresults'){
 						jQuery.getJSON( source, function(data) {
 							var data = data;
 							addMarkers(data);
 						});
-						
+
 					}else{
 						jQuery.getJSON( source, function(data) {
 							var data = data;
 							addMarkers(data);
 						});
 					}
-					
+
 					/* Map Action Buttons */
-					
+
 					// Fullscreen
 					jQuery('.leaflet-control-fullscreen-toggle').click(function(e){
 						e.preventDefault();
@@ -686,7 +677,7 @@ function mh_display_map($type=null,$item=null,$tour=null){
 							if(jQuery('body').hasClass('fullscreen-map')) jQuery('.leaflet-control-fullscreen-toggle').click();
 						}
 					});
-					
+
 					// Geolocation
 					jQuery('.leaflet-control-geolocation-toggle').click(
 						function(e){
@@ -732,14 +723,11 @@ function mh_display_map($type=null,$item=null,$tour=null){
 							}, 
 							options);
 					});	
-					
+
 					// enable mouse scrollwheel zoom if the user has interacted with the map
 					map.once('focus', function() { map.scrollWheelZoom.enable(); });					
-							
+
 				}
-
-
-
 
 				if(useClusters==true){
 					loadJS( leafletClusterjs, function(){
@@ -750,14 +738,11 @@ function mh_display_map($type=null,$item=null,$tour=null){
 					mapDisplay();
 				}
 
-				
 			});
-		
-
 
 		});
-    </script>
-        
+		</script>
+
 	<!-- Map Container -->
 	<div class="curatescape-map">
 		<div id="curatescape-map-canvas" class="hero"></div>
@@ -771,19 +756,18 @@ function mh_display_map($type=null,$item=null,$tour=null){
 function mh_map_actions($item=null,$tour=null,$collection=null,$saddr='current',$coords=null){
 	
 		$street_address=null;
-		
-		
+
 		if($item!==null){
-			
+
 			// get the destination coordinates for the item
 			$location = get_db()->getTable('Location')->findLocationByItem($item, true);
 			$coords=$location[ 'latitude' ].','.$location[ 'longitude' ];
 			$street_address=mh_street_address($item);
-			
+
 			$showlink=true;
 		
 		}elseif($tour!==null){
-			
+
 			// get the waypoint coordinates for the tour
 			$coords = array();
 			foreach( $tour->Items as $item ){
@@ -791,33 +775,31 @@ function mh_map_actions($item=null,$tour=null,$collection=null,$saddr='current',
 				$location = get_db()->getTable('Location')->findLocationByItem($item, true);
 				$coords[] = mh_street_address($item) ? urlencode(strip_tags(mh_street_address($item))) : $location['latitude'].','.$location['longitude'];
 			}
-			
+
 			$daddr=end($coords);
 			reset($coords);
 			$waypoints=array_pop($coords);		
 			$waypoints=implode('+to:', $coords);
 			$coords=$daddr.'+to:'.$waypoints;	
-			
-			$showlink=get_theme_option('show_tour_dir');			
+
+			$showlink=get_theme_option('show_tour_dir');
 		}
 	
 	?>
 	
 	<div id="map-actions-anchor" class="map-actions flex">
-		
+
 		<!-- Directions link -->
 		<?php if( $showlink && $coords && ($item || $tour) ):?>
 				<a onclick="jQuery(\'body\').removeClass(\'fullscreen-map\')" class="directions" title="<?php echo __('Get Directions on Google Maps');?>" target="_blank" rel="noopener" href="https://maps.google.com/maps?saddr=<?php echo $saddr;?>+location&daddr=<?php echo $street_address ? urlencode(strip_tags($street_address)) : $coords;?>">
 				<i class="fa fa-lg fa-external-link-square" aria-hidden="true"></i> <span class="label"><?php echo __('Get Directions');?></span>
 		</a>
-		<?php endif;?>		
-	
+		<?php endif;?>
+
 	</div>
 
-	
 	<?php	
 }
-
 
 /*
 ** Modified search form
@@ -926,8 +908,8 @@ function mh_appstore_footer(){
 ** Replace BR tags, wrapping text in P tags instead
 */
 function replace_br($data) {
-    $data = preg_replace('#(?:<br\s*/?>\s*?){2,}#', '</p><p>', $data);
-    return "<p>$data</p>";
+	$data = preg_replace('#(?:<br\s*/?>\s*?){2,}#', '</p><p>', $data);
+	return "<p>$data</p>";
 }
 
 /*
@@ -970,7 +952,6 @@ function mh_the_lede($item='item'){
 		$lede=metadata($item,array('Item Type Metadata', 'Lede'));
 		return  $lede ? '<div class="lede">'.strip_tags($lede,'<a><em><i><u><b><strong><strike>').'</div>' : null;
 	}
-		
 }
 
 /*
@@ -997,7 +978,6 @@ function mh_snippet_expanded($item='item'){
 	return snippet($story,0,250,'&hellip;');
 }
 
-
 /*
 ** sponsor for use in item byline 
 */
@@ -1009,7 +989,6 @@ function mh_the_sponsor($item='item'){
 	} 
 	
 }
-
 
 /*
 ** Display subjects as tags
@@ -1054,7 +1033,6 @@ function mh_subjects_string(){
 		return '<div class="subjects"><span>'.__('Subjects: ').'</span>'.implode(", ", $html).'</div>';
 	}
 }
-
 
 /*
 ** Display the item tags
@@ -1300,7 +1278,7 @@ function mh_item_images($item,$index=0){
 				$html.= '<figcaption id="caption'.$captionID.'" hidden class="hidden;">'.strip_tags($caption,'<a><u><strong><em><i><cite>').'</figcaption>';
 			$html.= '</figure>';
 			$captionID++;
-		}		
+		}
 	}
 	if($html): ?>
 		<h3><?php echo __('Images');?></h3>
@@ -1309,41 +1287,39 @@ function mh_item_images($item,$index=0){
 		</figure>		
 		<!-- PhotoSwipe -->
 		<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
-		  <div class="pswp__bg"></div>
-		  <div class="pswp__scroll-wrap">
-		      <div class="pswp__container">
-		          <div class="pswp__item"></div>
-		          <div class="pswp__item"></div>
-		          <div class="pswp__item"></div>
-		      </div>
-		      <div class="pswp__ui pswp__ui--hidden">
-		          <div class="pswp__top-bar">
-		              <div class="pswp__counter"></div>
-		              <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
-		              <button class="pswp__button pswp__button--share" title="Share"></button>
-		              <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
-		              <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
-		              <div class="pswp__preloader">
-		                  <div class="pswp__preloader__icn">
-		                    <div class="pswp__preloader__cut">
-		                      <div class="pswp__preloader__donut"></div>
-		                    </div>
-		                  </div>
-		              </div>
-		          </div>
-		          <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
-		              <div class="pswp__share-tooltip"></div> 
-		          </div>
-		          <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
-		          </button>
-		          <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
-		          </button>
-		          <div class="pswp__caption">
-		              <div class="pswp__caption__center"></div>
-		          </div>
-		      </div>
-		  </div>
-		</div>		
+			<div class="pswp__bg"></div>
+			<div class="pswp__scroll-wrap">
+			<div class="pswp__container">
+				<div class="pswp__item"></div>
+				<div class="pswp__item"></div>
+				<div class="pswp__item"></div>
+			</div>
+			<div class="pswp__ui pswp__ui--hidden">
+				<div class="pswp__top-bar">
+					<div class="pswp__counter"></div>
+					<button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+					<button class="pswp__button pswp__button--share" title="Share"></button>
+					<button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+					<button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+					<div class="pswp__preloader">
+						<div class="pswp__preloader__icn">
+							<div class="pswp__preloader__cut">
+								<div class="pswp__preloader__donut"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+					<div class="pswp__share-tooltip"></div> 
+				</div>
+				<button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)"></button>
+				<button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button>
+				<div class="pswp__caption">
+					<div class="pswp__caption__center"></div>
+				</div>
+			</div>
+		</div>
+	</div>
 	<?php endif;
 }
 
@@ -1406,14 +1382,13 @@ function mh_audio_files($item,$index=0){
 						audioplayer.get(0).load();
 						audioplayer.get(0).play();
 					}
-				});				
+				});
 				
 			}
 		});		
 		</script>
 	<?php endif;
 }
-
 
 
 /*
@@ -1475,11 +1450,10 @@ function mh_video_files($item='item',$html=null) {
 						videoplayer.get(0).load();
 						videoplayer.get(0).play();
 					}
-				});				
-				
+				});
 			}
 		});
-		</script>			
+		</script>
 	<?php endif;
 }
 
@@ -1504,7 +1478,7 @@ function mh_document_files($item='item',$html=null){
 			$html .= '<td class="download"><a class="button" target="_blank" title="Download" href="'.$download.'"><i class="fa fa-download" aria-hidden="true"></i> <span>Download</span></a></td>';
 			$html .= '</tr>';
 		}
-		
+
 	}	
 	if($html){
 		echo '<h3>'.__('Documents').'</h3>';
@@ -1524,11 +1498,10 @@ function mh_single_file_show($file=null){
 		$img = array('image/jpeg','image/jpg','image/png','image/jpeg','image/gif');
 		$audioTypes = array('audio/mpeg');
 		$videoTypes = array('video/mp4','video/mpeg','video/quicktime');
-		
-		
+
 		// SINGLE AUDIO FILE
 		if ( array_search($mime, $audioTypes) !== false ){
-			
+
 			?>
 			<figure id="item-audio">	
 				<div class="media-container audio">
@@ -1538,8 +1511,7 @@ function mh_single_file_show($file=null){
 				</div>
 			</figure>
 			<?php
-			
-		
+
 		// SINGLE VIDEO FILE	
 		}elseif(array_search($mime, $videoTypes) !== false){
 			$videoTypes = array('video/mp4','video/mpeg','video/quicktime');
@@ -1560,9 +1532,9 @@ function mh_single_file_show($file=null){
 				$html .= '</video>';
 
 			}	
-					
+
 			return $html;
-		
+
 		// SINGLE IMAGE OR OTHER FILE	
 		}else{
 			return file_markup($file, array('imageSize'=>'fullsize'));
@@ -1575,13 +1547,13 @@ function mh_file_metadata_additional($file='file',$html=null){
 	$fields = all_element_texts($file,array('return_type'=>'array','show_element_sets'=>'Dublin Core')); 
 
 	if($fields['Dublin Core']){
-		
+
 		// Omit Primary DC Fields
 		$dc = array_filter($fields['Dublin Core'],function($key){
 			$omit=array('Description','Title','Creator','Date','Rights','Source');
 			return !(in_array($key, $omit));
 		},ARRAY_FILTER_USE_KEY); 
-		
+
 		// Output
 		foreach($dc as $dcname=>$values){
 			$html.='<div class="additional-element">';
@@ -1594,7 +1566,7 @@ function mh_file_metadata_additional($file='file',$html=null){
 			$html.='</div>';
 		}
 	}
-	
+
 	if($html){
 		echo '<h3>'.__('Additional Information').'</h3>';
 		echo '<div class="additional-elements">'.$html.'</div>';
@@ -1690,34 +1662,33 @@ function mh_share_this($type='Page'){
 function mh_disquss_comments($shortname){
 	if ($shortname){
 	?>
-    
+
 	<div id="disqus_thread">
 	  <a class="load-comments" title="Click to load the comments section" href="#" onclick="disqus();return false;">Show Comments</a> 
-	</div>    
-	
-	
+	</div>
+
 	<script async defer>
 		var disqus_shortname = "<?php echo $shortname;?>";
 		var disqus_loaded = false;
-		
+
 		// This is the function that will load Disqus comments on demand
 		function disqus() {
-		
-		  if (!disqus_loaded)  {
-		    disqus_loaded = true;
-		    console.log("Disqus ready...");
-		    
-		    var e = document.createElement("script");
-		    e.type = "text/javascript";
-		    e.async = true;
-		    e.src = "//" + disqus_shortname + ".disqus.com/embed.js";
-		    (document.getElementsByTagName("head")[0] ||
-		     document.getElementsByTagName("body")[0])
-		    .appendChild(e);
+
+			if (!disqus_loaded)  {
+				disqus_loaded = true;
+				console.log("Disqus ready...");
+
+				var e = document.createElement("script");
+				e.type = "text/javascript";
+				e.async = true;
+				e.src = "//" + disqus_shortname + ".disqus.com/embed.js";
+				(document.getElementsByTagName("head")[0] ||
+				document.getElementsByTagName("body")[0])
+				.appendChild(e);
 		  }
 		} 	
 	</script>
-    
+
 	<?php
 	}
 }
@@ -1849,19 +1820,18 @@ function mh_display_homepage_tours($num=5, $scope='featured'){
 		for ($i = 0; $i < $num; $i++) {
 			set_current_record( 'tour', $items[$i] );
 			$tour=get_current_tour();		
-			
-			
+
 			if(tour('credits')){
 				$byline= __('Curated by %s',tour('credits'));
 			}else{
 				$byline= __('Curated by The %s Team',option('site_title'));
-			}				
-				
+			}
+
 			$html .= '<article class="item-result '.(get_theme_option('fetch_tour_images') ? 'fetch-tour-image' : null).'" data-tour-id="'.tour('id').'">';
 			$html .= get_theme_option('fetch_tour_images') ? '<div class="tour-image-container"></div>' : null;
 			$html .= '<div><h3 class="home-tour-title"><a href="' . WEB_ROOT . '/tours/show/'. tour('id').'">' . tour('title').'</a></h3><span class="total">'.__('%s Locations',mh_tour_total_items($tour)).'</span> ~ <span>'.$byline.'</span></div>';
 			$html .= '</article>';
-			
+
 		}
 		if(count($public)>1){
 			$html .= '<p class="view-more-link"><a class="button" href="'.WEB_ROOT.'/tours/browse/">'.__('Browse all <span>%1$s %2$s</span>', count($public), mh_tour_label('plural')).'</a></p>';
@@ -1879,7 +1849,7 @@ function mh_hero_item($item){
 			$itemDescription = mh_snippet_expanded($item);
 			$class=get_theme_option('featured_tint')==1 ? 'tint' : 'no-tint';
 			$html=null;
-	
+
 			if (metadata($item, 'has thumbnail') ) {
 				$img_markup=item_image('fullsize',array(),0, $item);
 				preg_match('/<img(.*)src(.*)=(.*)"(.*)"/U', $img_markup, $result);
@@ -2016,8 +1986,6 @@ function mh_home_popular_tags($num=40){
 	
 }
 
-	
-
 /*
 ** List of recent or random items for homepage
 */
@@ -2043,12 +2011,12 @@ function mh_social_array($max=5){
 		if($total>$max){
 			for($i=$total; $i>($max-1); $i-- ){
 				unset($services[$i]);
-			}			
+			}
 		}
 		return $services;
 	}else{
 		return false;
-	}	
+	}
 }
 
 /*
@@ -2134,40 +2102,40 @@ function homepage_widget_sections(){
 		foreach(array(homepage_widget_1(),homepage_widget_2(),homepage_widget_3(),homepage_widget_4()) as $setting){
 			
 			switch ($setting) {
-			    case 'featured':
-			        $html.= ($featured==0) ? '<section id="featured-stories">'.mh_display_random_featured_item(true,3).'</section>' : null;
-			        $featured++;
-			        break;
-			    case 'tours':
-			        $html.= ($tours==0) ? '<section id="home-tours">'.mh_display_homepage_tours().'</section>' : null;
-			        $tours++;
-			        break;
-			    case 'recent_or_random':
-			        $html.= ($recent_or_random==0) ? '<section id="home-item-list">'.mh_home_item_list().'</section>' : null;
-			        $recent_or_random++;
-			        break;
-			    case 'popular_tags':
-			        $html.= ($popular_tags==0) ? '<section id="home-popular-tags">'.mh_home_popular_tags().'</section>' : null;
-			        $popular_tags++;
-			        break;
-			    case 'about':
-			        $html.= ($about==0) ? '<section id="about">'.mh_home_about().'</section>	' : null;
-			        $about++;
-			        break;
-			    case 'cta':
-			        $html.= ($cta==0) ? '<section id="cta">'.mh_home_cta().'</section>	' : null;
-			        $cta++;
-			        break;			        
-			    case 'custom_meta_img':
-			        $html.= ($meta==0) ? '<section id="custom-meta-img" aria-hidden="true"><img src="'.mh_seo_pageimg_custom().'" alt="" class="homepage-brand-image"></section>	' : null;
-			        $meta++;
-			        break;
-			    default:
-			    	$html.=null;
+				case 'featured':
+					$html.= ($featured==0) ? '<section id="featured-stories">'.mh_display_random_featured_item(true,3).'</section>' : null;
+					$featured++;
+					break;
+				case 'tours':
+					$html.= ($tours==0) ? '<section id="home-tours">'.mh_display_homepage_tours().'</section>' : null;
+					$tours++;
+					break;
+				case 'recent_or_random':
+					$html.= ($recent_or_random==0) ? '<section id="home-item-list">'.mh_home_item_list().'</section>' : null;
+					$recent_or_random++;
+					break;
+				case 'popular_tags':
+					$html.= ($popular_tags==0) ? '<section id="home-popular-tags">'.mh_home_popular_tags().'</section>' : null;
+					$popular_tags++;
+					break;
+				case 'about':
+					$html.= ($about==0) ? '<section id="about">'.mh_home_about().'</section>	' : null;
+					$about++;
+					break;
+				case 'cta':
+					$html.= ($cta==0) ? '<section id="cta">'.mh_home_cta().'</section>	' : null;
+					$cta++;
+					break;
+				case 'custom_meta_img':
+					$html.= ($meta==0) ? '<section id="custom-meta-img" aria-hidden="true"><img src="'.mh_seo_pageimg_custom().'" alt="" class="homepage-brand-image"></section>	' : null;
+					$meta++;
+					break;
+				default:
+					$html.=null;
 			}
-			
+
 		}
-				
+
 		return $html;
 }
 
@@ -2523,59 +2491,57 @@ function mh_ios_smart_banner(){
 ** via: https://stackoverflow.com/questions/3512311/how-to-generate-lighter-darker-color-with-php#11951022
 */
 function adjustBrightness($hex, $steps) {
-    // Steps should be between -255 and 255. Negative = darker, positive = lighter
-    $steps = max(-255, min(255, $steps));
-
-    // Normalize into a six character long hex string
-    $hex = str_replace('#', '', $hex);
-    if (strlen($hex) == 3) {
-        $hex = str_repeat(substr($hex,0,1), 2).str_repeat(substr($hex,1,1), 2).str_repeat(substr($hex,2,1), 2);
-    }
-
-    // Split into three parts: R, G and B
-    $color_parts = str_split($hex, 2);
-    $return = '#';
-
-    foreach ($color_parts as $color) {
-        $color   = hexdec($color); // Convert to decimal
-        $color   = max(0,min(255,$color + $steps)); // Adjust color
-        $return .= str_pad(dechex($color), 2, '0', STR_PAD_LEFT); // Make two char hex code
-    }
-
-    return $return;
+	// Steps should be between -255 and 255. Negative = darker, positive = lighter
+	$steps = max(-255, min(255, $steps));
+	
+	// Normalize into a six character long hex string
+	$hex = str_replace('#', '', $hex);
+	if (strlen($hex) == 3) {
+		$hex = str_repeat(substr($hex,0,1), 2).str_repeat(substr($hex,1,1), 2).str_repeat(substr($hex,2,1), 2);
+	}
+	
+	// Split into three parts: R, G and B
+	$color_parts = str_split($hex, 2);
+	$return = '#';
+	
+	foreach ($color_parts as $color) {
+		$color   = hexdec($color); // Convert to decimal
+		$color   = max(0,min(255,$color + $steps)); // Adjust color
+		$return .= str_pad(dechex($color), 2, '0', STR_PAD_LEFT); // Make two char hex code
+	}
+	
+	return $return;
 }
 
 /* 
 ** https://stackoverflow.com/questions/5501427/php-filesize-mb-kb-conversion
 */
-function formatSizeUnits($bytes)
-    {
-        if ($bytes >= 1073741824)
-        {
-            $bytes = number_format($bytes / 1073741824, 2) . ' GB';
-        }
-        elseif ($bytes >= 1048576)
-        {
-            $bytes = number_format($bytes / 1048576, 2) . ' MB';
-        }
-        elseif ($bytes >= 1024)
-        {
-            $bytes = number_format($bytes / 1024, 2) . ' kB';
-        }
-        elseif ($bytes > 1)
-        {
-            $bytes = $bytes . ' bytes';
-        }
-        elseif ($bytes == 1)
-        {
-            $bytes = $bytes . ' byte';
-        }
-        else
-        {
-            $bytes = '0 bytes';
-        }
-
-        return $bytes;
+function formatSizeUnits($bytes){
+	if ($bytes >= 1073741824)
+	{
+	$bytes = number_format($bytes / 1073741824, 2) . ' GB';
+	}
+	elseif ($bytes >= 1048576)
+	{
+	$bytes = number_format($bytes / 1048576, 2) . ' MB';
+	}
+	elseif ($bytes >= 1024)
+	{
+	$bytes = number_format($bytes / 1024, 2) . ' kB';
+	}
+	elseif ($bytes > 1)
+	{
+	$bytes = $bytes . ' bytes';
+	}
+	elseif ($bytes == 1)
+	{
+	$bytes = $bytes . ' byte';
+	}
+	else
+	{
+	$bytes = '0 bytes';
+	}
+	return $bytes;
 }
 
 ?>
