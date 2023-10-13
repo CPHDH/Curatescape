@@ -2274,6 +2274,9 @@ figure#multi-map select:hover{
   cursor:pointer;
   background-color: #f4f4f4;
 }
+figure#multi-map[data-secondary-layer="NONE"] select{
+  right: 10px;
+}
 
 @media all and (max-width: 500px){
   figure#multi-map select,

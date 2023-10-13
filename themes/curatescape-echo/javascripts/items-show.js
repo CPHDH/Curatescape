@@ -60,41 +60,16 @@ const loadMapSingle = () => {
           resumeInteraction(map, false);
 
           // Layers
-          var defaultMapLayer;
-          switch (data.defaultLayer) {
-            case "STAMEN_TERRAIN":
-              defaultMapLayer = stamen_terrain;
-              break;
-            case "CARTO_POSITRON":
-              defaultMapLayer = carto_positron;
-              break;
-            case "CARTO_DARK_MATTER":
-              defaultMapLayer = carto_dark_matter;
-              break;
-            case "CARTO_VOYAGER":
-              defaultMapLayer = carto_voyager;
-              break;
-            default:
-              defaultMapLayer = carto_voyager;
-          }
-          defaultMapLayer.addTo(map);
+          var tileprovider = window.getMapTileSets();
+          tileprovider[data.primaryLayer].addTo(map);
           // Layer controls
-          var allLayers = {
-            Street:
-              defaultMapLayer == stamen_terrain
-                ? carto_voyager
-                : defaultMapLayer,
-            Terrain: stamen_terrain,
-          };
-          L.control.layers(allLayers).addTo(map);
-          // fallback for terrain map coverage errors
-          Object.values(allLayers).forEach((layer) => {
-            layer.on("tileerror", (err) => {
-              if (!map.hasLayer(carto_voyager)) {
-                carto_voyager.addTo(map);
-              }
-            });
-          });
+          if(data.secondaryLayer && data.secondaryLayer !== 'NONE'){
+            let allLayers = {
+             [tileprovider[data.primaryLayer].options.label] : tileprovider[data.primaryLayer],
+             [tileprovider[data.secondaryLayer].options.label] : tileprovider[data.secondaryLayer],
+            };
+            L.control.layers(allLayers).addTo(map); 
+          }
           // Geolocation controls
           if (isSecure && navigator.geolocation) {
             var geolocationControl = L.control({ position: "topleft" });

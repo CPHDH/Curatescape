@@ -18,6 +18,7 @@ const mapfigure = document.querySelector("figure#multi-map");
 const map_attr = mapfigure.dataset;
 let map_title = container.getAttribute("data-label");
 let mapped = 0;
+let tileprovider = null;
 let map = null;
 let group = null;
 let cluster_group = null;
@@ -30,7 +31,6 @@ let requested_marker_id = null;
 let requestedMarker = null;
 let loader = null;
 let titleControl = null;
-let defaultMapLayer = null;
 let allLayers = null;
 let dataSource = null;
 
@@ -349,24 +349,13 @@ const geolocationControls = (isGlobalMap)=>{
     geolocationControl.addTo(map);
   }
 }
-const layerControls = ()=>{
+const layerControls = (primary,secondary)=>{
   // Layer controls
   allLayers = {
-    Street:
-      defaultMapLayer == stamen_terrain
-        ? carto_voyager
-        : defaultMapLayer,
-    Terrain: stamen_terrain,
+   [primary.options.label] : primary,
+   [secondary.options.label] : secondary,
   };
-  L.control.layers(allLayers).addTo(map);
-  // fallback for terrain map coverage errors
-  Object.values(allLayers).forEach((layer) => {
-    layer.on("tileerror", (err) => {
-      if (!map.hasLayer(carto_voyager)) {
-        carto_voyager.addTo(map);
-      }
-    });
-  });
+  L.control.layers(allLayers).addTo(map); 
 }
 const subjectSelectControls = ()=>{
   // not a proper leaflet control
@@ -404,28 +393,15 @@ const loadMapMulti = (requested_id = null, isGlobalMap = false) => {
           // Get Tour Items & Add Markers
           markerFetchAndAdd(dataSource,isGlobalMap,requested_id);
           // Layers
-          switch (map_attr.defaultLayer) {
-            case "STAMEN_TERRAIN":
-              defaultMapLayer = stamen_terrain;
-              break;
-            case "CARTO_POSITRON":
-              defaultMapLayer = carto_positron;
-              break;
-            case "CARTO_DARK_MATTER":
-              defaultMapLayer = carto_dark_matter;
-              break;
-            case "CARTO_VOYAGER":
-              defaultMapLayer = carto_voyager;
-              break;
-            default:
-              defaultMapLayer = carto_voyager;
-          }
-          defaultMapLayer.addTo(map);
+          tileprovider = window.getMapTileSets();
+          tileprovider[map_attr.primaryLayer].addTo(map);
           // Controls
           fitBoundsControls(isGlobalMap);
           geolocationControls(isGlobalMap);
-          layerControls();
           subjectSelectControls();
+          if(map_attr.secondaryLayer && map_attr.secondaryLayer !== 'NONE'){
+            layerControls(tileprovider[map_attr.primaryLayer],tileprovider[map_attr.secondaryLayer]);
+          }
         });
       });
     });
