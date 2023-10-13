@@ -412,7 +412,8 @@ function mh_display_map($type=null,$item=null,$tour=null){
 		var mapBounds; // keep track of changing bounds
 		var root_url = '<?php echo WEB_ROOT;?>';
 		var geolocation_icon = '<?php echo img('geolocation.png');?>';
-		var mapLayerThemeSetting = '<?php echo get_theme_option('map_style') ? get_theme_option('map_style') : 'CARTO_VOYAGER';?>';
+		var primaryMapStyle = '<?php echo get_theme_option('primary_map') ? get_theme_option('primary_map') : 'CARTO_VOYAGER';?>';
+		var secondaryMapStyle = '<?php echo get_theme_option('secondary_map') ? get_theme_option('secondary_map') : 'NONE';?>';
 		var leafletjs='<?php echo src('leaflet.maki.combined.min.js','javascripts');?>'+'?v=1.1';
 		var leafletcss='<?php echo src('leaflet/leaflet.min.css','javascripts');?>'+'?v=1.1';	
 		var leafletClusterjs='<?php echo src('leaflet.markercluster/leaflet.markercluster.js','javascripts');?>'+'?v=1.1';
@@ -420,7 +421,7 @@ function mh_display_map($type=null,$item=null,$tour=null){
 		var mapbox_tile_layer='<?php echo get_theme_option('mapbox_tile_layer');?>';
 		var mapbox_access_token='<?php echo get_theme_option('mapbox_access_token');?>';
 		var mapbox_layer_title='<?php echo get_theme_option('mapbox_tile_layer') ? ucwords( str_replace( array('-v11','-v10','-v9','-'),' ', get_theme_option('mapbox_tile_layer') ) ) : "Mapbox";?>';
-		
+
 		// End PHP Variables
 		
 		var isSecure = window.location.protocol == 'https:' ? true : false;	
@@ -428,47 +429,67 @@ function mh_display_map($type=null,$item=null,$tour=null){
 		jQuery(document).ready(function() {
 			loadCSS( leafletcss );
 			if(useClusters==true) loadCSS( leafletClustercss );
-			
 			loadJS( leafletjs, function(){
 				console.log('Leaflet ready...');
-				
-				var terrain = L.tileLayer('//tiles.stadiamaps.com/tiles/stamen_terrain/{z}/{x}/{y}{retina}.png', {
-						attribution: '<a href="https://stadiamaps.com/" target="_blank">Stadia Maps</a> | <a href="https://stamen.com/" target="_blank">Stamen Design</a> | <a href="https://openmaptiles.org/" target="_blank">OpenMapTiles</a> | <a href="https://www.openstreetmap.org/about" target="_blank">OpenStreetMap</a>',
-						retina: (L.Browser.retina) ? '@2x' : '',
-					});
-				var carto = L.tileLayer('//cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}{retina}.png', {
-				    	attribution: '<a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> | <a href="https://cartodb.com/attributions">CartoDB</a>',
-						retina: (L.Browser.retina) ? '@2x' : '',
-					});
-				var voyager = L.tileLayer('//cartodb-basemaps-{s}.global.ssl.fastly.net/rastertiles/voyager/{z}/{x}/{y}{retina}.png', {
-				    	attribution: '<a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> | <a href="https://cartodb.com/attributions">CartoDB</a>',
-						retina: (L.Browser.retina) ? '@2x' : '',
-					});					
-				var mapbox = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/'+mapbox_tile_layer+'/tiles/{z}/{x}/{y}?access_token={accessToken}', {
-				    	attribution: '<a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> | <a href="https://www.mapbox.com/feedback/">Mapbox</a>',
-						accessToken: mapbox_access_token,
-						tileSize: 512,
-						zoomOffset: -1,
-					});	
-					
-				var defaultMapLayer;	
-				switch(mapLayerThemeSetting){
-					case 'TERRAIN':
-						defaultMapLayer=terrain;
-						break;
-					case 'CARTO':
-						defaultMapLayer=carto;
-						break;
-					case 'CARTO_VOYAGER':
-						defaultMapLayer=voyager;
-						break;						
-					case 'MAPBOX_TILES':
-						defaultMapLayer=mapbox;
-						break;	
-					default:
-						defaultMapLayer=wikimedia;				
-				}
-								
+				var tiles=[];
+				tiles.STAMEN_TERRAIN = L.tileLayer(
+				'//tiles.stadiamaps.com/tiles/stamen_terrain/{z}/{x}/{y}{retina}.png', {
+					attribution: '<a href="https://stadiamaps.com/" target="_blank">Stadia Maps</a> | <a href="https://stamen.com/" target="_blank">Stamen Design</a> | <a href="https://openmaptiles.org/" target="_blank">OpenMapTiles</a> | <a href="https://www.openstreetmap.org/about" target="_blank">OpenStreetMap</a>',
+					retina: (L.Browser.retina) ? '@2x' : '',
+					label: 'Terrain (Stamen Terrain)',
+				});
+				tiles.STAMEN_TONER = L.tileLayer(
+				"//tiles.stadiamaps.com/tiles/stamen_toner_lite/{z}/{x}/{y}{retina}.png",{
+					attribution: '<a href="https://stadiamaps.com/">Stadia Maps</a> | <a href="https://stamen.com/">Stamen Design</a> | <a href="https://openmaptiles.org/">OpenMapTiles</a>',
+					retina: L.Browser.retina ? "@2x" : "",
+					label: 'Street (Stamen Toner Lite)',
+				});
+				tiles.CARTO_POSITRON = L.tileLayer(
+				'//cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}{retina}.png', {
+					attribution: '<a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> | <a href="https://cartodb.com/attributions">CartoDB</a>',
+					retina: (L.Browser.retina) ? '@2x' : '',
+					label: 'Street (Carto Positron)',
+				});
+				tiles.CARTO_VOYAGER = L.tileLayer(
+				'//cartodb-basemaps-{s}.global.ssl.fastly.net/rastertiles/voyager/{z}/{x}/{y}{retina}.png',{
+					attribution: '<a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> | <a href="https://cartodb.com/attributions">CartoDB</a>',
+					retina: (L.Browser.retina) ? '@2x' : '',
+					label: 'Street (Carto Voyager)',
+				});
+				tiles.CARTO_DARK_MATTER = L.tileLayer(
+				"//cartodb-basemaps-{s}.global.ssl.fastly.net/dark_all/{z}/{x}/{y}{retina}.png",{
+					attribution: '<a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> | <a href="https://cartodb.com/attributions">CartoDB</a>',
+					retina: L.Browser.retina ? "@2x" : "",
+					label: 'Street (Carto Dark Matter)',
+				});
+				tiles.HUMANITARIAN = L.tileLayer(
+				"//{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png",{
+					attribution: '<a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> | <a href="https://www.hotosm.org">Humanitarian OpenStreetMap Team</a> | <a href="https://openstreetmap.fr">OpenStreetMap France</a>',
+					label: 'Street (OSM Humanitarian)',
+				});
+				tiles.OSM_BRIGHT = L.tileLayer(
+				"//tiles.stadiamaps.com/tiles/osm_bright/{z}/{x}/{y}{retina}.png", {
+					attribution: '<a href="https://stadiamaps.com/">Stadia Maps</a> | <a href="https://openmaptiles.org/">OpenMapTiles</a>',
+					retina: L.Browser.retina ? "@2x" : "",
+					label: 'Street (Stadia OSM Bright)',
+				});
+				tiles.STADIA_OUTDOORS = L.tileLayer(
+				"//tiles.stadiamaps.com/tiles/outdoors/{z}/{x}/{y}{retina}.png",{
+					attribution: '<a href="https://stadiamaps.com/">Stadia Maps</a> | <a href="https://openmaptiles.org/">OpenMapTiles</a>',
+					retina: L.Browser.retina ? "@2x" : "",
+					label: 'Street (Stadia Outdoors)',
+				});
+				tiles.MAPBOX_TILES = L.tileLayer(
+				'https://api.mapbox.com/styles/v1/mapbox/'+mapbox_tile_layer+'/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+					attribution: '<a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> | <a href="https://www.mapbox.com/feedback/">Mapbox</a>',
+					accessToken: mapbox_access_token,
+					tileSize: 512,
+					zoomOffset: -1,
+					label: mapbox_layer_title + '(Mapbox)',
+				});
+
+				var defaultMapLayer = tiles[primaryMapStyle];
+
 				// helper for title attributes with encoded HTML
 				function convertHtmlToText(value) {
 				    var d = document.createElement('div');
@@ -506,20 +527,21 @@ function mh_display_map($type=null,$item=null,$tour=null){
 					    return div;
 					};
 					fullscreenControl.addTo(map);
-					
+
 					// Layer controls
-					var allLayers={
-						"Street":(defaultMapLayer == terrain) ? voyager : defaultMapLayer,
-						"Terrain":terrain,
+					var  allLayers = {
+						[defaultMapLayer.options.label] : defaultMapLayer,
 					};
-					if(mapbox_access_token){
-						allLayers[mapbox_layer_title]=mapbox;
+					if(secondaryMapStyle !== 'NONE' && tiles[secondaryMapStyle] !== tiles[primaryMapStyle]){
+						allLayers[tiles[secondaryMapStyle].options.label] = tiles[secondaryMapStyle];
 					}
-					L.control.layers(allLayers).addTo(map);		
-					
-					
-										
-					
+					if(mapbox_access_token && mapbox_tile_layer !== 'NONE'){
+						allLayers[tiles.MAPBOX_TILES.options.label]=tiles.MAPBOX_TILES;
+					}
+					if(Object.keys(allLayers).length > 1){{
+						L.control.layers(allLayers).addTo(map);		
+					}}
+
 					// Center marker and popup on open
 					map.on('popupopen', function(e) {
 						// find the pixel location on the map where the popup anchor is
