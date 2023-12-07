@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "POT-Creation-Date: 2022-09-02 10:47-0400\n"
-"PO-Revision-Date: 2022-09-07 12:04-0400\n"
+"PO-Revision-Date: 2022-09-30 12:45+0200\n"
 "Last-Translator: CPHDH @ CSU <digitalhumanities@csuohio.edu>\n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -128,7 +128,7 @@ msgstr "Zurück"
 #: common/pagination_control.php:26 custom.php:1849
 #: exhibit-builder/exhibits/show.php:37
 msgid "Next"
-msgstr "Vor"
+msgstr "Weiter"
 
 # (Contribution plugin)
 #: contribution/contribution/contribute.php:48
@@ -630,7 +630,7 @@ msgstr "Empfohlene %s"
 #: custom.php:1596
 #, php-format
 msgid "Browse All Featured %2s"
-msgstr "Alle empfohlenen %2s browsen"
+msgstr "Alle empfohlenen %2s anzeigen"
 
 # (e.g. Recent Items)
 #: custom.php:1614
@@ -654,7 +654,7 @@ msgstr "Beliebte Tags"
 
 #: custom.php:1670
 msgid "Browse All Tags"
-msgstr "Alle Tags browsen"
+msgstr "Alle Tags anzeigen"
 
 # IGNORE
 #: custom.php:1686
@@ -675,7 +675,7 @@ msgstr "Über das Projekt"
 
 #: custom.php:1692
 msgid "Read More About Us"
-msgstr "Lesen Sie mehr über uns"
+msgstr "Mehr über uns"
 
 # (stealth screen/maintenance mode)
 #: custom.php:1732
@@ -691,13 +691,13 @@ msgstr "%s ist derzeit nicht verfügbar."
 # (e.g. Take a Tour)
 #: custom.php:1768
 msgid "Take a"
-msgstr "Machen Sie"
+msgstr "Machen Sie eine"
 
 # TOUR LABEL PLURAL
 #: custom.php:1801
 #, php-format
 msgid "Browse All <span>%s</span>"
-msgstr "Alle <span>%s</span> browsen"
+msgstr "Alle <span>%s</span> anzeigen"
 
 # (aria-label, navigation)
 #: custom.php:1814
@@ -787,7 +787,7 @@ msgstr "Der Vorschautext ist nicht verfügbar."
 #: custom.php:1999
 #, php-format
 msgid "Browse Featured %s"
-msgstr "Empfohlene %s browsen"
+msgstr "Empfohlene %s anzeigen"
 
 #: custom.php:2002
 msgid "No featured items are available. Publish some now."
@@ -814,7 +814,7 @@ msgstr "Dieses Werk ist lizensiert von "
 #: custom.php:2263
 #, php-format
 msgid "&copy; %1$s %2$s"
-msgstr "%1$s %2$s kopieren"
+msgstr ""
 
 #: error/403.php:10
 msgid "Sorry. Access Forbidden!"
@@ -898,7 +898,7 @@ msgstr "Ausstellung anzeigen"
 # (Exhibit Builder plugin)
 #: exhibit-builder/exhibits/tags.php:2
 msgid "Browse Exhibits by Tag"
-msgstr "Ausstellungen nach Tags browsen"
+msgstr "Ausstellungen nach Tags anzeigen"
 
 # Sort by…
 #: exhibit-builder/exhibits/tags.php:37 items/tags.php:20
@@ -1024,7 +1024,7 @@ msgid ""
 "\">Sitewide Search</a>."
 msgstr ""
 "Versuchen Sie es mit <a href=\"%1$s\">Erweiterte %2$s Suche</a> oder <a href="
-"\"%3$s\">Gesamte Seite durchsuchen</a>."
+"\"%3$s\">Ganze Seite durchsuchen</a>."
 
 # ITEM LABEL PLURAL
 #: items/search.php:4
@@ -1040,8 +1040,7 @@ msgid ""
 "search\">Sitewide Search</a>."
 msgstr ""
 "Verwenden Sie das untenstehende Formular für die Suche nach %s. Für andere "
-"Datensatztypen verwenden Sie <a href=\"/search\">Gesamte Seite durchsuchen</"
-"a>."
+"Datensatztypen verwenden Sie <a href=\"/search\">Ganze Seite durchsuchen</a>."
 
 # (search form)
 #: items/search.php:41
@@ -1136,7 +1135,7 @@ msgstr "Nach Benutzern suchen"
 # (search form)
 #: items/search.php:152
 msgid "Search By Tags"
-msgstr "Mit Tags suchen"
+msgstr "Nach Tags suchen"
 
 # (search form)
 #: items/search.php:166
@@ -1151,13 +1150,13 @@ msgstr "Nur empfohlene Objekte"
 # (search form)
 #: items/search.php:175
 msgid "Only Non-Featured Items"
-msgstr "Nur nicht-empfohlene Objekte"
+msgstr "Nur nicht empfohlene Objekte"
 
 # (search form, button) ITEM LABEL
 #: items/search.php:185
 #, php-format
 msgid "Submit %s Search"
-msgstr "Suche abschicken %s"
+msgstr "%s Suche abschicken"
 
 # (aria label)
 #: items/show-template-default.php:77
@@ -1166,7 +1165,7 @@ msgstr "Mediendateien"
 
 #: items/show-template-default.php:123
 msgid "Related Resources"
-msgstr "Verwandte Ressourcen"
+msgstr "Ressourcen"
 
 #: items/show-template-default.php:126
 msgid "Official Website"
@@ -1234,7 +1233,7 @@ msgstr "Alle %1$s: %2$s"
 #: tour-builder/tours/browse.php:24
 #, php-format
 msgid "%s are self-guided."
-msgstr "%s sind selbstgesteuert."
+msgstr "Selbstgeführte %s"
 
 #: tour-builder/tours/browse.php:57
 msgid "No tours are available. Publish some now."
@@ -1307,6 +1306,30 @@ msgstr "Zur Startseite"
 #: users/login.php:11
 msgid "Lost your password?"
 msgstr "Passwort vergessen?"
+
+# bookmarks
+msgid "Bookmarks"
+msgstr "Lesezeichen"
+
+# add_bookmark
+msgid "Add Bookmark"
+msgstr "Lesezeichen hinzufügen"
+
+# remove_bookmark
+msgid "Remove Bookmark"
+msgstr "Lesezeichen entfernen"
+
+# bookmark_removed
+msgid "Bookmark Removed"
+msgstr "Lesezeichen entfernt"
+
+# bookmark_added
+msgid "Bookmark Added"
+msgstr "Lesezeichen hinzugefügt"
+
+# helper
+msgid "No Bookmarks Found"
+msgstr "Keine Lesezeichen vorhanden"
 
 # ITEM LABEL
 #, fuzzy, php-format

@@ -746,7 +746,7 @@ input[type="submit"].button-primary:focus,
 .button-primary:focus {
   color: var(--button-primary-text-color-hover);
   background: var(--button-primary-bg-color-hover);
-  border-color: var(-button-p-border-color-hover);
+  border-color: var(--button-primary-border-color-hover);
 }
 .button-wide {
   display: block;
@@ -997,7 +997,7 @@ button.remove_search:before {
 }
 input[type="file"] {
   width: auto;
-  min-width: none;
+  min-width: 0;
   max-width: 100%;
   font-size: 16px;
   border-width: 1px;
@@ -1392,11 +1392,16 @@ header.primary a#home-logo {
   height: var(--site-header-height);
   background-color: var(--site-header-bg-logo, transparent);
 }
-header.primary a#home-logo img {
+header.primary a#home-logo picture {
   max-height: var(--site-header-height);
   padding: 10px 1em;
   flex-grow: 0;
   align-self: center;
+  display: flex;
+}
+header.primary a#home-logo img{
+  align-self: center;
+  max-height: calc(var(--site-header-height) - 20px);
 }
 header.primary nav #nav-interactive {
   background: var(--site-header-bg-menu);
@@ -1977,7 +1982,7 @@ article header .background-image {
 article header .background-image.portrait {
   background-position: center 35%;
 }
-@media print or screen and (prefers-contrast: more),
+@media print, screen and (prefers-contrast: more),
   (-ms-high-contrast media feature) {
   #collections.show .background-image,
   article header .background-image {

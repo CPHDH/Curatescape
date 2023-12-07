@@ -53,23 +53,7 @@ if(isset($_COOKIE['neverdarkmode']) && $_COOKIE['neverdarkmode']=="1"){
 
     <!-- RSS -->
     <?php echo auto_discovery_link_tags(); ?>
-    
-    <!-- CSS var() polyfill for IE 11 -->
-    <script>window.MSInputMethodContext && document.documentMode && document.write('<script src="https://cdn.jsdelivr.net/gh/nuxodin/ie11CustomProperties@4.1.0/ie11CustomProperties.min.js"><\/script>');</script>
 
-    <!-- Assets -->
-    <?php  
-    fire_plugin_hook('public_head', array('view'=>$this));
-    rl_assets_blacklist($this, array('/plugins/Geolocation','/plugins/GuestUser/views/public/javascripts','admin-bar','family=Arvo:400'));
-    rl_theme_css();
-    echo head_css();
-    echo head_js(rl_jquery_whitelist(current_url()));
-    ?>
-
-    <style>
-    <?php echo rl_configured_css();?>
-    </style>
-    
     <!-- Preconnect to Map JSON -->
     <?php if (is_current_url('/items/show') || is_current_url('/tours/show')):?>
         <link rel="preconnect" href="?output=mobile-json">
@@ -84,10 +68,10 @@ if(isset($_COOKIE['neverdarkmode']) && $_COOKIE['neverdarkmode']=="1"){
     <!-- Async Assets -->
     <script>
     /*!
-		loadJS: load a JS file asynchronously. 
-		[c]2014 @scottjehl, Filament Group, Inc. (Based on http://goo.gl/REQGQ by Paul Irish). 
-		Licensed MIT 
-		*/
+    loadJS: load a JS file asynchronously. 
+    [c]2014 @scottjehl, Filament Group, Inc. (Based on http://goo.gl/REQGQ by Paul Irish). 
+    Licensed MIT 
+    */
     (function(w) {
         var loadJS = function(src, cb, ordered) {
             "use strict";
@@ -147,14 +131,32 @@ if(isset($_COOKIE['neverdarkmode']) && $_COOKIE['neverdarkmode']=="1"){
     }
 
     // Async JS 
-    loadJS('<?php echo src('global.js', 'javascripts');?>');
-    <?php if (is_current_url('/items/show')):?>
-        loadJS('<?php echo src('items-show.js', 'javascripts');?>');
-    <?php elseif (is_current_url('/tours/show') || is_current_url('/items/browse') || is_current_url('/') || is_current_url('/items/map')):?>
-        loadJS('<?php echo src('multi-map.js', 'javascripts');?>');
-    <?php endif;?>
+    setTimeout(()=>{
+        loadJS('<?php echo src('global.js', 'javascripts');?>');
+        <?php if (is_current_url('/items/show')):?>
+            loadJS('<?php echo src('items-show.js', 'javascripts');?>');
+        <?php elseif (is_current_url('/tours/show') || is_current_url('/items/browse') || is_current_url('/') || is_current_url('/items/map')):?>
+            loadJS('<?php echo src('multi-map.js', 'javascripts');?>');
+        <?php endif;?>
+    });
     </script>
-    
+
+    <!-- CSS var() polyfill for IE 11 -->
+    <script>window.MSInputMethodContext && document.documentMode && document.write('<script src="https://cdn.jsdelivr.net/gh/nuxodin/ie11CustomProperties@4.1.0/ie11CustomProperties.min.js"><\/script>');</script>
+
+    <!-- Assets -->
+    <?php  
+    fire_plugin_hook('public_head', array('view'=>$this));
+    rl_assets_blacklist($this, array('/plugins/Geolocation','/plugins/GuestUser/views/public/javascripts','admin-bar','family=Arvo:400'));
+    rl_theme_css();
+    echo head_css();
+    echo head_js(rl_jquery_whitelist(current_url()));
+    ?>
+
+    <style>
+    <?php echo rl_configured_css();?>
+    </style>
+
     <noscript>
         <link href="<?php echo css_src('noscript'); ?>" media="all" rel="stylesheet" type="text/css" />
         <?php if(isset($noscript_styles)){
@@ -174,7 +176,6 @@ if(isset($_COOKIE['neverdarkmode']) && $_COOKIE['neverdarkmode']=="1"){
         <header class="primary">
             <?php echo rl_global_header();?>
         </header>
-
 
         <div id="page-content" class="container">
             <?php fire_plugin_hook('public_content_top', array('view'=>$this)); ?>

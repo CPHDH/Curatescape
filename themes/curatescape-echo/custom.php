@@ -567,6 +567,15 @@ function rl_the_logo_url()
 }
 
 /*
+** Small/Mobile/Alternate Logo URL
+*/
+function rl_the_alt_logo_url()
+{
+   $logo = get_theme_option('compact_logo');
+   return $logo ? WEB_ROOT.'/files/theme_uploads/'.$logo : false;
+}
+
+/*
 ** Logo IMG Tag
 */
 function rl_the_logo()
@@ -623,7 +632,14 @@ function rl_global_header($html=null)
     <nav id="top-navigation" class="" aria-label="<?php echo __('Main Navigation'); ?>">
 
         <!-- Home / Logo -->
-        <?php echo link_to_home_page(rl_the_logo(), array('id'=>'home-logo', 'aria-label'=>'Home')); ?>
+        <a href="<?php echo WEB_ROOT;?>" id="home-logo" aria-label="Home">
+          <picture>
+            <?php if($compact=rl_the_alt_logo_url()):?>
+              <source media="(max-width:550px)" srcset="<?php echo $compact;?>">
+            <?php endif;?>
+            <img src="<?php echo rl_the_logo_url();?>" alt="<?php echo __('%s Logo',option('site_title'));?>">
+          </picture>
+        </a>
         <div id="nav-desktop">
             <?php echo get_theme_option('quicklink_story') ? '<a class="button transparent '.((is_current_url('/items/browse')) ? 'active' : null).'" href="'.rl_stories_url().'">'.rl_icon("location").rl_item_label('plural').'</a>' : null; ?>
             <?php echo get_theme_option('quicklink_tour') && plugin_is_active('TourBuilder') ? '<a class="button transparent '.((is_current_url('/tours/browse')) ? 'active' : null).'" href="'.url('tours/browse').'">'.rl_icon("compass").rl_tour_label('plural').'</a>' : null; ?>
