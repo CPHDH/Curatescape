@@ -4,7 +4,7 @@ Curatescape is a set of themes and plugins for the [Omeka Classic](https://omeka
 
 # Server-side Setup
 
-To get started, install Omeka and the Curatescape theme and plugins on the server of your choice. You can grab the all the required and optional Curatescape components (excluding Omeka) by cloning or downloading this repo. There is also an unofficial command line script for adding/updating components at [ebellempire/curatescape_utility](https://github.com/ebellempire/curatescape_utility).
+To get started, install Omeka and the Curatescape theme and plugins on the server of your choice. You can grab the all the required and optional Curatescape components (excluding Omeka) by cloning or downloading this repo. There is also an unofficial command line script for adding/updating components at [ebellempire/curatescape_utility](https://github.com/ebellempire/curatescape_utility). Note that this repo may lag behind individual theme and plugin repos. For the latest versions, check individual theme and plugin repos.
 
 1.  **Install Omeka**
     - [Download Omeka (omeka.org)](http://omeka.org/download/)
