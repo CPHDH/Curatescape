@@ -72,11 +72,11 @@ function cah_item_form_helper_text_array($json_encode=true){
 		'tabs'=> 
 			array( // tabs that need some helper text
 				array(
-				'text'=>'<p class="cah-helper">'.__('Use Dublin Core fields to add basic information, including the <strong>Title</strong>, <strong>Creator</strong> (Author), and <strong>Subjects</strong>. <span class="divider"></span><strong>Tip:</strong> Use the green <strong>Add Input</strong> buttons when adding more than one Subject or Creator.').'</p>',
+				'text'=>'<p class="cah-helper">'.__('Use Dublin Core fields to add basic information, including the <strong>Title</strong>, <strong>Creator</strong> (Author), and <strong>Subjects</strong>. <span class="divider"></span><strong>Tip:</strong> Use the <strong>Add Input</strong> buttons when adding more than one Subject or Creator.').'</p>',
 				'insert_point'=>'.items #edit-form #dublin-core-metadata .set h2',
 				),
 				array(
-				'text'=>'<p class="cah-helper">'.__('Choose <strong>%s</strong> from the select menu to reveal Curatescape element fields. <span class="divider"></span><strong>Tip:</strong> Use the green <strong>Add Input</strong> buttons when adding more than one Factoid or Related Resource.',$it_name).'</p>',
+				'text'=>'<p class="cah-helper">'.__('Choose <strong>%s</strong> from the select menu to reveal Curatescape element fields. <span class="divider"></span><strong>Tip:</strong> Use the <strong>Add Input</strong> buttons when adding more than one Factoid or Related Resource.',$it_name).'</p>',
 				'insert_point'=>'.items #edit-form #item-type-metadata-metadata .set h2',	
 				),
 				array(

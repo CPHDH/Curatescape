@@ -84,6 +84,7 @@ $use_html_supported = $element_info['use_html_supported'];
 		float: right;	
 		display: inline-block;	
 		border-radius: 0 0 0 7px;
+		font-size: 1rem;
 	}	
 	p.cah-helper{
 		padding:1em;
@@ -95,6 +96,7 @@ $use_html_supported = $element_info['use_html_supported'];
 		color: #222;
 		border-width: 7px 1px 1px;
 		border-radius: 3px;
+		font-size: 1rem;
 	}
 	.element-set-description{
 		display: none !important;

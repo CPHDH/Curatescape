@@ -17,7 +17,7 @@ function normalizeText($text){
 function finalpassJSON($processing, $postProcessed = array()){
 	usort($processing, 'sortByTitleIndex'); // for processing dupes with alt titles
 	foreach($processing as $a){
-		unset($a['title_index'],$a['public'],$a['filename']); // remove raw data
+		unset($a['title_index'],$a['filename']); // remove raw data
 		$postProcessed[$a['id']] = $a; // (overwrites dupes based on sort)
 	}
 	usort($postProcessed, 'sortById'); // re-sort new to old
@@ -26,6 +26,15 @@ function finalpassJSON($processing, $postProcessed = array()){
 		'total_items'=> count( $postProcessed ))
 	);
 }
+function getLoopItemIds(){
+	$itemIdArray = array();
+	foreach( loop('items') as $item ){
+		if($item->public){
+			$itemIdArray[] = $item->id;
+		}
+	}
+	return implode(',', $itemIdArray);
+}
 // Querying DB is way faster than using itemJsonifier for large sets, but results need processing
 $db=get_db();
 $prefix=$db->prefix;
@@ -33,7 +42,6 @@ $sql='SELECT
 i.id,
 i.featured,
 i.modified,
-i.public,
 l.latitude,
 l.longitude,
 et1.id title_index,
@@ -60,7 +68,7 @@ LEFT JOIN ('.$prefix.'files AS f)
 	AND f.has_derivative_image = 1
 	AND f.order = 1
 	)
-WHERE i.public = 1
+WHERE i.id IN ('.getLoopItemIds().')
 ORDER BY i.id DESC;
 ';
 $processing = array(); // build initial array from sql results
