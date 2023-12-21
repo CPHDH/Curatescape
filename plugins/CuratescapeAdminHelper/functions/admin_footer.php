@@ -13,7 +13,7 @@
 	$copied=__('Copied!');
 	$inactive_users_helper = get_option('cah_inactive_users_helper'); 
 	if(is_current_url('/admin/users') && $inactive_users_helper){
-		$protocol = $_SERVER['HTTPS'] == 'on' ? 'https' : 'http';
+		$protocol = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') ? 'https' : 'http';
 		$host = $_SERVER['HTTP_HOST'];
 		$user_activations = array();
 		$u = get_records('User',array(

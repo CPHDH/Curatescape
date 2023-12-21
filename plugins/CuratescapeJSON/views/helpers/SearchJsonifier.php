@@ -16,8 +16,12 @@ class CuratescapeJSON_View_Helper_SearchJsonifier extends Zend_View_Helper_Abstr
 			if(metadata($result, 'has thumbnail')){
 				$imgTag=item_image('square_thumbnail',array(),0,$result);
 				if(preg_match('/<img(.*)src(.*)=(.*)"(.*)"/U', $imgTag, $src)){
-					$thumbSrc = array_pop($src);
+					$thumbSrc = $src ? array_pop($src) : '';
+				}else{
+					$thumbSrc = '';
 				};
+			}else{
+				$thumbSrc = '';
 			}
 
 			$itemMetadata=array(
