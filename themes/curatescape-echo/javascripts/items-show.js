@@ -226,14 +226,6 @@ const streamingMediaControls = () => {
   });
 };
 
-// LOAD IMAGES
-const loadImages = () => {
-  document.querySelectorAll("[data-style]").forEach((image) => {
-    let css = image.dataset.style;
-    image.style = css;
-  });
-};
-
 // IMAGE VIEWER / PHOTOSWIPE
 const loadPhotoSwipe = (target) => {
   if (!target) {
@@ -303,13 +295,11 @@ const smoothAnchorLinks = () => {
 };
 
 // OBSERVER CALLBACK
-// Loads Images on intersection
 // Loads PhotoSwipe on intersection
 // Loads Map on intersection
 // Updates Table of Contents on intersection
 let mapped = 0;
 let pswp = 0;
-let imgs = 0;
 const scrollEvents = (entries, observer) => {
   entries.forEach((entry) => {
     if (entry.intersectionRatio) {
@@ -319,10 +309,6 @@ const scrollEvents = (entries, observer) => {
       ) {
         mapped++;
         loadMapSingle();
-      }
-      if (imgs == 0 && entry.target.parentElement.dataset.toc == "#images") {
-        imgs++;
-        loadImages();
       }
       if (pswp == 0 && entry.target.parentElement.dataset.toc == "#images") {
         pswp++;
@@ -358,12 +344,8 @@ document.onreadystatechange = () => {
       let sections = document.querySelectorAll("[data-toc] > *");
       sections.forEach((section) => observer.observe(section));
     } else {
-      loadImages();
-      loadPhotoSwipe(document.querySelector('[data-toc="#images"'));
+      loadPhotoSwipe(document.querySelector('[data-toc="#images"]'));
       loadMapSingle();
     }
-    addEventListener("beforeprint", (event) => {
-      loadImages();
-    });
   }
 };

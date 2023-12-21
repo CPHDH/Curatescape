@@ -132,12 +132,13 @@ if(isset($_COOKIE['neverdarkmode']) && $_COOKIE['neverdarkmode']=="1"){
 
     // Async JS 
     setTimeout(()=>{
-        loadJS('<?php echo src('global.js', 'javascripts');?>');
-        <?php if (is_current_url('/items/show')):?>
-            loadJS('<?php echo src('items-show.js', 'javascripts');?>');
-        <?php elseif (is_current_url('/tours/show') || is_current_url('/items/browse') || is_current_url('/') || is_current_url('/items/map')):?>
-            loadJS('<?php echo src('multi-map.js', 'javascripts');?>');
-        <?php endif;?>
+        loadJS('<?php echo src('global.js', 'javascripts');?>',()=>{
+            <?php if (is_current_url('/items/show')):?>
+                loadJS('<?php echo src('items-show.js', 'javascripts');?>');
+            <?php elseif (is_current_url('/tours/show') || is_current_url('/items/browse') || is_current_url('/') || is_current_url('/items/map')):?>
+                loadJS('<?php echo src('multi-map.js', 'javascripts');?>');
+            <?php endif;?>
+        });
     });
     </script>
 

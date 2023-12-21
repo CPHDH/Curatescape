@@ -2074,38 +2074,21 @@ function rl_item_files_by_type($item=null, $output=null)
 }
 
 /*
-These images load via js unless the $class is set to "featured" (i.e. in article header)
-Should be used with rl_nojs_images() for users w/o js
+Use $hrefOverride in article header
 */
 function rl_gallery_figure($image=null, $class=null, $hrefOverride=null)
 {
     if (isset($image) && $image['src']) {
         $src = WEB_ROOT.'/files/fullsize/'.$image['src'];
         $url = WEB_ROOT.'/files/show/'.$image['id'];
-        $data_or_style_attr = $class == 'featured' ? 'style' : 'data-style';
         $html = '<figure class="image-figure '.$class.'" itemscope itemtype="http://schema.org/ImageObject">';
-          if($hrefOverride){
-            $html .= '<div itemprop="associatedMedia" class="gallery-image '.$image['orientation'].' file-'.$image['id'].'" '.$data_or_style_attr.'="background-image:url('.$src.')" data-pswp-width="'.$image['size'][0].'" data-pswp-height="'.$image['size'][1].'"></div>';
-          }else{
-            $html .= '<a itemprop="associatedMedia" aria-label="Image: '.$image['title'].'" href="'.$src.'" class="gallery-image '.$image['orientation'].' file-'.$image['id'].'" '.$data_or_style_attr.'="background-image:url('.$src.')" data-pswp-width="'.$image['size'][0].'" data-pswp-height="'.$image['size'][1].'"></a>';
-          }
+            $html .= '<a itemprop="associatedMedia" aria-label="Image: '.$image['title'].'" href="'.($hrefOverride ? $hrefOverride : $src).'" class="gallery-image '.$image['orientation'].' file-'.$image['id'].'" data-pswp-width="'.$image['size'][0].'" data-pswp-height="'.$image['size'][1].'"><img width="'.$image['size'][0].'" height="'.$image['size'][1].'" alt="'.$image['title'].'" loading="lazy" src="'.$src.'"></a>';
           $html .= '<figcaption>'.$image['caption'].'</figcaption>';
         $html .= '</figure>';
         return $html;
     }else{
       return null;
     }
-}
-
-/*
-These fallback styles load in a <noscript> tag
-*/
-function rl_nojs_images($images=array(), $css=null)
-{
-    foreach ($images as $img) {
-        $css .= '.file-'.$img['id'].'{background-image:url('.WEB_ROOT.'/files/fullsize/'.$img['src'].');}';
-    }
-    return '<style>'.$css.'</style>';
 }
 
 function rl_nojs_map(){
@@ -2187,9 +2170,10 @@ function rl_social_array($max=5)
    $services=array();
    ($email=get_theme_option('contact_email') ? get_theme_option('contact_email') : get_option('administrator_email')) ? array_push($services, '<a target="_blank" rel="noopener" title="email" href="mailto:'.$email.'" class="button social icon-round email">'.rl_icon("mail").'</a>') : null;
    ($facebook=get_theme_option('facebook_link')) ? array_push($services, '<a target="_blank" rel="noopener" title="facebook" href="'.$facebook.'" class="button social icon-round facebook">'.rl_icon("logo-facebook", null).'</a>') : null;
-   ($twitter=get_theme_option('twitter_username')) ? array_push($services, '<a target="_blank" rel="noopener" title="twitter" href="https://twitter.com/'.$twitter.'" class="button social icon-round twitter">'.rl_icon("logo-twitter", null).'</a>') : null;
+   ($twitter=get_theme_option('twitter_username')) ? array_push($services, '<a target="_blank" rel="noopener" title="twitter/x" href="https://twitter.com/'.$twitter.'" class="button social icon-round twitter">'.rl_icon("logo-x", null).'</a>') : null;
    ($youtube=get_theme_option('youtube_username')) ? array_push($services, '<a target="_blank" rel="noopener" title="youtube" href="'.$youtube.'" class="button social icon-round youtube">'.rl_icon("logo-youtube", null).'</a>') : null;
    ($instagram=get_theme_option('instagram_username')) ? array_push($services, '<a target="_blank" rel="noopener" title="instagram" href="https://www.instagram.com/'.$instagram.'" class="button social icon-round instagram">'.rl_icon("logo-instagram", null).'</a>') : null;
+   ($threads=get_theme_option('threads_username')) ? array_push($services, '<a target="_blank" rel="noopener" title="threads" href="https://www.threads.net/'.$threads.'" class="button social icon-round threads">'.rl_icon("logo-threads", null).'</a>') : null;
    ($mastodon=get_theme_option('mastodon_link')) ? array_push($services, '<a target="_blank" rel="noopener" title="mastodon" href="'.$mastodon.'" class="button social icon-round mastodon">'.rl_icon("logo-mastodon", null).'</a>') : null;
    ($tiktok=get_theme_option('tiktok_link')) ? array_push($services, '<a target="_blank" rel="noopener" title="tiktok" href="'.$tiktok.'" class="button social icon-round tiktok">'.rl_icon("logo-tiktok", null).'</a>') : null;
    ($pinterest=get_theme_option('pinterest_username')) ? array_push($services, '<a target="_blank" rel="noopener" title="pinterest" href="https://www.pinterest.com/'.$pinterest.'" class="button social icon-round pinterest">'.rl_icon("logo-pinterest", null).'</a>') : null;

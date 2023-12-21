@@ -132,7 +132,8 @@
 
   /* Social */
   --facebook: #305891;
-  --twitter: #2ca8d2;
+  --twitter: #000;
+  --threads: #000;
   --instagram: #000;
   --youtube: #de2826;
   --pinterest: #c82828;
@@ -821,11 +822,17 @@ input[type="submit"].icon-round,
   border-color: #fff;
   background: var(--facebook);
 }
-.button[title="twitter"]:hover,
-.button[title="twitter"]:focus {
+.button[title="twitter/x"]:hover,
+.button[title="twitter/x"]:focus {
   color: #fff;
   border-color: #fff;
   background: var(--twitter);
+}
+.button[title="threads"]:hover,
+.button[title="threads"]:focus {
+  color: #fff;
+  border-color: #fff;
+  background: var(--threads);
 }
 .button[title="instagram"]:hover,
 .button[title="instagram"]:focus {
@@ -2037,9 +2044,6 @@ figure.image-figure,
 }
 .gallery-image {
   background-color: #fff;
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center center;
   width: 100%;
   height: 400px;
   max-height: 60vh;
@@ -2049,6 +2053,7 @@ figure.image-figure,
   z-index: 1;
   position: relative;
   display: block;
+  overflow: hidden;
   transition: filter 0.15s linear, height 0.15s linear, box-shadow 0.15s linear;
 }
 
@@ -2058,8 +2063,16 @@ figure.image-figure,
   filter: none !important;
 }
 .gallery-image.portrait {
-  background-position: center 20%;
   height: 550px;
+}
+.gallery-image img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+}
+.gallery-image.portrait img{
+  object-position: center 20%;
 }
 figure .gallery-image + figcaption {
   max-width: calc(700px - 5em);

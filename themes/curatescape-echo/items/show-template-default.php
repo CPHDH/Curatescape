@@ -31,8 +31,7 @@ echo head(array(
     'maptype'=>$maptype,
     'bodyid'=>'items',
     'bodyclass'=>'show item-story item-'.$item->id.($tour ? ' tour-'.$tour : null).(isset($tour_index) ? ' tour-index-'.$tour_index : null),
-    'title' => metadata($item, array('Dublin Core', 'Title')),
-    'noscript_styles' => rl_nojs_images($filesforitem['images'])
+    'title' => metadata($item, array('Dublin Core', 'Title'))
     ));
 ?>
 
