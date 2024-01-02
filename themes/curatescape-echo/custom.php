@@ -737,7 +737,7 @@ if(plugin_is_active('Geolocation')):
       <figcaption><?php echo rl_map_caption();?></figcaption>
   </figure>
   <div id="map-actions">
-    <a class="button directions" target="_blank" rel="noopener" href="https://maps.google.com/maps?location&daddr=<?php echo $address ? urlencode(strip_tags($address)) : $location[ 'latitude' ].','.$location[ 'longitude' ];?>">
+    <a class="button directions" target="_blank" rel="noopener" href="https://www.google.com/maps/dir/?api=1&destination=<?php echo $address ? urlencode(strip_tags($address)) : $location[ 'latitude' ].','.$location[ 'longitude' ];?>">
       <?php echo rl_icon("logo-google", null);?>
       <span class="label">
           <?php echo __('Open in Google Maps');?></span>
@@ -1201,7 +1201,7 @@ function rl_official_website($item='item')
 function rl_street_address($item='item')
 {
    if (element_exists('Item Type Metadata', 'Street Address') && $address=metadata($item, array('Item Type Metadata','Street Address'))) {
-      $map_link='<a target="_blank" rel="noopener" href="https://maps.google.com/maps?saddr=current+location&daddr='.urlencode(strip_tags($address)).'">map</a>';
+      $map_link='<a target="_blank" rel="noopener" href="https://www.google.com/maps/dir/?api=1&destination='.urlencode(strip_tags($address)).'">map</a>';
       return $address ? $address : null;
    } else {
       return null;
