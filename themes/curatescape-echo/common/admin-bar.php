@@ -1,5 +1,4 @@
 <nav id="admin-bar" aria-label="Admin Navigation">
-
 <?php if ($user = current_user()) {
     $links = array(
         array(
@@ -15,7 +14,6 @@
             'uri' => url('/users/logout')
         )
     );
-
     $url=current_url();
     $r = preg_match_all("/.*?(\d+)$/", $url, $matches);
     if ($r==1) {
@@ -26,10 +24,7 @@
         );
         array_unshift($links, $edit);
     }
-} else {
-    $links = array();
+    echo nav($links, 'public_navigation_admin_bar');
 }
-
-echo nav($links, 'public_navigation_admin_bar');
 ?>
 </nav>

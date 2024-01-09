@@ -433,44 +433,51 @@ const loadMapMulti = (requested_id = null, isGlobalMap = false) => {
     }
   }
 };
-// MAIN
-if (!(container.getAttribute("id") === "home-map-container")) {
-  // not homepage/global...
-  overlay.addEventListener("click", (e) => {
-    if (e.srcElement.classList.contains("open")) {
-      closeMultiMap();
-    }
-  });
-  showmap.addEventListener("click", (e) => {
-    if (e.srcElement.classList.contains("open")) {
-      closeMultiMap();
-    } else {
-      openMultiMap();
-    }
-  });
-  showmap_with_marker.forEach((link) => {
-    link.addEventListener("click", (e) => {
-      e.preventDefault();
-      openMultiMap(e.srcElement.dataset.id);
+// MULTI MAP / MAIN
+const multiMap = ()=>{
+  if (!(container.getAttribute("id") === "home-map-container")) {
+    // not homepage/global...
+    overlay.addEventListener("click", (e) => {
+      if (e.srcElement.classList.contains("open")) {
+        closeMultiMap();
+      }
     });
-  });
-} else {
-  // homepage/global...
-  document.onreadystatechange = () => {
-    var loaded = false;
-    if ("IntersectionObserver" in window) {
-      const scrollEvents = (entries, observer) => {
-        entries.forEach(function (entry) {
-          if (entry.isIntersecting && !loaded) {
-            loadMapMulti(null, true);
-            loaded = true;
-          }
-        });
-      };
-      let observer = new IntersectionObserver(scrollEvents, {});
-      observer.observe(document.querySelector("#home-map .query-header"));
-    } else {
-      loadMapMulti(null, true);
-    }
-  };
+    showmap.addEventListener("click", (e) => {
+      if (e.srcElement.classList.contains("open")) {
+        closeMultiMap();
+      } else {
+        openMultiMap();
+      }
+    });
+    showmap_with_marker.forEach((link) => {
+      link.addEventListener("click", (e) => {
+        e.preventDefault();
+        openMultiMap(e.srcElement.dataset.id);
+      });
+    });
+  } else {
+    // homepage/global...
+      var loaded = false;
+      if ("IntersectionObserver" in window) {
+        const scrollEvents = (entries, observer) => {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting && !loaded) {
+              loadMapMulti(null, true);
+              loaded = true;
+            }
+          });
+        };
+        let observer = new IntersectionObserver(scrollEvents, {});
+        observer.observe(document.querySelector("#home-map .query-header"));
+      } else {
+        loadMapMulti(null, true);
+      }
+  }
 }
+// MAIN
+let isReady = setInterval(() => {
+  if (document.readyState === 'complete') {
+    clearInterval(isReady);
+    multiMap();
+  }
+}, 100);
