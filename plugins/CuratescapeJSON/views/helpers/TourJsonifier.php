@@ -7,9 +7,9 @@ class CuratescapeJSON_View_Helper_TourJsonifier extends Zend_View_Helper_Abstrac
 
 	}
 
-	public function tourJsonifier( $tour )
+	public function tourJsonifier( $tour, $isExtended = false )
 	{
-		// Add enumarations of the ordered items in this tour.
+		// Add enumerations of the ordered items in this tour.
 		$items = array();
 		foreach( $tour->Items as $item )
 		{
@@ -37,6 +37,12 @@ class CuratescapeJSON_View_Helper_TourJsonifier extends Zend_View_Helper_Abstrac
 						if($address){
 							$item_metadata['address']=trim( html_entity_decode( strip_formatting( $address ) ) );
 						}
+					}
+					
+					if($isExtended && method_exists($tour,'getTourItem')){
+						$c=$tour->getTourItem($item->id);
+						$item_metadata['custom']['subtitle']=$c['subtitle'];
+						$item_metadata['custom']['text']=$c['text'];
 					}
 	
 					array_push( $items, $item_metadata );

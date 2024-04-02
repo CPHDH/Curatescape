@@ -11,7 +11,7 @@ class TourBuilderPlugin extends Omeka_Plugin_AbstractPlugin
 		'public_navigation_main',
 		'admin_dashboard_stats',
 		'admin_navigation_main',
-		'search_record_types',	
+		'search_record_types',
 		);
 
 	protected $_hooks = array(
@@ -46,6 +46,8 @@ class TourBuilderPlugin extends Omeka_Plugin_AbstractPlugin
 		`tour_id` INT( 10 ) UNSIGNED NOT NULL,
 		`ordinal` INT NOT NULL,
 		`item_id` INT( 10 ) UNSIGNED NOT NULL,
+		`subtitle` text collate utf8_unicode_ci,
+		`text` text collate utf8_unicode_ci,
 		PRIMARY KEY( `id` ),
 		KEY `tour` ( `tour_id` )
 		) ENGINE=InnoDB ";
@@ -61,55 +63,51 @@ class TourBuilderPlugin extends Omeka_Plugin_AbstractPlugin
 		$db->query( "DROP TABLE IF EXISTS `$db->Tour`" );
 	}
 
-    public function hookUpgrade($args)
-    {
+	public function hookUpgrade($args)
+	{
 		$oldVersion = $args['old_version'];
 		$newVersion = $args['new_version'];
 		$db = $this->_db;
 		$prefix=$db->prefix;
-
 		if ($oldVersion < '1.4') {
 			$sql = "ALTER TABLE `$db->Tour` ADD COLUMN `postscript_text` text collate utf8_unicode_ci default NULL";
 			$db->query($sql);
 		}
-
 		if ($oldVersion < '1.5') {
 			$sql = "ALTER TABLE `$db->Tour` DROP COLUMN `slug`";
-			$db->query($sql);  
-
+			$db->query($sql);
 			$sql = "ALTER TABLE `$db->Tour` DROP COLUMN `tour_image`";
-			$db->query($sql);  
+			$db->query($sql);
 		}
-		
-	    if($oldVersion < '1.6'){
+		if($oldVersion < '1.6'){
 			Zend_Registry::get('bootstrap')->getResource('jobs')->sendLongRunning('Job_SearchTextIndex');
 		}
-
 		if($oldVersion < '1.7'){
-			// Get rid of orphan tour_items that weren't being deleted along with their respective tours in previous versions		
+			// Get rid of orphan tour_items that weren't being deleted along with their respective tours in previous versions
 			$sql = "DELETE ".$prefix."tour_items 
 			FROM ".$prefix."tour_items
 			LEFT JOIN ".$prefix."tours 
 			ON ".$prefix."tour_items.tour_id = ".$prefix."tours.id
 			WHERE ".$prefix."tours.id IS NULL";
-			
-			$db->query($sql);     
+			$db->query($sql);
+		}
+		if($oldVersion < '1.9.3'){
+			$sql = "ALTER TABLE `$db->TourItem` 
+			ADD COLUMN `subtitle` text collate utf8_unicode_ci,
+			ADD COLUMN `text` text collate utf8_unicode_ci";
+			$db->query($sql);
 		}
 	}
 	
 	public function hookDefineAcl( $args )
 	{
 		$acl = $args['acl'];
-
 		// Create the ACL context
 		$acl->addResource( 'TourBuilder_Tours' );
-		
 		// Allow anyone to look but not touch
 		$acl->allow( null, 'TourBuilder_Tours', array('browse', 'show', 'tags') );
-		
 		// Allow contributor (and better) to do anything with tours
 		$acl->allow( 'contributor','TourBuilder_Tours');
-
 	}
 
 	public function hookDefineRoutes( $args )
@@ -148,26 +146,20 @@ class TourBuilderPlugin extends Omeka_Plugin_AbstractPlugin
 	{
 		// Get the database.
 		$db = get_db();
-
 		// Get the Tour table.
 		$table = $db->getTable('Tour');
-
 		// Build the select query.
 		$select = $table->getSelect();
-
 		// Fetch some items with our select.
 		$results = $table->fetchObjects($select);
-
 		$tourItems = null;
 		$html  = null;
-
 		for($i=0;$i<=5;$i++){
 			if(array_key_exists($i,$results) && is_object($results[$i])){
 				$tourItems .='<p class="recent"><a href="/admin/tours/show/'.$results[$i]->id.'">'
 				.$results[$i]->title.'</a></p><p class="dash-edit"><a href="/admin/tours/edit/'.$results[$i]->id.'">Edit</a></p>';
 			}
 		}
-
 		$html .= '<section class="panel five columns omega">';
 		$html .= '<h2>'.__('Recent Tours').'</h2>';
 		$html .= '<div class="recent-row">';
@@ -175,9 +167,7 @@ class TourBuilderPlugin extends Omeka_Plugin_AbstractPlugin
 		$html .= '</div>';
 		$html .= '<div class="add-new-link"><p><a class="add-tour green button" href="'.html_escape(url('tour-builder/tours/add/')).'">'.__('Add a new tour').'</a></p></div>';
 		$html .= '</section>';
-
 		echo $html;
-
 	}
 
 	public function hookAdminHead()
@@ -187,15 +177,13 @@ class TourBuilderPlugin extends Omeka_Plugin_AbstractPlugin
 		$controller = $request->getControllerName();
 		if ($module == 'tour-builder' && $controller == 'tours') {
 			queue_css_file('tourbuilder');
-		}		
+		}
 	}
-
 
 	public function filterSearchRecordTypes($recordTypes){
 		$recordTypes['Tour'] = __('Tour');
-		return $recordTypes;		
+		return $recordTypes;
 	}
-
 
 	public function filterAdminNavigationMain( $nav )
 	{

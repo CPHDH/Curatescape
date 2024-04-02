@@ -72,40 +72,88 @@
   padding: 1em !important;
   box-sizing: border-box;
 }
-.remove {
+li .drag,
+li .remove,
+li .edit{
+  flex-shrink: 0;
+  margin: 0;
+  color: #bbb;
+  transition: color .15s linear;
+}
+li .drag{
+  width: 10px;
+  height: 20px;
+  margin-right: .75em;
+}
+li .remove,
+li .edit{
   cursor: pointer;
+  width: 20px;
+  height: 20px;
+  margin-left: 1em;
+}
+li .remove:hover{
+  color: #B00D00;
+}
+li .edit:hover{
+  color: #222;
+}
+li .title{
+  flex-grow: 1;
+  margin: 0;
+}
+li .title a,
+li .title a:visited{
+  color: inherit;
 }
 #sortable {
   list-style-type: none;
-  margin: 2em 0 0;
+  margin: 1em 0 0;
   padding: 0;
   width: 100%;
 }
-#sortable li {
+#sortable li{
+  margin-bottom: 1em;
+}
+#sortable li > div.item-primary{
   display: flex;
+  align-items: center;
   padding: 1em;
-  margin: 0 0 4px 0;
-  border: 1px solid #ccc;
   cursor: move;
   cursor: grab;
-  cursor: -moz-grab;
-  cursor: -webkit-grab;
 }
-#sortable li span:first-child {
-  flex-grow: 1;
+#sortable li > div.item-secondary .editable{
+  border-top: 1px solid #ccc;
+  padding: 1em;
+  overflow: hidden;
 }
+#sortable label {
+  margin-top: 0.5em;
+  margin-bottom: 0.25em;
+  display: block;
+  color: #777;
+}
+
+#sortable input[type="text"]{
+  min-width: 80%;
+}
+
 #sortable li.ui-state-highlight {
-  height: 1.5em;
+  min-height: 1.5em;
   line-height: 1.2em;
-  color: #fff;
   border: 1px solid rgba(63, 123, 0, 0.25);
   background: #eaf2e1;
 }
 #sortable li.ui-state-highlight span:first-child {
   font-weight: 800;
 }
-.ui-sortable-placeholder {
-  background: #ccc;
+.ui-sortable-placeholder.ui-state-highlight {
+  background: #ccc !important;
+  border-color: #ccc !important;
+  min-height: 50px !important;
+  width: 100%;
+  display: block;
+  visibility: visible;
 }
 .ui-menu-item {
   border-bottom: 1px solid #ccc;

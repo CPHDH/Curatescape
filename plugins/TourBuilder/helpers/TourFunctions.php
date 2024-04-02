@@ -33,7 +33,6 @@ function has_tours_for_loop()
 	return $view->tours && count( $view->tours );
 }
 
-
 function tour( $fieldName, $options=array(), $tour=null )
 {
 	if( ! $tour ) {
@@ -104,7 +103,6 @@ function link_to_tour(
 
 	return link_to($tourObj, $action, $text, $props);
 }
-
 
 function total_tours()
 {
@@ -223,8 +221,7 @@ function tour_nav( $html=null, $label='Tour', $alwaysShow=false, $item_id=null )
 
 		if( $tourURL )
 		{
-			$html .= '<a title= "'.__('View %1$s: %2$s', $intlLabel, $tourTitle).'"
-         href="'.$tourURL.'">'.__('%s Info', $intlLabel).'</a>';
+			$html .= '<a title= "'.__('View %1$s: %2$s', $intlLabel, $tourTitle).'"href="'.$tourURL.'">'.__('%s Info', $intlLabel).'</a>';
 		}
 
 		// Add the next item to the navigation if present
@@ -237,13 +234,13 @@ function tour_nav( $html=null, $label='Tour', $alwaysShow=false, $item_id=null )
 
 		$html .= '</span>'
 			. '</div>';
-			
+
 		return $html;
 	}else{
 		if($alwaysShow && $item_id){
 			// theme designers can set $alwaysShow to true and $item_id to [an item id] to show the tour info for all items if it exists (e.g. for sites where all items are part of a tour)
 			$html .= cta_tour_for_item($item_id,$intlLabel);
-			return $html;			
+			return $html;
 		}else{
 			return null;
 		}
@@ -259,7 +256,7 @@ function tours_for_item($item_id=null,$heading=null){
 		$select = $db->select()
 		->from(array('ti' => $prefix.'tour_items')) // SELECT * FROM omeka_tour_items as ti
 		->join(array('t' => $prefix.'tours'),    	// INNER JOIN omeka_tours as t
-			'ti.tour_id = t.id')      				// ON ti.tour_id = t.id
+			'ti.tour_id = t.id')					// ON ti.tour_id = t.id
 		->where("item_id=$item_id AND public=1");   // WHERE item_id=$item_id
 		$q = $select->query();
 		$results = $q->fetchAll();
@@ -288,8 +285,8 @@ function cta_tour_for_item($item_id=null,$intlLabel='Tour'){
 		$prefix=$db->prefix;
 		$select = $db->select()
 		->from(array('ti' => $prefix.'tour_items')) // SELECT * FROM omeka_tour_items as ti
-		->join(array('t' => $prefix.'tours'),    	// INNER JOIN omeka_tours as t
-			'ti.tour_id = t.id')      				// ON ti.tour_id = t.id
+		->join(array('t' => $prefix.'tours'),		// INNER JOIN omeka_tours as t
+			'ti.tour_id = t.id')					// ON ti.tour_id = t.id
 		->where("item_id=$item_id AND public=1");   // WHERE item_id=$item_id
 		$q = $select->query();
 		$results = $q->fetchAll();
