@@ -2213,7 +2213,7 @@ function rl_story_actions($class=null, $title=null, $id=null)
       '<a rel="noopener" title="print" href="javascript:void" onclick="window.print();" class="button social icon-round">'.rl_icon("print").'</a>',
       '<a target="_blank" rel="noopener" title="email" href="'.w3_valid_url('mailto:?subject='.$title.'&body='.$url).'" class="button social icon-round">'.rl_icon("mail").'</a>',
       '<a target="_blank" rel="noopener" title="facebook" href="https://www.facebook.com/sharer/sharer.php?u='.urlencode($url).'" class="button social icon-round">'.rl_icon("logo-facebook", null).'</a>',
-      '<a target="_blank" rel="noopener" title="twitter" href="https://twitter.com/intent/tweet?text='.urlencode($url).'" class="button social icon-round">'.rl_icon("logo-twitter", null).'</a>'
+      '<a target="_blank" rel="noopener" title="twitter/x" href="https://twitter.com/intent/tweet?text='.urlencode($url).'" class="button social icon-round">'.rl_icon("logo-x", null).'</a>'
    );
    return '<div class="link-icons '.$class.'">'.implode(' ', $actions).'</div>';
 }

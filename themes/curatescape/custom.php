@@ -960,7 +960,7 @@ function mh_the_lede($item='item'){
 function mh_the_title_expanded($item='item'){
 	$title=strip_tags(metadata($item, array('Dublin Core', 'Title')));
 	if(get_theme_option('subtitle_on_browse') && element_exists('Item Type Metadata','Subtitle')){
-		$subtitle = ' – '.strip_tags(metadata($item,array('Item Type Metadata','Subtitle')));
+		$subtitle = metadata($item,array('Item Type Metadata','Subtitle')) ? ' – '.strip_tags(metadata($item,array('Item Type Metadata','Subtitle'))) : null;
 		$title = $title.$subtitle;
 	}
 	return link_to($item,'show',$title, array('class'=>'permalink'));

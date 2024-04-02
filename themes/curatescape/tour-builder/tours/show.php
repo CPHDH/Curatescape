@@ -18,9 +18,7 @@ echo head( array( 'maptype'=>$maptype,'title' => ''.$label.' | '.$tourTitle, 'co
 			<?php echo mh_map_actions(null,$tour);?>
 		</figure>
 	</section>
-	
 	<article id="tour-content" class="tour show" role="main">
-	
 		<header id="tour-header">
 		<h2 class="tour-title"><?php echo $tourTitle; ?></h2>
 		<?php $byline=null;
@@ -32,7 +30,6 @@ echo head( array( 'maptype'=>$maptype,'title' => ''.$label.' | '.$tourTitle, 'co
 		echo '<div class="byline">'.$byline.'</div>';
 		?>
 		</header>
-	
 		<div id="primary" class="show">
 		    <section id="text">
 			   <h2 hidden class="hidden"><?php echo __('%s Description',mh_tour_label('singular'));?></h2>
@@ -40,33 +37,35 @@ echo head( array( 'maptype'=>$maptype,'title' => ''.$label.' | '.$tourTitle, 'co
 			    <?php echo htmlspecialchars_decode(nls2p( tour( 'Description' ) )); ?>
 			   </div>
 			</section>
-			   
 			<section id="tour-items">
-				
 				<h3 hidden class="hidden"><?php echo __('Locations for %s', $label);?></h3>
 				<nav class="secondary-nav" id="tours-show" aria-hidden="true"> 
 					<?php echo mh_tour_browse_subnav($label,$tour->id);?>
-				</nav>				
+				</nav>
 					<?php 
 					$i=1;
 					foreach( $tour->getItems() as $tourItem ): 
 						if($tourItem->public || current_user()):
 							set_current_record( 'item', $tourItem );
-								$itemID=$tourItem->id;
-								$hasImage=metadata($tourItem,'has thumbnail');
+							$itemID=$tourItem->id;
+							$hasImage=metadata($tourItem,'has thumbnail');
+							$custom = method_exists($tour,'getTourItem') ? $tour->getTourItem($tourItem->id) : null;
+							$text = $custom && isset($custom['text']) && $custom['text'] ? $custom['text'] : null;
+							$text = $text ? $text : snippet(mh_the_text($tourItem),0,250);
+							$subtitle = $custom && isset($custom['subtitle']) && $custom['subtitle'] ? $custom['subtitle'] : null;
+							$subtitle = $subtitle ? '<span> – '.$subtitle.'</span>' : (get_theme_option('subtitle_on_browse') && mh_the_subtitle($tourItem) ? '<span> – '.strip_tags(mh_the_subtitle($tourItem)).'</span>' : null);
 							?>
 							<div class="tour-item-container flex">
 								<div class="tour-route flex flex-column" aria-hidden="true">
 									<div class="tour-route-number"><?php echo $i;?> </div>
 									<div class="tour-route-path"></div>
 								</div>
-						        <article class="item-result <?php echo $hasImage ? 'has-image' : null;?>">
+								<article class="item-result <?php echo $hasImage ? 'has-image' : null;?>">
 									<h3><a href="<?php echo url('/') ?>items/show/<?php echo $itemID.'?tour='.tour( 'id' ).'&index='.($i-1).''; ?>">
-										<?php echo strip_tags(metadata( $tourItem, array('Dublin Core', 'Title') )); ?>
+										<?php echo strip_tags(metadata( $tourItem, array('Dublin Core', 'Title') )).$subtitle; ?>
 									</a></h3>
-										         
-							        <div class="item-description"><?php echo snippet(mh_the_text($tourItem),0,250); ?></div>
-						        </article>
+									<div class="item-description"><?php echo $text; ?></div>
+								</article>
 							</div>
 							<?php 
 							$i++; 
@@ -78,16 +77,11 @@ echo head( array( 'maptype'=>$maptype,'title' => ''.$label.' | '.$tourTitle, 'co
 				<h2 hidden class="hidden"><?php echo __('%s Postscript',mh_tour_label('singular'));?></h2>
 				<?php echo htmlspecialchars_decode(metadata('tour','Postscript Text')); ?>
 			</section>
-			
 			<div class="comments">
 				<?php echo (get_theme_option('tour_comments') ==1) ? mh_display_comments() : null;?>
-			</div>	
-			
+			</div>
 			<?php echo mh_share_this(mh_tour_label());?>
-		
 		</div>
-		
 	</article>
 </div> <!-- end content -->
-
 <?php echo foot(); ?>
