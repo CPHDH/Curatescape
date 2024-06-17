@@ -16,29 +16,6 @@ if (isset($_GET['tags'])) {
 $sort_field = (isset($_GET['sort_field']) ? htmlspecialchars($_GET['sort_field']) : null);
 $sort_dir = (isset($_GET['sort_dir']) ? htmlspecialchars($_GET['sort_dir']) : null);
 $sort=[$sort_field, $sort_dir];
-if($tours){
-    switch ($sort) {
-        // added
-        case $sort[0]=='id' && $sort[1]=='a':
-        case $sort[0]=='id' && $sort[1]==null:
-        case $sort[0]==null && $sort[1]==null:
-           rl_sort_objects_array($tours, 'id', true); 
-           break;
-        // added reverse
-        case $sort[0]=='id' && $sort[1]=='d':
-           rl_sort_objects_array($tours, 'id', false); 
-           break;
-        // title
-        case $sort[0]=='title' && $sort[1]=='a':
-        case $sort[0]=='title' && $sort[1]==null:
-           rl_sort_objects_array($tours, 'title', true); 
-           break;
-        // title reverse
-        case $sort[0]=='title' && $sort[1]=='d':
-           rl_sort_objects_array($tours, 'title', false); 
-           break;
-    }
-}
 echo head(
     array(
     'maptype'=>'none',
@@ -71,6 +48,10 @@ echo head(
                     $html = null;
                     if (has_tours()) {
                         if (has_tours_for_loop()) {
+                           if(function_exists('active_sort_tours')){ // tour builder 2.0
+                              $active_sort = isset($sort_field) ? array() : array('ordinal','a');
+                              $tours = active_sort_tours($tours,$active_sort);
+                           }
                             foreach ($tours as $tour) {
                                 set_current_record('tour', $tour);
                                 $bg=array();

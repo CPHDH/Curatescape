@@ -32,7 +32,10 @@ echo head( array(
 		    if( has_tours_for_loop() ){
 		    	$i=1;
 		    	$tourimg=0;
-		    	
+		    	if(function_exists('active_sort_tours')){ // tour builder 2.0
+					$active_sort = isset($_GET['sort_field']) ? array() : array('ordinal','a');
+					$tours = active_sort_tours($tours,$active_sort);
+				}
 				foreach( $tours as $tour ){ 
 					set_current_record( 'tour', $tour );
 					

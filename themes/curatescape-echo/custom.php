@@ -529,12 +529,12 @@ function rl_tour_browse_subnav()
 */ 
 function rl_tours_browse_sort_links($sort=array(null,null)){
   // add /browse to path
-  $nav = str_replace('tours?','tours/browse?',browse_sort_links(array(__('Title')=>'title',__('Date Added')=>'id')));
+  $nav = str_replace('tours?','tours/browse?',browse_sort_links(array(__('Default')=>'ordinal',__('Title')=>'title',__('Date Added')=>'id')));
   
   if($sort[0]==null && $sort[1]==null){
     $dom = new DOMDocument;
     $dom->loadHTML($nav);
-    $li = $dom->getElementsByTagName('li')->item(1);
+    $li = $dom->getElementsByTagName('li')->item(0);
     // add sorting class
     $li->setAttribute('class', 'sorting asc');
     // sort direction toggle fix
