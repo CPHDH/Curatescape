@@ -22,7 +22,7 @@ class CuratescapeJSON_View_Helper_ItemJsonifier extends Zend_View_Helper_Abstrac
 		$raw = metadata( 'item', array( 'Dublin Core', $element ) );
 		if( ! $formatted )
 			$raw = strip_formatting( $raw );
-		return html_entity_decode( $raw );
+		return $raw ? html_entity_decode( $raw ) : null;
 	}
 
 	private static function getItemTypeText( $element, $formatted = false )
@@ -30,7 +30,7 @@ class CuratescapeJSON_View_Helper_ItemJsonifier extends Zend_View_Helper_Abstrac
 		$raw = metadata( 'item', array( 'Item Type Metadata', $element ) );
 		if( ! $formatted )
 			$raw = strip_formatting( $raw );
-		return html_entity_decode( $raw );
+		return $raw ? html_entity_decode( $raw ) : null;
 	}
 	
 	private static function getContributor($item)

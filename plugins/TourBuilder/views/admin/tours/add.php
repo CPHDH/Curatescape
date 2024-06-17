@@ -1,7 +1,8 @@
 <?php
 echo head( array( 'title' => 'Add Tour', 
   'content_class' => 'vertical-nav',
-  'bodyclass' => 'tours primary add-tour-form' 
+  'bodyid'=>'tour',
+  'bodyclass' => 'tours primary add-tour-form add' 
 ));
 echo flash();
 ?>
@@ -15,6 +16,14 @@ echo flash();
         array( 'id' => 'save-changes',
         'class' => 'submit big green button' ) ); ?>
       </div>
+      
+      <?php if ( is_allowed('TourBuilder_Tours', 'makePublic') ): ?>
+      <div class="field panel ordinal">
+          <?php echo $this->formLabel( 'ordinal', __('Custom Order') ); ?>
+          <?php echo $this->formText( 'ordinal', $tour->ordinal ); ?>
+          <p class="explanation"><?php echo __('Optional: Enter a number greater than 0 to customize the order of this tour. Enter 0 to use the default order.');?></p>
+      </div>
+      <?php endif; ?>
 
       <div id="public-featured">
       <?php if( is_allowed( 'TourBuilder_Tours', 'makePublic' ) ): ?>

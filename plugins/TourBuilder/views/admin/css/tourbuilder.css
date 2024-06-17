@@ -1,23 +1,32 @@
-#admin-tour-image img {
-  max-width: 100%;
+@media (max-width: 767px) {
+  #tour.browse .middot{
+    display: none;
+  }
 }
-#tour.edit #admin-tour-image img {
-  margin: 1em 0;
-}
-#tour.show #admin-tour-image img {
-  margin: 0 0;
-}
-#tour.edit input[type="text"] {
+.tours input[type="text"] {
   margin-bottom: 0;
 }
-#tour.edit input[type="search"] {
+.tours input[type="search"] {
   border: 1px solid #ccc;
 }
-#tour.edit input#image {
-  background: #eaeaea;
-  padding: 0.5em 0 0.5em 0.5em;
+.tours .panel.ordinal{
+  background: #fafafa;
+}
+.tours input#ordinal{
   width: 100%;
-  border: 1px solid #d8d8d8;
+}
+#tour.show .panel.ordinal,
+#tour.show .panel.public-featured{
+  padding: 20px;
+}
+#tour.show .panel.ordinal .label{
+  font-weight: bold;
+}
+#tour.show .panel.ordinal p,
+#tour.show .panel.public-featured p{
+  display: inline-block;
+  margin: 0 5px 0 0;
+  text-align: center;
 }
 #tour.edit p.explanation {
   padding: 0.25em 0;
@@ -27,30 +36,9 @@
   font-style: italic;
   padding: 0.5em 0 0;
 }
-
-#tour.browse .fa {
-  /* font-family:"FontAwesome"; */
-  font-style: normal;
-  font-weight: lighter;
-  font-size: 1.35em;
-  line-height: inherit;
-  vertical-align: middle;
-  padding-left: 0.25em;
-  text-shadow: 0 0 2px #fff;
-}
-#tour.browse i.fa.fa-camera:after {
-  /* content: "\f030"; */
-  color: #ccc;
-  float: right;
-  display: inline-block;
-}
 .hidden {
   display: none;
   visibility: hidden;
-}
-.admin-tour-browse-meta {
-  margin: 0.25em 0;
-  color: #777;
 }
 #tourbuilder-item-list {
   padding-left: 0;

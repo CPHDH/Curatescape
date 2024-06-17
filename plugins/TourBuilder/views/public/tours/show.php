@@ -22,10 +22,10 @@ echo head( array( 'maptype'=>'tour','title' => ''.__('Tour').' | '.$tourTitle, '
 				<?php echo htmlspecialchars_decode(nls2p( tour( 'Description' ) )); ?>
 			</div>
 			<div id="tour-postscript">
-				<em><?php echo htmlspecialchars_decode(metadata('tour','Postscript Text')); ?></em>
+				<em><?php echo htmlspecialchars_decode(nls2p(metadata('tour','Postscript Text'))); ?></em>
 			</div>
 		</div>
-		
+
 		<div id="tour-items">
 			<h2 class="locations"><?php echo $tour->getItems() ? __('Locations for Tour') : null;?></h2>
 
@@ -70,7 +70,7 @@ echo head( array( 'maptype'=>'tour','title' => ''.__('Tour').' | '.$tourTitle, '
 
 						<div class="ti-text">
 							<?php echo '<p>'.$description.'</p>'; ?>
-					    </div>
+						</div>
 					</div>
 					<?php 
 					$i++;

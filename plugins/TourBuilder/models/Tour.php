@@ -14,6 +14,7 @@ class Tour extends Omeka_Record_AbstractRecord
 	public $featured = 0;
 	public $public = 0;
 	public $postscript_text;
+	public $ordinal = 0;
 
 	protected $_related = array( 'Items' => 'getItems','Image' => 'getImage', 'Tags'=> 'getTags' );
 
@@ -92,6 +93,9 @@ class Tour extends Omeka_Record_AbstractRecord
 		}
 		if (!$this->fieldIsUnique('title')) {
 			$this->addError('title', 'The Title is already in use by another tour. Please choose another.');
+		}
+		if ( intval($this->ordinal) < 0 || $this->ordinal == '' || !is_numeric($this->ordinal)) {
+			$this->addError('custom order', 'The value for the custom order must be a number equal to or greater than 0.');
 		}
 	}
 

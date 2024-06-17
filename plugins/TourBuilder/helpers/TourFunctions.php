@@ -301,3 +301,71 @@ function cta_tour_for_item($item_id=null,$intlLabel='Tour'){
 		return $html;
 	}
 }
+
+// Sorting helpers
+function tb_sortByTitle($a, $b){
+	return $a['title'] <=> $b['title']; // title ASC
+}
+function tb_sortByTitleReverse($a, $b){
+	return $b['title'] <=> $a['title']; // title DESC
+}
+function tb_sortById($a, $b){
+	return $a['id'] <=> $b['id']; // id ASC
+}
+function tb_sortByIdReverse($a, $b){
+	return $b['id'] <=> $a['id']; // id DESC
+}
+function tb_sortByOrdinal($a, $b){
+	// 0/default value will always follow ASC custom values: 1,2,3,0,0
+	if ($a['ordinal'] == $b['ordinal']) return 0;
+	if ($a['ordinal'] == 0) return 1;
+	if ($b['ordinal'] == 0) return -1;
+	return $a['ordinal'] > $b['ordinal'] ? 1 : -1;
+}
+function tb_sortByOrdinalReverse($a, $b){
+	// 0/default value will always precede DESC custom values: 0,0,3,2,1
+	if ($a['ordinal'] == $b['ordinal']) return 0;
+	if ($b['ordinal'] == 0) return 1;
+	if ($a['ordinal'] == 0) return -1;
+	return $b['ordinal'] > $a['ordinal'] ? 1 : -1;
+}
+function active_sort_tours($tours,$sort=array()){
+	if(count($sort) !== 2){
+		$sortParam = Omeka_Db_Table::SORT_PARAM;
+		$sortDirParam = Omeka_Db_Table::SORT_DIR_PARAM;
+		$req = Zend_Controller_Front::getInstance()->getRequest();
+		$currentSort = $req->getParam($sortParam); // title, id, ordinal
+		$currentDir = $req->getParam($sortDirParam); // a, d
+		$sort=array($currentSort,$currentDir);
+	}
+	switch($sort){
+		case array('title','a'):
+		usort($tours, 'tb_sortByTitle');
+		break;
+		case array('title',null):
+		usort($tours, 'tb_sortByTitle');
+		break;
+		case array('id','a'):
+		usort($tours, 'tb_sortById');
+		break;
+		case array('id',null):
+		usort($tours, 'tb_sortById');
+		break;
+		case array('ordinal','a'):
+		usort($tours, 'tb_sortByOrdinal');
+		break;
+		case array('ordinal',null):
+		usort($tours, 'tb_sortByOrdinal');
+		break;
+		case array('title','d'):
+		usort($tours, 'tb_sortByTitleReverse');
+		break;
+		case array('id','d'):
+		usort($tours, 'tb_sortByIdReverse');
+		break;
+		case array('ordinal','d'):
+		usort($tours, 'tb_sortByOrdinalReverse');
+		break;
+	}
+	return $tours;
+}

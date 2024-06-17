@@ -1,9 +1,9 @@
 <?php
 $tourTitle = strip_formatting( tour( 'title' ) );
 if( $tourTitle != '' && $tourTitle != '[Untitled]' ) {
-	$tourTitle = ': &quot;' . $tourTitle . '&quot; ';
+  $tourTitle = ': &quot;' . $tourTitle . '&quot; ';
 } else {
-	$tourTitle = '';
+  $tourTitle = '';
 }
 $tourTitle = 'Tour #' . tour( 'id' ) . $tourTitle;
 
@@ -35,7 +35,7 @@ echo flash();
   <div id="tour-description" class="element">
     <h2>Description</h2>
     <div class="element-text">
-      <?php echo nls2p( metadata( 'tour', 'Description' ) ); ?>
+      <?php echo htmlspecialchars_decode(nls2p(metadata( 'tour', 'Description' ))); ?>
     </div>
   </div>
   <?php endif; ?>
@@ -44,11 +44,11 @@ echo flash();
   <div id="postscript_text" class="element">
     <h2>Postscript Text</h2>
     <div class="element-text">
-      <?php echo '<em>'.htmlspecialchars_decode(metadata( 'tour', 'postscript_text' )).'</em>'; ?>
+      <?php echo htmlspecialchars_decode(nls2p(metadata( 'tour', 'postscript_text' ))); ?>
     </div>
   </div>
   <?php endif; ?>
-  
+
   <?php if($tour->Tags):?>
     <div id="tour_tags" class="element">
       <h2>Tags</h2>
@@ -58,25 +58,23 @@ echo flash();
     </div>
   <?php endif; ?>
 
-  
   <?php
-$items = $tour->getItems();
-if( $tour->getItems() ): ?>
-  <div id="tour-items" class="element">
-    <h2>Items</h2>
-    <div class="element-text">
-      <ul>
-        <?php foreach( $items as $item ):?>
-        <?php set_current_record( 'item', $item, true );?>
-        <li>
-          <?php echo link_to_item(); ?>
-        </li>
-        <?php endforeach; ?>
-      </ul>
+  $items = $tour->getItems();
+  if( $tour->getItems() ): ?>
+    <div id="tour-items" class="element">
+      <h2>Items</h2>
+      <div class="element-text">
+        <ul>
+          <?php foreach( $items as $item ):?>
+          <?php set_current_record( 'item', $item, true );?>
+          <li>
+            <?php echo link_to_item(); ?>
+          </li>
+          <?php endforeach; ?>
+        </ul>
+      </div>
     </div>
-  </div>
   <?php endif; ?>
-
 </section>
 
 <section class="three columns omega">
@@ -94,10 +92,17 @@ if( $tour->getItems() ): ?>
     </a>
 
     <?php if( is_allowed( 'TourBuilder_Tours', 'delete' ) ): ?>
-    <?php echo link_to_tour( __('Delete'),
-		array( 'class' => 'delete-confirm big red button' ),
-		'delete-confirm' ); ?>
+    <?php echo link_to_tour( __('Delete'),array( 'class' => 'delete-confirm big red button' ),'delete-confirm' ); ?>
     <?php endif; ?>
+  </div>
+
+  <div class="ordinal panel">
+      <p>
+        <span class="label">
+          <?php echo __('Custom Order'); ?>:
+        </span>
+        <?php echo $tour->ordinal ? $tour->ordinal : __('None'); ?>
+      </p>
   </div>
 
   <div class="public-featured panel">

@@ -37,7 +37,8 @@ class TourBuilderPlugin extends Omeka_Plugin_AbstractPlugin
 		`postscript_text` text collate utf8_unicode_ci,
 		`featured` tinyint( 1 ) default '0',
 		`public` tinyint( 1 ) default '0',
-		PRiMARY KEY( `id` )
+		`ordinal` INT NOT NULL default '0',
+		PRIMARY KEY( `id` )
 		) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ";
 
 		$tourItemQuery = "
@@ -95,6 +96,11 @@ class TourBuilderPlugin extends Omeka_Plugin_AbstractPlugin
 			$sql = "ALTER TABLE `$db->TourItem` 
 			ADD COLUMN `subtitle` text collate utf8_unicode_ci,
 			ADD COLUMN `text` text collate utf8_unicode_ci";
+			$db->query($sql);
+		}
+		if($oldVersion < '2.0'){
+			$sql = "ALTER TABLE `$db->Tour` 
+			ADD COLUMN `ordinal` INT NOT NULL default '0'";
 			$db->query($sql);
 		}
 	}
@@ -157,7 +163,7 @@ class TourBuilderPlugin extends Omeka_Plugin_AbstractPlugin
 		for($i=0;$i<=5;$i++){
 			if(array_key_exists($i,$results) && is_object($results[$i])){
 				$tourItems .='<p class="recent"><a href="/admin/tours/show/'.$results[$i]->id.'">'
-				.$results[$i]->title.'</a></p><p class="dash-edit"><a href="/admin/tours/edit/'.$results[$i]->id.'">Edit</a></p>';
+				.$results[$i]->title.'</a></p><p class="dash-edit"><a href="/admin/tours/edit/'.$results[$i]->id.'">'.__('Edit').'</a></p>';
 			}
 		}
 		$html .= '<section class="panel five columns omega">';
@@ -180,7 +186,8 @@ class TourBuilderPlugin extends Omeka_Plugin_AbstractPlugin
 		}
 	}
 
-	public function filterSearchRecordTypes($recordTypes){
+	public function filterSearchRecordTypes($recordTypes)
+	{
 		$recordTypes['Tour'] = __('Tour');
 		return $recordTypes;
 	}
