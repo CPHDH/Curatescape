@@ -14,9 +14,10 @@ $options = $this->geolocationMapOptions($options);
     </div>
     <div class="inputs five columns omega">
         <input type="text" name="geolocation[address]" id="geolocation_address" value="<?php echo $address; ?>">
-        <button type="button" name="geolocation_find_location_by_address" id="geolocation_find_location_by_address"><?php echo __('Find'); ?></button>
+        <button type="button" name="geolocation_find_location_by_address" id="geolocation_find_location_by_address" data-success-message="<?php echo __('Location found.'); ?>"><?php echo __('Find'); ?></button>
     </div>
 </div>
+<div id="geolocation-sr-alerts" class="sr-only" aria-live="polite" aria-atomic="true"></div>
 <div id="omeka-map-form" class="geolocation-map"></div>
 
 <?php
@@ -35,11 +36,15 @@ jQuery(document).ready(function () {
     jQuery('#geolocation_find_location_by_address').on('click', function (event) {
         event.preventDefault();
         var address = jQuery('#geolocation_address').val();
+        var successMessage = jQuery(this).data('successMessage');
         geocoder.geocode(address).then(function (coords) {
             var marker = omekaGeolocationForm.setMarker(L.latLng(coords));
             if (marker === false) {
                 jQuery('#geolocation_address').val('');
                 jQuery('#geolocation_address').focus();
+            } else {
+                jQuery('#geolocation-sr-alerts').text(successMessage + ' ' + address);
+                jQuery('#omeka-map-form').focus();
             }
         }, function () {
             alert('Error: "' + address + '" was not found!');

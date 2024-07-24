@@ -5,6 +5,7 @@
 }
 #geolocation_address {
     width: 80%;
+    float: none;
 }
 button#geolocation_find_location_by_address {
     float: none;

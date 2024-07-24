@@ -24,7 +24,7 @@
             <Snippet maxLines="2"><?php echo xml_escape(metadata('item', array('Dublin Core', 'Description'), array('snippet' => 150))); ?></Snippet>
             <description><?php
             if (metadata($item, 'has thumbnail')) {
-                echo xml_escape(link_to_item(item_image('thumbnail'), array('class' => 'view-item')));
+                echo xml_escape(link_to_item(item_image('thumbnail', array('alt' => '')), array('class' => 'view-item')));
             }
             ?></description>
             <Point>

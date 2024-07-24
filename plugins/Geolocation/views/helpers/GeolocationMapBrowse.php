@@ -36,7 +36,10 @@ class Geolocation_View_Helper_GeolocationMapBrowse extends Zend_View_Helper_Abst
         $varDivId = Inflector::variablize($divId);
         $divAttrs = array_merge($attrs, array(
             'id' => $divId,
-            'class' => $class
+            'class' => $class,
+            'aria-role' => 'region',
+            'aria-roledescription' => 'map',
+            'aria-label' => 'Geolocation map'
         ));
 
         $html = '<div ' . tag_attributes($divAttrs) . '></div>';

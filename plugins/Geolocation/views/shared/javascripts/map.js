@@ -18,6 +18,10 @@ OmekaMap.prototype = {
     {
         var map = this.map;
         var marker = L.marker(latLng, options);
+        var srAlertsDiv = jQuery('#geolocation-sr-alerts');
+        var srAlertStringArray = [marker.options.title, srAlertsDiv.data('latString'), latLng[0], srAlertsDiv.data('longString'), latLng[1]];
+        var srOpenedAlertStringArray = srAlertStringArray.concat([srAlertsDiv.data('openedString')]);
+        var srClosedAlertStringArray = srAlertStringArray.concat([srAlertsDiv.data('closedString')]);
 
         if (this.clusterGroup) {
             this.clusterGroup.addLayer(marker);
@@ -44,6 +48,14 @@ OmekaMap.prototype = {
                         }
                     });
                 }
+            });
+
+            marker.addEventListener('popupopen', function (event) {
+                srAlertsDiv.text(srOpenedAlertStringArray.join(' '));
+            });
+
+            marker.addEventListener('popupclose', function (event) {
+                srAlertsDiv.text(srClosedAlertStringArray.join(' '));
             });
         }
                
@@ -183,7 +195,7 @@ OmekaMapBrowse.prototype = {
         balloon = balloon.replace('$[namewithlink]', titleWithLink).replace('$[description]', body).replace('$[Snippet]', snippet);
 
         // Build a marker, add HTML for it
-        this.addMarker([latitude, longitude], {title: title}, balloon);
+        this.addMarker([latitude, longitude], {title: title, alt: title}, balloon);
     },
     
     buildListLinks: function (container) {
@@ -201,12 +213,15 @@ OmekaMapBrowse.prototype = {
 
             // Links open up the markers on the map, clicking them doesn't actually go anywhere
             link.attr('href', 'javascript:void(0);');
+            link.attr('role', 'button');
 
             // Each <li> starts with the title of the item            
             link.text(marker.options.title);
 
             // Clicking the link should take us to the map
             link.bind('click', {}, function (event) {
+                link.toggleClass('current');
+
                 if (that.clusterGroup) {
                     that.clusterGroup.zoomToShowLayer(marker, function () {
                         marker.fire('click');

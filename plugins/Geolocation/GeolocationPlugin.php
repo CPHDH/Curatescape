@@ -138,6 +138,21 @@ class GeolocationPlugin extends Omeka_Plugin_AbstractPlugin
                 set_option('geolocation_mapbox_map_id', $newMapboxIds[$oldMapboxId]);
             }
         }
+        if (version_compare($args['old_version'], '3.3', '<')) {
+            $stamenBasemaps = array(
+                'Stamen.Toner' => 'Stadia.StamenToner',
+                'Stamen.TonerBackground' => 'Stadia.StamenTonerBackground',
+                'Stamen.TonerLite' => 'Stadia.StamenTonerLite',
+                'Stamen.Watercolor' => 'Stadia.StamenWatercolor',
+                'Stamen.Terrain' => 'Stadia.StamenTerrain',
+                'Stamen.TerrainBackground' => 'Stadia.StamenTerrainBackground',
+            );
+
+            $currentBasemap = get_option('geolocation_basemap');
+            if (isset($stamenBasemaps[$currentBasemap])) {
+                set_option('geolocation_basemap', $stamenBasemaps[$currentBasemap]);
+            }
+        }
     }
 
     /**

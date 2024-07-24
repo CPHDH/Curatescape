@@ -48,12 +48,12 @@
                 'OpenTopoMap' => __('OpenTopoMap'),
             ),
             __('Stamen') => array(
-                'Stamen.Toner' => __('Toner'),
-                'Stamen.TonerBackground' => __('Toner (background)'),
-                'Stamen.TonerLite' => __('Toner (lite)'),
-                'Stamen.Watercolor' => __('Watercolor'),
-                'Stamen.Terrain' => __('Terrain'),
-                'Stamen.TerrainBackground' => __('Terrain (background)'),
+                'Stadia.StamenToner' => __('Toner'),
+                'Stadia.StamenTonerBackground' => __('Toner (background)'),
+                'Stadia.StamenTonerLite' => __('Toner (lite)'),
+                'Stadia.StamenWatercolor' => __('Watercolor'),
+                'Stadia.StamenTerrain' => __('Terrain'),
+                'Stadia.StamenTerrainBackground' => __('Terrain (background)'),
             ),
             __('Esri') => array(
                 'Esri.WorldStreetMap' => __('World Street Map'),
