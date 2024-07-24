@@ -97,7 +97,7 @@ echo head(array('maptype'=>$maptype,'title'=>$title,'bodyid'=>'items','bodyclass
                             <?php echo rl_filed_under($item);?>
                             <?php echo rl_the_title_expanded($item); ?>
                             <?php echo rl_the_byline($item, false);?>
-                            <?php echo link_to_item(__('View %s', rl_item_label('singular')),array('class'=>'readmore')).($has_location && $item->public ? ' <span class="sep-bar">|</span> <a role="button" data-id="'.$item->id.'" class="readmore showonmap" href="javascript:void(0)">'.__('Show on Map').'</a>' : null);?>
+                            <?php echo link_to_item(__('View %s', rl_item_label('singular')),array('class'=>'readmore')).($has_location && $item->public ? ' <span class="sep-bar" aria-hidden="true">&mdash;</span> <a role="button" data-id="'.$item->id.'" class="readmore showonmap" href="javascript:void(0)">'.__('Show on Map').'</a>' : null);?>
                         </div>
 
                     </article>

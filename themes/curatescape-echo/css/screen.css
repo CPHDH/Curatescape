@@ -487,8 +487,8 @@ a:focus {
 }
 a.readmore {
   font-family: var(--font-ui);
-  font-variant: all-petite-caps;
-  font-size: 1rem;
+  font-size: .7rem;
+  text-transform: uppercase;
 }
 audio,
 video,
@@ -1261,7 +1261,8 @@ figcaption,
 #admin-bar {
   background: #222;
   padding: 0 1em;
-  font-variant: all-small-caps;
+  font-size: .7rem;
+  text-transform: uppercase;
 }
 #admin-bar .navigation {
   display: flex;
@@ -1328,7 +1329,8 @@ figcaption,
 #skip-nav,
 #skip-map {
   font-family: var(--font-ui);
-  font-variant: all-small-caps;
+  font-size: .7rem;
+  text-transform: uppercase;
   text-align: center;
   position: absolute;
   left: -999px;
@@ -1379,7 +1381,10 @@ hr {
   margin: 1rem 0;
   max-width: 200px;
 }
-
+.sep-bar {
+  vertical-align: middle;
+  font-size: .7rem;
+}
 /* Header Primary */
 header.primary {
   width: 100%;
@@ -2435,7 +2440,8 @@ nav.rl-toc {
 }
 nav.rl-toc ul li.head,
 nav.rl-toc ul li.foot {
-  font-variant: all-small-caps;
+  font-size: .7rem;
+  text-transform: uppercase;
 }
 nav.rl-toc ul {
   list-style-type: none;
