@@ -50,7 +50,7 @@ echo head(array('maptype'=>'none','title' => __('Collection').' | '.$title, 'bod
                 <?php endif; ?>
             </div>
         </section>
-        <?php echo isset($image[0]) ? rl_gallery_figure($image[0], 'featured', true) : null;?>
+        <?php echo isset($image[0]) ? rl_gallery_figure($image[0], 'featured', WEB_ROOT.'/items/browse?collection='.$collection->id) : null;?>
     </div>
 </article>
 
