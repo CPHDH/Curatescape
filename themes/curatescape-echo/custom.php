@@ -846,7 +846,7 @@ function rl_simple_search($inputID='search', $formProperties=array(), $ariaLabel
     $default_record_types = rl_search_form_default_record_types();
 
 
-    $searchQuery = array_key_exists($qname, $_GET) ? $_GET[$qname] : '';
+    $searchQuery = array_key_exists($qname, $_GET) ? htmlspecialchars($_GET[$qname]) : '';
     $formProperties['action'] = $searchUri;
     $formProperties['method'] = 'get';
     $html = '<form ' . tag_attributes($formProperties) . '>' . "\n";

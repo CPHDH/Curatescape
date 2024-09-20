@@ -331,10 +331,21 @@ const scrollEvents = (entries, observer) => {
     }
   });
 };
+// DISQUS LINKS 
+const disqusLinks = ()=>{
+  // for links to comments, auto-load comments section
+  if(window.location.hash.indexOf("#comment-") != -1){
+    let loadComments = document.querySelector('.load-comments.button');
+    if(loadComments){
+      loadComments.click();
+    }
+  }
+}
 // ITEM SHOW / MAIN
 const itemShow = () =>{
   streamingMediaControls();
   smoothAnchorLinks();
+  disqusLinks();
   if ("IntersectionObserver" in window) {
     let observer = new IntersectionObserver(scrollEvents, {});
     let sections = document.querySelectorAll("[data-toc] > *");

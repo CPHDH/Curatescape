@@ -1,7 +1,7 @@
 <?php
 // SETUP
-$tour = isset($_GET['tour']) ? $_GET['tour'] : null;
-$tour_index = isset($_GET['index']) ? $_GET['index'] : null;
+$tour = isset($_GET['tour']) ? (int)htmlspecialchars($_GET['tour']) : null;
+$tour_index = isset($_GET['index']) ? (int)htmlspecialchars($_GET['index']) : null;
 $maptype = 'story';
 $filesforitem = rl_item_files_by_type($item);
 if (isset($filesforitem['images'][0]['src'])) {

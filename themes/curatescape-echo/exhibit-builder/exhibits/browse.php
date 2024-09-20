@@ -1,8 +1,8 @@
 <?php
-$tag = (isset($_GET['tag']) ? $_GET['tag'] : null);
-$tags = (isset($_GET['tags']) ? $_GET['tags'] : null);
-$term = (isset($_GET['term']) ? $_GET['term'] : null);
-$query = (isset($_GET['search']) ? $_GET['search'] : null);
+$tag = (isset($_GET['tag']) ? htmlspecialchars($_GET['tag']): null);
+$tags = (isset($_GET['tags']) ? htmlspecialchars($_GET['tags']) : null);
+$term = (isset($_GET['term']) ? htmlspecialchars($_GET['term']) : null);
+$query = (isset($_GET['search']) ? htmlspecialchars($_GET['search']) : null);
 $advanced = (isset($_GET['advanced']) ? true : false);
 $bodyclass='browse';
 $maptype='focusarea';
