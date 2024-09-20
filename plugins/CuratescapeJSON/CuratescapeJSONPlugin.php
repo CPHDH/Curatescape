@@ -8,24 +8,24 @@ class CuratescapeJSONPlugin extends Omeka_Plugin_AbstractPlugin
 		'action_contexts',
 		'items_browse_per_page',
 		'search_texts_browse_per_page' );
-	
+
 	public function filterItemsBrowsePerPage( $perPage ){
-				
+
 		if( isset($_GET["output"]) && $_GET["output"] == 'mobile-json'){
 			$perPage=null; // no pagination
 		}
-		
+
 		return $perPage;
 	}
 
 	public function filterSearchTextsBrowsePerPage( $perPage ){
-				
+
 		if( isset($_GET["output"]) && $_GET["output"] == 'mobile-json'){
 			$perPage=null; // no pagination
 		}
-		
+
 		return $perPage;
-	}	
+	}
 
 	public function filterResponseContexts( $contexts )
 	{

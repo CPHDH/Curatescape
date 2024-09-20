@@ -11,18 +11,29 @@ msgstr ""
 "Project-Id-Version: Omeka Classic\n"
 "Report-Msgid-Bugs-To: http://github.com/omeka/plugin-SimpleVocab/issues\n"
 "POT-Creation-Date: 2012-11-28 21:49-0500\n"
-"PO-Revision-Date: 2017-09-19 16:11+0000\n"
-"Last-Translator: Isabelle Gilles <isabelle.gillesgallet@gmail.com>\n"
-"Language-Team: French (http://www.transifex.com/omeka/omeka/language/fr/)\n"
+"PO-Revision-Date: 2013-04-01 20:22+0000\n"
+"Last-Translator: Isabelle Gilles <isabelle.gillesgallet@gmail.com>, 2015\n"
+"Language-Team: French (http://app.transifex.com/omeka/omeka/language/fr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: fr\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Plural-Forms: nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;\n"
 
-#: SimpleVocabPlugin.php:80 views/admin/index/index.php:2
+#: SimpleVocabPlugin.php:112 views/admin/index/index.php:2
 msgid "Simple Vocab"
 msgstr "Vocabulaire Simple"
+
+#: config_form.php:3
+msgid "Apply to Files"
+msgstr ""
+
+#: config_form.php:14
+msgid ""
+"By default, your simple vocabularies will only apply to item metadata. Check"
+" the above box if you want to apply your vocabularies to file metadata as "
+"well."
+msgstr ""
 
 #: controllers/IndexController.php:57
 msgid "Successfully deleted the element's vocabulary terms."
@@ -52,10 +63,6 @@ msgstr "Contient des retours à la ligne."
 msgid "No texts for the selected element exist in Omeka."
 msgstr "Aucun texte n'existe dans Omeka pour l'élément sélectionné."
 
-#: views/admin/index/element-texts.ajax.php:6
-msgid "Count"
-msgstr "Compte"
-
 #: views/admin/index/element-texts.ajax.php:7
 msgid "Warnings"
 msgstr "Avertissements"
@@ -64,27 +71,27 @@ msgstr "Avertissements"
 msgid "Text"
 msgstr "Texte"
 
-#: views/admin/index/index.php:34
+#: views/admin/index/index.php:45
 msgid "Element"
 msgstr "Élément"
 
-#: views/admin/index/index.php:38
+#: views/admin/index/index.php:49
 msgid ""
 "Select an element to manage its custom vocabulary. Elements with a custom "
 "vocabulary are marked with an asterisk (*)."
 msgstr "Sélectionner un élément pour gérer son vocabulaire. Les éléments disposant d'un vocabulaire spécifique sont signalés par une astérisque (*)"
 
-#: views/admin/index/index.php:44
+#: views/admin/index/index.php:56
 msgid "Vocabulary Terms"
 msgstr "Éléments de vocabulaire"
 
-#: views/admin/index/index.php:47
+#: views/admin/index/index.php:60
 msgid ""
 "Enter the custom vocabulary terms for this element, one per line. To delete "
 "the vocabulary, simply remove the terms and submit this form."
 msgstr "Entrer les termes de vocabulaire pour cet élément, un par ligne. Pour supprimer le vocabulaire, supprimer tous les termes et valider le formulaire."
 
-#: views/admin/index/index.php:52
+#: views/admin/index/index.php:65
 #, php-format
 msgid ""
 "%sClick here%s to display a list of texts for the selected element that "
@@ -92,27 +99,23 @@ msgid ""
 "vocabulary, but be aware of some caveats:"
 msgstr "%sCliquer ici%s pour afficher une liste de textes existants déjà dans Omeka pour l'élément sélectionné. Vous pouvez utiliser cette liste comme référence pour construire le vocabulaire mais attention à :"
 
-#: views/admin/index/index.php:58
+#: views/admin/index/index.php:71
 msgid "Vocabulary terms must not contain newlines (line breaks)."
 msgstr "Les termes de vocabulaires ne doivent pas contenir de retour à la ligne"
 
-#: views/admin/index/index.php:59
+#: views/admin/index/index.php:72
 msgid ""
 "Vocabulary terms are typically short and concise. If your existing texts are"
 " otherwise, avoid using a controlled vocabulary for this element."
 msgstr "Les termes de vocabulaire sont en général concis. Si votre texte de départ ne l'est pas, il est déconseillé d'utiliser un vocabulaire contrôlé pour cet élément."
 
-#: views/admin/index/index.php:62
+#: views/admin/index/index.php:75
 msgid "Vocabulary terms must be identical to their corresponding texts."
 msgstr "Les termes de vocabulaire doivent être équivalent à leur texte cible."
 
-#: views/admin/index/index.php:63
+#: views/admin/index/index.php:76
 msgid ""
 "Existing texts that are not in the vocabulary will be preserved — however, "
 "they cannot be selected in the item edit page, and will be deleted once you "
 "save the item."
 msgstr "Les textes existants qui ne figurent pas dans le vocabulaire seront conservés - cependant, ils ne peuvent être sélectionnés en mode édition et seront supprimés lors de l'enregistrement du contenu."
-
-#: views/admin/index/index.php:70
-msgid "Add/Edit Vocabulary"
-msgstr "Ajouter/Modifier un vocabulaire"

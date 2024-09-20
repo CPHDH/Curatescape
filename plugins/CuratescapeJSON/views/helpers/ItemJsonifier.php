@@ -32,7 +32,7 @@ class CuratescapeJSON_View_Helper_ItemJsonifier extends Zend_View_Helper_Abstrac
 			$raw = strip_formatting( $raw );
 		return $raw ? html_entity_decode( $raw ) : null;
 	}
-	
+
 	private static function getContributor($item)
 	{
 		$contribItem = get_db()->getTable('ContributionContributedItem')->findByItem($item);
@@ -44,7 +44,7 @@ class CuratescapeJSON_View_Helper_ItemJsonifier extends Zend_View_Helper_Abstrac
 		}
 		return $name;
 	}
-	
+
 	public function itemJsonifier( $item, $isExtended = false )
 	{
 		// Skip items that don't have a location
@@ -68,7 +68,7 @@ class CuratescapeJSON_View_Helper_ItemJsonifier extends Zend_View_Helper_Abstrac
 			if(metadata($item, 'has thumbnail')){
 				$itemMetadata[ 'thumbnail' ] = (preg_match('/<img(.*)src(.*)=(.*)"(.*)"/U', item_image('square_thumbnail'), $result)) ? array_pop($result) : null;
 			}
-	
+
 			/* Extended Metadata */
 			if($isExtended){
 				$authors = metadata( 'item', array( 'Dublin Core', 'Creator' ),array( 'all' => true ) );
@@ -77,7 +77,7 @@ class CuratescapeJSON_View_Helper_ItemJsonifier extends Zend_View_Helper_Abstrac
 				{
 					$authorsStripped[] = html_entity_decode( strip_formatting( $auth ) );
 				}
-				
+
 				$itemMetadata['creator']=$authorsStripped;
 
 				if(!$itemMetadata['creator'] && plugin_is_active('Contribution') && plugin_is_active('GuestUser'))
@@ -187,7 +187,7 @@ class CuratescapeJSON_View_Helper_ItemJsonifier extends Zend_View_Helper_Abstrac
 					{
 						$caption[] = $creator;
 					}
-	
+
 					if( count( $caption ) )
 					{
 						$filedata[ 'description' ] = implode( " | ", $caption );

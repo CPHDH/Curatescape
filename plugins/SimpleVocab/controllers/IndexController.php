@@ -132,7 +132,7 @@ class SimpleVocab_IndexController extends Omeka_Controller_AbstractActionControl
                                     'count' => $elementText->count, 
                                     'text' => $elementText->text);
         }
-        
+        $this->view->element_id = $elementId;
         $this->view->element_texts = $elementTexts;
     }
     

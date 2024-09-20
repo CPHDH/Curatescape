@@ -8,13 +8,13 @@ class CuratescapeJSON_View_Helper_TourJsonifier extends Zend_View_Helper_Abstrac
 	public function tourJsonifier( $tour, $isExtended = false ){
 		$items = array();
 		foreach( $tour->Items as $item ){
-			
+
 			if($item->public){
 				set_current_record( 'item', $item );
-				
+
 				$location = get_db()->getTable('Location')->findLocationByItem($item, true);
 				if($location){
-					
+
 					$item_metadata = array(
 						'id' => $item->id,
 						'title' => trim( html_entity_decode( strip_formatting( metadata( 'item', array( 'Dublin Core', 'Title' ) ) ) ) ),

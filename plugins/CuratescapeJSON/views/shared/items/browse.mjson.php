@@ -47,6 +47,7 @@ l.longitude,
 et1.id title_index,
 et1.text title,
 et2.text address,
+et3.text subtitle,
 f.filename
 FROM '.$prefix.'items AS i
 JOIN '.$prefix.'locations AS l
@@ -62,6 +63,12 @@ LEFT JOIN ('.$prefix.'element_texts AS et2, '.$prefix.'elements AS e2)
 	AND et2.record_type = "Item"
 	AND et2.element_id = e2.id
 	AND e2.name="Street Address"
+	)
+LEFT JOIN ('.$prefix.'element_texts AS et3, '.$prefix.'elements AS e3)
+	ON (i.id = et3.record_id
+	AND et3.record_type = "Item"
+	AND et3.element_id = e3.id
+	AND e3.name="Subtitle"
 	)
 LEFT JOIN ('.$prefix.'files AS f)
 	ON (i.id = f.item_id
@@ -79,6 +86,7 @@ try {
 			continue; // skip items without location data
 		}
 		$record['title'] = normalizeText($record['title']);
+		$record['subtitle'] = normalizeText($record['subtitle']);
 		$record['address'] = normalizeText($record['address']);
 		if (! is_null($record['filename'])) {
 			$record['thumbnail'] = filenameToPath($record['filename'],'square_thumbnails');
