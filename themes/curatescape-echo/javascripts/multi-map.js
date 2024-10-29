@@ -248,11 +248,11 @@ const markerReset = (term,label)=>{
   map_title = label;
   all_markers = new Array();
   if(term){
-    dataSource = window.location.protocol + "//" + window.location.hostname +
+    dataSource = map_attr.rootUrl +
     "/items/browse?search=&advanced[0][element_id]=49&advanced[0][type]=contains&advanced[0][terms]=" +
     term + "&output=mobile-json";
   }else{
-    dataSource = window.location.protocol + "//" + window.location.hostname +
+    dataSource = map_attr.rootUrl +
     "/items/browse?output=mobile-json";
   }
   markerFetchAndAdd(dataSource,true,null);
@@ -369,9 +369,7 @@ const subjectSelectControls = ()=>{
 // LOAD MAP (MULTI)
 const loadMapMulti = (requested_id = null, isGlobalMap = false) => {
   dataSource = isGlobalMap
-    ? window.location.protocol +
-      "//" +
-      window.location.hostname +
+    ? map_attr.rootUrl +
       "/items/browse" +
       jsonPath
     : url + jsonPath;

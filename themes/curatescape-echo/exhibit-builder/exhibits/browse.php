@@ -1,5 +1,5 @@
 <?php
-$tag = (isset($_GET['tag']) ? htmlspecialchars($_GET['tag']): null);
+$tag = (isset($_GET['tag']) ? htmlspecialchars($_GET['tag']) : null);
 $tags = (isset($_GET['tags']) ? htmlspecialchars($_GET['tags']) : null);
 $term = (isset($_GET['term']) ? htmlspecialchars($_GET['term']) : null);
 $query = (isset($_GET['search']) ? htmlspecialchars($_GET['search']) : null);
