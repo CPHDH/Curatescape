@@ -1,0 +1,317 @@
+/* vars! */
+:root{
+	--factoid-detail-opacity: .25;
+	--factoid-innerborder-opacity: .15;
+	--factoid-background-opacity: .025;
+	--factoid-text-size: .9rem;
+	--factoid-border-width: 5px;
+	--factoid-multiples-vertical-spacing: 0.5rem;
+	--pswp-caption-text: #fff;
+	--pswp-accent-color: #f2f2f2; /* may be overridden in gallery.js */
+}
+/* functional! */
+[data-curatescape-hidden="true"]{
+	display: none;
+	visibility: hidden;
+}
+/* gallery! */
+.pswp__pswp-caption {
+	position: absolute;
+	width: 100%;
+	bottom: 0;
+	left: 0;
+}
+.pswp__pswp-caption > div{
+	position: relative;
+	max-width: 800px;
+	margin: 0 auto;
+	color: var(--pswp-caption-text);
+	padding: 1lh;
+	text-shadow: 0 0 10px rgba(0,0,0,.65);
+	background: linear-gradient(to top, rgba(0,0,0,1), rgba(0,0,0,.75));
+}
+.pswp__pswp-caption cite::before{
+	content: none;
+}
+.pswp__pswp-caption cite{
+	font-size: inherit;
+	color: inherit;
+	display: inline;
+}
+.pswp__pswp-caption a:link,
+.pswp__pswp-caption a:visited{
+	color: var(--pswp-accent-color);
+}
+.pswp button {
+	background-color: unset !important;
+}
+.pswp__audio-container,
+.pswp__video-container,
+.pswp__document-container{
+	text-align: center;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+.pswp__audio-container audio,
+.pswp__video-container video{
+	width: 100%;
+	box-shadow: 0 0 10vh rgba(0,0,0,.75);
+	background: rgba(0,0,0,1);
+	max-width: calc(100% - 150px);
+	margin: 0 auto;
+}
+.pswp__document-container a.curatescape-pswp-button{
+	display: block;
+	margin: 0 auto;
+}
+.pswp__document-container .document-thumb{
+	display: inline-block;
+}
+.pswp__audio-container audio.firefox,
+.pswp__video-container video{
+	border: 1px solid var(--pswp-accent-color);
+}
+.pswp__document-container .document-thumb img,
+.pswp__document-container .document-thumb a{
+	width: calc(100% - 10px);
+	max-width: 400px;
+	height: auto;
+}
+.pswp__document-container .document-thumb,
+.pswp__document-container iframe,
+.pswp__document-container object{
+	max-width: calc(100% - 150px);
+	max-height: calc(100vh - 150px);
+	margin: 0 auto;
+}
+@media all and (max-width: 500px){
+	.pswp__document-container .document-thumb,
+	.pswp__audio-container audio,
+	.pswp__video-container video,
+	.pswp__document-container object,
+	.pswp__document-container iframe{
+		max-width: calc(100% - 10px);
+		max-height: 90vh;
+	}
+}
+/* From here, all rules should use the .curatescape-styles body class! */
+.curatescape-styles .curatescape-article-header-styles .curatescape-subtitle{
+	display: block;
+	font-size: .9em;
+	font-variant-caps: all-small-caps;
+	font-variant-caps: all-petite-caps;
+	display: block;
+	line-height: 1.1em;
+}
+.curatescape-styles .curatescape-article-header-styles .curatescape-subtitle-separator{
+	position: absolute;
+	visibility: hidden;
+}
+.curatescape-styles .curatescape-lede{
+	font-size: 1.3em;
+	line-height: 1.4em;
+	font-weight: 500;
+	font-style: italic;
+}
+.curatescape-styles #factoid-heading{
+	font-weight: 600;
+	font-variant-caps: all-small-caps;
+	font-variant-caps: all-petite-caps;
+	font-size: 1rem;
+	margin-bottom: 0.25rem;
+}
+.curatescape-styles .curatescape-factoids{
+	position: relative;
+	display: flex;
+	flex-direction: row;
+	max-width: 100%;
+	background-color: rgba(0,0,0,var(--factoid-background-opacity)); /* old browsers */
+	background-color: color-mix(in srgb, currentColor calc(var(--factoid-background-opacity) * 100%), transparent); /* color-mixing currentColor addresses both light and dark dark backgrounds */
+	padding: 1rem;
+	margin: 1rem 0 2rem;
+}
+.curatescape-styles .curatescape-factoids::before{
+	content:'';
+	background-color: currentColor;
+	height: 100%;
+	width: var(--factoid-border-width);
+	position: absolute;
+	top: 0;
+	left: 0;
+	opacity: var(--factoid-detail-opacity);
+}
+.curatescape-styles .curatescape-text .curatescape-factoids{
+	margin-left: 1.5rem;
+	margin-right: 2.5rem;
+	max-width: calc(100% - 5rem - var(--factoid-border-width));
+}
+.curatescape-styles .curatescape-factoids .factoids-container{
+	flex-grow: 1;
+}
+.curatescape-styles .curatescape-factoids .factoid p{
+	margin: 0;
+	padding: 0;
+	font-size: var(--factoid-text-size);
+}
+.curatescape-styles .curatescape-factoids .factoid + .factoid{
+	margin-top: var(--factoid-multiples-vertical-spacing);
+	padding-top: var(--factoid-multiples-vertical-spacing);
+}
+.curatescape-styles .curatescape-factoids .factoid + .factoid::before{
+	content: '';
+	position: relative;
+	height: 1px;
+	display: block;
+	background: currentcolor;
+	opacity: var(--factoid-innerborder-opacity);
+	top: calc(0rem - var(--factoid-multiples-vertical-spacing));
+	left: 0;
+	
+}
+.curatescape-styles .factoids-decorator{
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+.curatescape-styles .factoids-decorator svg{
+	height: 2rem;
+	width: 2rem;
+	margin: 0 calc(1rem + var(--factoid-border-width)) 0 1rem;
+	fill: currentColor;
+	opacity: var(--factoid-detail-opacity);
+	user-select: none;
+}
+.curatescape-styles .curatescape-files{
+	display: block;
+	width: 100%;
+	container-name: gallerycontainer; /* <== Container */
+	container-type: inline-size; /* <== Container */
+	padding-bottom: 0.5em;
+}
+.curatescape-styles .curatescape-files cite::before {
+	content: none;
+}
+.curatescape-styles .curatescape-files cite{
+	font-size: inherit;
+	color: inherit;
+	display: inline;
+}
+.curatescape-styles .curatescape-files figure{
+	margin: 0 auto;
+}
+.curatescape-styles #geolocation figure{
+	margin: 0;
+	padding: 0;
+}
+.curatescape-styles .curatescape-map-caption{
+	margin-top: 0.5rem;
+}
+.curatescape-styles figcaption cite,
+.curatescape-styles table cite{
+	font-weight: 600;
+}
+.curatescape-styles .curatescape-shortcode-app-buttons-container{
+	container-name: appbuttonscontainer; /* <== Container */
+	container-type: inline-size; /* <== Container */
+}
+.curatescape-styles .curatescape-shortcode-app-buttons{
+	margin-bottom: 1lh;
+}
+.curatescape-styles .curatescape-shortcode-app-buttons a + a {
+	margin-inline-start: 0.25lh;
+}
+.curatescape-styles .curatescape-shortcode-app-buttons a.curatescape-shortcode-button {
+	text-decoration: none;
+	display: inline-flex;
+	flex-direction: row;
+	border: 1px solid currentcolor;
+	padding: 0.25lh 0.5lh;
+}
+@container appbuttonscontainer (width < 720px){
+	.curatescape-styles .curatescape-shortcode-app-buttons{
+		display: flex;
+		flex-direction: row;
+	}
+	.curatescape-styles .curatescape-shortcode-app-buttons a{
+		flex-grow: 1;
+		justify-content: center;
+	}
+}
+@container appbuttonscontainer (width < 500px){
+	.curatescape-styles .curatescape-shortcode-app-buttons{
+		flex-direction: column;
+	}
+	.curatescape-styles .curatescape-shortcode-app-buttons a + a{
+		margin-inline-start: 0;
+		margin-top: 0.25lh
+	}
+}
+.curatescape-styles table.curatescape-additional-files a.button{
+	text-decoration: none;
+	margin: 0.25lh 0;
+	margin-top: ;
+}
+.curatescape-styles table.curatescape-additional-files caption{
+	text-align:start;
+	font-style: normal;
+}
+.curatescape-styles table.curatescape-additional-files caption h3{
+	margin: 0;
+}
+.curatescape-styles table.curatescape-additional-files th,
+.curatescape-styles table.curatescape-additional-files td{
+	padding-left: 0;
+	text-align: left;
+}
+.curatescape-styles table.curatescape-additional-files td:first-child{
+	padding-right: 1lh;
+}
+.curatescape-styles table.curatescape-additional-files td:last-child{
+	white-space: nowrap;
+	height: 100%;
+}
+.curatescape-styles table.curatescape-additional-files td:last-child span.file-download{
+	display: inline-table;
+	margin: 0.5lh 0 0;
+}
+.curatescape-styles table.curatescape-additional-files td span.type{
+	text-transform: uppercase;
+	display: block;
+	margin: 0.25lh 0 0 0;
+	font-size: .75rem;
+	text-align: center;
+}
+.curatescape-styles .curatescape-shortcode-app-buttons a .curatescape-icon {
+	display: flex;
+	flex-direction: column;
+	align-self: center;
+	height: 1lh;
+	width: 1lh;
+	margin-right: 0.5lh;
+}
+.curatescape-styles .curatescape-shortcode-app-buttons a .curatescape-icon svg{
+	fill: currentColor;
+}
+.curatescape-styles .curatescape-file-figure img,
+.curatescape-styles .curatescape-file-figure audio,
+.curatescape-styles .curatescape-file-figure video,
+.curatescape-styles .curatescape-file-figure object,
+.curatescape-styles .curatescape-file-figure iframe{
+	display: block;
+	margin: 0 auto;
+	max-width: 100%;
+}
+.curatescape-styles .curatescape-file-figure audio{
+	width: calc(100% - 1lh);
+	padding: 0.5lh 0;
+}
+.curatescape-styles .curatescape-file-figure video,
+.curatescape-styles .curatescape-file-figure object,
+.curatescape-styles .curatescape-file-figure iframe{
+	width:100%;
+}
+.curatescape-styles .curatescape-file-figure object,
+.curatescape-styles .curatescape-file-figure iframe{
+	min-height: 70vh;
+}

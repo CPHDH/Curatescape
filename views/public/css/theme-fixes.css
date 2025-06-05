@@ -1,0 +1,72 @@
+.curatescape-fix-freedom.curatescape-styles.type-curatescape-story.items.show .metadata h3{
+	margin-top: revert;
+}
+.curatescape-fix-freedom.curatescape-styles.type-curatescape-story.items.show .metadata h2{
+	font-size: 2.3rem;
+}
+.curatescape-fix-rhythm.curatescape-styles.type-curatescape-story .curatescape-byline,
+.curatescape-fix-rhythm.curatescape-styles.type-curatescape-story .curatescape-lede{
+	margin-block-end: 24px; 
+}
+.curatescape-fix-rhythm.curatescape-styles #omeka-lightgallery img{
+	float: none !important;
+	height: 100% !important;
+}
+.curatescape-fix-bigstuff.curatescape-styles table.curatescape-additional-files,
+.curatescape-fix-berlin.curatescape-styles table.curatescape-additional-files,
+.curatescape-fix-rhythm.curatescape-styles table.curatescape-additional-files{
+	display: table-caption;
+	padding: 0 10px 0 0;
+}
+.curatescape-fix-foundation.curatescape-styles table.curatescape-additional-files th,
+.curatescape-fix-foundation.curatescape-styles table.curatescape-additional-files td{
+	padding-left: 0.625rem;
+}
+.curatescape-fix-santa-fe.curatescape-styles table.curatescape-additional-files th,
+.curatescape-fix-santa-fe.curatescape-styles table.curatescape-additional-files td{
+	padding-left: 9px
+}
+.curatescape-fix-default.curatescape-styles table.curatescape-additional-files th,
+.curatescape-fix-default.curatescape-styles table.curatescape-additional-files td{
+	padding-left: 4px;
+}
+.curatescape-fix-foundation.curatescape-styles.type-curatescape-story .curatescape-lede{
+	margin-block-start: 1rem;
+}
+.curatescape-fix-big-picture.curatescape-styles .curatescape-factoids .factoid p{
+	font-size: 1rem;
+}
+.curatescape-fix-bigstuff.curatescape-styles .curatescape-factoids .factoid p,
+.curatescape-fix-santa-fe.curatescape-styles .curatescape-factoids .factoid p,
+.curatescape-fix-santa-fe.curatescape-styles #factoid-heading,
+.curatescape-fix-emiglio.curatescape-styles .curatescape-factoids .factoid p,
+.curatescape-fix-emiglio.curatescape-styles #factoid-heading{
+	font-size: unset;
+}
+.curatescape-fix-emiglio.curatescape-styles .curatescape-image-gallery.gallery-grid .curatescape-image-figure img{
+	margin: unset;
+	padding:unset;
+	border:unset;
+	background-color:unset;
+}
+.curatescape-fix-bigstuff.curatescape-styles .curatescape-image-gallery.gallery-grid,
+.curatescape-fix-berlin.curatescape-styles .curatescape-image-gallery.gallery-grid {
+	margin-right: 10px;
+	margin-top: 5px;
+}
+@media screen and (min-width: 800px) {
+	.curatescape-fix-the-daily.curatescape-styles.type-curatescape-story h2{
+		width: 25%;
+		display: block;
+		text-align: right;
+	}
+}
+@media screen and (min-width: 800px) {
+	.curatescape-fix-big-picture.curatescape-styles.type-curatescape-story.items.show.gallery .item-metadata{
+		width: 35% !important;
+	}
+	.curatescape-fix-big-picture.curatescape-styles.type-curatescape-story.items.show div#itemfiles,
+	.curatescape-fix-big-picture.curatescape-styles.type-curatescape-story.items.show div.lightgallery{
+		width: 65% !important;
+	}
+}

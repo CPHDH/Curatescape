@@ -1,7 +1,0 @@
-<phpunit bootstrap="bootstrap.php"
-         convertErrorsToExceptions="true"
-         convertWarningsToExceptions="true">
-    <testsuite name="SimplePages Tests">
-        <directory>suite</directory>
-    </testsuite>
-</phpunit>

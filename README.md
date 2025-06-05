@@ -1,48 +1,71 @@
-# About Curatescape
+# Curatescape
+This plugin provides the core functionality for Curatescape mobile app projects (and others), adding a variety of features to facilitate location-based narrative storytelling and walking tours. Learn more at [curatescape.org](https://curatescape.org/).
 
-Curatescape is a set of themes and plugins for the [Omeka Classic](https://omeka.org/classic) CMS, and native client applications for Android and iOS devices. For more information, visit [curatescape.org](https://curatescape.org/) or view the [GitHub project wiki](https://github.com/CPHDH/Curatescape/wiki).
+## Overview
+### Item Type & Metadata Elements
+The first time you activate this plugin, it will install a new [Item Type](https://omeka.org/classic/docs/Content/Item_Types/) called *Curatescape Story*. This Item Type employs multiple new metadata [Elements](https://omeka.org/classic/docs/Admin/Settings/Item_Type_Elements/), including *Story*, *Subtitle*, *Lede*, *Street Address*, *Access Information*, *Official Website*, and several more. These Elements form a schema for location-based narrative storytelling.
 
-# Server-side Setup
+### Item Display
+Through various user-configurable settings, items using the *Curatescape Story* Item Type are displayed in a consistent, thematically-appropriate layout that uses semantic typographic design while fitting in with the look and feel of your chosen theme. Geolocation maps for each item include accessibility enhancements, e.g. the addition of text-equivalent content using the *Street Address* and/or *Access Information* elements.
 
-To get started, install Omeka and the Curatescape theme and plugins on the server of your choice. You can grab the all the required and optional Curatescape components (excluding Omeka) by cloning or downloading this repo. There is also an unofficial command line script for adding/updating components at [ebellempire/curatescape_utility](https://github.com/ebellempire/curatescape_utility). Note that this repo may lag behind individual theme and plugin repos. For the latest versions, check individual theme and plugin repos.
+### File Display
+In compatible themes, media files can be presented in multiple customizable, accessible media layouts and displayed in an interactive [PhotoSwipe](https://photoswipe.com/) lightbox, with various improvements to the display of audio, video, and PDF documents (PDFs can be displayed inline in Gecko- and Chromium-based browsers).
 
-1.  **Install Omeka**
-    - [Download Omeka (omeka.org)](http://omeka.org/download/)
-    - [Installation instructions (omeka.org)](http://omeka.org/codex/Installation)
-    - [Server requirements](https://github.com/CPHDH/Curatescape/wiki/Server-requirements)
-2.  **Add the Curatescape theme** to the `/themes/` directory
-    - Curatescape Classic: [repo](https://github.com/CPHDH/theme-curatescape) | [download](https://github.com/CPHDH/theme-curatescape/releases)
-    - Curatescape Echo: [repo](https://github.com/CPHDH/theme-curatescape-echo) | [download](https://github.com/CPHDH/theme-curatescape-echo/releases)
-3.  **Add the required plugins** to the `/plugins/` directory
-    - CuratescapeJSON: [repo](https://github.com/CPHDH/CuratescapeJSON) | [download](https://github.com/CPHDH/CuratescapeJSON/releases)
-    - CuratescapeAdminHelper: [repo](https://github.com/CPHDH/CuratescapeAdminHelper) | [download](https://github.com/CPHDH/CuratescapeAdminHelper/releases)
-    - TourBuilder: [repo](https://github.com/CPHDH/plugin-TourBuilder) | [download](https://github.com/CPHDH/plugin-TourBuilder/releases)
-    - Geolocation: [instructions](https://omeka.org/classic/docs/Plugins/Geolocation/) | [repo](https://github.com/omeka/plugin-Geolocation) | [download](http://omeka.org/add-ons/plugins/geolocation/)
-    - SimplePages: [instructions](http://omeka.org/codex/Plugins/SimplePages) | [repo](https://github.com/omeka/plugin-SimplePages) | [download](http://omeka.org/add-ons/plugins/simple-pages/)
-4.  Optionally, add additional recommended plugins to the `/plugins/` directory:
-    - SuperRSS: [repo](https://github.com/CPHDH/SuperRss) | [download](https://github.com/CPHDH/SuperRss/releases)
-    - MoreUserRoles: [repo](https://github.com/ebellempire/MoreUserRoles) | [download](https://github.com/ebellempire/MoreUserRoles/releases)
-    - SimpleVocab: [instructions](https://omeka.org/classic/docs/Plugins/SimpleVocab/) | [repo](https://github.com/omeka/plugin-SimpleVocab) | [download](http://omeka.org/add-ons/plugins/simple-vocab/)
-    - SubjectsBrowse: [repo](https://github.com/ebellempire/SubjectsBrowse) | [download](https://github.com/ebellempire/SubjectsBrowse/releases)
+### Tours
+Curatescape adds a new content type called Tours. Each tour is a curated selection of items, placed on a map, and presented with additional metadata and contextual information. Any location-enabled *Curatescape Story* Item can be added to any number of Tours. Tours can be thematic or geographically-based and are presented alongside an interactive map to assist users with navigation.
 
-# Native client apps
+### Sitewide Enhancements
+Curatescape also enables a variety of sitewide enhancements, including the addition of a simple, cacheable JSON API for mobile app and/or headless data exchange of select content; a custom RSS feed designed specifically for narrative content; custom meta tags for rich social media previews; custom shortcodes (see below); Google Analytics integration; admin bar enhancements; and much more. View the plugin configuration page for all options (there are _a lot_ of them).
 
-Note that while the server-side components of Curatescape are open source and freely available, the native client applications are proprietary and require a license agreement. For more information about licensing, visit [curatescape.org](https://curatescape.org/).
+## Requirements
+The [Geolocation plugin](https://omeka.org/classic/plugins/Geolocation/) is required. 
 
-# Documentation and other resources
+Any server that meets the [Omeka system requirements](https://omeka.org/classic/docs/Installation/System_Requirements/) should be fine. If you have server compatibility issues, please let us know on the [Curatescape Forum](https://forum.curatescape.org/).
 
-Please visit the [Curatescape project wiki](https://github.com/CPHDH/Curatescape/wiki) for technical and usage documentation. For general information about the project, please visit [curatescape.org](https://curatescape.org/). Please visit the [Curatescape Forum](https://forum.curatescape.org/) for inquiries about Curatescape. If you're new to Omeka, please consult the [Omeka documentation and forums](https://omeka.org) for help with installation and usage of Omeka.
+## Compatibility
+This plugin should work with any Omeka Classic theme, though features and level of integration may vary. For example, certain media-specific features may not be available for themes that already use filters to enhance the presentation of media files (e.g. The Daily, Center Row, and Big Picture). Efforts have been made to accommodate all [publicly-available Omeka Classic themes](https://omeka.org/classic/themes/), particularly those created by the Omeka Team, which generally share a common approach in terms of markup and layout. If you have a question or issue relating to theme compatibility, please let us know on the [Curatescape Forum](https://forum.curatescape.org/).
 
-# Acknowledgments
+### Recommended Theme
+For additional features, [vetted accessibility](https://curatescape.org/accessibility), and improved performance, use the [Curatescape Echo theme](https://github.com/CPHDH/theme-curatescape-echo).
 
-The [Curatescape team](http://curatescape.org/about/our-team/) and the [Center for Public History + Digital Humanities](http://csudigitalhumanities.org) at Cleveland State University would like to thank the following for their support, direct or otherwise:
+## Shortcodes
+Curatescape adds the following [shortcodes](https://omeka.org/classic/docs/Content/Shortcodes/).
+### [curatescape_app_buttons]
+Uses configured plugin settings for mobile apps to create button-styled links for iOS and Android app stores. With the default CSS classes, the links will be presented in a flexible CSS container that adjusts the layout based on available space.
+#### Usage
+```
+[curatescape_app_buttons icons="true"]
+```
+#### Parameters
+| Option | Type | Description |
+| -------- | ---- | ----------- |
+| buttonclass | string | Replace the default CSS class for the button links. Omit to use the default button link styles. Default class: `curatescape-shortcode-button` |
+| containerclass | string | Replace the default CSS class for the container. Omit to use the default container styles. Default class: `curatescape-shortcode-app-buttons` |
+| icons | boolean |  Use "true" to include vector icons for App Store and Google Play. |
+| platform | string | Use "ios" for the iOS link only or "android" for the Android link only. Omit to include both. When using this option, it is generally recommended to override the default button link and container classes. |
 
-- [Cleveland State University College of Liberal Arts and Social Sciences](https://www.csuohio.edu/class/)
-- [Cleveland State University Research Corporation](https://www.csuohio.edu/research-corporation/research-corporation)
-- [Cleveland State University Department of History](https://www.csuohio.edu/class/history/history)
-- [The Omeka team](https://omeka.org) at [RRCHNM](https://rrchnm.org/) and the Omeka open source community
-- [OpenStreetMap contributors](https://www.openstreetmap.org/copyright)
-- [Stamen Design](https://stamen.com/) and [Carto](https://carto.com/) for sharing their beautiful base maps
-- [Github](https://github.com) for [supporting educational organizations](https://education.github.com/)
-- [Browser Stack](https://www.browserstack.com/) for providing cross-browser testing tools for this open source project
-- [Mapbox Community](https://www.mapbox.com/community/) for supporting our in-app usage of [Mapbox GL](https://docs.mapbox.com/mapbox-gl-js/api/)
+## Support & Troubleshooting
+### User Forums
+Use the [Curatescape Forum](https://forum.curatescape.org/) to get support with Curatescape-specific issues. For general Omeka support, please use the [Omeka Forum](https://forum.omeka.org/).
+
+### Frequently Asked Questions
+#### Do I need to pay for Curatescape?
+No. The Curatescape plugin and themes are free and open source. We offer *optional* mobile app and hosting services at affordable rates, which helps us to recover some of the costs associated with the ongoing development of Curatescape. Learn more about our services at [curatescape.org](https://curatescape.org/).
+
+#### Does this single plugin replace others like Tour Builder, Curatescape JSON (Mobile JSON), Curatescape Admin Helper (Send To Admin Header), and Super RSS?
+Yes, those plugins are all deprecated and their functionality has been moved into the standalone Curatescape plugin, which includes performance improvements, additional features, and greater theme compatibility. If you are migrating an existing Curatescape project, you should deactivate and remove the deprecated plugins _after_ ensuring you have installed any outstanding plugin updates. If you have existing Tours, take care to uninstall Tour Builder only _after_ installing the Curatescape plugin to ensure your tours are preserved. The only other plugin you need is [Geolocation](https://omeka.org/classic/plugins/Geolocation/).
+
+#### Does Curatescape have an accessibility statement?
+Yes, please refer to the [Curatescape accessibility statement](https://curatescape.org/accessibility) to review our report and download the Voluntary Product Accessibility Template (VPAT). Note that our accessibility report applies only to the Curatescape plugin and themes and not to other themes or plugins, nor to Omeka Classic itself. See [Omeka Classic accessibility statement](https://omeka.org/classic/docs/GettingStarted/Accessibility_Statement/) for additional information.
+
+#### How can I upload a file for use as a custom meta image?
+The Curatescape plugin includes an option to define a default meta image for search engine and social media previews. This option accepts a URL. As a convenient alternative, theme developers may add the following option to their theme's `config.ini` file so that the image file can be easily changed in theme settings.
+
+```
+curatescape_meta_image.type = "file"
+curatescape_meta_image.options.label = "Meta Image"
+curatescape_meta_image.options.description = "Upload a custom meta image file for use when there is not a content-related image available (for example, on the homepage and browse pages). Recommended dimensions: 1200px × 630px (1.91:1)."
+curatescape_meta_image.options.validators.count.validator = "Count"
+curatescape_meta_image.options.validators.count.options.max = "1"
+```
+
