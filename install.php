@@ -61,6 +61,10 @@ function curatescapeStoryElements(){
 	);
 }
 /*
+** INSTALL PLUGIN OPTIONS
+*/
+$this->_installOptions();
+/*
 ** INSTALL ITEM TYPE AND ELEMENTS
 */
 $itemTypeMeta = curatescapeStoryItemType();
@@ -84,6 +88,65 @@ if(!$itemType){
 	$itemType->save();
 }
 /*
-** INSTALL PLUGIN OPTIONS
+** CREATE/MIGRATE DATABASE TABLES
 */
-$this->_installOptions();
+$db = $this->_db;
+// CREATE curatescape_tours table
+$db->query(
+	<<<SQL
+	CREATE TABLE IF NOT EXISTS `{$db->prefix}curatescape_tours` (
+		`id` int( 10 ) UNSIGNED NOT NULL AUTO_INCREMENT,
+		`title` varchar( 255 ) DEFAULT NULL,
+		`description` text NOT NULL,
+		`credits` text,
+		`postscript_text` text,
+		`featured` tinyint( 1 ) DEFAULT '0',
+		`public` tinyint( 1 ) DEFAULT '0',
+		`ordinal` INT NOT NULL DEFAULT '0',
+		`added` TIMESTAMP NOT NULL DEFAULT '2000-01-01 00:00:00',
+		`modified` TIMESTAMP NOT NULL DEFAULT '2000-01-01 00:00:00',
+		PRIMARY KEY( `id` )
+	) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci
+	SQL
+);
+// CREATE curatescape_tour_items table
+$db->query(
+	<<<SQL
+	CREATE TABLE IF NOT EXISTS `{$db->prefix}curatescape_tour_items` (
+		`id` INT( 10 ) UNSIGNED NOT NULL AUTO_INCREMENT,
+		`tour_id` INT( 10 ) UNSIGNED NOT NULL,
+		`ordinal` INT NOT NULL,
+		`item_id` INT( 10 ) UNSIGNED NOT NULL,
+		`subtitle` text DEFAULT NULL,
+		`text` text DEFAULT NULL,
+		PRIMARY KEY( `id` ),
+		KEY `curatescape_tours` ( `tour_id` )
+	) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci
+	SQL
+);
+// MIGRATE existing tours from legacy TourBuilder plugin
+$db->query(
+	<<<SQL
+	INSERT INTO `{$db->prefix}curatescape_tours` (id,title,description,credits,postscript_text,featured,public,ordinal,added,modified)
+	SELECT id,title,description,credits,postscript_text,featured,public,ordinal,NOW(),NOW()
+	FROM `{$db->prefix}tours` as t
+	WHERE NOT EXISTS (
+		SELECT 1
+		FROM `{$db->prefix}curatescape_tours` AS ct
+		WHERE t.id = ct.id
+	);
+	SQL
+);
+// MIGRATE existing tour items from legacy TourBuilder plugin
+$db->query(
+	<<<SQL
+	INSERT INTO `{$db->prefix}curatescape_tour_items` (id,tour_id,ordinal,item_id,subtitle,text)
+	SELECT id,tour_id,ordinal,item_id,subtitle,text
+	FROM `{$db->prefix}tour_items` as ti
+	WHERE NOT EXISTS (
+		SELECT 1
+		FROM `{$db->prefix}curatescape_tour_items` AS cti
+		WHERE ti.id = cti.id
+	);
+	SQL
+);

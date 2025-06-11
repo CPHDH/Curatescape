@@ -118,7 +118,7 @@ class CuratescapePlugin extends Omeka_Plugin_AbstractPlugin{
 
 	public function hookUninstall()
 	{
-		$this->_uninstallOptions();
+		require _PLUGIN_DIR_.'/uninstall.php';
 	}
 
 	public function hookConfig()

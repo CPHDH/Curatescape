@@ -10,13 +10,14 @@ class Curatescape_View_Helper_HookAdminHead extends Zend_View_Helper_Abstract{
 		if(
 			(is_current_url('/admin/plugins/') && !is_current_url('/admin/plugins/uninstall/')) ||
 			is_current_url('/admin/themes/') ||
-			is_current_url('/admin/settings/')
+			is_current_url('/admin/settings/') ||
+			is_current_url('/admin/tours/')
 		){
 			// @todo: theme deprecation check?
 			$deprecatedPlugins = array(
 				'CuratescapeJSON',
 				'CuratescapeAdminHelper',
-				'TourBuilder', // @todo: is this separate?
+				'TourBuilder',
 				'SuperRSS',
 				'SendToAdminHeader',
 				'MobileJSON',
