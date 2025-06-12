@@ -30,7 +30,7 @@ For additional features, [vetted accessibility](https://curatescape.org/accessib
 
 ## Shortcodes
 Curatescape adds the following [shortcodes](https://omeka.org/classic/docs/Content/Shortcodes/).
-### [curatescape_app_buttons]
+### App Store Buttons
 Uses configured plugin settings for mobile apps to create button-styled links for iOS and Android app stores. With the default CSS classes, the links will be presented in a flexible CSS container that adjusts the layout based on available space.
 #### Usage
 ```
