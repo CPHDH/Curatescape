@@ -1,5 +1,5 @@
 # Curatescape
-This plugin provides the core functionality for Curatescape mobile app projects (and others), adding a variety of features to facilitate location-based narrative storytelling and walking tours. Learn more at [curatescape.org](https://curatescape.org/).
+This plugin provides the core functionality for Curatescape mobile app projects (and others), adding a variety of features to facilitate location-based narrative storytelling and walking tours. Learn more at [curatescape.org](https://curatescape.org/). Curatescape is a project of the [Center for Public History + Digital Humanities](https://csudigitalhumanities.org/) at Cleveland State University.
 
 ## Overview
 ### Item Type & Metadata Elements
@@ -71,3 +71,15 @@ curatescape_meta_image.options.validators.count.options.max = "1"
 
 #### Why don't the File Display Settings change anything in my theme?
 Each theme is created differently. Some themes – such as Big Picture, Center Row, and The Daily – already have their own custom file viewers with their own display options. You can configure the plugin setting for Media Gallery to "None (use theme)" and turn off the PhotoSwipe-related options if you are using a theme that has a built-in media viewer. Other options should still work as intended.
+
+#### Can I use Item Types other than Curatescape Story?
+Technically yes, you can use any other item type, though some features are specific to the Curatescape Story item type. Projects with have mobile apps should generally only use the Curatescape Story item type. This will ensure a consistent presentation and user experience. Any project that is focused strongly on location-based storytelling as a whole should probably use the Curatescape Story item type for all items.
+
+#### Do all of my Items need to have Geolocation data?
+Technically no, but using Geolocation to add your item to the map is strongly recommended for Curatescape Story items. Curatescape is designed specifically for location-based storytelling. For projects with mobile apps, the only content that will appear in the app are items that use the Curatescape Story item type and have Geolocation data.
+
+#### My project is primarily centered around publishing archival metadata records, should I still use Curatescape?
+You can certainly use Curatescape to add some narrative content to your items database. However, depending on how your content is structured, you might consider using the Exhibit Builder instead of – _or in addition to_ – Curatescape to better curate traditional metadata-driven archival content. See related question below.
+
+#### How is Curatescape different from – or similar to – Exhibit Builder?
+Exhibit Builder is intended for curating discrete item records into multi-page exhibits, whereas Curatescape treats _each item_ as a sort of single-page exhibit. Curatescape Story items are centered around a location-based narrative, where multiple files are added at the item level to support the text. Any item that has Geolocation data and uses the Curatescape Story item type may be added to a Tour, which is similar to an Exhibit in that it is a curation of related items. Tours are comparatively simpler and centered primarily on geospatial relationships; the single-page, map-based presentation is designed specifically for curating location-based narratives into easily digestible walking, driving, and cycling tours, which are compatible with Curatescape mobile apps.
