@@ -9,7 +9,7 @@ The first time you activate this plugin, it will install a new [Item Type](https
 Through various user-configurable settings, items using the *Curatescape Story* Item Type are displayed in a consistent, thematically-appropriate layout that uses semantic typographic design while fitting in with the look and feel of your chosen theme. Geolocation maps for each item include accessibility enhancements, e.g. the addition of text-equivalent content using the *Street Address* and/or *Access Information* elements.
 
 ### File Display
-In compatible themes, media files can be presented in multiple customizable, accessible media layouts and displayed in an interactive [PhotoSwipe](https://photoswipe.com/) lightbox, with various improvements to the display of audio, video, and PDF documents (PDFs can be displayed inline in Gecko- and Chromium-based browsers).
+In compatible themes, media files can be presented in multiple customizable, accessible media layouts and displayed in an interactive [PhotoSwipe](https://photoswipe.com/) lightbox, with various improvements to the display of audio, video, and PDF documents (PDFs can be displayed inline in Gecko- and Chromium-based browsers including Chrome, Edge, Opera, and Firefox).
 
 ### Tours
 Curatescape adds a new content type called Tours. Each tour is a curated selection of items, placed on a map, and presented with additional metadata and contextual information. Any location-enabled *Curatescape Story* Item can be added to any number of Tours. Tours can be thematic or geographically-based and are presented alongside an interactive map to assist users with navigation.
@@ -69,3 +69,5 @@ curatescape_meta_image.options.validators.count.validator = "Count"
 curatescape_meta_image.options.validators.count.options.max = "1"
 ```
 
+#### Why don't the File Display Settings change anything in my theme?
+Each theme is created differently. Some themes – such as Big Picture, Center Row, and The Daily – already have their own custom file viewers with their own display options. You can configure the plugin setting for Media Gallery to "None (use theme)" and turn off the PhotoSwipe-related options if you are using a theme that has a built-in media viewer. Other options should still work as intended.
