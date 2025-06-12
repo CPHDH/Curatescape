@@ -30,7 +30,6 @@ class Curatescape_View_Helper_HookConfig extends Zend_View_Helper_Abstract{
 		set_option('curatescape_omit_redundant_elements', $_POST['curatescape_omit_redundant_elements']);
 		set_option('curatescape_plugin_styles', $_POST['curatescape_plugin_styles']);
 		set_option('curatescape_rss', $_POST['curatescape_rss']);
-		set_option('curatescape_shorten_item_type_name', $_POST['curatescape_shorten_item_type_name']);
 		set_option('curatescape_shorten_secondary_nav', $_POST['curatescape_shorten_secondary_nav']);
 		set_option('curatescape_subtitle_styles', $_POST['curatescape_subtitle_styles']);
 		set_option('curatescape_template', $_POST['curatescape_template']);

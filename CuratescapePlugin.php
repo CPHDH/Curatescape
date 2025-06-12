@@ -7,7 +7,9 @@
 * @todo: audio and video playlists?
 * @todo: option to exclude audio and video from lightbox
 * @todo: media fallback thumbnails (transparent, SVG, object fit: cover)
+* @todo: detect theme and display relevant compatibility info on config form
 * @later: languages
+* @later: matomo.org integration? or just use plugin?
 */
 
 // Includes
@@ -45,7 +47,6 @@ class CuratescapePlugin extends Omeka_Plugin_AbstractPlugin{
 		'display_option_description',
 		'files_for_item',
 		'file_markup',
-		
 		'filterCreatorAsLink' => array('Display', 'Item', 'Dublin Core', 'Creator'),
 		'filterDCTitleWithSubtitle' => array('Display', 'Item', 'Dublin Core', 'Title'),
 		'filterDisplayTitleWithSubtitle' => array('Display', 'Item', 'display_title'),
