@@ -175,7 +175,7 @@ class Curatescape_View_Helper_FilterFilesForItem extends Zend_View_Helper_Abstra
 	private function filesOutputTable($files, $subhead = true, $html = null)
 	{
 		if(!$files) return null;
-		$html .= '<table class="curatescape-additional-files">';
+		$html .= '<div class="filestablecontainer"><table class="curatescape-additional-files">';
 			$html .= ($subhead ? '<caption><h3>'.__('Documents').'</h3></caption>' : null);
 			$html .= '<thead><th>'.__('File Details').'</th><th>'.__('Download').'</th></thead>';
 			$html .= '<tbody>';
@@ -189,7 +189,7 @@ class Curatescape_View_Helper_FilterFilesForItem extends Zend_View_Helper_Abstra
 				$html .= '<tr><td>'.$title.'</td><td>'.$download.'</td></tr>';
 			}
 			$html .= '</tbody>';
-		$html .= '</table>';
+		$html .= '</table></div>';
 		return $html;
 	}
 	
