@@ -1,0 +1,32 @@
+:root{
+	--notice-bg: #fafad2;
+	--notice-text: #9F6D00;
+	--notice-text-darker: #390700;
+	--notice-decorative: #b8860b;
+}
+.curatescape-panel h3{
+	padding-top:12px;
+	padding-bottom: 6px;
+	border-bottom: 1px solid #e7e7e7;
+}
+.curatescape-panel span.highlight{
+	background: var(--notice-bg);
+	display: inline-block;
+	padding: 0 1lh;
+	margin-bottom: 1lh;
+}
+.curatescape-panel svg{
+	height: 0.95lh;
+	width: 0.95lh;
+	vertical-align: text-bottom;
+	padding-right: .5lh;
+	fill: var(--notice-decorative);
+}
+span.highlight h3{
+	color:var(--notice-text);
+	border-bottom-color: var(--notice-decorative);
+}
+#content #flash .curatescape-warning{
+	background-color: var(--notice-bg);
+	color:var(--notice-text-darker);
+}

@@ -4,6 +4,8 @@ class Curatescape_View_Helper_HookConfig extends Zend_View_Helper_Abstract{
 		set_option('curatescape_admin_bar_edit', $_POST['curatescape_admin_bar_edit']);
 		set_option('curatescape_alt_item_type_name_p', $_POST['curatescape_alt_item_type_name_p']);
 		set_option('curatescape_alt_item_type_name', $_POST['curatescape_alt_item_type_name']);
+		set_option('curatescape_alt_tour_name_p', $_POST['curatescape_alt_tour_name_p']);
+		set_option('curatescape_alt_tour_name', $_POST['curatescape_alt_tour_name']);
 		set_option('curatescape_app_android', $_POST['curatescape_app_android']);
 		set_option('curatescape_app_ios', $_POST['curatescape_app_ios']);
 		set_option('curatescape_append_primary_nav', $_POST['curatescape_append_primary_nav']);

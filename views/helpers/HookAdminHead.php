@@ -1,10 +1,22 @@
 <?php
 class Curatescape_View_Helper_HookAdminHead extends Zend_View_Helper_Abstract{
 	public function HookAdminHead($args){
-		$this->itemTypeFormJs();
-		$this->itemFormCss();
 		$this->adminCss();
+		$this->adminJs();
 		$this->deprecatedCheck();
+		$this->itemFormCss();
+		$this->itemTypeFormJs();
+	}
+	private function adminCss(){
+		queue_css_file('dashboard', 'all', false, 'css', get_plugin_ini(_PLUGIN_NAME_, 'version'));
+		if(is_current_url('/admin/tours/')){
+			queue_css_file('tours', 'all', false, 'css', get_plugin_ini(_PLUGIN_NAME_, 'version'));
+		}
+	}
+	private function adminJs(){
+		if(is_current_url('/admin/tours/')){
+			queue_js_file('browse', 'javascripts');
+		}
 	}
 	private function deprecatedCheck($warnings=array()){
 		if(
@@ -35,61 +47,13 @@ class Curatescape_View_Helper_HookAdminHead extends Zend_View_Helper_Abstract{
 			}
 		}
 	}
-	private function elementId($set=null,$element=null){
-		if(element_exists($set,$element)){
-			$elementObj= get_record('Element',array('name'=>$element));
-			return $elementObj->id;
-		}
-	}
-	private function adminCss(){
-		?>
-		
-		<style>
-		:root{
-			--notice-bg: #fafad2;
-			--notice-text: #9F6D00;
-			--notice-text-darker: #390700;
-			--notice-decorative: #b8860b;
-		}
-		.curatescape-panel h3{
-			padding-top:12px;
-			padding-bottom: 6px;
-			border-bottom: 1px solid #e7e7e7;
-		}
-		.curatescape-panel span.highlight{
-			background: var(--notice-bg);
-			display: inline-block;
-			padding: 0 1lh;
-			margin-bottom: 1lh;
-		}
-		.curatescape-panel svg{
-			height: 0.95lh;
-			width: 0.95lh;
-			vertical-align: text-bottom;
-			padding-right: .5lh;
-			fill: var(--notice-decorative);
-		}
-		span.highlight h3{
-			color:var(--notice-text);
-			border-bottom-color: var(--notice-decorative);
-		}
-		#content #flash .curatescape-warning{
-			background-color: var(--notice-bg);
-			color:var(--notice-text-darker);
-		}
-		</style>
-		
-		<?php
-	}
 	private function itemFormCss($largerTextArea = array(), $noHtml=array(), $noAddInput=array(), $labelHighlight=array())
 	{
 		if(
 			!str_contains(current_url(), 'admin/items/edit') &&
 			!str_contains(current_url(), 'admin/items/add')
 		) return null;
-		
 		if(!option('curatescape_form_enforcement')) return null;
-
 		$titleId=$this->elementId('Dublin Core','Title');
 		$creatorId=$this->elementId('Dublin Core','Creator');
 		$subjectId=$this->elementId('Dublin Core','Subject');
@@ -181,7 +145,7 @@ class Curatescape_View_Helper_HookAdminHead extends Zend_View_Helper_Abstract{
 			}
 		<?php endif;?>
 	</style>
-	
+
 	<script defer>
 		<?php if(count($labelHighlight)):?>
 			const addTitleAttribute = ()=>{
@@ -244,5 +208,11 @@ class Curatescape_View_Helper_HookAdminHead extends Zend_View_Helper_Abstract{
 	</script>
 
 	<?php
+	}
+	private function elementId($set=null,$element=null){
+		if(element_exists($set,$element)){
+			$elementObj= get_record('Element',array('name'=>$element));
+			return $elementObj->id;
+		}
 	}
 }

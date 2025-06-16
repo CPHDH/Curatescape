@@ -1,9 +1,12 @@
 <?php
+
+// https://omeka.readthedocs.io/en/latest/Tutorials/understandingOmeka_Record_AbstractRecord.html
+
+
 /*
-* @major: TOURS (HookPublicHomeTop, HookPublicHomeEnd, item navigation, in-tour navigation)
+* @major: TOURS (HookPublicHomeTop, HookPublicHomeEnd, item navigation, in-tour navigation, update json)
 * @major: MAPS (Geolocation PRs?)
 
-* @todo: files table -> responsive
 * @todo: audio and video playlists?
 * @todo: option to exclude audio and video from lightbox
 * @todo: media fallback thumbnails (transparent, SVG, object fit: cover)
@@ -31,6 +34,8 @@ class CuratescapePlugin extends Omeka_Plugin_AbstractPlugin{
 		'after_save_item',
 		'config_form',
 		'config',
+		'define_acl',
+		'define_routes',
 		'initialize',
 		'install',
 		'public_head',
@@ -41,6 +46,8 @@ class CuratescapePlugin extends Omeka_Plugin_AbstractPlugin{
 
 	protected $_filters = array(
 		'action_contexts',
+		'admin_dashboard_stats',
+		'admin_navigation_main',
 		'all_element_texts_options',
 		'body_tag_attributes',
 		'display_elements',
@@ -65,6 +72,7 @@ class CuratescapePlugin extends Omeka_Plugin_AbstractPlugin{
 		'public_navigation_items',
 		'public_navigation_main',
 		'response_contexts',
+		'search_record_types',
 		'search_texts_browse_per_page',
 	);
 
@@ -72,6 +80,8 @@ class CuratescapePlugin extends Omeka_Plugin_AbstractPlugin{
 		'curatescape_admin_bar_edit' => 1,
 		'curatescape_alt_item_type_name_p' => 'Stories',
 		'curatescape_alt_item_type_name' => 'Story',
+		'curatescape_alt_tour_name_p' => 'Tours',
+		'curatescape_alt_tour_name' => 'Tour',
 		'curatescape_app_android' => null,
 		'curatescape_app_ios' => null,
 		'curatescape_append_primary_nav' => 1,
@@ -152,6 +162,16 @@ class CuratescapePlugin extends Omeka_Plugin_AbstractPlugin{
 		return get_view()->HookPublicHomeEnd($args);
 	}
 
+	public function hookDefineRoutes($args)
+	{
+		return get_view()->HookDefineRoutes($args);
+	}
+
+	public function hookDefineAcl($args)
+	{
+		return get_view()->HookDefineAcl($args);
+	}
+
 	public function hookPublicContentTop($args)
 	{
 		return get_view()->HookPublicHomeTop($args);
@@ -178,6 +198,16 @@ class CuratescapePlugin extends Omeka_Plugin_AbstractPlugin{
 	// {
 	// 	return get_view()->FilterGeolocationMapSingle($html, $args);
 	// }
+
+	public function filterAdminNavigationMain($nav)
+	{
+		return get_view()->FilterAdminNavigationMain($nav);
+	}
+
+	public function filterAdminDashboardStats($stats)
+	{
+		return get_view()->FilterAdminDashboardStats($stats);
+	}
 
 	public function filterResponseContexts($contexts)
 	{
@@ -284,6 +314,11 @@ class CuratescapePlugin extends Omeka_Plugin_AbstractPlugin{
 
 	public function filterSearchTextsBrowsePerPage($perPage){
 		return get_view()->FilterPerPage($perPage);
+	}
+
+	public function filterSearchRecordTypes($recordTypes)
+	{
+		return get_view()->FilterSearchRecordTypes($recordTypes);
 	}
 
 }

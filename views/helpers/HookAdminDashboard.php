@@ -1,6 +1,34 @@
 <?php
 class Curatescape_View_Helper_HookAdminDashboard extends Zend_View_Helper_Abstract{
 	public function HookAdminDashboard($view, $html = null){
+		// TOURS (required)
+		$db = get_db();
+		$table = $db->getTable('CuratescapeTour');
+		$select = $table->getSelect();
+		$results = $table->fetchObjects($select);
+		$tourItems = null;
+		for($i=0;$i<=10;$i++){
+			if(array_key_exists($i, $results) && is_object($results[$i])){
+				$tourItems .= '<p class="recent">';
+					$tourItems .= '<a href="/admin/tours/show/'.$results[$i]->id.'">'
+					.$results[$i]->title.'</a>';
+				$tourItems .= '</p>';
+				$tourItems .= '<p class="dash-edit">';
+					$tourItems .= '<a href="/admin/tours/edit/'.$results[$i]->id.'">'
+					.__('Edit').'</a>';
+				$tourItems .= '</p>';
+			}
+		}
+		if($tourItems){
+			$html .= '<section class="panel five columns omega">';
+			$html .= '<h2>'.__('Recent Tours').'</h2>';
+			$html .= '<div class="recent-row">';
+			$html .= ''.$tourItems.'';
+			$html .= '</div>';
+			$html .= '<div class="add-new-link"><p><a class="add-tour green button" href="'.html_escape(url('tour-builder/tours/add/')).'">'.__('Add a new tour').'</a></p></div>';
+			$html .= '</section>';
+		}
+		// RESOURCES (optional)
 		if(option('curatescape_dashboard_resources')){
 			if(option('curatescape_app_android') || option('curatescape_app_ios') || option('curatescape_google_analytics')){
 				$html .= '<section class="panel five columns curatescape-panel">';

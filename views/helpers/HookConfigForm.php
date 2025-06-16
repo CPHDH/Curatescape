@@ -75,7 +75,11 @@ class Curatescape_View_Helper_HookConfigForm extends Zend_View_Helper_Abstract{
 		<fieldset>
 			<legend><?php echo __('Tour Settings'); ?></legend>
 			<p><?php echo __('Items using the %s Item Type (along with Geolocation data) can be collected into walking, cycling, and driving tours. The following options apply to Tours.', _CURATESCAPE_ITEM_TYPE_NAME_);?></p>
-
+			
+			<!-- Alt Tour Name -->
+			<?php echo configFormText('curatescape_alt_tour_name', 'Alternate Name', __('Enter an alternate display name for Tours. You may also need to adjust the corresponding link label in <a href="%s" target="_blank">Navigation settings</a>.', admin_url('appearance/edit-navigation')), 'Example: Tour');?>
+			<!-- Alt Tour Name (Plural) -->
+			<?php echo configFormText('curatescape_alt_tour_name_p', 'Alternate Name Plural', __('Enter the plural form of your alternate display name for Tours. You may also need to adjust the corresponding link label in <a href="%s" target="_blank">Navigation settings</a>.', admin_url('appearance/edit-navigation')), 'Example: Tours');?>
 			<!-- Map Style-->
 			<?php echo configFormSelect('curatescape_tour_map_style', 'Tour Maps', 'Select the type of map to use for tours.', array( 'inline' => __('Inline (default)'), 'floating' => __('Floating') ) );?>
 			<!-- Thumb Style-->

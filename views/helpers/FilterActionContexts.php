@@ -4,12 +4,12 @@ class Curatescape_View_Helper_FilterActionContexts extends Zend_View_Helper_Abst
 		$controller = $args['controller'];
 		if( !plugin_is_active('CuratescapeJSON') ){
 			if( is_a( $controller, 'ItemsController' ) ||
-				is_a( $controller, 'TourBuilder_ToursController' ) ||
+				is_a( $controller, 'Curatescape_ToursController' ) ||
 				is_a( $controller, 'SimplePages_PageController' ) ){
 				$contexts['show'][] = 'mobile-json';
 			}
 			if( is_a( $controller, 'ItemsController' ) ||
-				is_a( $controller, 'TourBuilder_ToursController' ) ){
+				is_a( $controller, 'Curatescape_ToursController' ) ){
 				$contexts['browse'][] = 'mobile-json';
 			}
 			if( is_a( $controller, 'SearchController' ) ){

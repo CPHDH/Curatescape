@@ -1,5 +1,20 @@
 <?php
 /*
+** HELPERS
+*/
+function databaseTableExists($db, $tableName){
+	$tableCheck = $db->query(
+		<<<SQL
+		SHOW TABLES LIKE '{$db->prefix}{$tableName}'
+		SQL
+	);
+	if ($tableCheck->rowCount() > 0) {
+		return true;
+	}
+	return false;
+}
+
+/*
 ** ARRAY: ITEM TYPE
 */
 function curatescapeStoryItemType(){
@@ -8,6 +23,7 @@ function curatescapeStoryItemType(){
 		'description' => 'A narrative body of text in article format, often describing a physical location.',
 	);
 }
+
 /*
 ** ARRAY: ELEMENTS
 */
@@ -60,10 +76,12 @@ function curatescapeStoryElements(){
 		),
 	);
 }
+
 /*
 ** INSTALL PLUGIN OPTIONS
 */
 $this->_installOptions();
+
 /*
 ** INSTALL ITEM TYPE AND ELEMENTS
 */
@@ -87,14 +105,16 @@ if(!$itemType){
 	$itemType->addElements($newElements);
 	$itemType->save();
 }
+
 /*
 ** CREATE/MIGRATE DATABASE TABLES
 */
 $db = $this->_db;
+
 // CREATE curatescape_tours table
 $db->query(
 	<<<SQL
-	CREATE TABLE IF NOT EXISTS `{$db->prefix}curatescape_tours` (
+	CREATE TABLE IF NOT EXISTS `{$db->CuratescapeTour}` (
 		`id` int( 10 ) UNSIGNED NOT NULL AUTO_INCREMENT,
 		`title` varchar( 255 ) DEFAULT NULL,
 		`description` text NOT NULL,
@@ -109,10 +129,11 @@ $db->query(
 	) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci
 	SQL
 );
+
 // CREATE curatescape_tour_items table
 $db->query(
 	<<<SQL
-	CREATE TABLE IF NOT EXISTS `{$db->prefix}curatescape_tour_items` (
+	CREATE TABLE IF NOT EXISTS `{$db->CuratescapeTourItem}` (
 		`id` INT( 10 ) UNSIGNED NOT NULL AUTO_INCREMENT,
 		`tour_id` INT( 10 ) UNSIGNED NOT NULL,
 		`ordinal` INT NOT NULL,
@@ -124,29 +145,41 @@ $db->query(
 	) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci
 	SQL
 );
-// MIGRATE existing tours from legacy TourBuilder plugin
+// UPDATE existing tour tags from legacy TourBuilder plugin
 $db->query(
 	<<<SQL
-	INSERT INTO `{$db->prefix}curatescape_tours` (id,title,description,credits,postscript_text,featured,public,ordinal,added,modified)
-	SELECT id,title,description,credits,postscript_text,featured,public,ordinal,NOW(),NOW()
-	FROM `{$db->prefix}tours` as t
-	WHERE NOT EXISTS (
-		SELECT 1
-		FROM `{$db->prefix}curatescape_tours` AS ct
-		WHERE t.id = ct.id
-	);
+	UPDATE `{$db->prefix}records_tags`
+	SET `record_type` = 'CuratescapeTour'
+	WHERE `record_type` = 'Tour';
 	SQL
 );
-// MIGRATE existing tour items from legacy TourBuilder plugin
-$db->query(
-	<<<SQL
-	INSERT INTO `{$db->prefix}curatescape_tour_items` (id,tour_id,ordinal,item_id,subtitle,text)
-	SELECT id,tour_id,ordinal,item_id,subtitle,text
-	FROM `{$db->prefix}tour_items` as ti
-	WHERE NOT EXISTS (
-		SELECT 1
-		FROM `{$db->prefix}curatescape_tour_items` AS cti
-		WHERE ti.id = cti.id
+// COPY existing tours from legacy TourBuilder plugin
+if (databaseTableExists($db,'tours')) {
+	$db->query(
+		<<<SQL
+		INSERT INTO `{$db->CuratescapeTour}` (id,title,description,credits,postscript_text,featured,public,ordinal,added,modified)
+		SELECT id,title,description,credits,postscript_text,featured,public,ordinal,NOW(),NOW()
+		FROM `{$db->prefix}tours` as t
+		WHERE NOT EXISTS (
+			SELECT 1
+			FROM `{$db->CuratescapeTour}` AS ct
+			WHERE t.id = ct.id
+		);
+		SQL
 	);
-	SQL
-);
+}
+// COPY existing tour items from legacy TourBuilder plugin
+if(databaseTableExists($db,'tour_items')){
+	$db->query(
+		<<<SQL
+		INSERT INTO `{$db->CuratescapeTourItem}` (id,tour_id,ordinal,item_id,subtitle,text)
+		SELECT id,tour_id,ordinal,item_id,subtitle,text
+		FROM `{$db->prefix}tour_items` as ti
+		WHERE NOT EXISTS (
+			SELECT 1
+			FROM `{$db->CuratescapeTourItem}` AS cti
+			WHERE ti.id = cti.id
+		);
+		SQL
+	);
+}

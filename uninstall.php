@@ -10,12 +10,12 @@ $db = $this->_db;
 // curatescape_tours
 $db->query(
 	<<<SQL
-	DROP TABLE IF EXISTS `{$db->prefix}curatescape_tours` 
+	DROP TABLE IF EXISTS `{$db->CuratescapeTour}` 
 	SQL
 );
 //curatescape_tour_items
 $db->query(
 	<<<SQL
-	DROP TABLE IF EXISTS `{$db->prefix}curatescape_tour_items`
+	DROP TABLE IF EXISTS `{$db->CuratescapeTourItem}`
 	SQL
 );
