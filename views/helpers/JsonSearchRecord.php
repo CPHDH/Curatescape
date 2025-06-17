@@ -46,11 +46,11 @@ class Curatescape_View_Helper_JsonSearchRecord extends Zend_View_Helper_Abstract
 
 		/* TOUR */
 		if(
-			$searchText->record_type == 'Tour'
+			$searchText->record_type == 'CuratescapeTour'
 		){
 			return array(
 				'result_id' => $searchText->record_id,
-				'result_type' => $searchText->record_type,
+				'result_type' => 'Tour',
 				'result_title' => $searchText->title,
 				'result_tour_items' => count($record->getItems()),
 			);

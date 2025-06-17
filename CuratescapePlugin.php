@@ -4,7 +4,7 @@
 
 
 /*
-* @major: TOURS (HookPublicHomeTop, HookPublicHomeEnd, item navigation, in-tour navigation, update json)
+* @major: TOURS (HookPublicHomeTop, HookPublicHomeEnd, item navigation, in-tour navigation)
 * @major: MAPS (Geolocation PRs?)
 
 * @todo: audio and video playlists?
