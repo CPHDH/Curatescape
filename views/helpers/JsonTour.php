@@ -1,4 +1,4 @@
-<?php // @todo: see below: getTourItem()
+<?php
 class Curatescape_View_Helper_JsonTour extends Zend_View_Helper_Abstract
 {
 	public function JsonTour( $tour, $isExtended = false, $items = array() ){
@@ -22,6 +22,20 @@ class Curatescape_View_Helper_JsonTour extends Zend_View_Helper_Abstract
 			'items' => $items,
 		);
 	}
+	
+	public function JsonToursBrowse($tours){
+		if( count($tours) ){
+			usort( $tours, 'sortByOrdinal' );
+		}
+		$output = array('tours'=>array());
+		foreach( $tours as $tour ){
+			if(!$tour->public) continue;
+			if($tourMeta = $this->JsonTour( $tour )){
+				$output['tours'][] = $tourMeta;
+			}
+		}
+		return json_encode($output);
+	}
 
 	private function tourItem($item, $tour, $isExtended = false){
 		if(!$item || !$tour) return null;
@@ -36,7 +50,7 @@ class Curatescape_View_Helper_JsonTour extends Zend_View_Helper_Abstract
 				'subtitle' => plainText( itm($item, 'Subtitle') ),
 				'address' => plainText( itm($item, 'Street Address') ),
 			);
-			if($isExtended && method_exists($tour,'getTourItem')){ // @todo: migrate from tour builder
+			if($isExtended){
 				$custom = $tour->getTourItem($item->id);
 				$itemMeta['custom']['subtitle'] = plainText($custom['subtitle']);
 				$itemMeta['custom']['text'] = plainText($custom['text']);

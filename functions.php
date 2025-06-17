@@ -173,29 +173,12 @@ function allowedExtensionImg($filepath, $allowed = array('jpg','jpeg','png', 'we
 	}
 }
 
-function generateItemsBrowseJson($items){
-	$output = array('items'=>array());
-	foreach( $items as $item ){
-		if(!$item->public) continue;
-		if($itemMeta = get_view()->JsonItem( $item, false )){
-			$output['items'][] = $itemMeta;
 		}
 	}
-	return json_encode($output);
 }
 
-function generateToursBrowseJson($tours){
-	if( count($tours) ){
-		usort( $tours, 'sortByOrdinal' );
-	}
-	$output = array('tours'=>array());
-	foreach( $tours as $tour ){
-		if(!$tour->public) continue;
-		if($tourMeta = get_view()->JsonTour( $tour )){
-			$output['tours'][] = $tourMeta;
 		}
 	}
-	return json_encode($output);
 }
 
 // used only for PDF display

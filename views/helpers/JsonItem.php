@@ -32,6 +32,17 @@ class Curatescape_View_Helper_JsonItem extends Zend_View_Helper_Abstract
 		}
 		return false;
 	}
+	
+	public function JsonItemsBrowse($items){
+		$output = array('items'=>array());
+		foreach( $items as $item ){
+			if(!$item->public) continue;
+			if($itemMeta = $this->JsonItem( $item, false )){
+				$output['items'][] = $itemMeta;
+			}
+		}
+		return json_encode($output);
+	}
 
 	private function getFiles($item, $files = array()){
 		foreach( $item->Files as $file ){

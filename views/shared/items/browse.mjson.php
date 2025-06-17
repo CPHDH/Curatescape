@@ -5,7 +5,7 @@ echo $cache->Config(option('curatescape_json_cache'));
 if ($cacheFile = $cache->GetJsonFile(_JSON_ITEMS_FILE_, option('curatescape_json_storage'))) {
 	echo $cacheFile;
 }else{
-	$json = generateItemsBrowseJson($items);
+	$json = $this->getHelper('JsonItem')->JsonItemsBrowse($items);
 	if(intval(option('curatescape_json_storage'))){
 		$cache->WriteJsonFile(_JSON_ITEMS_FILE_, $json);
 	}
