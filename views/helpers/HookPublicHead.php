@@ -53,12 +53,35 @@ class Curatescape_View_Helper_HookPublicHead extends Zend_View_Helper_Abstract{
 
 	<?php
 	}
+	
+	private function metaImage($url = ''){
+		if(option('curatescape_meta_image') && strlen(option('curatescape_meta_image')) > 6){
+			// string/url (plugin option)
+			$url = trim(option('curatescape_meta_image'));
+		}elseif(get_theme_option('curatescape_meta_image') && strlen(get_theme_option('curatescape_meta_image')) > 5){
+			// theme upload (available for theme developers)
+			$url = WEB_ROOT.'/files/theme_uploads/'.trim(get_theme_option('curatescape_meta_image')); 
+		}elseif(get_theme_option('custom_meta_img') && strlen(get_theme_option('custom_meta_img')) > 5){
+			// theme upload (legacy)
+			$url = WEB_ROOT.'/files/theme_uploads/'.trim(get_theme_option('custom_meta_img')); 
+		}
+		if(!$url) return '';
+		// validate/sanitize
+		$url = html_escape(filter_var($url, FILTER_SANITIZE_URL));
+		if(substr($url,0,4) !== "http" || !allowedExtensionImg($url)){
+			return '';
+		}
+		if(filter_var($url, FILTER_VALIDATE_URL, FILTER_FLAG_PATH_REQUIRED) === FALSE) {
+			return '';
+		}
+		return $url;
+	}
 
 	private function metaTags($args)
 	{
 		$metaTitle= get_option('site_title');
 		$metaText= get_option('description');
-		$metaImg= metaImage();
+		$metaImg= $this->metaImage();
 		$metaUrl = WEB_ROOT.current_url();
 		$metaTitle = isset($args['view']->title) ? $args['view']->title : $metaTitle;
 		if($item = $args['view']->getCurrentRecord('item', false)){
@@ -90,7 +113,7 @@ class Curatescape_View_Helper_HookPublicHead extends Zend_View_Helper_Abstract{
 			$metaTitle = __('Map').(get_option('site_title') !== $metaTitle ? ' | '.get_option('site_title') : null);
 		}
 		if(empty($metaImg) || !empty($metaImg) && str_contains($metaImg, 'application/views/scripts/images/fallback')){
-			$metaImg = metaImage();
+			$metaImg = $this->metaImage();
 		}
 	?>
 

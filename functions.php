@@ -133,27 +133,8 @@ function sortByOrdinal($a, $b){
 	return $a['ordinal'] > $b['ordinal'] ? 1 : -1;
 }
 
-function metaImage($url = ''){
-	if(option('curatescape_meta_image') && strlen(option('curatescape_meta_image')) > 6){
-		// plugin option (string)
-		$url = trim(option('curatescape_meta_image'));
-	}elseif(get_theme_option('curatescape_meta_image') && strlen(get_theme_option('curatescape_meta_image')) > 5){
-		// theme upload (available for theme developers)
-		$url = WEB_ROOT.'/files/theme_uploads/'.trim(get_theme_option('curatescape_meta_image')); 
-	}elseif(get_theme_option('custom_meta_img') && strlen(get_theme_option('custom_meta_img')) > 5){
-		// theme upload (legacy)
-		$url = WEB_ROOT.'/files/theme_uploads/'.trim(get_theme_option('custom_meta_img')); 
 	}
-	if(!$url) return '';
-	// validate/sanitize
-	$url = html_escape(filter_var($url, FILTER_SANITIZE_URL));
-	if(substr($url,0,4) !== "http" || !allowedExtensionImg($url)){
-		return '';
 	}
-	if(filter_var($url, FILTER_VALIDATE_URL, FILTER_FLAG_PATH_REQUIRED) === FALSE) {
-		return '';
-	}
-	return $url;
 }
 
 function allowedExtensionImg($filepath, $allowed = array('jpg','jpeg','png', 'webp')){
