@@ -1,12 +1,13 @@
 <?php
-cacheBustManual(_JSON_ITEMS_FILE_, false);
-echo cacheConfig(option('curatescape_json_cache'));
-if ($cache = getJsonCacheFile(_JSON_ITEMS_FILE_, option('curatescape_json_storage'))) {
-	echo $cache;
+$cache = get_view()->Cache();
+$cache->CacheBustManual(_JSON_ITEMS_FILE_, false);
+echo $cache->Config(option('curatescape_json_cache'));
+if ($cacheFile = $cache->GetJsonFile(_JSON_ITEMS_FILE_, option('curatescape_json_storage'))) {
+	echo $cacheFile;
 }else{
 	$json = generateItemsBrowseJson($items);
 	if(intval(option('curatescape_json_storage'))){
-		writeJsonCacheFile(_JSON_ITEMS_FILE_, $json);
+		$cache->WriteJsonFile(_JSON_ITEMS_FILE_, $json);
 	}
 	echo $json;
 }
