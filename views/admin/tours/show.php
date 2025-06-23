@@ -6,13 +6,11 @@ if( $tourTitle != '' && $tourTitle != '[Untitled]' ) {
 	$tourTitle = '';
 }
 $tourTitle = 'Tour #'.metadata('tour','id').$tourTitle;
-
 echo head(array('title' => $tourTitle,'bodyclass' =>'show','bodyid'=>'tour'));
 echo flash();
 ?>
 
 <section class="seven columns alpha">
-
 	<?php if(metadata('tour','Title')): ?>
 		<div id="tour-title" class="element">
 			<h2><?php echo __('Title');?></h2>
@@ -35,7 +33,7 @@ echo flash();
 		<div id="tour-description" class="element">
 			<h2><?php echo __('Description');?></h2>
 			<div class="element-text">
-				<?php echo htmlspecialchars_decode(nls2p(metadata('tour','Description'))); ?>
+				<?php echo htmlspecialchars_decode(metadata('tour','Description')); ?>
 			</div>
 		</div>
 	<?php endif; ?>
@@ -44,7 +42,7 @@ echo flash();
 		<div id="postscript_text" class="element">
 			<h2><?php echo __('Postscript Text');?></h2>
 			<div class="element-text">
-				<?php echo htmlspecialchars_decode(nls2p(metadata('tour','postscript_text'))); ?>
+				<?php echo htmlspecialchars_decode(metadata('tour','postscript_text')); ?>
 			</div>
 		</div>
 	<?php endif; ?>
@@ -81,7 +79,7 @@ echo flash();
 <section class="three columns omega">
 	<div id="edit" class="panel">
 		<?php if(is_allowed('Curatescape_CuratescapeTours', 'edit')): ?>
-			<a href="<?php echo url(array( 'action' => 'edit', 'id' => $tour->id )); ?>"
+			<a href="<?php echo url(array( 'action' => 'edit','id' => $tour->id), 'tourAction' );?>"
 				class="edit big green button"><?php echo __('Edit'); ?></a>
 		<?php endif; ?>
 
@@ -89,7 +87,8 @@ echo flash();
 			class="big blue button" target="_blank"><?php echo __('View Public Page'); ?></a>
 
 		<?php if(is_allowed('Curatescape_CuratescapeTours', 'delete')): ?>
-			<?php echo link_to_tour(__('Delete'),array( 'class' => 'delete-confirm big red button'),'delete-confirm' ); ?>
+			<a href="<?php echo url(array( 'action' => 'delete-confirm','id' => $tour->id), 'tourAction' );?>"
+			class="delete-confirm big red button"><?php echo __('Delete'); ?></a>
 		<?php endif; ?>
 	</div>
 

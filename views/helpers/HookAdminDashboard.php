@@ -25,7 +25,7 @@ class Curatescape_View_Helper_HookAdminDashboard extends Zend_View_Helper_Abstra
 			$html .= '<div class="recent-row">';
 			$html .= ''.$tourItems.'';
 			$html .= '</div>';
-			$html .= '<div class="add-new-link"><p><a class="add-tour green button" href="'.html_escape(url('tour-builder/tours/add/')).'">'.__('Add a new tour').'</a></p></div>';
+			$html .= '<div class="add-new-link"><p><a class="add-tour green button" href="'.html_escape(url('tours/add/')).'">'.__('Add a new tour').'</a></p></div>';
 			$html .= '</section>';
 		}
 		// RESOURCES (optional)

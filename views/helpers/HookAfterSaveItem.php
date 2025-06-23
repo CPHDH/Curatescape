@@ -48,8 +48,9 @@ class Curatescape_View_Helper_HookAfterSaveItem extends Zend_View_Helper_Abstrac
 			}
 		}
 		// clear json server cache 
-		cacheBustManual(_JSON_ITEMS_FILE_, true);
-		cacheBustManual(_JSON_TOURS_FILE_, true);
+		$cache = get_view()->Cache();
+		$cache->CacheBustManual(_JSON_ITEMS_FILE_, true);
+		$cache->CacheBustManual(_JSON_TOURS_FILE_, true);
 	}
 
 	private function filterRules()

@@ -4,15 +4,21 @@
 
 
 /*
-* @major: TOURS (HookPublicHomeTop, HookPublicHomeEnd, item navigation, in-tour navigation)
-* @major: MAPS (Geolocation PRs?)
+* @major: TOURS
+	* search filters not working (tags, featured, etc)
+	* public views
+	* item-nav
+	* HookPublicHomeTop, HookPublicHomeEnd
+	* New features: in-tour navigation
 
 * @todo: audio and video playlists?
 * @todo: option to exclude audio and video from lightbox
 * @todo: media fallback thumbnails (transparent, SVG, object fit: cover)
 * @todo: detect theme and display relevant compatibility info on config form
+
 * @later: languages
 * @later: matomo.org integration? or just use plugin?
+* @later: maps (Geolocation PRs?)
 */
 
 // Includes

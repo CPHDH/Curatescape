@@ -1,20 +1,14 @@
-<?php 
-if (isset($_GET['featured']) && $_GET['featured'] == 1) {
-	$pageTitle = __('Featured Tours (%s total)', $total_results);
-}elseif(isset($_GET['tags']) ){
-	$tag = htmlspecialchars($_GET['tags']);
-	$pageTitle = __('Tours tagged "%1s" (%2s total)', $tag, $total_results );
-}else{
-	$pageTitle = __('All Tours (%s total)', $total_results);
-}
-if(has_tours()){
+<?php
+if(hasTours()){
   $tours = activeSort($tours);
 }
 ?>
 
-<?php echo head(array('title' => $pageTitle, 'bodyid'=>'tour','bodyclass' => 'tours browse'));?>
+<?php echo head(array('title' =>toursBrowsePageTitle($total_results), 'bodyid'=>'tour','bodyclass' => 'tours browse'));?>
 
-<?php echo flash();?>
+<?php echo item_search_filters();?>
+
+<?php echo flash(); ?>
 
 <?php if(is_allowed( 'Curatescape_CuratescapeTours', 'add' )): ?>
 	<div class="tour-actions">
@@ -47,7 +41,7 @@ if(has_tours()){
 					<td scope="row" <?php echo ($tour->featured) ? 'class="featured"' : null?> >
 
 						<span class="title">
-							<a href="<?php echo url(array( 'action' => 'show','id' => $tour->id), 'toursAction' ); ?>"><?php echo $tour->title; ?></a>
+							<a href="<?php echo url(array( 'action' => 'show','id' => $tour->id), 'tourAction' ); ?>"><?php echo $tour->title; ?></a>
 							<?php if(metadata( $tour, 'Featured' ) == 1):?>
 							<div class="featured-icon">
 								<span class="featured" aria-hidden="true" title="<?php echo __('Featured'); ?>"></span>
@@ -63,7 +57,7 @@ if(has_tours()){
 							<a href="javascript:void(0)" class="details-link"><?php echo __('Details');?></a>
 							<?php if(is_allowed( 'Curatescape_CuratescapeTours', 'edit')):?>
 								<span class="middot">&middot;</span>
-								<a href="<?php echo url(array( 'action' => 'edit','id' => $tour->id), 'toursAction' );?>" class="edit"><?php echo __('Edit')?></a>
+								<a href="<?php echo url(array( 'action' => 'edit','id' => $tour->id), 'tourAction' );?>" class="edit"><?php echo __('Edit')?></a>
 							<?php endif;?>
 
 							<div class="details admin-tour-browse-meta hidden">

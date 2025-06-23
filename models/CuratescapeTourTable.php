@@ -48,31 +48,31 @@ class CuratescapeTourTable extends Omeka_Db_Table
 		return $select;
 	}
 	
-	public function applySearchFilters($select, $params)
-	{
-		$db = $this->getDb();
-		parent::applySearchFilters($select, $params);
-		foreach($params as $paramName => $paramValue) {
-			switch($paramName) {
-				case 'tag':
-				case 'tags':
-					$tags = explode(',', $paramValue);
-					$select->joinInner(array('tg'=>$db->RecordsTags), 'tg.record_id = tours.id', array());
-					$select->joinInner(array('t'=>$db->Tag), "t.id = tg.tag_id", array());
-					foreach ($tags as $k => $tag) {
-						$select->where('t.name = ?', trim($tag));
-					}
-					$select->where("tg.record_type = ? ", array('CuratescapeTour'));
-					break;
-				case 'public':
-					$this->filterByPublic($select, $params['public']);
-					break;
-				case 'featured':
-					$this->filterByFeatured($select, $params['featured']);
-					break;
-			}
-		}
-		return $select;
-	}
+	// public function applySearchFilters($select, $params)
+	// {
+	// 	$db = $this->getDb();
+	// 	parent::applySearchFilters($select, $params);
+	// 	foreach($params as $paramName => $paramValue) {
+	// 		switch($paramName) {
+	// 			case 'tag':
+	// 			case 'tags':
+	// 				$tags = explode(',', $paramValue);
+	// 				$select->joinInner(array('tg'=>$db->RecordsTags), 'tg.record_id = tours.id', array());
+	// 				$select->joinInner(array('t'=>$db->Tag), "t.id = tg.tag_id", array());
+	// 				foreach ($tags as $k => $tag) {
+	// 					$select->where('t.name = ?', trim($tag));
+	// 				}
+	// 				$select->where("tg.record_type = ? ", array('CuratescapeTour'));
+	// 				break;
+	// 			case 'public':
+	// 				$this->filterByPublic($select, $params['public']);
+	// 				break;
+	// 			case 'featured':
+	// 				$this->filterByFeatured($select, $params['featured']);
+	// 				break;
+	// 		}
+	// 	}
+	// 	return $select;
+	// }
 
 }

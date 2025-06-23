@@ -2,7 +2,7 @@
 class Curatescape_View_Helper_FilterTitleWithSubtitle extends Zend_View_Helper_Abstract{
 	public function FilterTitleWithSubtitle($text, $args, $isRich = false){
 		if(
-			(is_admin_theme() && is_current_url('/admin/items/show')) || 
+			is_current_url('/admin/items/show') || 
 			!option('curatescape_auto_subtitle')
 		) return $text;
 		if(!isset($args['record'])) return $text;

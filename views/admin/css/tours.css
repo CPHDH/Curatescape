@@ -1,3 +1,12 @@
+:root{
+	--panelBg: #fafafa;
+	--formGrey: #ccc;
+	--formGreyMedium: #bbb;
+	--formGreyDark: #777;
+	--formRed: #B00D00;
+	--formGreen: #eaf2e1;
+	--formBlack: #222;
+}
 /* BROWSE */
 @media (max-width: 767px) {
 	#tour.browse .middot{
@@ -20,10 +29,10 @@ tr.tour .details .middot{
 	margin-bottom: 0;
 }
 .tours input[type="search"] {
-	border: 1px solid #ccc;
+	border: 1px solid var(--formGrey);
 }
 .tours .panel.ordinal{
-	background: #fafafa;
+	background: var(--panelBg);
 }
 .tours input#ordinal{
 	width: 100%;
@@ -41,21 +50,14 @@ tr.tour .details .middot{
 	margin: 0 5px 0 0;
 	text-align: center;
 }
+/* EDIT / ADD */
 #tour.edit p.explanation {
 	padding: 0.25em 0;
 }
-#tour.edit .file-helper {
-	display: inline-block;
-	font-style: italic;
-	padding: 0.5em 0 0;
-}
 
-#tourbuilder-item-list {
-	padding-left: 0;
-}
-#tour-items-picker {
+#tour-items-picker #sortable{
+	height: 90vh;
 	min-height: 600px;
-	min-height: 90vh;
 }
 #tour-item-search {
 	padding: 10px;
@@ -75,7 +77,7 @@ li .remove,
 li .edit{
 	flex-shrink: 0;
 	margin: 0;
-	color: #bbb;
+	color: var(--formGreyMedium);
 	transition: color .15s linear;
 }
 li .drag{
@@ -91,10 +93,10 @@ li .edit{
 	margin-left: 1em;
 }
 li .remove:hover{
-	color: #B00D00;
+	color: var(--formRed);
 }
 li .edit:hover{
-	color: #222;
+	color: var(--formBlack);
 }
 li .title{
 	flex-grow: 1;
@@ -104,6 +106,17 @@ li .title a,
 li .title a:visited{
 	color: inherit;
 }
+/* Item Search Form */
+#sortable label {
+	margin-top: 0.5em;
+	margin-bottom: 0.25em;
+	display: block;
+	color: var(--formGreyDark);
+}
+#sortable input[type="text"]{
+	min-width: 80%;
+}
+/* Item Container/UI */
 #sortable {
 	list-style-type: none;
 	margin: 1em 0 0;
@@ -121,41 +134,37 @@ li .title a:visited{
 	cursor: grab;
 }
 #sortable li > div.item-secondary .editable{
-	border-top: 1px solid #ccc;
+	border-top: 1px solid var(--formGrey);
 	padding: 1em;
 	overflow: hidden;
 }
-#sortable label {
-	margin-top: 0.5em;
-	margin-bottom: 0.25em;
-	display: block;
-	color: #777;
-}
-
-#sortable input[type="text"]{
-	min-width: 80%;
-}
-
 #sortable li.ui-state-highlight {
 	min-height: 1.5em;
 	line-height: 1.2em;
 	border: 1px solid rgba(63, 123, 0, 0.25);
-	background: #eaf2e1;
+	background: var(--formGreen);
 }
-#sortable li.ui-state-highlight span:first-child {
-	font-weight: 800;
+/* Autocomplete */
+.ui-autocomplete{
+	max-width: calc(70% - 2em) !important;
+}
+@media (max-width: 767px) {
+	.ui-autocomplete{
+		max-width: calc(100% - 2em) !important;
+	}
 }
 .ui-sortable-placeholder.ui-state-highlight {
-	background: #ccc !important;
-	border-color: #ccc !important;
+	background: var(--formGrey) !important;
+	border-color: var(--formGrey) !important;
 	min-height: 50px !important;
 	width: 100%;
 	display: block;
 	visibility: visible;
 }
 .ui-menu-item {
-	border-bottom: 1px solid #ccc;
+	border-bottom: 1px solid var(--formGrey);
 	padding: 5px;
+	margin: 0 10px;
 }
 .ui-state-active,
 .ui-state-hover,

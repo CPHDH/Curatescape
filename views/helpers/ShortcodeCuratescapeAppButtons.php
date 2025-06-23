@@ -33,7 +33,7 @@ class Curatescape_View_Helper_ShortcodeCuratescapeAppButtons extends Zend_View_H
 		}
 		return '<div class="curatescape-shortcode-app-buttons-container"><div class="'.$containerclass.'">'.$html.'</div></div>';
 	}
-	
+
 	private function appStoreValidURL($string, $root='https://itunes.apple.com/us/app/id'){
 		$string = str_replace($root, '', $string); // make sure it's not the full url already
 		if(strpos($string, 'id') == 0){

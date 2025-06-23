@@ -19,3 +19,13 @@ $db->query(
 	DROP TABLE IF EXISTS `{$db->CuratescapeTourItem}`
 	SQL
 );
+/*
+** CLEANUP
+*/
+// remove tags for curatescape_tours
+$db->query(
+	<<<SQL
+	DELETE FROM `{$db->RecordsTags}`
+	WHERE `record_type` = 'CuratescapeTour'
+	SQL
+);

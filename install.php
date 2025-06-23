@@ -124,7 +124,7 @@ $db->query(
 		`public` tinyint( 1 ) DEFAULT '0',
 		`ordinal` INT NOT NULL DEFAULT '0',
 		`added` TIMESTAMP NOT NULL DEFAULT '2000-01-01 00:00:00',
-		`modified` TIMESTAMP NOT NULL DEFAULT '2000-01-01 00:00:00',
+		`modified` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
 		PRIMARY KEY( `id` )
 	) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci
 	SQL
@@ -148,7 +148,7 @@ $db->query(
 // UPDATE existing tour tags from legacy TourBuilder plugin
 $db->query(
 	<<<SQL
-	UPDATE `{$db->prefix}records_tags`
+	UPDATE `{$db->RecordsTags}`
 	SET `record_type` = 'CuratescapeTour'
 	WHERE `record_type` = 'Tour';
 	SQL
