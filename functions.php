@@ -260,7 +260,7 @@ function toursBrowsePageTitle($total_results)
 		if($_GET['featured'] == 1){
 			$featured = __('Featured');
 		}else{
-			$featured = __('Not featured');
+			$featured = __('Non-featured');
 		}
 		if($private){
 			$featured = ' '.strtolower($featured);

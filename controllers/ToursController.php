@@ -15,9 +15,11 @@ class Curatescape_ToursController extends Omeka_Controller_AbstractActionControl
 
 	public function browseAction()
 	{
-		$featured = $this->getRequest()->getParam('featured');
-		$public = $this->getRequest()->getParam('public');
-		$tags = $this->getRequest()->getParam('tags');
+		$request = $this->getRequest();
+
+		$featured = $request->getParam('featured');
+		$public = $request->getParam('public');
+		$tags = $request->getParam('tags');
 
 		$db = get_db();
 		$table = $db->getTable('CuratescapeTour');
@@ -44,7 +46,7 @@ class Curatescape_ToursController extends Omeka_Controller_AbstractActionControl
 				array());
 			$select->where('tags.name IN (?)', $tagArray);
 			$select->group('curatescape_tours.id');
-			$select->having('COUNT(DISTINCT tags.name) = ?', count($tagArray)); // match multiple tags
+			$select->having('COUNT(DISTINCT tags.name) = ?', count($tagArray)); // matches multiple tags
 		}
 		$tours = $table->fetchObjects($select);
 		$total_results = count($tours);
@@ -68,8 +70,9 @@ class Curatescape_ToursController extends Omeka_Controller_AbstractActionControl
 
 	public function editAction()
 	{
+		$request = $this->getRequest();
 		// view
-		$id = $this->getRequest()->getParam('id');
+		$id = $request->getParam('id');
 		if (!$id) {
 			throw new Omeka_Controller_Exception_404('Missing tour ID.');
 		}
@@ -79,7 +82,6 @@ class Curatescape_ToursController extends Omeka_Controller_AbstractActionControl
 		}
 		$this->view->tour = $tour;
 		// form
-		$request = $this->getRequest();
 		if ($request->isPost()) {
 			$post = $request->getPost();
 			$tour->editTourMeta($post);
