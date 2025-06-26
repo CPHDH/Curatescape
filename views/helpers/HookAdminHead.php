@@ -1,21 +1,11 @@
 <?php
 class Curatescape_View_Helper_HookAdminHead extends Zend_View_Helper_Abstract{
 	public function HookAdminHead($args){
-		$this->forwardDefaultCheck();
 		$this->adminCss();
 		$this->adminJs();
 		$this->deprecatedCheck();
 		$this->itemFormCss();
 		$this->itemTypeFormJs();
-	}
-	private function forwardDefaultCheck(){
-		// @todo: this should probably be fixed in router instead
-		if(is_current_url('/admin/curatescape/tours/')){
-			$forwardTo = str_replace('curatescape/', '', current_url());
-			header('Location: '.$forwardTo);
-			exit;
-		}
-		return null;
 	}
 	private function adminCss(){
 		queue_css_file('dashboard', 'all', false, 'css', get_plugin_ini(_PLUGIN_NAME_, 'version'));
