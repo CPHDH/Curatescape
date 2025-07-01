@@ -113,7 +113,7 @@ class Curatescape_View_Helper_HookAdminDashboard extends Zend_View_Helper_Abstra
 			$totalFiles++;
 		}
 		if(!$totalFiles) return null;
-		$html .= '<p>'.__('Your files directory contains <strong>%1s original files</strong> for an average of about <strong>%2s files per item</strong>. Below is a break down by files by type:', number_format($totalFiles), round($totalFiles/total_records('Item'), 1)).'</p>';
+		$html .= '<p>'.__('Your files directory contains <strong>%1s original files</strong> for an average of about <strong>%2s files per item</strong>. Below is a break down of files by type:', number_format($totalFiles), round($totalFiles/total_records('Item'), 1)).'</p>';
 		$html .= '<ul>';
 			$html .= $images ? '<li>'.__('Images').': '.number_format($images).'</li>' : null;
 			$html .= $audio ? '<li>'.__('Audio').': '.number_format($audio).'</li>' : null;

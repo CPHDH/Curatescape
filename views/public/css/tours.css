@@ -1,0 +1,18 @@
+.tour-item-count{
+	display: inline-flex;
+}
+.tour-item-count::before{
+	content: '(';
+}
+.tour-item-count::after{
+	content: ')';
+}
+.tour-item,
+.tour-colophon{
+	clear: both;
+	display: block;
+}
+.tour-colophon{
+	font-style: italic;
+	margin-top: 2lh;
+}

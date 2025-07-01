@@ -19,14 +19,41 @@ class Curatescape_View_Helper_HookPublicHead extends Zend_View_Helper_Abstract{
 					get_plugin_ini(_PLUGIN_NAME_, 'version'));
 			}
 		}
+		if(is_current_url('/tours')){
+			queue_css_file('tours', 'all', false, 'css', get_plugin_ini(_PLUGIN_NAME_, 'version'));
+		}
+		if(is_current_url('/tours/show')){
+			if(option('curatescape_gallery_style_tour') == 'gallery-inline-captions'){
+				queue_css_file('gallery-inline-captions', 'all', false, 'css', get_plugin_ini(_PLUGIN_NAME_, 'version'));
+			}
+			if(option('curatescape_gallery_style_tour') == 'gallery-grid'){
+				queue_css_file('gallery-grid', 'all', false, 'css', get_plugin_ini(_PLUGIN_NAME_, 'version'));
+			}
+		}
 		if(is_current_url('/items/show')){ 
-			if(option('curatescape_gallery_style') == 'gallery-inline-captions') queue_css_file('gallery-inline-captions', 'all', false, 'css', get_plugin_ini(_PLUGIN_NAME_, 'version'));
-			if(option('curatescape_gallery_style') == 'gallery-grid') queue_css_file('gallery-grid', 'all', false, 'css', get_plugin_ini(_PLUGIN_NAME_, 'version'));
-			if(option('curatescape_gallery_style') == 'gallery-slides') queue_css_file('gallery-slides', 'all', false, 'css', get_plugin_ini(_PLUGIN_NAME_, 'version'));
+			if(option('curatescape_gallery_style') == 'gallery-inline-captions'){
+				queue_css_file('gallery-inline-captions', 'all', false, 'css', get_plugin_ini(_PLUGIN_NAME_, 'version'));
+			}
+			if(option('curatescape_gallery_style') == 'gallery-grid'){
+				queue_css_file('gallery-grid', 'all', false, 'css', get_plugin_ini(_PLUGIN_NAME_, 'version'));
+			}
+			if(option('curatescape_gallery_style') == 'gallery-slides'){
+				queue_css_file('gallery-slides', 'all', false, 'css', get_plugin_ini(_PLUGIN_NAME_, 'version'));
+			}
 		}
 		queue_js_file('global', 'javascripts');
+		if(
+			is_current_url('/tours/show') && 
+			option('curatescape_lightbox_tours') && 
+			option('curatescape_gallery_style_tour') !== 'gallery-inline-captions'
+		){
+			$this->photoSwipeModule();
+		}
 		if(is_current_url('/items/show')){ 
-			if(option('curatescape_lightbox') && option('curatescape_gallery_style') !== 'gallery-slides'){
+			if(
+				option('curatescape_lightbox') && 
+				option('curatescape_gallery_style') !== 'gallery-slides'
+			){
 				$this->photoSwipeModule();
 			}
 			if(option('curatescape_gallery_style') == 'gallery-slides'){
@@ -38,8 +65,11 @@ class Curatescape_View_Helper_HookPublicHead extends Zend_View_Helper_Abstract{
 			}
 			queue_js_file('items-show', 'javascripts', array('defer'=>'defer'));
 		}
-		if(is_current_url('/items/browse')){
-			queue_js_file('items-browse', 'javascripts', array('defer'=>'defer'));
+		if(
+			is_current_url('/items/browse') || 
+			is_current_url('/tours/browse')
+		){
+			queue_js_file('secondary-nav-fix', 'javascripts', array('defer'=>'defer'));
 		}
 	}
 
@@ -93,9 +123,8 @@ class Curatescape_View_Helper_HookPublicHead extends Zend_View_Helper_Abstract{
 		}	
 		elseif($tour = $args['view']->getCurrentRecord('tour', false)){
 			$metaText = $tour->description ? $tour->description : $metaText;
-			if($firstTourItem = tour_item_id($tour, 0)){
-				$item = get_record_by_id('item', $firstTourItem);
-				$metaImg = preferredItemImageUrl($item);		
+			if($firstTourItem = $tour->getTourItemByIndex(0)){
+				$metaImg = preferredItemImageUrl($firstTourItem);
 			}
 		}
 		elseif($exhibit = $args['view']->getCurrentRecord('exhibit', false)){

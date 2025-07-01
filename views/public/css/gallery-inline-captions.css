@@ -14,7 +14,6 @@
 }
 .curatescape-image-gallery.gallery-inline-captions .curatescape-image-figure > figcaption > *{
 	display: inline;
-	
 }
 .curatescape-image-gallery.gallery-inline-captions .curatescape-image-figure > a{
 	width: calc(60% - 1rem);

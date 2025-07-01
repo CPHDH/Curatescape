@@ -19,12 +19,14 @@ class Curatescape_View_Helper_HookConfig extends Zend_View_Helper_Abstract{
 		set_option('curatescape_form_enforcement', $_POST['curatescape_form_enforcement']);
 		set_option('curatescape_format_warnings', $_POST['curatescape_format_warnings']);
 		set_option('curatescape_gallery_style', $_POST['curatescape_gallery_style']);
+		set_option('curatescape_gallery_style_tour', $_POST['curatescape_gallery_style_tour']);
 		set_option('curatescape_google_analytics', $_POST['curatescape_google_analytics']);
 		set_option('curatescape_inline_factoids', $_POST['curatescape_inline_factoids']);
 		set_option('curatescape_inner_heading', $_POST['curatescape_inner_heading']);
 		set_option('curatescape_json_cache', $_POST['curatescape_json_cache']);
 		set_option('curatescape_json_storage', $_POST['curatescape_json_storage']);
 		set_option('curatescape_lightbox_docs', $_POST['curatescape_lightbox_docs']);
+		set_option('curatescape_lightbox_tours', $_POST['curatescape_lightbox_tours']);
 		set_option('curatescape_lightbox', $_POST['curatescape_lightbox']);
 		set_option('curatescape_meta_image', $_POST['curatescape_meta_image']);
 		set_option('curatescape_meta_tags', $_POST['curatescape_meta_tags']);

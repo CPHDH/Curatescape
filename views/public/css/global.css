@@ -38,8 +38,8 @@
 	color: inherit;
 	display: inline;
 }
-.pswp__pswp-caption a:link,
-.pswp__pswp-caption a:visited{
+.pswp__pswp-caption a:link:not(.button),
+.pswp__pswp-caption a:visited:not(.button){
 	color: var(--pswp-accent-color);
 }
 .pswp button {
@@ -96,6 +96,11 @@
 	}
 }
 /* From here, all rules should use the .curatescape-styles body class! */
+.curatescape-styles .curatescape-tour-button-container,
+.curatescape-styles .curatescape-image-gallery.gallery-inline-captions .curatescape-image-figure > figcaption > .curatescape-tour-button-container{
+	display: block;
+	margin-top: 0.5lh;
+}
 .curatescape-styles .curatescape-article-header-styles .curatescape-subtitle{
 	display: block;
 	font-size: .9em;
@@ -197,7 +202,8 @@
 	color: inherit;
 	display: inline;
 }
-.curatescape-styles .curatescape-files figure{
+.curatescape-styles .curatescape-files figure,
+.curatescape-styles .tour-items figure{
 	margin: 0 auto;
 }
 .curatescape-styles #geolocation figure{

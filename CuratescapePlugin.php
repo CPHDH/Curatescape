@@ -5,11 +5,10 @@
 
 /*
 * @major: TOURS
-	* search filters not working (tags, featured, etc)
-	* public views
-	* item-nav
+	* html in description?
+	* item tour navigation
 	* HookPublicHomeTop, HookPublicHomeEnd
-	* New features: in-tour navigation
+	* New features: multi-stop map directions
 
 * @todo: audio and video playlists?
 * @todo: option to exclude audio and video from lightbox
@@ -100,6 +99,7 @@ class CuratescapePlugin extends Omeka_Plugin_AbstractPlugin{
 		'curatescape_filter_text' => 1,
 		'curatescape_form_enforcement' => 1,
 		'curatescape_format_warnings' => 1,
+		'curatescape_gallery_style_tour' => 'gallery-inline-captions',
 		'curatescape_gallery_style'=> 'gallery-grid',
 		'curatescape_google_analytics' => null,
 		'curatescape_inline_factoids' => 1,
@@ -107,6 +107,7 @@ class CuratescapePlugin extends Omeka_Plugin_AbstractPlugin{
 		'curatescape_json_cache' => '600',
 		'curatescape_json_storage' => '300',
 		'curatescape_lightbox_docs' => 0,
+		'curatescape_lightbox_tours' => 1,
 		'curatescape_lightbox' => 1,
 		'curatescape_meta_image' => null,
 		'curatescape_meta_tags'=> 1,

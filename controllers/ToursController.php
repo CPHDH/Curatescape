@@ -10,6 +10,7 @@ class Curatescape_ToursController extends Omeka_Controller_AbstractActionControl
 	{
 		$params = array_merge($this->_getAllParams(), array('type'=>'CuratescapeTour'));
 		$tags = $this->_helper->db->getTable('Tag')->findBy($params);
+
 		$this->view->assign(compact('tags'));
 	}
 
@@ -50,9 +51,9 @@ class Curatescape_ToursController extends Omeka_Controller_AbstractActionControl
 		}
 		$tours = $table->fetchObjects($select);
 		$total_results = count($tours);
-		
-		$this->view->tours = $tours;
-		$this->view->total_results = $total_results;
+
+		$this->view->assign(compact('tours'));
+		$this->view->assign(compact('total_results'));
 	}
 
 	public function showAction()
@@ -65,12 +66,14 @@ class Curatescape_ToursController extends Omeka_Controller_AbstractActionControl
 		if (!$tour) {
 			throw new Omeka_Controller_Exception_404('Tour not found.');
 		}
-		$this->view->tour = $tour;
+
+		$this->view->assign(compact('tour'));
 	}
 
 	public function editAction()
 	{
 		$request = $this->getRequest();
+
 		// view
 		$id = $request->getParam('id');
 		if (!$id) {
@@ -80,7 +83,9 @@ class Curatescape_ToursController extends Omeka_Controller_AbstractActionControl
 		if (!$tour) {
 			throw new Omeka_Controller_Exception_404('Tour not found.');
 		}
-		$this->view->tour = $tour;
+
+		$this->view->assign(compact('tour'));
+
 		// form
 		if ($request->isPost()) {
 			$post = $request->getPost();

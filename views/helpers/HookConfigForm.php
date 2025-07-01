@@ -84,6 +84,10 @@ class Curatescape_View_Helper_HookConfigForm extends Zend_View_Helper_Abstract{
 			<?php echo $this->configFormSelect('curatescape_tour_map_style', 'Tour Maps', 'Select the type of map to use for tours.', array( 'inline' => __('Inline (default)'), 'floating' => __('Floating') ) );?>
 			<!-- Thumb Style-->
 			<?php echo $this->configFormSelect('curatescape_tour_thumb_style', 'Tour Thumbnail', 'Select the style of thumbnail image to use when browsing tours. The composite style combines the first image from the first four Items on the Tour to create a mini-collage.', array( 'composite' => __('Composite (default)'), 'first-image' => __('First image from first tour stop'), 'none' => __('None') ) );?>
+			<!-- Tour Item Gallery Style-->
+			<?php echo $this->configFormSelect('curatescape_gallery_style_tour', 'Tour Item Gallery', 'Select the style to be used for displaying tour items in list form. Each style will adapt to the available space as determined by the theme layout and browser dimensions.', array( 'gallery-inline-captions' => __('Inline Captions (default)'), 'gallery-grid' => __('Thumbnail Grid'), 'none' => __('None') ) );?>
+			<!-- Image Lightbox-->
+			<?php echo $this->configFormCheckBox('curatescape_lightbox_tours', 'Tour Lightbox', 'If checked, image links for tour items will open in lightbox overlay (PhotoSwipe) for compatible Tour Item Gallery styles. If unchecked, image links will open the file record directly.');?>
 		</fieldset>
 
 		<fieldset>

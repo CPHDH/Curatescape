@@ -39,6 +39,25 @@ class CuratescapeTour extends Omeka_Record_AbstractRecord
 		return $this->getTable()->findItemsByTourId($this->id);
 	}
 
+
+	public function getFile()
+	{
+		// register default record_image
+		// @todo: custom/composite image option
+		$file = null;
+		if($tourItems = $this->getItems()){
+			if($files = $tourItems[0]->getFiles()){
+				foreach($files as $f){
+					if($f->has_derivative_image){
+						$file = $f;
+						return $file;
+					}
+				}
+			}
+		}
+		return $file;
+	}
+
 	public function getTourItem($itemId)
 	{
 		$db = get_db();
@@ -47,15 +66,47 @@ class CuratescapeTour extends Omeka_Record_AbstractRecord
 		$select->where( 'tour_id='.$this->id.' AND item_id='.$itemId);
 		return $tiTable->fetchObject($select);
 	}
-	
+
 	public function getTourItemTitleString($item)
 	{
 		$tourItemColumns = $this->getTourItem($item->id);
 		if($subtitle = $tourItemColumns->subtitle){
-			$unfilteredTitle = dc($item,'Title',array('no_filter'=>true));
+			$unfilteredTitle = dc($item,'Title', array('no_filter'=>true));
 			return $unfilteredTitle.': '.$subtitle;
 		}
 		return dc($item,'Title');
+	}
+	
+	public function getTourItemTextString($item)
+	{
+		$tourItemColumns = $this->getTourItem($item->id);
+		if($text = $tourItemColumns->text){
+			return $text;
+		}
+		if($text = itm($item,'Lede')){
+			return $text;
+		}
+		return dc($item,'Description'); // default snippet
+	}
+
+	public function getTourItemByIndex($i){
+		if($tourItems = $this->getItems()){
+			if(isset($tourItems[$i])){
+				return $tourItems[$i];
+			}
+		}
+		return null;
+	}
+
+	public function getTourColophon($colophonArray = array(), $separator = ' | ')
+	{
+		if($credits = $this->credits){
+			$colophonArray[] = __('Tour curated by: %s', $credits);
+		}
+		if($ps = $this->postscript_text){
+			$colophonArray[] = $ps;
+		}
+		return normalizeTextBlocks(implode($separator, $colophonArray));
 	}
 
 	public function addTourItem($itemId, $ordinal = null, $item_subtitle = null, $item_text = null)
