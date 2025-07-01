@@ -13,6 +13,7 @@ $tourItems = $tour->Items;
 		<div class="tour-items">
 			
 			<?php if(count($tourItems)):?>
+				<?php echo $tour->tourGeolocationMap();?>
 				<?php if($tourItemsDiplay = tourItemsOutput($tour, option('curatescape_gallery_style_tour'))):?>
 					<h2><?php echo storyLabelString(true);?> 
 						<span class="tour-item-count" aria-label="<?php echo __('(%s total)', count($tourItems));?>">

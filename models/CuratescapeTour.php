@@ -39,6 +39,17 @@ class CuratescapeTour extends Omeka_Record_AbstractRecord
 		return $this->getTable()->findItemsByTourId($this->id);
 	}
 
+	public function tourGeolocationMap($html = null)
+	{
+		$html .= '<figure class="tour-items-map">';
+			$range = implode(',', array_column($this->getItems(), 'id'));
+			$html .=  get_view()->shortcodes('[geolocation range='.$range.']');
+			$html .= '<figcaption>';
+				$html .=  __('%1s Map: %2s', tourLabelString(), $this->title);
+			$html .= '</figcaption>';
+		$html .= '</figure>';
+		return $html;
+	}
 
 	public function getFile()
 	{
