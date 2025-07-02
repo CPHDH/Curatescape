@@ -34,92 +34,6 @@ class CuratescapeTour extends Omeka_Record_AbstractRecord
 		$this->_mixins[] = new Mixin_PublicFeatured($this);
 	}
 
-	public function getItems()
-	{
-		return $this->getTable()->findItemsByTourId($this->id);
-	}
-
-	public function tourGeolocationMap($html = null)
-	{
-		$html .= '<figure class="tour-items-map">';
-			$range = implode(',', array_column($this->getItems(), 'id'));
-			$html .=  get_view()->shortcodes('[geolocation range='.$range.']');
-			$html .= '<figcaption>';
-				$html .=  __('%1s Map: %2s', tourLabelString(), $this->title);
-			$html .= '</figcaption>';
-		$html .= '</figure>';
-		return $html;
-	}
-
-	public function getFile()
-	{
-		// register default record_image
-		// @todo: custom/composite image option
-		$file = null;
-		if($tourItems = $this->getItems()){
-			if($files = $tourItems[0]->getFiles()){
-				foreach($files as $f){
-					if($f->has_derivative_image){
-						$file = $f;
-						return $file;
-					}
-				}
-			}
-		}
-		return $file;
-	}
-
-	public function getTourItem($itemId)
-	{
-		$db = get_db();
-		$tiTable = $db->getTable('CuratescapeTourItem');
-		$select = $tiTable->getSelect();
-		$select->where( 'tour_id='.$this->id.' AND item_id='.$itemId);
-		return $tiTable->fetchObject($select);
-	}
-
-	public function getTourItemTitleString($item)
-	{
-		$tourItemColumns = $this->getTourItem($item->id);
-		if($subtitle = $tourItemColumns->subtitle){
-			$unfilteredTitle = dc($item,'Title', array('no_filter'=>true));
-			return $unfilteredTitle.': '.$subtitle;
-		}
-		return dc($item,'Title');
-	}
-	
-	public function getTourItemTextString($item)
-	{
-		$tourItemColumns = $this->getTourItem($item->id);
-		if($text = $tourItemColumns->text){
-			return $text;
-		}
-		if($text = itm($item,'Lede')){
-			return $text;
-		}
-		return dc($item,'Description'); // default snippet
-	}
-
-	public function getTourItemByIndex($i){
-		if($tourItems = $this->getItems()){
-			if(isset($tourItems[$i])){
-				return $tourItems[$i];
-			}
-		}
-		return null;
-	}
-
-	public function getTourColophon($colophonArray = array(), $separator = ' | ')
-	{
-		if($credits = $this->credits){
-			$colophonArray[] = __('Tour curated by: %s', $credits);
-		}
-		if($ps = $this->postscript_text){
-			$colophonArray[] = $ps;
-		}
-		return normalizeTextBlocks(implode($separator, $colophonArray));
-	}
-
 	public function addTourItem($itemId, $ordinal = null, $item_subtitle = null, $item_text = null)
 	{
 		if(!is_numeric($itemId)) {
@@ -233,5 +147,142 @@ class CuratescapeTour extends Omeka_Record_AbstractRecord
 		if(intval($this->ordinal) < 0 || $this->ordinal == '' || !is_numeric($this->ordinal)){
 			$this->addError('custom order', 'The value for the custom order must be a number equal to or greater than 0.');
 		}
+	}
+
+	public function getItems()
+	{
+		return $this->getTable()->findItemsByTourId($this->id);
+	}
+
+	public function getFile()
+	{
+		// register default record_image
+		// @todo: custom/composite image option
+		$file = null;
+		if($tourItems = $this->getItems()){
+			if($files = $tourItems[0]->getFiles()){
+				foreach($files as $f){
+					if($f->has_derivative_image){
+						$file = $f;
+						return $file;
+					}
+				}
+			}
+		}
+		return $file;
+	}
+
+	public function getTourItem($itemId)
+	{
+		$db = get_db();
+		$tiTable = $db->getTable('CuratescapeTourItem');
+		$select = $tiTable->getSelect();
+		$select->where( 'tour_id='.$this->id.' AND item_id='.$itemId);
+		return $tiTable->fetchObject($select);
+	}
+
+	public function getTourItemByIndex($i){
+		if($tourItems = $this->getItems()){
+			if(isset($tourItems[$i])){
+				return $tourItems[$i];
+			}
+		}
+		return null;
+	}
+
+	public function tourItemTitleString($item)
+	{
+		$tourItemColumns = $this->getTourItem($item->id);
+		if($subtitle = $tourItemColumns->subtitle){
+			$unfilteredTitle = dc($item,'Title', array('no_filter'=>true));
+			return $unfilteredTitle.': '.$subtitle;
+		}
+		return dc($item,'Title');
+	}
+
+	public function tourItemTextString($item)
+	{
+		$tourItemColumns = $this->getTourItem($item->id);
+		if($text = $tourItemColumns->text){
+			return $text;
+		}
+		if($text = itm($item,'Lede')){
+			return $text;
+		}
+		return dc($item,'Description'); // default snippet
+	}
+
+	public function tourColophon($colophonArray = array(), $separator = ' | ')
+	{
+		if($credits = $this->credits){
+			$colophonArray[] = __('Tour curated by: %s', $credits);
+		}
+		if($ps = $this->postscript_text){
+			$colophonArray[] = $ps;
+		}
+		return normalizeTextBlocks(implode($separator, $colophonArray));
+	}
+
+	public function tourItemCaption($tourItem, $meta = array(), $mapShowButton = null)
+	{
+		if(!$tourItem) return null;
+		if($title=$this->tourItemTitleString($tourItem)){
+			$meta[] = '<span class="file-title" itemprop="name"><cite>'.$this->linkToTourItem($tourItem, $title, array(), 'show').'</cite></span>';
+		}
+		if($text=$this->tourItemTextString($tourItem)){
+			$meta[] = '<span class="file-text">'.strip_tags($text).'</span>';
+		}
+		$caption = implode(' | ', $meta);
+		if(hasLocation($tourItem)){
+			$mapShowButton = '<a class="button" data-item-id="'.$tourItem->id.'" href="javascript:void(0)">'.__('Show on Map').'</a>';
+		}
+		$actions = '<div class="curatescape-tour-button-container">'.$this->linkToTourItem($tourItem, __('Read More'), array('class'=>'button curatescape-button curatescape-tour-button'), 'show').$mapShowButton.'</div>';
+		
+		return $caption.$actions;
+	}
+
+	public function linkToTourItem($item, $text = null, $props = array())
+	{
+		if(!$item){
+			throw new Exception('Missing item object');
+		}
+		$tourItem = $this->getTourItem($item->id);
+		$tourItemIndex = $tourItem->ordinal;
+		if(empty($text)){
+			$title = $this->tourItemTitleString($tourItem);
+			$text = (!empty($title)) ? $title : '[Untitled]';
+		}
+		return link_to($item, 'show', $text, $props, array('tour'=>$this->id, 'index'=>$tourItemIndex));
+	}
+
+	public function tourGeolocationMap($html = null)
+	{
+		$height = option('geolocation_item_map_height') ? 'height='.option('geolocation_item_map_height') : null;
+		$range = implode(',', array_column($this->getItems(), 'id'));
+		$html .= '<figure class="tour-items-map" data-tour-id="'.$this->id.'" data-tour-items="'.$range.'">';
+			$html .=  get_view()->shortcodes('[geolocation range='.$range.' '.$height.']');
+			$html .= '<figcaption>';
+				$html .=  __('%1s Map: %2s', tourLabelString(), $this->title);
+			$html .= '</figcaption>';
+		$html .= '</figure>';
+		return $html;
+	}
+
+	public function tourItemsOutput($galleryType = 'gallery-inline-captions', $isLazy = 'true', $html = null)
+	{
+		if($galleryType == 'none') return null;
+		$html .= '<div class="curatescape-files">';
+			$html .= '<div id="pswp-container" class="curatescape-image-gallery '.$galleryType.'">';
+			foreach($this->Items as $tourItem){
+				$html .= '<figure class="curatescape-image-figure" itemtype="https://schema.org/ImageObject">';
+					$imgDetails = preferredItemImageUrl($tourItem, 'fullsize', true);
+					$tourItemImage = '<img '.($isLazy ? 'loading="lazy"' : '').' title="'.$this->tourItemTitleString($tourItem).'" src="'.$imgDetails['url'].'" class="item-file" width="'.$imgDetails['width'].'" height="'.$imgDetails['height'].'"/>';
+					$html .= $this->linkToTourItem($tourItem, $tourItemImage, array('class'=>'gallery-image '.$imgDetails['orientation'].' pswp-item', 'data-pswp-src'=>$imgDetails['url'], 'data-pswp-width'=>$imgDetails['width'], 'data-pswp-height'=>$imgDetails['height']), 'show');
+					$html .= '<figcaption>'.$this->tourItemCaption($tourItem).'</figcaption>';
+				$html .= '</figure>';
+			}
+			$html .= '</div>';
+		$html .= '</div>';
+		return $html;
 	}
 }

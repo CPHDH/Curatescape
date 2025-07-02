@@ -379,60 +379,6 @@ function linkToTour($tour = null, $text = null, $props = array(), $action = 'sho
 	return link_to($tour, $action, $text, $props);
 }
 
-function linkToTourItem($item, $tour, $text = null, $props = array())
-{
-	if(!$item){
-		throw new Exception('Missing item object');
-	}
-	if(!$tour) {
-		throw new Exception('Missing tour object');
-	}
-	$tourItem = $tour->getTourItem($item->id);
-	$tourItemIndex = $tourItem->ordinal;
-	if(empty($text)){
-		$title = $tour->getTourItemTitleString($tourItem);
-		$text = (!empty($title)) ? $title : '[Untitled]';
-	}
-	return link_to($item, 'show', $text, $props, array('tour'=>$tour->id, 'index'=>$tourItemIndex));
-}
-
-function tourItemsOutput($tour, $galleryType = 'gallery-inline-captions', $isLazy = 'true', $html = null)
-{
-	if(
-		!$tour ||
-		$galleryType == 'none'
-	) return null;
-	$html .= '<div class="curatescape-files">';
-		$html .= '<div id="pswp-container" class="curatescape-image-gallery '.$galleryType.'">';
-		foreach($tour->Items as $tourItem){
-			$html .= '<figure class="curatescape-image-figure" itemtype="https://schema.org/ImageObject">';
-				$imgDetails = preferredItemImageUrl($tourItem, 'fullsize', true);
-				//$dimensions = dimensions($imgUrl, 'fullsize');
-				$tourItemImage = '<img '.($isLazy ? 'loading="lazy"' : '').' title="'.$tour->getTourItemTitleString($tourItem).'" src="'.$imgDetails['url'].'" class="item-file" width="'.$imgDetails['width'].'" height="'.$imgDetails['height'].'"/>';
-				$html .= linkToTourItem($tourItem, $tour, $tourItemImage, array('class'=>'gallery-image '.$imgDetails['orientation'].' pswp-item', 'data-pswp-src'=>$imgDetails['url'], 'data-pswp-width'=>$imgDetails['width'], 'data-pswp-height'=>$imgDetails['height']), 'show');
-				$html .= '<figcaption>'.tourItemCaption($tour, $tourItem).'</figcaption>';
-			$html .= '</figure>';
-		}
-		$html .= '</div>';
-	$html .= '</div>';
-	return $html;
-}
-
-function tourItemCaption($tour, $tourItem, $meta = array())
-{
-	if(!$tour || !$tourItem) return null;
-	if($title=$tour->getTourItemTitleString($tourItem)){
-		$meta[] = '<span class="file-title" itemprop="name"><cite>'.linkToTourItem($tourItem, $tour, $title, array(), 'show').'</cite></span>';
-	}
-	if($text=$tour->getTourItemTextString($tourItem)){
-		$meta[] = '<span class="file-text">'.strip_tags($text).'</span>';
-	}
-	$caption = implode(' | ', $meta);
-	$actions = '<div class="curatescape-tour-button-container">'.linkToTourItem($tourItem, $tour, __('Read More'), array('class'=>'button curatescape-button curatescape-tour-button'), 'show').'</div>';
-	
-	return $caption.$actions;
-}
-
 function filesOutputFigures($images = array(), $audio = array(), $video = array(), $other = array(), $galleryType = 'gallery-inline-captions', $html = null)
 {
 	if(!count($images) && !count($audio) && !count($video)) return null;

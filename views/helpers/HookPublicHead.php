@@ -42,6 +42,9 @@ class Curatescape_View_Helper_HookPublicHead extends Zend_View_Helper_Abstract{
 			}
 		}
 		queue_js_file('global', 'javascripts');
+		if(is_current_url('/tours/show')){
+			queue_js_file('tour', 'javascripts', array('defer'=>'defer'));
+		}
 		if(
 			is_current_url('/tours/show') && 
 			option('curatescape_lightbox_tours') && 

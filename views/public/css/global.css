@@ -42,6 +42,9 @@
 .pswp__pswp-caption a:visited:not(.button){
 	color: var(--pswp-accent-color);
 }
+.pswp__pswp-caption a.button{
+	text-shadow: initial;
+}
 .pswp button {
 	background-color: unset !important;
 }
@@ -100,6 +103,10 @@
 .curatescape-styles .curatescape-image-gallery.gallery-inline-captions .curatescape-image-figure > figcaption > .curatescape-tour-button-container{
 	display: block;
 	margin-top: 0.5lh;
+	display: flex;
+	flex-direction: row;
+	justify-items: flex-start;
+	gap: 0.5lh;
 }
 .curatescape-styles .curatescape-article-header-styles .curatescape-subtitle{
 	display: block;
