@@ -66,7 +66,7 @@ echo flash();
 					<?php foreach( $items as $item ):?>
 						<?php set_current_record('item', $item, true);?>
 						<li>
-							<?php echo link_to_item($tour->getTourItemTitleString($item)).
+							<?php echo link_to_item($tour->tourItemTitleString($item)).
 							(!$item->public ? '&nbsp;('.__('Private').')' : null); ?>
 						</li>
 					<?php endforeach; ?>

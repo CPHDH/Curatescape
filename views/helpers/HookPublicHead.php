@@ -67,6 +67,11 @@ class Curatescape_View_Helper_HookPublicHead extends Zend_View_Helper_Abstract{
 				queue_js_file('lightgallery', 'javascripts', array('defer'=>'defer'));
 			}
 			queue_js_file('items-show', 'javascripts', array('defer'=>'defer'));
+			if($params = $this->getQueryParams()){
+				if(isset($params['tour']) && isset($params['index'])){
+					queue_js_file('curatescape-tour-nav', 'javascripts', array('defer'=>'defer'));
+				}
+			}
 		}
 		if(
 			is_current_url('/items/browse') || 
@@ -194,6 +199,13 @@ class Curatescape_View_Helper_HookPublicHead extends Zend_View_Helper_Abstract{
 	</script>
 
 	<?php
+	}
+	
+	private function getQueryParams()
+	{
+		$params = array();
+		parse_str($_SERVER['QUERY_STRING'], $params);
+		return array_map('htmlspecialchars', $params);
 	}
 	
 }

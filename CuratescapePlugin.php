@@ -5,8 +5,7 @@
 
 /*
 * @major: TOURS
-	* html in description?
-	* item tour navigation
+	* <TOUR-NAV> COMPONENT
 	* HookPublicHomeTop, HookPublicHomeEnd
 	* New features: multi-stop map directions
 
@@ -72,6 +71,8 @@ class CuratescapePlugin extends Omeka_Plugin_AbstractPlugin{
 		// 'geolocation_map_pagination',
 		// 'geolocation_map_single',
 		'items_browse_per_page',
+		'item_next',
+		'item_previous',
 		'item_search_filters',
 		'public_navigation_admin_bar',
 		'public_navigation_items',
@@ -258,6 +259,16 @@ class CuratescapePlugin extends Omeka_Plugin_AbstractPlugin{
 	public function filterPublicNavigationMain($nav)
 	{
 		return get_view()->FilterPublicNavigationMain($nav);
+	}
+
+	public function filterItemNext($nextItem)
+	{
+		return get_view()->FilterItemNextPrevious($nextItem, null);
+	}
+
+	public function filterItemPrevious($previousItem)
+	{
+		return get_view()->FilterItemNextPrevious(null, $previousItem);
 	}
 
 	public function filterBodyTagAttributes($attributes)

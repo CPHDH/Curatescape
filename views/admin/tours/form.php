@@ -84,7 +84,7 @@ $strings = array( // translatable strings used in js
 				</div>
 
 				<h2><?php echo __('Tour Items');?></h2>
-				<p><?php echo __('Search for items by title to add to tour. Drag and drop to change order.');?></p>
+				<p><?php echo __('Search for items to add to tour (item geolocation is required). Drag and drop to change order.');?></p>
 
 				<div class="input-container">
 					<input type="search" id="tour-item-search" placeholder="Search by title..." onkeydown="if (event.keyCode == 13) return false"/>
