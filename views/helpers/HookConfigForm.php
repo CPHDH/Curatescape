@@ -67,7 +67,7 @@ class Curatescape_View_Helper_HookConfigForm extends Zend_View_Helper_Abstract{
 			<!-- Image Lightbox-->
 			<?php echo $this->configFormCheckBox('curatescape_lightbox', 'Image Lightbox', 'If checked, image links will open in lightbox overlay (PhotoSwipe). If unchecked, image links will open to either the file or the file record, based on site settings. Requires use of plugin media styles, selected above.');?>
 			<!-- Docs in Lightbox-->
-			<?php echo $this->configFormCheckBox('curatescape_lightbox_docs', 'PDF Lightbox', 'If checked, PDF document files will be presented alongside images and use the lightbox overlay (PhotoSwipe) with select gallery types. Note that the presentation of PDF document files will vary across different browsers and devices. If unchecked, PDF document files will be listed uniformly in a separate table.');?>
+			<?php echo $this->configFormCheckBox('curatescape_lightbox_docs', 'PDF Lightbox', 'If checked, PDF document files will be presented alongside images and use the lightbox overlay (PhotoSwipe) with select gallery types. Note that the presentation of PDF document files will vary across different browsers and devices. If unchecked, PDF document files will be listed uniformly in a separate table when the Thumbnail Grid gallery type is active.');?>
 			<!-- Files Show File Markup-->
 			<?php echo $this->configFormCheckBox('curatescape_file_markup', 'File Record Markup', 'If checked, the HTML for files on each single file record (i.e. files/show) will use Curatescape style markup. Potentially useful for projects with audio, video, and PDF files.');?>
 		</fieldset>

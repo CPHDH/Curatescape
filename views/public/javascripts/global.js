@@ -11,7 +11,7 @@ const getCalculatedLinkColor = (opacity = 1)=>{
 	let sampleElement = document.querySelector('a');
 	let colorSample = sampleElement ? window.getComputedStyle(sampleElement).color : false;
 	let colorLightened = colorSample ? 'hsl(from '+colorSample+' h s 70% / ' + opacity + ')' : false;
-	return colorLightened ? '--pswp-accent-color:'+colorLightened : '';
+	return colorLightened ? '--calculated-accent-color:'+colorLightened : '';
 }
 const browserString = ()=>{
 	// used only for PDF display

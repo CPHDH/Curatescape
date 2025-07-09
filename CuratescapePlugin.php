@@ -1,22 +1,9 @@
 <?php
-
-// https://omeka.readthedocs.io/en/latest/Tutorials/understandingOmeka_Record_AbstractRecord.html
-
-
 /*
 * @major: TOURS
-	* <TOUR-NAV> COMPONENT
 	* HookPublicHomeTop, HookPublicHomeEnd
-	* New features: multi-stop map directions
-
-* @todo: audio and video playlists?
-* @todo: option to exclude audio and video from lightbox
-* @todo: media fallback thumbnails (transparent, SVG, object fit: cover)
-* @todo: detect theme and display relevant compatibility info on config form
-
+	* New features: multi-stop map directions?
 * @later: languages
-* @later: matomo.org integration? or just use plugin?
-* @later: maps (Geolocation PRs?)
 */
 
 // Includes
@@ -66,10 +53,6 @@ class CuratescapePlugin extends Omeka_Plugin_AbstractPlugin{
 		'filterItemTypeNameUnderscores' => array('Display', 'Item', 'item_type_name'),
 		'filterRichTitleWithSubtitle' => array('Display', 'Item', 'rich_title'),
 		'filterSubjectAsLink' => array('Display', 'Item', 'Dublin Core', 'Subject'),
-		// 'geolocation_map_browse',
-		// 'geolocation_map_browse_ui',
-		// 'geolocation_map_pagination',
-		// 'geolocation_map_single',
 		'items_browse_per_page',
 		'item_next',
 		'item_previous',
@@ -189,23 +172,6 @@ class CuratescapePlugin extends Omeka_Plugin_AbstractPlugin{
 	{
 		return get_view()->HookAfterSaveItem($post);
 	}
-
-	// public function filterGeolocationMapBrowse($html, $args)
-	// {
-	// 	return get_view()->FilterGeolocationMapBrowse($html, $args);
-	// }
-	// 	// public function filterGeolocationMapBrowseUI($html)
-	// {
-	// 	return get_view()->FilterGeolocationMapBrowseUI($html);
-	// }
-	// 	// public function filterGeolocationMapPagination($html)
-	// {
-	// 	return get_view()->FilterGeolocationMapPagination($html);
-	// }
-	// 	// public function filterGeolocationMapSingle($html, $args)
-	// {
-	// 	return get_view()->FilterGeolocationMapSingle($html, $args);
-	// }
 
 	public function filterAdminNavigationMain($nav)
 	{

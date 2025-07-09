@@ -1,3 +1,11 @@
+#tours.browse .tour a.image{
+	float: left;
+	margin-right: 1lh;
+	margin-bottom: 1lh;
+}
+#tours.browse .tour{
+	clear: both;
+}
 .tour-item-count{
 	display: inline-flex;
 }

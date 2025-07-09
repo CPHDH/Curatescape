@@ -4,12 +4,8 @@ class CuratescapeTourNav extends HTMLElement {
 		this.shadow = this.attachShadow({ mode: "open" });
 	}
 	connectedCallback(){
-		//this.getAttributes();
 		this.uiElements();
 		this.styleSheet();
-	}
-	disconnectedCallback(){
-
 	}
 	uiElements(){
 		this.container = document.createElement("nav");
@@ -50,18 +46,22 @@ class CuratescapeTourNav extends HTMLElement {
 			)
 		);
 		this.shadow.appendChild(this.container);
+		setTimeout(()=>{ // enables animation
+			this.container.setAttribute('data-loaded','true');
+		}, 0);
 	}
 	attr(string){
 		return this.hasAttribute(string) ? this.getAttribute(string) : null;
 	}
 	tourDetail(id, tourid, title, tourinfo){
 		if(!id || !tourid || !title || !tourinfo){
-			return this.spacer(id, tourid, title, tourinfo);
+			return this.spacer();
 		}
+		let infoSvg = '<svg xmlns="http://www.w3.org/2000/svg" class="ionicon" viewBox="0 0 512 512"><path d="M256 56C145.72 56 56 145.72 56 256s89.72 200 200 200 200-89.72 200-200S366.28 56 256 56zm0 82a26 26 0 11-26 26 26 26 0 0126-26zm64 226H200v-32h44v-88h-32v-32h64v120h44z"/></svg>'; // @todo: customizable using file URL
 		let link = document.createElement('a');
 		link.href = '/tours/show/'+tourid;
 		link.title = title;
-		link.textContent = tourinfo;
+		link.innerHTML = infoSvg + '<span>' + tourinfo + '</span>';
 		let tourDetail = document.createElement("div");
 		tourDetail.id = id;
 		tourDetail.appendChild(link)
@@ -75,7 +75,7 @@ class CuratescapeTourNav extends HTMLElement {
 	}
 	tourItemLink(id, tourid, index, titleattr, url, text, imgsrc){
 		if(!id || !tourid || !index || !titleattr || !url || !text){
-			return this.spacer(id, tourid, index, titleattr, url, text, imgsrc);
+			return this.spacer();
 		}
 		let img = document.createElement('img');
 		img.onload = function() {
@@ -95,10 +95,12 @@ class CuratescapeTourNav extends HTMLElement {
 		link.appendChild(img);
 		return link;
 	}
-	spacer(logmessage){
-		if(logmessage) console.log(logmessage)
+	spacer(titleattr){
 		let spacer = document.createElement('div');
 		spacer.classList.add('spacer');
+		if(titleattr){
+			spacer.title = titleattr;
+		}
 		return spacer;
 	}
 	styleSheet(){
@@ -119,6 +121,8 @@ class CuratescapeTourNav extends HTMLElement {
 			--tour-nav-max-width: 370px;
 			--tour-nav-border-radius: calc( var(--tour-nav-height) * 0.5);
 			--tour-nav-image-width-multiplier: 1.5;
+			--tour-nav-spacer-background-color: rgba(256,256,256, 0.25);
+			--tour-nav-spacer-border: 1px solid transparent;
 			
 			container-type: inline-size;
 			container-name: nav;
@@ -142,10 +146,21 @@ class CuratescapeTourNav extends HTMLElement {
 			text-align: center;
 			justify-content: space-between;
 			width: 95%;
-			margin: 0 auto calc(env(safe-area-inset-bottom) + 10px);
+			margin: 0 auto calc(0 - var(--tour-nav-height) * 2);
 			padding: var(--tour-nav-padding);
 			font-family: inherit;
 			box-shadow: var(--tour-nav-box-shadow);
+			transition: all 0.5s linear;
+			opacity: 0;
+		}
+		@media (prefers-reduced-motion: reduce) {
+			#container{
+				transition: unset;
+			}
+		}
+		#container[data-loaded]{
+			opacity: 1;
+			margin: 0 auto calc(env(safe-area-inset-bottom) + 10px);
 		}
 		a{
 			color: var(--tour-nav-button-color);
@@ -172,10 +187,29 @@ class CuratescapeTourNav extends HTMLElement {
 			object-position: center 20%;
 		}
 		#container .spacer{
-			min-width: var(--tour-nav-img-width);
+			cursor: not-allowed;
+			background-color: var(--tour-nav-spacer-background-color);
+			height: var(--tour-nav-height);
+			width: var(--tour-nav-img-width);
+			border: var(--tour-nav-spacer-border);
+		}
+		#container .spacer:last-child{
+			border-radius: 0 var(--tour-nav-img-border-radius) var(--tour-nav-img-border-radius) 0;
+		}
+		#container .spacer:first-child{
+			border-radius: var(--tour-nav-img-border-radius) 0  0 var(--tour-nav-img-border-radius);
 		}
 		#detail a{
 			padding: var(--tour-nav-padding);
+			display: flex;
+			flex-direction: row;
+			align-items: center;
+		}
+		svg{
+			height: 1.5em;
+			fill: var(--tour-nav-text-color);
+			margin-right: 3px;
+			opacity: 0.5;
 		}
 		`);
 		this.shadow.adoptedStyleSheets = [css];

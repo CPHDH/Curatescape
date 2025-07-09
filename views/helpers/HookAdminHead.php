@@ -25,7 +25,6 @@ class Curatescape_View_Helper_HookAdminHead extends Zend_View_Helper_Abstract{
 			is_current_url('/admin/settings/') ||
 			is_current_url('/admin/tours/')
 		){
-			// @todo: theme deprecation check?
 			$deprecatedPlugins = array(
 				'CuratescapeJSON',
 				'CuratescapeAdminHelper',
@@ -34,9 +33,32 @@ class Curatescape_View_Helper_HookAdminHead extends Zend_View_Helper_Abstract{
 				'SendToAdminHeader',
 				'MobileJSON',
 			);
+			$incompatiblePlugins = array(
+				'WalkingTour',
+			);
+			$deprecatedThemes = array(
+				'curatescape' => '4.0',
+				'curatescape-echo' => '2.0'
+			);
 			foreach($deprecatedPlugins as $plugin){
 				if(plugin_is_active($plugin)){
 					array_push($warnings, __('The %1s plugin is deprecated and replaced by the %2s plugin. Please deactivate and remove the %3s plugin to avoid conflicts.', $plugin, _PLUGIN_NAME_, $plugin));
+				}
+			}
+			foreach($incompatiblePlugins as $plugin){
+				if(plugin_is_active($plugin)){
+					array_push($warnings, __('The %1s plugin is incompatible with the %2s plugin. Please deactivate and remove the %3s plugin to avoid conflicts.', $plugin, _PLUGIN_NAME_, $plugin));
+				}
+			}
+			$currentThemeName = Theme::getCurrentThemeName('public');
+			foreach($deprecatedThemes as $theme=>$minversion){
+				if($theme == $currentThemeName){
+					$currentTheme = Theme::getTheme($currentThemeName);
+					$currentThemeTitle = $currentTheme->title;
+					$currentThemeVersion = $currentTheme->version;
+					if(version_compare($currentThemeVersion, $minversion, '<')){
+						array_push($warnings, __('The %s theme needs to be updated. Version %s or higher is required for the %s plugin. Your current version is %s.', $currentThemeTitle, $minversion, _PLUGIN_NAME_, $currentThemeVersion));
+					}
 				}
 			}
 			if(count($warnings)){

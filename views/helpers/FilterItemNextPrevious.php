@@ -1,4 +1,5 @@
 <?php
+// SEE ALSO CURATESCAPE-TOUR-NAV.JS
 class Curatescape_View_Helper_FilterItemNextPrevious extends Zend_View_Helper_Abstract{
 	public function FilterItemNextPrevious($nextItem, $previousItem)
 	{

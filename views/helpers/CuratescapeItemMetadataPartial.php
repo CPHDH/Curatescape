@@ -1,5 +1,4 @@
 <?php
-// settings for: byline first, include title/subtitle, inline factoids, factoids custom label
 class Curatescape_View_Helper_CuratescapeItemMetadataPartial extends Zend_View_Helper_Abstract{
 	public function CuratescapeItemMetadataPartial($elementsForDisplay, $html=null)
 	{
@@ -9,6 +8,10 @@ class Curatescape_View_Helper_CuratescapeItemMetadataPartial extends Zend_View_H
 		$mapCaptionElements = array();
 		$factoidElements = array();
 		$metaHtml = null;
+		if($tours = toursForItem(get_current_record('item')->id)){
+			$label = count($tours) > 1 ? tourLabelString('plural') : tourLabelString();
+			$elementsForDisplay[_CURATESCAPE_ITEM_TYPE_SETNAME_][__('Related %s', $label)]['texts'] = $this->getTourLinks($tours);
+		}
 		foreach ($elementsForDisplay as $setName => $setElements){
 			foreach ($setElements as $elementName => $elementInfo){
 				if($setName == 'Dublin Core'){
@@ -50,6 +53,13 @@ class Curatescape_View_Helper_CuratescapeItemMetadataPartial extends Zend_View_H
 		$html .= $this->storyMapCaption($mapCaptionElements);
 		$html .= $metaHtml ? '<div class="element-set"><h2>'.__('Metadata').'</h2>'.$metaHtml.'</div>' : null;
 		return $html;
+	}
+
+	private function getTourLinks($tours = array(), $results = array()){
+		foreach($tours as $tour){
+			$results[] = '<a href="/tours/show/'.$tour['id'].'">'.$tour['title'].'</a>';
+		}
+		return $results;
 	}
 
 	private function story($articleElements = array(), $bylineElements = array(), $factoidElements = array(), $bylineLocation='after_lede', $html = null, $factoidCount = 0)

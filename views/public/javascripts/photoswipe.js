@@ -63,7 +63,6 @@ const openLightboxAtIndex = (i,data)=>{
 			const audio = document.createElement('audio');
 			audio.setAttribute('controls','controls');
 			audio.setAttribute('src', content.data.src);
-			audio.setAttribute('style', getCalculatedLinkColor(0.75));
 			audio.classList.add(browserClassName);
 			content.element.appendChild(audio);
 		}
@@ -74,7 +73,6 @@ const openLightboxAtIndex = (i,data)=>{
 			const video = document.createElement('video');
 			video.setAttribute('controls','controls');
 			video.setAttribute('src', content.data.src);
-			video.setAttribute('style', getCalculatedLinkColor(0.75));
 			video.classList.add(browserClassName);
 			content.element.appendChild(video);
 		}
@@ -88,7 +86,6 @@ const openLightboxAtIndex = (i,data)=>{
 			download.classList.add('button');
 			download.classList.add('curatescape-pswp-button');
 			download.innerText = content.data.fallbackmessage;
-			download.setAttribute('style', getCalculatedLinkColor(0.75));
 			if(browserClassName=='chromium') {
 				// Chromium PDF Viewer (Chrome, Edge, Opera, etc.)
 				// must use iframe to avoid "permissions policy violation: fullscreen..."

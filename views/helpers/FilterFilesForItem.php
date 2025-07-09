@@ -18,15 +18,14 @@ class Curatescape_View_Helper_FilterFilesForItem extends Zend_View_Helper_Abstra
 	public function filesDisplayGallery($files, $galleryType = 'gallery-inline-captions', $html = null)
 	{
 		if(!$files) return null;
-		if($galleryType == 'gallery-slides'){ // @todo: https://github.com/omeka/Omeka/pull/1056
-			$supportedFiles = array_merge($files['images'], $files['audio'], $files['video']);
-			$html .= lightgallery($supportedFiles);
-			$html .= filesOutputTable($files['other']);
-		}elseif($galleryType == 'gallery-table'){
+		if($galleryType == 'gallery-table'){
 			$html .= filesOutputTable(array_merge($files['images'], $files['audio'], $files['video'], $files['other']), false);
+		}elseif($galleryType == 'gallery-slides'){
+			$html .= lightgallery(array_merge($files['images'], $files['audio'], $files['video']));
+			$html .= filesOutputTable($files['other']);
 		}else{
 			// grid or inline
-			if(option('curatescape_lightbox_docs')==1){
+			if(option('curatescape_lightbox_docs')==1 || $galleryType == 'gallery-inline-captions'){
 				$html .= filesOutputFigures($files['images'], $files['audio'], $files['video'], $files['other'], $galleryType);
 			}else{
 				$html .= filesOutputFigures($files['images'], $files['audio'], $files['video'], array(),$galleryType);
