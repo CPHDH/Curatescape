@@ -1,9 +1,7 @@
 <?php
 /*
-* @major: TOURS
-	* HookPublicHomeTop, HookPublicHomeEnd
-	* New features: multi-stop map directions?
-* @later: languages
+* @todo: HookPublicHomeTop, HookPublicHomeEnd
+* @later: in-tour map routing?
 */
 
 // Includes

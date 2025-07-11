@@ -35,7 +35,7 @@ const openLightboxAtIndex = (i,data)=>{
 	let lightbox = new PhotoSwipeLightbox({
 		dataSource: data,
 		index: i,
-		bgOpacity: 0.85,
+		bgOpacity: 1,
 		pswpModule: () => import('./PhotoSwipe/dist/photoswipe.esm.min.js')
 	});
 	// add captions support
