@@ -261,7 +261,7 @@ class CuratescapeTour extends Omeka_Record_AbstractRecord
 		$range = implode(',', array_column($this->getItems(), 'id'));
 		$html .= '<figure class="tour-items-map" data-tour-id="'.$this->id.'" data-tour-items="'.$range.'">';
 			$html .=  get_view()->shortcodes('[geolocation range='.$range.' '.$height.']');
-			$html .= '<figcaption>';
+			$html .= '<figcaption class="curatescape-map-caption">';
 				$html .=  __('%1s Map: %2s', tourLabelString(), $this->title);
 			$html .= '</figcaption>';
 		$html .= '</figure>';

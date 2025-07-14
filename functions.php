@@ -228,7 +228,7 @@ function activeSort($objects, $sort = array())
 	return $objects;
 }
 
-function availableTourItemsJSON($locationRequired = true)
+function availableTourItemsJSON()
 {
 		$db = get_db();
 		$itemTable = $db->getTable( 'Item' );
@@ -239,7 +239,7 @@ function availableTourItemsJSON($locationRequired = true)
 			SQL
 		);
 		foreach($items as $index => $item) {
-			if($locationRequired && !hasLocation($item)) continue;
+			if(!hasLocation($item) || !isCuratescapeStory($item)) continue;
 			$items[$index]['label'] = dc( $item,'Title');
 		}
 		return json_encode($items);

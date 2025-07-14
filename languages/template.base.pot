@@ -749,7 +749,7 @@ msgstr ""
 #: views/helpers/HookConfigForm.php:165
 msgid ""
 "If checked, the \"Use HTML\" and \"Add Input\" buttons in the Item form will "
-"be disabled for select elements in order to enfoce the recommended "
+"be disabled for select elements in order to enforce the recommended "
 "formatting rules."
 msgstr ""
 
@@ -1001,9 +1001,7 @@ msgstr ""
 #: views/helpers/HookAdminHead.php:176
 #, php-format
 msgid ""
-"This element is recommended for %1s content. The form has been modified to "
-"enforce the recommended formatting rules for this element. You may turn off "
-"this feature in %2s plugin settings."
+"This element is recommended for %1s content."
 msgstr ""
 
 #: views/helpers/HookAdminHead.php:196

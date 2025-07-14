@@ -148,7 +148,12 @@ class CuratescapePlugin extends Omeka_Plugin_AbstractPlugin{
 
 	public function hookPublicHome($args)
 	{
-		return get_view()->HookPublicHomeEnd($args);
+		return get_view()->HookPublicContent($args)->homeEnd();
+	}
+	
+	public function hookPublicContentTop($args)
+	{
+		return get_view()->HookPublicContent($args)->homeTop();
 	}
 
 	public function hookDefineRoutes($args)
@@ -159,11 +164,6 @@ class CuratescapePlugin extends Omeka_Plugin_AbstractPlugin{
 	public function hookDefineAcl($args)
 	{
 		return get_view()->HookDefineAcl($args);
-	}
-
-	public function hookPublicContentTop($args)
-	{
-		return get_view()->HookPublicHomeTop($args);
 	}
 
 	public function hookAfterSaveItem($post)

@@ -20,7 +20,7 @@ function databaseTableExists($db, $tableName){
 function curatescapeStoryItemType(){
 	return array(
 		'name'=> 'Curatescape Story',
-		'description' => 'A narrative body of text in article format, often describing a physical location.',
+		'description' => 'A narrative body of text in article format, typically describing a physical location.',
 	);
 }
 

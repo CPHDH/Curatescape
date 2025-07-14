@@ -162,7 +162,7 @@ class Curatescape_View_Helper_HookConfigForm extends Zend_View_Helper_Abstract{
 			<!-- Format Warnings-->
 			<?php echo $this->configFormCheckBox('curatescape_format_warnings', 'Format Warnings', 'If checked, display a warning after the user has saved an Item that appears to violate the recommended formatting rules (for example, by including a new line within a Subject term). This option does not result in the modification of any content. Required for mobile app projects and generally recommended for all.');?>
 			<!-- Form Enforcement -->
-			<?php echo $this->configFormCheckBox('curatescape_form_enforcement', 'Form Enforcement', __('If checked, the "Use HTML" and "Add Input" buttons in the Item form will be disabled for select elements in order to enfoce the recommended formatting rules.') );?>
+			<?php echo $this->configFormCheckBox('curatescape_form_enforcement', 'Form Enforcement', __('If checked, the "Use HTML" and "Add Input" buttons in the Item form will be disabled for select elements in order to enforce the recommended formatting rules.') );?>
 			<!-- Omit Redundant -->
 			<?php echo $this->configFormCheckBox('curatescape_omit_redundant_elements', 'Omit Redundant', __('If checked, the Title and Subtitle elements for the Item will be omitted from the metadata table since they already appear as part of the page heading. Likewise, the Coverage element will be omitted since it already appears as part of the map caption (which consists of the Street Address and Access Information texts).', _CURATESCAPE_ITEM_TYPE_NAME_) );?>
 			<!-- Dashboard -->
