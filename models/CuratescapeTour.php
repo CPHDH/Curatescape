@@ -157,7 +157,6 @@ class CuratescapeTour extends Omeka_Record_AbstractRecord
 	public function getFile()
 	{
 		// register default record_image
-		// @todo: custom/composite image option
 		$file = null;
 		if($tourItems = $this->getItems()){
 			if($files = $tourItems[0]->getFiles()){
@@ -170,6 +169,62 @@ class CuratescapeTour extends Omeka_Record_AbstractRecord
 			}
 		}
 		return $file;
+	}
+
+	public function getFileCustom(){
+		if(option('curatescape_tour_thumb_style') == 'composite'){
+			return $this->compositeSvg();
+		}else{
+			return record_image($this);
+		}
+	}
+
+	private function getFilesForComposite($max = 4)
+	{
+		$output = array();
+		if($tourItems = $this->getItems()){
+			foreach($tourItems as $item){
+				if(count($output) >= $max) return $output;
+				if($files = $item->getFiles()){
+					foreach($files as $f){
+						if($f->has_derivative_image){
+							array_push($output, record_image_url($f, 'square_thumbnail'));
+							continue 2;
+						}
+					}
+				}
+			}
+		}
+		return $output;
+	}
+
+	private function compositeSvg($class = 'composite', $imgSize = 200, $svgSize = 400)
+	{
+		$svg = null;
+		$imgSources = $this->getFilesForComposite(4);
+		if($imgSize = intval(option('square_thumbnail_constraint'))){
+			$svgSize = intval($imgSize * 2);
+		}
+		$coords = array(
+			array('x'=>0,'y'=>0),
+			array('x'=>$imgSize,'y'=>0),
+			array('x'=>0,'y'=>$imgSize),
+			array('x'=>$imgSize,'y'=>$imgSize),
+		);
+		$svg .= '<svg
+			class="'.$class.'"
+			xmlns="http://www.w3.org/2000/svg" 
+			xmlns:xlink="http://www.w3.org/1999/xlink" 
+			viewBox ="0 0 '.$svgSize.' '.$svgSize.'" 
+			version="1.1" 
+			width="'.$imgSize.'" 
+			height="'.$imgSize.'" 
+			>';
+			foreach($imgSources as $i=>$src){
+				$svg .= '<image href="'.$src.'" x="'.$coords[$i]['x'].'" y="'.$coords[$i]['y'].'" height="'.$imgSize.'px" width="'.$imgSize.'px"/>';
+			}
+		$svg .= '</svg>';
+		return $svg;
 	}
 
 	public function getTourItem($itemId)

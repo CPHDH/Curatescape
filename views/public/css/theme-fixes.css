@@ -76,9 +76,31 @@
 	}
 }
 /* TOURS */
+.curatescape-fix-default.curatescape-styles#tours.browse .tour svg,
+.curatescape-fix-minimalist.curatescape-styles#tours.browse .tour svg,
+.curatescape-fix-bigstuff.curatescape-styles#tours.browse .tour svg,
+.curatescape-fix-seasons.curatescape-styles#tours.browse .tour svg{
+	height: 100%;
+	width: 100%;
+}
+.curatescape-fix-emiglio.curatescape-styles#tours.browse .tour svg{
+	height: 84px;
+	width: 84px;
+}
+.curatescape-fix-rhythm.curatescape-styles#tours.browse .tour svg{
+	height: 120px;
+	width: 120px;
+}
+.curatescape-fix-santa-fe.curatescape-styles#tours.browse .tour svg{
+	height: 63px;
+	width: 63px;
+}
 .curatescape-fix-emiglio.curatescape-styles#tours.browse .tour img,
 .curatescape-fix-rhythm.curatescape-styles#tours.browse .tour img,
 .curatescape-fix-santa-fe.curatescape-styles#tours.browse .tour img,
+.curatescape-fix-emiglio.curatescape-styles#tours.browse .tour svg,
+.curatescape-fix-rhythm.curatescape-styles#tours.browse .tour svg,
+.curatescape-fix-santa-fe.curatescape-styles#tours.browse .tour svg,
 .curatescape-fix-default.curatescape-styles#tours.browse .tour .image{
 	box-shadow: -3px -3px 0 rgba(0, 0, 0, 0.2), -6px -6px 0 rgba(0, 0, 0, 0.1);
 	margin-left: 6px;
@@ -98,17 +120,24 @@
 .curatescape-fix-bigstuff.curatescape-styles#tours.browse .tour a.image{
 	box-shadow: -5px -5px 0 -1px #fafafa, -5px -5px 0 #cccccc, -8px -8px 0 -1px #eeeeee, -8px -8px 0 #cccccc;
 	height: 10.5em;
+	margin-left: 1em;
 }
-.curatescape-fix-berlin.curatescape-styles#tours.browse .tour img{
+.curatescape-fix-berlin.curatescape-styles#tours.browse .tour img,
+.curatescape-fix-berlin.curatescape-styles#tours.browse .tour svg{
 	box-shadow: -5px -5px 0 -1px #f2f2f2, -5px -5px 0 #ccc, -8px -8px 0 -1px #ddd, -8px -8px 0 #CCC;
 	width: 160px;
+	height: 160px;
 	margin-left: 8px;
 }
-.curatescape-fix-foundation.curatescape-styles#tours.browse .tour img{
+.curatescape-fix-foundation.curatescape-styles#tours.browse .tour img,
+.curatescape-fix-foundation.curatescape-styles#tours.browse .tour svg{
 	border: 4px solid #fefefe;
 	box-shadow: 0 0 0 1px rgba(10,10,10,.2);
+	width: 200px;
+	height: 200px;
 }
-.curatescape-fix-minimalist.curatescape-styles#tours.browse .tour img{
+.curatescape-fix-minimalist.curatescape-styles#tours.browse .tour img,
+.curatescape-fix-minimalist.curatescape-styles#tours.browse .tour svg{
 	box-shadow: -6px -6px 0 #bbb, -12px -12px 0 #eee;
 }
 .curatescape-fix-minimalist.curatescape-styles#tours.browse .tour .image{

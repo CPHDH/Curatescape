@@ -15,7 +15,7 @@ echo head(array('title' => $pageTitle, 'bodyid'=>'tours','bodyclass' => 'browse'
 			<h2>
 				<?php echo linkToTour($tour); ?>
 			</h2>
-			<?php if ($tourImage = record_image($tour)): ?>
+			<?php if ($tourImage = $tour->getFileCustom()): ?>
 				<?php echo linkToTour($tour, $tourImage, array('class'=>'image'), 'show'); ?>
 			<?php endif; ?>
 			<?php if ($tourDescription = metadata($tour, 'description', array('no_escape'=>true))): ?>
