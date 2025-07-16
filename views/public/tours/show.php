@@ -5,15 +5,20 @@ echo head(array('title' => metadata('tour', 'title'), 'bodyid'=>'tours', 'bodycl
 $tourItems = $tour->Items;
 ?>
 <h1 id="tourtitle"><?php echo metadata('tour', 'title'); ?></h1>
-<div>
+<div id="tour-content-container">
 	<article id="tour-content" aria-labelledby="tourtitle">
 		<div class="tour-description">
 			<?php echo normalizeTextBlocks(metadata('tour', 'Description'));?>
 		</div>
+		
+		<div class="tour-map">
+			<?php if(count($tourItems)):?>
+				<?php echo $tour->tourGeolocationMap();?>
+			<?php endif;?>
+		</div>
 
 		<div class="tour-items">
 			<?php if(count($tourItems)):?>
-				<?php echo $tour->tourGeolocationMap();?>
 
 				<?php if($tourItemsDiplay = $tour->tourItemsOutput(option('curatescape_gallery_style_tour'))):?>
 					<h2><?php echo storyLabelString(true);?> 

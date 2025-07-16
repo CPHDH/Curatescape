@@ -4,33 +4,39 @@ class Curatescape_View_Helper_HookPublicContent extends Zend_View_Helper_Abstrac
 	{
 		return $this;
 	}
-	public function homeEnd($heading = null)
+	public function homeEnd()
 	{
-		if(isset($heading)){
-			$heading = '<h2>'.strip_tags(trim($heading)).'</h2>';
+		if(option('curatescape_home_map') == 'bottom'){
+			echo $this->homeGeolocationMap('bottom');
 		}
-		// @todo!
-		echo '<div id="home-end">'.$heading.'</div>';
 	}
-	public function homeTop($heading = null)
+	public function homeTop()
 	{
 		if(!is_current_url('/')) return null;
-		if(isset($heading)){
-			$heading = '<h2>'.strip_tags(trim($heading)).'</h2>';
+
+		if(option('curatescape_home_map') == 'top'){
+			echo $this->homeGeolocationMap('top');
 		}
-		echo '<div id="home-top">'.$heading.$this->homeGeolocationMap().'</div>';
 	}
-	public function homeGeolocationMap()
+	public function homeGeolocationMap($class = null)
 	{
 		$html = null;
 		$range = $this->commaSeparatedItemIds();
+		if(!count($range)) return null;
 		$height = option('geolocation_item_map_height') ? 'height='.option('geolocation_item_map_height') : null;
-		$html .= '<figure class="home-items-map">';
-			$html .=  get_view()->shortcodes('[geolocation range='.implode(',',$range).' '.$height.']');
-			$html .= '<figcaption class="curatescape-map-caption" data-curatescape-invisible="true">';
-				$html .=  __('%1s Map: %2s total', storyLabelString(), count($range));
-			$html .= '</figcaption>';
-		$html .= '</figure>';
+		$heading = option('curatescape_home_map_heading') ? plainText(option('curatescape_home_map_heading')) : null;
+		if(isset($heading)){
+			$heading = '<h2 class="curatescape-map-title">'.$heading.'</h2>';
+		}
+		$caption = option('curatescape_home_map_caption') ? allowLinks(option('curatescape_home_map_caption')) : __('Map containing %1s %2s', count($range), strtolower(storyLabelString('plural')));
+		$html .= '<div class="curatescape-home-content '.$class.'">'.$heading;
+			$html .= '<figure class="home-items-map">';
+				$html .=  get_view()->shortcodes('[geolocation range='.implode(',',$range).' '.$height.']');
+				$html .= '<figcaption class="curatescape-map-caption" data-curatescape-screenreader-only="'.(option('curatescape_home_map_caption') ? 'false' : 'true').'">';
+					$html .= $caption;
+				$html .= '</figcaption>';
+			$html .= '</figure>';
+		$html .= '</div>';
 		return $html;
 	}
 	private function commaSeparatedItemIds()

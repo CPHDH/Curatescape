@@ -1,5 +1,4 @@
 <?php
-// Following template structure used by Exhibit Builder plugin to maximize theme compatibility
 // To customize, copy the contents of this file to your-theme/curatescape/tours/browse.php 
 $pageTitle = toursBrowsePageTitle($total_results);
 echo head(array('title' => $pageTitle, 'bodyid'=>'tours','bodyclass' => 'browse'));
@@ -12,22 +11,26 @@ echo head(array('title' => $pageTitle, 'bodyid'=>'tours','bodyclass' => 'browse'
 	<?php echo pagination_links(); ?>
 	<?php foreach (loop('tour') as $tour): ?>
 		<div class="tour">
-			<h2>
-				<?php echo linkToTour($tour); ?>
-			</h2>
-			<?php if ($tourImage = $tour->getFileCustom()): ?>
-				<?php echo linkToTour($tour, $tourImage, array('class'=>'image'), 'show'); ?>
-			<?php endif; ?>
-			<?php if ($tourDescription = metadata($tour, 'description', array('no_escape'=>true))): ?>
-				<div class="description">
-					<?php echo $tourDescription; ?>
+			<div class="tour-flex-container">
+				<?php if ($tourImage = $tour->getFileCustom()): ?>
+					<?php echo linkToTour($tour, $tourImage, array('class'=>'tour-image'), 'show'); ?>
+				<?php endif; ?>
+				<div class="details">
+					<h2>
+						<?php echo linkToTour($tour); ?>
+					</h2>
+					<?php if ($tourDescription = metadata($tour, 'description', array('no_escape'=>true))): ?>
+						<div class="description">
+							<?php echo snippet($tourDescription, 0, 500); ?>
+						</div>
+					<?php endif; ?>
+					<?php if ($tourTags = tag_string($tour, 'tours')): ?>
+						<div class="tags">
+							<?php echo '<strong>'.__('Tags').': </strong>'.$tourTags; ?>
+						</div>
+					<?php endif; ?>
 				</div>
-			<?php endif; ?>
-			<?php if ($tourTags = tag_string($tour, 'tours')): ?>
-				<p class="tags">
-					<?php echo $tourTags; ?>
-				</p>
-			<?php endif; ?>
+			</div>
 		</div>
 	<?php endforeach; ?>
 	<?php echo pagination_links(); ?>

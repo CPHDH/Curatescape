@@ -113,7 +113,7 @@ class Curatescape_View_Helper_CuratescapeItemMetadataPartial extends Zend_View_H
 		$flattened = array_merge(...array_values($mapCaptionElements));
 		$html .= implode(' | ', $flattened);
 		// hidden; used for JS map figure
-		return '<figcaption class="curatescape-map-caption" data-curatescape-hidden="true"><p>'.strip_tags($html,'<a>').'</p></figcaption>';
+		return '<figcaption class="curatescape-map-caption" data-curatescape-hidden="true">'.strip_tags($html,'<a>').'</figcaption>';
 	}
 
 	public function factoid($factoidElements = array(), $customLabel = 'Did you know?', $html = null){

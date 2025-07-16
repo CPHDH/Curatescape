@@ -45,6 +45,10 @@ function plainText($text){
 	return $text ? trim( html_entity_decode( strip_formatting($text))) : null;
 }
 
+function allowLinks($text){
+	return $text ? trim(strip_tags(html_entity_decode($text),'<a>')) : null;
+}
+
 function oxfordAmp($names=array(), $html = null)
 {
 	if(!$names) return array();

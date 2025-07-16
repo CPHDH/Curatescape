@@ -1,3 +1,4 @@
+/* Prepend all with .curatescape-fix-{themedir}.curatescape-styles */
 /* ITEMS */
 .curatescape-fix-freedom.curatescape-styles.type-curatescape-story.items.show .metadata h3{
 	margin-top: revert;
@@ -76,74 +77,163 @@
 	}
 }
 /* TOURS */
-.curatescape-fix-default.curatescape-styles#tours.browse .tour svg,
-.curatescape-fix-minimalist.curatescape-styles#tours.browse .tour svg,
-.curatescape-fix-bigstuff.curatescape-styles#tours.browse .tour svg,
-.curatescape-fix-seasons.curatescape-styles#tours.browse .tour svg{
-	height: 100%;
-	width: 100%;
+.curatescape-fix-emiglio.curatescape-styles#tours.browse .tour:not(:last-child) {
+	border-bottom: 1px solid #ddd;
 }
-.curatescape-fix-emiglio.curatescape-styles#tours.browse .tour svg{
-	height: 84px;
-	width: 84px;
+.curatescape-fix-rhythm.curatescape-styles#tours.browse .tour:not(:last-child) {
+	border-bottom: 1px dashed;
 }
-.curatescape-fix-rhythm.curatescape-styles#tours.browse .tour svg{
-	height: 120px;
-	width: 120px;
+.curatescape-fix-berlin.curatescape-styles#tours.browse .tour:not(:last-child) {
+	border-bottom: 1px solid #eee;
 }
-.curatescape-fix-santa-fe.curatescape-styles#tours.browse .tour svg{
-	height: 63px;
-	width: 63px;
+.curatescape-fix-bigstuff.curatescape-styles#tours.browse .tour:not(:last-child) {
+	border-bottom: 1px solid #cccccc;
 }
-.curatescape-fix-emiglio.curatescape-styles#tours.browse .tour img,
-.curatescape-fix-rhythm.curatescape-styles#tours.browse .tour img,
-.curatescape-fix-santa-fe.curatescape-styles#tours.browse .tour img,
-.curatescape-fix-emiglio.curatescape-styles#tours.browse .tour svg,
-.curatescape-fix-rhythm.curatescape-styles#tours.browse .tour svg,
-.curatescape-fix-santa-fe.curatescape-styles#tours.browse .tour svg,
-.curatescape-fix-default.curatescape-styles#tours.browse .tour .image{
-	box-shadow: -3px -3px 0 rgba(0, 0, 0, 0.2), -6px -6px 0 rgba(0, 0, 0, 0.1);
-	margin-left: 6px;
+.curatescape-fix-bigpicture.curatescape-styles#tours.browse .tour:not(:last-child) {
+	border-bottom: 1px solid #cecece;
 }
-.curatescape-fix-default.curatescape-styles#tours.browse .tour{
-	border-top: 1px solid #ccc;
-	padding-top: 23px;
+.curatescape-fix-foundation.curatescape-styles#tours.browse .tour:not(:last-child) {
+	border-bottom: 1px solid #e6e6e6;;
 }
-.curatescape-fix-santa-fe.curatescape-styles#tours.browse .tour{
+.curatescape-fix-default.curatescape-styles#tours.browse .tour:not(:last-child) {
+	border-bottom: 1px solid #ccc;
+}
+.curatescape-fix-santa-fe.curatescape-styles#tours.browse .tour:not(:last-child) {
 	border-bottom: 1px solid #d3d6bc;
-	padding-bottom: 17px;
-	margin-bottom: 18px;
 }
-.curatescape-fix-seasons.curatescape-styles#tours.browse .tour a.image{
-	box-shadow: -3px -3px 0 #bbb, -4px -4px 0 #fff, -7px -7px 0 #dedede
+.curatescape-fix-minimalist.curatescape-styles#tours.browse .tour{
+	border-top: 4px solid #ddd;
+	padding-top: 1em;
 }
-.curatescape-fix-bigstuff.curatescape-styles#tours.browse .tour a.image{
-	box-shadow: -5px -5px 0 -1px #fafafa, -5px -5px 0 #cccccc, -8px -8px 0 -1px #eeeeee, -8px -8px 0 #cccccc;
-	height: 10.5em;
-	margin-left: 1em;
+.curatescape-fix-freedom.curatescape-styles#tours.browse h2{
+	font-size: 2rem;
 }
-.curatescape-fix-berlin.curatescape-styles#tours.browse .tour img,
-.curatescape-fix-berlin.curatescape-styles#tours.browse .tour svg{
-	box-shadow: -5px -5px 0 -1px #f2f2f2, -5px -5px 0 #ccc, -8px -8px 0 -1px #ddd, -8px -8px 0 #CCC;
-	width: 160px;
-	height: 160px;
-	margin-left: 8px;
+.curatescape-fix-foundation.curatescape-styles#tours.browse h2{
+	font-size: 1.5625rem;
 }
-.curatescape-fix-foundation.curatescape-styles#tours.browse .tour img,
-.curatescape-fix-foundation.curatescape-styles#tours.browse .tour svg{
-	border: 4px solid #fefefe;
-	box-shadow: 0 0 0 1px rgba(10,10,10,.2);
+.curatescape-fix-centerrow.curatescape-styles#tours.browse h2{
+	margin-bottom: 0.25lh;
+}
+.curatescape-fix-freedom.curatescape-styles#tours.browse .tour-image,
+.curatescape-fix-freedom.curatescape-styles#tours.browse svg,
+.curatescape-fix-freedom.curatescape-styles#tours.browse img{
 	width: 200px;
 	height: 200px;
 }
-.curatescape-fix-minimalist.curatescape-styles#tours.browse .tour img,
-.curatescape-fix-minimalist.curatescape-styles#tours.browse .tour svg{
-	box-shadow: -6px -6px 0 #bbb, -12px -12px 0 #eee;
+.curatescape-fix-freedom.curatescape-styles#tours.browse .tour-image::after{
+	content: '';
+	width: 90%;
+	height: 90%;
+	background: transparent;
+	border: 1px solid #fff;
+	display: block;
+	position: absolute;
+	border-radius: 50%;
+	top:5%;
+	left:5%;
+	z-index: 2;
 }
-.curatescape-fix-minimalist.curatescape-styles#tours.browse .tour .image{
-	margin-left: 12px;
-	margin-top: 12px;
+/* HOME MAP */
+.curatescape-fix-default.curatescape-styles .curatescape-home-content{
+	padding: 24px;
 }
-.curatescape-fix-rhythm.curatescape-styles#tours.browse h1{
-	margin-bottom: 0;
+.curatescape-fix-bigpicture.curatescape-styles .curatescape-home-content{
+	margin: 21px;
+	padding: 21px;
+	width: calc(100% - 42px);
+}
+.curatescape-fix-foundation.curatescape-styles .curatescape-home-content.top{
+	border-bottom: 1px solid #cacaca;
+	padding-bottom: 0.5lh;
+	margin-bottom: 1lh;
+}
+.curatescape-fix-santa-fe.curatescape-styles .curatescape-home-content.top{
+	border-bottom: 1px solid #d3d6bc;
+	margin-bottom: 1lh;
+}
+.curatescape-fix-foundation.curatescape-styles .curatescape-home-content.bottom h2{
+	text-align: center;
+	border-bottom: 1px solid #cacaca;
+	margin-bottom: 2.25rem;
+	padding-bottom: 2.25rem;
+}
+.curatescape-fix-emiglio.curatescape-styles .curatescape-home-content.top{
+	border-bottom: 1px solid #ddd;
+}
+.curatescape-fix-berlin.curatescape-styles .curatescape-home-content.top{
+	border-bottom: 1px solid #ccc;
+}
+.curatescape-fix-thedaily.curatescape-styles .curatescape-map-caption{
+	background-color: #000000;
+	color: #FFFFFF;
+	padding: 12px;
+	width: max-content;
+}
+.curatescape-fix-thedaily.curatescape-styles .curatescape-map-caption a{
+	color: #FFFF00;
+	text-decoration: underline;
+}
+.curatescape-fix-thedaily.curatescape-styles h2.curatescape-map-title{
+	font-size: 31.5px;
+	line-height: 1em;
+	background: #FFFF00;
+	display: inline-block;
+	width: max-content;
+	padding: 12px;
+	margin: 0;
+}
+@media screen and (min-width:800px){
+	.curatescape-fix-thedaily.curatescape-styles h2.curatescape-map-title{
+		font-size: 22.5px;
+	}
+}
+.curatescape-fix-freedom.curatescape-styles h2.curatescape-map-title{
+	border-bottom: 1px solid #ececec;
+	padding-bottom: 1rem;
+}
+.curatescape-fix-freedom.curatescape-styles h2.curatescape-map-title::after {
+	display: block;
+	content: "";
+	background-color: var(--primary);
+	bottom: -1px;
+	height: 3px;
+	left: 0;
+	position: absolute;
+	width: 64px;
+}
+/* TAGS */
+.curatescape-fix-freedom.curatescape-styles.tags .hTagcloud ul {
+	display: flex;
+	align-items: center;
+	flex-shrink: 0;
+	flex-wrap: wrap;
+	gap: 10px;
+	list-style: none;
+	margin-bottom: 10px;
+	padding-left: 0;
+	align-items: center;
+	justify-content: center;
+	margin-top: 3rem;
+}
+.curatescape-fix-freedom.curatescape-styles.tags#tours .hTagcloud ul li a{
+	padding: 5px 10px;
+	text-decoration: none;
+	font-weight: 600;
+	color: #333;
+	background-color: hsl(2605185669, 100%, 87.5%);
+}
+.curatescape-fix-freedom.curatescape-styles.tags#tours .hTagcloud ul li:nth-child(2n) a{
+	background: hsl(2345449404, 100%, 87.5%);
+}
+.curatescape-fix-freedom.curatescape-styles.tags#tours .hTagcloud ul li:nth-child(3n) a{
+	background: hsl(103051168, 100%, 87.5%)
+}
+.curatescape-fix-freedom.curatescape-styles.tags#tours .hTagcloud ul li:nth-child(4n) a{
+	background: hsl(408066808, 100%, 87.5%);
+}
+.curatescape-fix-freedom.curatescape-styles.tags#tours .hTagcloud ul li:nth-child(5n) a{
+	background: hsl(844765985, 100%, 87.5%);
+}
+.curatescape-fix-freedom.curatescape-styles.tags#tours .hTagcloud ul li:nth-child(6n) a{
+	background: hsl(1885528553, 100%, 87.5%);
 }

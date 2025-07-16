@@ -14,9 +14,17 @@
 	display: none;
 	visibility: hidden;
 }
-[data-curatescape-invisible="true"]{
+[data-curatescape-screenreader-only="true"]{
 	visibility: hidden;
 	height: 0;
+	width: 0;
+	padding: 0;
+	margin: 0;
+	font-size: 0;
+	line-height: 0;
+	color: transparent;
+	position: absolute;
+	pointer-events: none;
 }
 /* gallery! */
 .pswp__bg{
@@ -217,9 +225,19 @@
 	color: inherit;
 	display: inline;
 }
+.curatescape-styles .curatescape-home-content{
+	width: 100%;
+	clear: both;
+}
+.curatescape-styles .curatescape-home-content.top{
+	padding-bottom: 1lh;
+}
+.curatescape-styles .curatescape-home-content.bottom{
+	padding-top: 1lh;
+	padding-bottom: 1lh;
+}
 .curatescape-styles .curatescape-files figure,
-.curatescape-styles .tour-items figure,
-.curatescape-styles #home-top figure{
+.curatescape-styles .curatescape-home-content figure{
 	margin: 0 auto;
 }
 .curatescape-styles #geolocation figure{
@@ -227,9 +245,14 @@
 	padding: 0;
 }
 .curatescape-styles .curatescape-map-caption{
-	padding-top: 0.25lh;
-	margin-bottom: 1lh;
+	padding-top: 0.5lh;
+	margin-bottom: 0;
 	font-style: italic;
+}
+.curatescape-styles .curatescape-map-title{
+	position: relative;
+	width: 100%;
+	clear: both;
 }
 .curatescape-styles figcaption cite,
 .curatescape-styles table cite{

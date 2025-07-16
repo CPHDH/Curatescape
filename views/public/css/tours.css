@@ -1,10 +1,71 @@
-#tours.browse .tour a.image{
-	float: left;
-	margin-right: 1lh;
-	margin-bottom: 1lh;
-}
+/* BROWSE */
 #tours.browse .tour{
 	clear: both;
+}
+#tours.browse .tour h2{
+	margin: 0 0 0.5lh;
+	padding: 0;
+	border: 0px none transparent;
+}
+#tours.browse .tour .tags{
+	margin-top: 0.25lh;
+}
+#tours.browse .tour{
+	container-name: tourcontainer; /* <== Container */
+	container-type: inline-size; /* <== Container */
+	width: 100%;
+	margin-bottom: 1lh;
+	padding-bottom: 1lh;
+}
+#tours.browse .tour:first-of-type{
+	margin-top: 1lh;
+}
+#tours.browse .tour-flex-container{
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}
+#tours.browse .tour a.tour-image{
+	position: relative;
+	margin-right: 1lh;
+	margin-bottom: 0;
+	margin-top: 0.5lh;
+}
+#tours.browse .tour a.tour-image,
+#tours.browse .tour svg,
+#tours.browse .tour img{
+	position: relative;
+	width: 150px;
+	height: 150px;
+}
+#tours.browse .tour a.tour-image,
+#tours.browse .tour svg,
+#tours.browse .tour img{
+	border-color: transparent;
+	border-radius: 50%;
+}
+@container tourcontainer (width < 500px){
+	#tours.browse .tour-flex-container {
+		flex-direction: column;
+	}
+	#tours.browse .tour a.tour-image{
+		margin: 0 0 1lh 0;
+	}
+	#tours.browse .tour h2{
+		text-align: center;
+	}
+}
+/* SHOW */
+#tour-content-container{
+	container-name: tourcontentcontainer; /* <== Container */
+	container-type: inline-size; /* <== Container */
+}
+.tour-items,
+.tour-map{
+	margin-top: 1lh;
+}
+.tour-map figure{
+	margin: 0 auto;	
 }
 .tour-item-count{
 	display: inline-flex;
@@ -23,4 +84,7 @@
 .tour-colophon{
 	font-style: italic;
 	margin-top: 2lh;
+}
+.pswp__pswp-caption a[data-item-id]{
+	display: none; // @todo: fix open map marker from pswp caption link
 }

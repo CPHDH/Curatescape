@@ -47,7 +47,6 @@ class Curatescape_View_Helper_HookPublicHead extends Zend_View_Helper_Abstract{
 		}
 		if(
 			is_current_url('/tours/show') && 
-			option('curatescape_lightbox_tours') && 
 			option('curatescape_gallery_style_tour') !== 'gallery-inline-captions'
 		){
 			$this->photoSwipeModule();

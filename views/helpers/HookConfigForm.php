@@ -86,10 +86,19 @@ class Curatescape_View_Helper_HookConfigForm extends Zend_View_Helper_Abstract{
 			<?php echo $this->configFormSelect('curatescape_tour_thumb_style', 'Tour Thumbnail', 'Select the style of thumbnail image to use when browsing tours. The composite style combines the first image from the first four Items on the Tour to create a mini-collage.', array( 'composite' => __('Composite (default)'), 'first-image' => __('First image from first tour stop'), 'none' => __('None') ) );?>
 			<!-- Tour Item Gallery Style-->
 			<?php echo $this->configFormSelect('curatescape_gallery_style_tour', 'Tour Item Gallery', 'Select the style to be used for displaying tour items in list form. Each style will adapt to the available space as determined by the theme layout and browser dimensions.', array( 'gallery-inline-captions' => __('Inline Captions (default)'), 'gallery-grid' => __('Thumbnail Grid'), 'none' => __('None') ) );?>
-			<!-- Image Lightbox-->
-			<?php echo $this->configFormCheckBox('curatescape_lightbox_tours', 'Tour Lightbox', 'If checked, image links for tour items will open in lightbox overlay (PhotoSwipe) for compatible Tour Item Gallery styles. If unchecked, image links will open the file record directly.');?>
 		</fieldset>
 
+		<fieldset>
+			<legend><?php echo __('Homepage Settings'); ?></legend>
+			<p><?php echo __('Use these settings to add content to the homepage.');?></p>
+			<!-- Home Map -->
+			<?php echo $this->configFormSelect('curatescape_home_map', 'Map Location', __('Select a location on the homepage for displaying a map of %s.', _CURATESCAPE_ITEM_TYPE_NAME_PLURAL_), array( 'top' => __('Top (default)'), 'bottom' => __('Bottom'), 'none' => __('None')));?>
+			<!-- Home Map Heading -->
+			<?php echo $this->configFormText('curatescape_home_map_heading', 'Map Heading', __('Enter a text heading for the homepage map or leave blank to omit the heading.'), 'Example: Story Map');?>
+			<!-- Home Map Caption-->
+			<?php echo $this->configFormText('curatescape_home_map_caption', 'Map Caption', __('Enter a text caption to display below the homepage map or leave blank to omit the caption. If blank, a basic description of the map will be made available to screen readers.'), 'Example: Use the Story Map to explore the area.');?>
+		</fieldset>
+		
 		<fieldset>
 			<legend><?php echo __('Navigation Settings'); ?></legend>
 			<p><?php echo __('The following settings apply to the primary and secondary/Item navigation menus, as well as the Omeka admin bar.');?></p>

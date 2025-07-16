@@ -317,7 +317,7 @@ class CuratescapeTour extends Omeka_Record_AbstractRecord
 		$html .= '<figure class="tour-items-map" data-tour-id="'.$this->id.'" data-tour-items="'.$range.'">';
 			$html .=  get_view()->shortcodes('[geolocation range='.$range.' '.$height.']');
 			$html .= '<figcaption class="curatescape-map-caption">';
-				$html .=  __('%1s Map: %2s', tourLabelString(), $this->title);
+				$html .=  __('%1s Map', tourLabelString());
 			$html .= '</figcaption>';
 		$html .= '</figure>';
 		return $html;
