@@ -4,9 +4,9 @@ class Curatescape_View_Helper_HookAdminDashboard extends Zend_View_Helper_Abstra
 		// TOURS (required)
 		echo $this->dashboardTours();
 		// RESOURCES (optional)
-		if(option('curatescape_dashboard_resources')){
-			$cache = get_view()->Cache();
-			// warnings (1 hour cache, cleared on item save)
+		$cache = get_view()->Cache();
+		// warnings (1 hour cache, cleared on item save)
+		if(option('curatescape_dashboard_audit')){
 			if ($cacheFile = $cache->GetCacheFile(_HTML_DASHBOARD_CONTENT_AUDIT_, 3600, false)) {
 				echo $cacheFile;
 			}else{
@@ -14,7 +14,9 @@ class Curatescape_View_Helper_HookAdminDashboard extends Zend_View_Helper_Abstra
 				$cache->WriteCacheFile(_HTML_DASHBOARD_CONTENT_AUDIT_, $html);
 				echo $html;
 			}
-			// file stats and info (1 hour cache, cleared on item save)
+		}
+		// file stats and info (1 hour cache, cleared on item save)
+		if(option('curatescape_dashboard_stats')){
 			if ($cacheFile = $cache->GetCacheFile(_HTML_DASHBOARD_FILE_STATS_, 3600, false)) {
 				echo $cacheFile;
 			}else{
@@ -24,9 +26,13 @@ class Curatescape_View_Helper_HookAdminDashboard extends Zend_View_Helper_Abstra
 					echo $html;
 				}
 			}
-			// project management
+		}
+		// project management
+		if(option('curatescape_dashboard_project_mgmt')){
 			echo $this->dashboardProjectManagement();
-			// resources
+		}
+		// resources
+		if(option('curatescape_dashboard_resources')){
 			echo $this->dashboardResources();
 		}
 	}
@@ -48,10 +54,11 @@ class Curatescape_View_Helper_HookAdminDashboard extends Zend_View_Helper_Abstra
 			$listIssues[] = $this->issueDisplay(
 				$missingFileMeta, 
 				array('range'=>''.implode(',', $missingFileMeta)),
-				__('%1s %2s with missing File metadata', 
+				__('%1s %2s with missing File Metadata', 
 					count($missingFileMeta), 
 					(count($missingFileMeta) == 1 ? __('item') : __('items'))
-				)
+				),
+				__('Each file should have a title and other metadata to meet accessibility standards and provide important context for end users. File metadata is used to generate captions for all media files, as well as alt text for images.')
 			);
 		}
 		// no images?
@@ -72,7 +79,8 @@ class Curatescape_View_Helper_HookAdminDashboard extends Zend_View_Helper_Abstra
 				__('%1s %2s with no Thumbnail Image', 
 					count($noImages), 
 					(count($noImages) == 1 ? __('item') : __('items'))
-				)
+				),
+				__('Each item should have at least one image file to help attract user interest and improve the overall user experience.')
 			);
 		}
 		// no map location?
@@ -88,7 +96,8 @@ class Curatescape_View_Helper_HookAdminDashboard extends Zend_View_Helper_Abstra
 				__('%1s %2s with no Map Location', 
 					count($noMap), 
 					(count($noMap) == 1 ? __('item') : __('items'))
-				)
+				),
+				__('Items without a map location will not be included in Curatescape mobile apps.')
 			);
 		}
 		// no tags?
@@ -105,7 +114,8 @@ class Curatescape_View_Helper_HookAdminDashboard extends Zend_View_Helper_Abstra
 					'%1s %2s with no Tags', 
 					count($noTags), 
 					(count($noTags) == 1 ? __('item') : __('items'))
-				)
+				),
+				__('Tags help users to discover related content and filter content by topic, and may be a featured aspect of your theme design.')
 			);
 		}
 		// no subjects?
@@ -122,7 +132,8 @@ class Curatescape_View_Helper_HookAdminDashboard extends Zend_View_Helper_Abstra
 					'%1s %2s with no Subject term', 
 					count($noSubjects), 
 					(count($noSubjects) == 1 ? __('item') : __('items'))
-				)
+				),
+				__('Subjects help users to discover related content and filter content by topic, and may be a featured aspect of your theme design. Using a controlled vocabulary is strongly recommended and can be managed using the Simple Vocab plugin.')
 			);
 		}
 		// no creator?
@@ -139,7 +150,8 @@ class Curatescape_View_Helper_HookAdminDashboard extends Zend_View_Helper_Abstra
 					'%1s %2s with no Creator', 
 					count($noCreator), 
 					(count($noCreator) == 1 ? __('item') : __('items'))
-				)
+				),
+				__('Items that are not attributed to an author may not feel trustworthy to end users.')
 			);
 		}
 		// no story?
@@ -156,7 +168,8 @@ class Curatescape_View_Helper_HookAdminDashboard extends Zend_View_Helper_Abstra
 					'%1s %2s with no Story text', 
 					count($noStory), 
 					(count($noStory) == 1 ? __('item') : __('items'))
-				)
+				),
+				__('The story is the most fundamental element of a %s item and should be used for every item.', _CURATESCAPE_ITEM_TYPE_NAME_)
 			);
 		}
 		// no subtitle?
@@ -173,7 +186,8 @@ class Curatescape_View_Helper_HookAdminDashboard extends Zend_View_Helper_Abstra
 					'%1s %2s with no Subtitle', 
 					count($noSubtitles), 
 					(count($noSubtitles) == 1 ? __('item') : __('items'))
-				)
+				),
+				__('The Subtitle is recommended to add additional interest, context, and detail to the item title.')
 			);
 		}
 		// no lede?
@@ -190,7 +204,8 @@ class Curatescape_View_Helper_HookAdminDashboard extends Zend_View_Helper_Abstra
 					'%1s %2s with no Lede', 
 					count($noLede), 
 					(count($noLede) == 1 ? __('item') : __('items'))
-				)
+				),
+				__('The Lede is recommended as an effective way to draw in the reader and may also be used as preview text in certain contexts such as tours.')
 			);
 		}
 		// no address?
@@ -207,15 +222,20 @@ class Curatescape_View_Helper_HookAdminDashboard extends Zend_View_Helper_Abstra
 					'%1s %2s with no Street Address', 
 					count($noAddress), 
 					(count($noAddress) == 1 ? __('item') : __('items'))
-				)
+				),
+				__('If an item has a map location, it should also have a street address. The street address provides text-equivalent content for visually impaired users and may also be used to enhance the marker info window in the maps provided by your theme and/or in the Curatescape mobile apps.')
 			);
 		}
 		if(!count($listIssues)) return null;
 		sort($listIssues);
 		$html .= '<section class="panel five columns curatescape-panel">';
-			$html .= '<h2>'.__('Content Suggestions').'</h2>';
-			$html .= '<p>'.__('The following issues apply only to published items that use the %s item type:', _CURATESCAPE_ITEM_TYPE_NAME_).'</p>';
-			$html .= '<ul>'.implode('', $listIssues).'</ul>';
+			$html .= '<h2>'.__('Content Audit').'</h2>';
+			$html .= '<p>'.__('This audit applies only to published items that use the %s item type.', '<em>'._CURATESCAPE_ITEM_TYPE_NAME_.'</em>').'</p>';
+			$html .= '<span class="highlight warning">';
+				$html .= '<h3>'.svg('warning').__('Potential Issues Detected').'</h3>';
+				$html .= '<p>'.__('Use the links to view items with potential content issues. Changes are recommended but not required.').'</p>';
+				$html .= '<ul>'.implode('', $listIssues).'</ul>';
+			$html .= '</span>';
 		$html .= '</section>';
 		return $html;
 	}
@@ -240,14 +260,14 @@ class Curatescape_View_Helper_HookAdminDashboard extends Zend_View_Helper_Abstra
 			$html .= '<h2>'.__('File Information').'</h2>';
 			$html .= '<h3>'.__('Statistics').'</h3>';
 			$html .= $fileStats;
-			$html .= '<span class="highlight">';
+			$html .= '<span class="highlight info">';
 				$html .= '<h3>'.svg('information-circle').__('Recommended Formats').'</h3>';
 				$html .= '<p>'.__('To maximize compatibility with all app platforms and web browsers, the following file formats are recommended:').'</p>';
 				$html .= '<ul>';
-				$html .= '<li>'.__('Images').': JPG or PNG</li>';
-				$html .= '<li>'.__('Audio').': MP3</li>';
-				$html .= '<li>'.__('Video').': MP4 (H.264)</li>';
-				$html .= '<li>'.__('Documents').': PDF</li>';
+					$html .= '<li>'.__('Images').': JPG or PNG</li>';
+					$html .= '<li>'.__('Audio').': MP3</li>';
+					$html .= '<li>'.__('Video').': MP4 (H.264)</li>';
+					$html .= '<li>'.__('Documents').': PDF</li>';
 				$html .= '</ul>';
 			$html .= '</span>';
 		$html .= '</section>';
@@ -348,9 +368,11 @@ class Curatescape_View_Helper_HookAdminDashboard extends Zend_View_Helper_Abstra
 		$html .= '</ul>';
 		return $html;
 	}
-	private function issueDisplay($recordIds, $queryParams, $string){
+	private function issueDisplay($recordIds, $queryParams, $string, $context = null){
 		$url = url('items/browse', $queryParams);
-		$linkTitle = __('View %s', count($recordIds) == 1 ? __('item') : __('items'));
-		return '<li data-count="'.sprintf('%05d',count($recordIds)).'"><a title="'.$linkTitle.'" href="'.$url.'">'.$string.'</a></li>';
+		if(!$context){
+			$context = __('View affected %s', count($recordIds) == 1 ? __('item') : __('items'));
+		}
+		return '<li data-count="'.sprintf('%05d',count($recordIds)).'"><a title="'.$context.'" href="'.$url.'">'.$string.'</a></li>';
 	}
 }

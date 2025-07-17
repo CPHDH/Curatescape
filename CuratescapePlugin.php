@@ -77,7 +77,10 @@ class CuratescapePlugin extends Omeka_Plugin_AbstractPlugin{
 		'curatescape_append_secondary_nav' => 1,
 		'curatescape_auto_subtitle' => 1,
 		'curatescape_byline' => 'after_lede',
+		'curatescape_dashboard_audit' => 1,
+		'curatescape_dashboard_project_mgmt' => 1,
 		'curatescape_dashboard_resources' => 1,
+		'curatescape_dashboard_stats' => 1,
 		'curatescape_factoids_label' => 'Did you know?',
 		'curatescape_file_markup'=> 1,
 		'curatescape_filter_text' => 1,
@@ -105,7 +108,6 @@ class CuratescapePlugin extends Omeka_Plugin_AbstractPlugin{
 		'curatescape_subtitle_styles' => 1,
 		'curatescape_template' => 1,
 		'curatescape_theme_fixes' => 1,
-		'curatescape_tour_map_style' => 'inline',
 		'curatescape_tour_thumb_style' => 'composite',
 	);
 

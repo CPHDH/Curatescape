@@ -80,8 +80,6 @@ class Curatescape_View_Helper_HookConfigForm extends Zend_View_Helper_Abstract{
 			<?php echo $this->configFormText('curatescape_alt_tour_name', 'Alternate Name', __('Enter an alternate display name for Tours. You may also need to adjust the corresponding link label in <a href="%s" target="_blank">Navigation settings</a>.', admin_url('appearance/edit-navigation')), 'Example: Tour');?>
 			<!-- Alt Tour Name (Plural) -->
 			<?php echo $this->configFormText('curatescape_alt_tour_name_p', 'Alternate Name Plural', __('Enter the plural form of your alternate display name for Tours. You may also need to adjust the corresponding link label in <a href="%s" target="_blank">Navigation settings</a>.', admin_url('appearance/edit-navigation')), 'Example: Tours');?>
-			<!-- Map Style-->
-			<?php echo $this->configFormSelect('curatescape_tour_map_style', 'Tour Maps', 'Select the type of map to use for tours.', array( 'inline' => __('Inline (default)'), 'floating' => __('Floating') ) );?>
 			<!-- Thumb Style-->
 			<?php echo $this->configFormSelect('curatescape_tour_thumb_style', 'Tour Thumbnail', 'Select the style of thumbnail image to use when browsing tours. The composite style combines the first image from the first four Items on the Tour to create a mini-collage.', array( 'composite' => __('Composite (default)'), 'first-image' => __('First image from first tour stop'), 'none' => __('None') ) );?>
 			<!-- Tour Item Gallery Style-->
@@ -96,7 +94,7 @@ class Curatescape_View_Helper_HookConfigForm extends Zend_View_Helper_Abstract{
 			<!-- Home Map Heading -->
 			<?php echo $this->configFormText('curatescape_home_map_heading', 'Map Heading', __('Enter a text heading for the homepage map or leave blank to omit the heading.'), 'Example: Story Map');?>
 			<!-- Home Map Caption-->
-			<?php echo $this->configFormText('curatescape_home_map_caption', 'Map Caption', __('Enter a text caption to display below the homepage map or leave blank to omit the caption. If blank, a basic description of the map will be made available to screen readers.'), 'Example: Use the Story Map to explore the area.');?>
+			<?php echo $this->configFormText('curatescape_home_map_caption', 'Map Caption', __('Enter a text caption to display below the homepage map or leave blank to omit the caption. If blank, a basic description of the map will be made available to screen readers. HTML links are allowed.'), 'Example: Use the Story Map to explore the area.');?>
 		</fieldset>
 		
 		<fieldset>
@@ -157,6 +155,21 @@ class Curatescape_View_Helper_HookConfigForm extends Zend_View_Helper_Abstract{
 			<!-- Android-->
 			<?php echo $this->configFormText('curatescape_app_android', 'Android App', 'Enter the alphanumeric package name/identifier for the Android app, found in Google Play Console account.', 'Example: com.developer.appname');?>
 		</fieldset>
+		
+		<fieldset>
+			<legend><?php echo __('Dashboard Settings'); ?></legend>
+			<p><?php echo __('The following options enable the addition of useful information, tools, and resources to the <a href="/admin/" target="_blank">admin dashboard</a>.');?></p>
+			
+			<!-- Content Audit -->
+			<?php echo $this->configFormCheckBox('curatescape_dashboard_audit', 'Content Audit', __('If checked, the admin dashboard will display the results of a content audit to ensure that authors are employing the recommended best practices for %s. Audit results are cached on the server side.', _CURATESCAPE_ITEM_TYPE_NAME_PLURAL_) );?>
+			<!-- File Stats -->
+			<?php echo $this->configFormCheckBox('curatescape_dashboard_stats', 'File Statistics', __('If checked, the admin dashboard will display file statistics and format recommendations. File statistics are cached on the server side.', _PLUGIN_NAME_) );?>
+			<!-- Project Admin -->
+			<?php echo $this->configFormCheckBox('curatescape_dashboard_project_mgmt', 'Project Management', __('If checked, the admin dashboard will display convenient links to manage configured app store and analytics accounts. See relevant options above.') );?>
+			<!-- Resources -->
+			<?php echo $this->configFormCheckBox('curatescape_dashboard_resources', 'Resources', __('If checked, the admin dashboard will display a list of useful %s resources.', _PLUGIN_NAME_) );?>
+			
+		</fieldset>
 
 		<fieldset>
 			<legend><?php echo __('Advanced Settings'); ?></legend>
@@ -174,8 +187,6 @@ class Curatescape_View_Helper_HookConfigForm extends Zend_View_Helper_Abstract{
 			<?php echo $this->configFormCheckBox('curatescape_form_enforcement', 'Form Enforcement', __('If checked, the "Use HTML" and "Add Input" buttons in the Item form will be disabled for select elements in order to enforce the recommended formatting rules.') );?>
 			<!-- Omit Redundant -->
 			<?php echo $this->configFormCheckBox('curatescape_omit_redundant_elements', 'Omit Redundant', __('If checked, the Title and Subtitle elements for the Item will be omitted from the metadata table since they already appear as part of the page heading. Likewise, the Coverage element will be omitted since it already appears as part of the map caption (which consists of the Street Address and Access Information texts).', _CURATESCAPE_ITEM_TYPE_NAME_) );?>
-			<!-- Dashboard -->
-			<?php echo $this->configFormCheckBox('curatescape_dashboard_resources', 'Dashboard Resources', __('If checked, the admin dashboard will display a list of resources for managing %s projects.', _PLUGIN_NAME_) );?>
 		</fieldset>
 
 		<?php

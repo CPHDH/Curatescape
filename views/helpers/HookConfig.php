@@ -12,7 +12,10 @@ class Curatescape_View_Helper_HookConfig extends Zend_View_Helper_Abstract{
 		set_option('curatescape_append_secondary_nav', $_POST['curatescape_append_secondary_nav']);
 		set_option('curatescape_auto_subtitle', $_POST['curatescape_auto_subtitle']);
 		set_option('curatescape_byline', $_POST['curatescape_byline']);
+		set_option('curatescape_dashboard_audit', $_POST['curatescape_dashboard_audit']);
+		set_option('curatescape_dashboard_project_mgmt', $_POST['curatescape_dashboard_project_mgmt']);
 		set_option('curatescape_dashboard_resources', $_POST['curatescape_dashboard_resources']);
+		set_option('curatescape_dashboard_stats', $_POST['curatescape_dashboard_stats']);
 		set_option('curatescape_factoids_label', $_POST['curatescape_factoids_label']);
 		set_option('curatescape_file_markup', $_POST['curatescape_file_markup']);
 		set_option('curatescape_filter_text', $_POST['curatescape_filter_text']);
@@ -40,7 +43,6 @@ class Curatescape_View_Helper_HookConfig extends Zend_View_Helper_Abstract{
 		set_option('curatescape_subtitle_styles', $_POST['curatescape_subtitle_styles']);
 		set_option('curatescape_template', $_POST['curatescape_template']);
 		set_option('curatescape_theme_fixes', $_POST['curatescape_theme_fixes']);
-		set_option('curatescape_tour_map_style', $_POST['curatescape_tour_map_style']);
 		set_option('curatescape_tour_thumb_style', $_POST['curatescape_tour_thumb_style']);
 	}
 }

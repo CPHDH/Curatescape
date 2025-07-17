@@ -30,7 +30,7 @@ class Curatescape_View_Helper_RssItems extends Zend_View_Helper_Abstract{
 			$entry->setDescription($content);
 			$feed->addEntry($entry);
 		}
-		echo cacheConfig(600); // 5 minutes
+		echo get_view()->Cache()->Config(600); // 5 minutes
 		echo $feed->export('atom');
 	}
 	
