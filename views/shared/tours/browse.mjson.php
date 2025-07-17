@@ -2,12 +2,12 @@
 $cache = get_view()->Cache();
 $cache->CacheBustManual(_JSON_TOURS_FILE_, false);
 echo $cache->Config(option('curatescape_json_cache'));
-if ($cacheFile = $cache->GetJsonFile(_JSON_TOURS_FILE_, option('curatescape_json_storage'))) {
+if ($cacheFile = $cache->GetCacheFile(_JSON_TOURS_FILE_, option('curatescape_json_storage'))) {
 	echo $cacheFile;
 }else{
 	$json = $this->getHelper('JsonTour')->JsonToursBrowse($tours);
-	if(intval(option('curatescape_json_storage'))){
-		$cache->WriteJsonFile(_JSON_TOURS_FILE_, $json);
+	if(intval(option('curatescape_json_storage')) && !is_admin_theme()){
+		$cache->WriteCacheFile(_JSON_TOURS_FILE_, $json);
 	};
 	echo $json;
 }

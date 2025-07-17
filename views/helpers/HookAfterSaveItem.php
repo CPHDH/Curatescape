@@ -47,10 +47,12 @@ class Curatescape_View_Helper_HookAfterSaveItem extends Zend_View_Helper_Abstrac
 				$flash->addMessage($warningNotification, 'curatescape-warning');
 			}
 		}
-		// clear json server cache 
+		// clear server cache 
 		$cache = get_view()->Cache();
 		$cache->CacheBustManual(_JSON_ITEMS_FILE_, true);
 		$cache->CacheBustManual(_JSON_TOURS_FILE_, true);
+		$cache->CacheBustManual(_HTML_DASHBOARD_FILE_STATS_, true);
+		$cache->CacheBustManual(_HTML_DASHBOARD_CONTENT_AUDIT_, true);
 	}
 
 	private function filterRules()

@@ -18,7 +18,7 @@ class Curatescape_View_Helper_Cache extends Zend_View_Helper_Abstract{
 		return boolval( time()-filemtime($filepath) < intval($maxSeconds) );
 	}
 	
-	public function GetJsonFile($filepath, $maxSeconds = 0, $bypassLoggedIn = true){
+	public function GetCacheFile($filepath, $maxSeconds = 0, $bypassLoggedIn = true){
 		if(
 			/* $maxSeconds = '0' means cache is disabled, return false and generate from db */
 			!boolval($maxSeconds) || 
@@ -31,7 +31,7 @@ class Curatescape_View_Helper_Cache extends Zend_View_Helper_Abstract{
 		return false;
 	}
 	
-	public function WriteJsonFile($filepath, $content = ''){
+	public function WriteCacheFile($filepath, $content = ''){
 		if(!file_exists($filepath)){
 			return boolval(file_put_contents($filepath, $content));
 		}
