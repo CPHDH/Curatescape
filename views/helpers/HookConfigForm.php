@@ -161,9 +161,9 @@ class Curatescape_View_Helper_HookConfigForm extends Zend_View_Helper_Abstract{
 			<p><?php echo __('The following options enable the addition of useful information, tools, and resources to the <a href="/admin/" target="_blank">admin dashboard</a>.');?></p>
 			
 			<!-- Content Audit -->
-			<?php echo $this->configFormCheckBox('curatescape_dashboard_audit', 'Content Audit', __('If checked, the admin dashboard will display the results of a content audit to ensure that authors are employing the recommended best practices for %s. Audit results are cached on the server side.', _CURATESCAPE_ITEM_TYPE_NAME_PLURAL_) );?>
+			<?php echo $this->configFormCheckBox('curatescape_dashboard_audit', 'Content Audit', __('If checked, the admin dashboard will display the results of a content audit to ensure that authors are employing the recommended best practices for %s. Audit results are cached on the server side and refreshed when any item is saved.', _CURATESCAPE_ITEM_TYPE_NAME_PLURAL_) );?>
 			<!-- File Stats -->
-			<?php echo $this->configFormCheckBox('curatescape_dashboard_stats', 'File Statistics', __('If checked, the admin dashboard will display file statistics and format recommendations. File statistics are cached on the server side.', _PLUGIN_NAME_) );?>
+			<?php echo $this->configFormCheckBox('curatescape_dashboard_stats', 'File Statistics', __('If checked, the admin dashboard will display file statistics and format recommendations. File statistics are cached on the server side and refreshed when any item is saved.', _PLUGIN_NAME_) );?>
 			<!-- Project Admin -->
 			<?php echo $this->configFormCheckBox('curatescape_dashboard_project_mgmt', 'Project Management', __('If checked, the admin dashboard will display convenient links to manage configured app store and analytics accounts. See relevant options above.') );?>
 			<!-- Resources -->

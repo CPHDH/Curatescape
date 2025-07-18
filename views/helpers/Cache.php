@@ -3,21 +3,17 @@ class Curatescape_View_Helper_Cache extends Zend_View_Helper_Abstract{
 	public function Cache(){
 		return $this;
 	}
-	
 	public function Config($seconds = 300, $bypassLoggedIn = true){
 		if($this->Bypass($bypassLoggedIn)) return null;
 		header('Expires: '.gmdate('D, d M Y H:i:s \G\M\T', time() + intval($seconds)));
 		header('Cache-Control: public, max-age='.intval($seconds));
 	}
-	
 	public function Bypass($bypassLoggedIn = true){
 		return boolval($bypassLoggedIn && current_user()) ;
 	}
-	
 	public function FileIsCurrent($filepath, $maxSeconds){
 		return boolval( time()-filemtime($filepath) < intval($maxSeconds) );
 	}
-	
 	public function GetCacheFile($filepath, $maxSeconds = 0, $bypassLoggedIn = true){
 		if(
 			/* $maxSeconds = '0' means cache is disabled, return false and generate from db */
@@ -30,7 +26,6 @@ class Curatescape_View_Helper_Cache extends Zend_View_Helper_Abstract{
 		if($content = file_get_contents($filepath)) return $content;
 		return false;
 	}
-	
 	public function WriteCacheFile($filepath, $content = ''){
 		if(!file_exists($filepath)){
 			return boolval(file_put_contents($filepath, $content));
@@ -38,7 +33,6 @@ class Curatescape_View_Helper_Cache extends Zend_View_Helper_Abstract{
 		if(!is_writable($filepath)) return false;
 		return boolval(file_put_contents($filepath, $content));
 	}
-	
 	public function CacheBustManual($filepath, $afterSave = false){ 
 		if( $afterSave ||
 			(

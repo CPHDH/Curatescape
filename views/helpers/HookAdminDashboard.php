@@ -5,9 +5,10 @@ class Curatescape_View_Helper_HookAdminDashboard extends Zend_View_Helper_Abstra
 		echo $this->dashboardTours();
 		// RESOURCES (optional)
 		$cache = get_view()->Cache();
-		// warnings (1 hour cache, cleared on item save)
+		$cacheDuration = 3600 * 24;
+		// content audit (24 hour cache, cleared on item save)
 		if(option('curatescape_dashboard_audit')){
-			if ($cacheFile = $cache->GetCacheFile(_HTML_DASHBOARD_CONTENT_AUDIT_, 3600, false)) {
+			if ($cacheFile = $cache->GetCacheFile(_HTML_DASHBOARD_CONTENT_AUDIT_, $cacheDuration, false)) {
 				echo $cacheFile;
 			}else{
 				$html = $this->dashboardWarnings();
@@ -17,7 +18,7 @@ class Curatescape_View_Helper_HookAdminDashboard extends Zend_View_Helper_Abstra
 		}
 		// file stats and info (1 hour cache, cleared on item save)
 		if(option('curatescape_dashboard_stats')){
-			if ($cacheFile = $cache->GetCacheFile(_HTML_DASHBOARD_FILE_STATS_, 3600, false)) {
+			if ($cacheFile = $cache->GetCacheFile(_HTML_DASHBOARD_FILE_STATS_, $cacheDuration, false)) {
 				echo $cacheFile;
 			}else{
 				if($fileStats = $this->dashboardFilesStats()){
@@ -226,15 +227,26 @@ class Curatescape_View_Helper_HookAdminDashboard extends Zend_View_Helper_Abstra
 				__('If an item has a map location, it should also have a street address. The street address provides text-equivalent content for visually impaired users and may also be used to enhance the marker info window in the maps provided by your theme and/or in the Curatescape mobile apps.')
 			);
 		}
-		if(!count($listIssues)) return null;
-		sort($listIssues);
+		if(count($listIssues)){
+			$messageTitle = __('Potential Issues Detected');
+			$messageText = __('Use the links to view items with potential content issues. Changes are recommended but not required.');
+			$messageIcon = svg('warning');
+			$messageClass = 'warning';
+			sort($listIssues);
+		}else{
+			$messageTitle = __('No Issues Detected');
+			$messageText = __('Great job. No recommended changes at this time.');
+			$messageIcon = svg('sparkles');
+			$messageClass = 'success';
+		}
 		$html .= '<section class="panel five columns curatescape-panel">';
 			$html .= '<h2>'.__('Content Audit').'</h2>';
-			$html .= '<p>'.__('This audit applies only to published items that use the %s item type.', '<em>'._CURATESCAPE_ITEM_TYPE_NAME_.'</em>').'</p>';
-			$html .= '<span class="highlight warning">';
-				$html .= '<h3>'.svg('warning').__('Potential Issues Detected').'</h3>';
-				$html .= '<p>'.__('Use the links to view items with potential content issues. Changes are recommended but not required.').'</p>';
-				$html .= '<ul>'.implode('', $listIssues).'</ul>';
+			$html .= '<h3>'.__('Results').'</h3>';
+			$html .= '<p>'.__('Content audit results apply only to published items that use the %s item type.', '<em>'._CURATESCAPE_ITEM_TYPE_NAME_.'</em>').'</p>';
+			$html .= '<span class="highlight '.$messageClass.'">';
+				$html .= '<h3>'.$messageIcon.$messageTitle.'</h3>';
+				$html .= '<p>'.$messageText.'</p>';
+				$html .= count($listIssues) ? '<ul>'.implode('', $listIssues).'</ul>' : null;
 			$html .= '</span>';
 		$html .= '</section>';
 		return $html;
@@ -248,7 +260,7 @@ class Curatescape_View_Helper_HookAdminDashboard extends Zend_View_Helper_Abstra
 			$html .= '<h3>'.__('Support & Troubleshooting').'</h3>';
 			$html .= '<p>'.__('Join the %s to request support, suggest features, share tips, and more.', '<a target="_blank" href="https://forum.curatescape.org/">Curatescape forum</a>').'</p>';
 			$html .= '<h3>'.__('News & Announcements').'</h3>';
-			$html .= '<p>'.__('Sign up for the %1s and visit the %2s for occassional tips and project updates.', '<a target="_blank" href="https://curatescape.us6.list-manage.com/subscribe?u=597554b8203b974d59fc51d5f&id=844240ad4f">Curatescape newsletter</a>', '<a target="_blank" href="https://curatescape.org/blog/">Curatescape blog</a>').' </p>';
+			$html .= '<p>'.__('Sign up for the %1s and visit the %2s for occasional tips and project updates.', '<a target="_blank" href="https://curatescape.us6.list-manage.com/subscribe?u=597554b8203b974d59fc51d5f&id=844240ad4f">Curatescape newsletter</a>', '<a target="_blank" href="https://curatescape.org/blog/">Curatescape blog</a>').' </p>';
 			$html .= '<h3>'.__('Developers & Server Admins').'</h3>';
 			$html .= '<p>'.__('Watch the %s and configure custom notifications for new releases. Pull requests are welcome.', '<a target="_blank" href="https://github.com/CPHDH/Curatescape">Curatescape Github repository</a>').' </p>';
 		$html .= '</section>';
@@ -284,12 +296,12 @@ class Curatescape_View_Helper_HookAdminDashboard extends Zend_View_Helper_Abstra
 				$html .= '<h2>'.__('Project Management').'</h2>';
 				if(option('curatescape_google_analytics')){
 					$html .= '<h3>'.__('Analytics').'</h3>';
-					$html .= '<p>'.__('Use Google Analytics to track website usage, user demographics, campaign performance, and more. <a target="_blank" href="https://curatescape.org/docs/project-launch-guide/#analytics">Learn more about website analytics</a>.').' </p>';
+					$html .= '<p>'.__('Track website usage, user demographics, campaign performance, and more. <a target="_blank" href="https://curatescape.org/docs/project-launch-guide/#analytics">Learn more about website analytics</a>.').' </p>';
 					$html .= '<a target="_blank" class="appstore blue button" href="https://analytics.google.com/analytics/web">'.__('Google Analytics').'</a>';
 				}
 				if(option('curatescape_app_android') || option('curatescape_app_ios')){
 					$html .= '<h3>'.__('App Stores').'</h3>';
-					$html .= '<p>'.__('Use the links below to manage your app store profiles, track downloads, and more. <a target="_blank" href="https://curatescape.org/docs/project-launch-guide/#analytics">Learn more about app management</a>.').' </p>';
+					$html .= '<p>'.__('Manage your app store profiles, track downloads, and more. <a target="_blank" href="https://curatescape.org/docs/project-launch-guide/#analytics">Learn more about app management</a>.').' </p>';
 					if(option('curatescape_app_ios')){
 						$html .= '<a target="_blank" class="appstore blue button" href="https://appstoreconnect.apple.com/login">'.__('App Store Connnect').'</a>';
 					}
@@ -370,9 +382,7 @@ class Curatescape_View_Helper_HookAdminDashboard extends Zend_View_Helper_Abstra
 	}
 	private function issueDisplay($recordIds, $queryParams, $string, $context = null){
 		$url = url('items/browse', $queryParams);
-		if(!$context){
-			$context = __('View affected %s', count($recordIds) == 1 ? __('item') : __('items'));
-		}
-		return '<li data-count="'.sprintf('%05d',count($recordIds)).'"><a title="'.$context.'" href="'.$url.'">'.$string.'</a></li>';
+		$title = __('View affected %s', count($recordIds) == 1 ? __('item') : __('items'));
+		return '<li data-count="'.sprintf('%05d',count($recordIds)).'"><a title="'.$title.'" href="'.$url.'">'.$string.'</a><span title="'.$context.'">'.svg('information-circle').'</span></li>';
 	}
 }
