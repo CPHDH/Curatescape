@@ -1,9 +1,4 @@
 <?php
-/*
-* @todo: HookPublicHomeTop, HookPublicHomeEnd
-* @later: in-tour map routing?
-*/
-
 // Includes
 include 'functions.php';
 
@@ -73,7 +68,6 @@ class CuratescapePlugin extends Omeka_Plugin_AbstractPlugin{
 		'curatescape_alt_tour_name' => 'Tour',
 		'curatescape_app_android' => null,
 		'curatescape_app_ios' => null,
-		'curatescape_append_primary_nav' => 1,
 		'curatescape_append_secondary_nav' => 1,
 		'curatescape_auto_subtitle' => 1,
 		'curatescape_byline' => 'after_lede',
@@ -154,7 +148,7 @@ class CuratescapePlugin extends Omeka_Plugin_AbstractPlugin{
 
 	public function hookPublicHome($args)
 	{
-		return get_view()->HookPublicContent($args)->homeEnd();
+		return get_view()->HookPublicContent($args)->homeBottom();
 	}
 	
 	public function hookPublicContentTop($args)

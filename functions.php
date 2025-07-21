@@ -139,6 +139,13 @@ function allowedExtensionImg($filepath, $allowed = array('jpg','jpeg','png', 'we
 	return in_array($ext, $allowed);
 }
 
+function getQueryParams()
+{
+	$params = array();
+	parse_str($_SERVER['QUERY_STRING'], $params);
+	return array_map('htmlspecialchars', $params);
+}
+
 function browserCategory(){
 	// used to determine document viewer availability
 	// used to determine audio player characteristics
@@ -252,6 +259,12 @@ function availableTourItemsJSON()
 function hasLocation($item)
 {
 	return boolval( get_db()->getTable( 'Location' )->findLocationByItem( $item, true ) );
+}
+
+function setMinValuePluginOption($optionName, $minValue)
+{
+	if(!is_numeric(get_option($optionName))) return null;
+	return set_option($optionName, max((int)get_option($optionName), (int)$minValue));
 }
 
 function altLabelIsValid($text)

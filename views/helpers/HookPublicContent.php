@@ -4,7 +4,7 @@ class Curatescape_View_Helper_HookPublicContent extends Zend_View_Helper_Abstrac
 	{
 		return $this;
 	}
-	public function homeEnd()
+	public function homeBottom()
 	{
 		if(option('curatescape_home_map') == 'bottom'){
 			echo $this->homeGeolocationMap('bottom');
@@ -23,15 +23,17 @@ class Curatescape_View_Helper_HookPublicContent extends Zend_View_Helper_Abstrac
 		$html = null;
 		$range = $this->commaSeparatedItemIds();
 		if(!count($range)) return null;
+		setMinValuePluginOption('geolocation_per_page', count($range));
 		$height = option('geolocation_item_map_height') ? 'height='.option('geolocation_item_map_height') : null;
 		$heading = option('curatescape_home_map_heading') ? plainText(option('curatescape_home_map_heading')) : null;
 		if(isset($heading)){
 			$heading = '<h2 class="curatescape-map-title">'.$heading.'</h2>';
 		}
 		$caption = option('curatescape_home_map_caption') ? allowLinks(option('curatescape_home_map_caption')) : __('Map containing %1s %2s', count($range), strtolower(storyLabelString('plural')));
+		$map = apply_filters('curatescape_home_map', get_view()->shortcodes('[geolocation range='.implode(',',$range).' '.$height.']'), array('range'=>$range, 'height'=>$height));
 		$html .= '<div class="curatescape-home-content '.$class.'">'.$heading;
 			$html .= '<figure class="home-items-map">';
-				$html .=  get_view()->shortcodes('[geolocation range='.implode(',',$range).' '.$height.']');
+				$html .=  $map;
 				$html .= '<figcaption class="curatescape-map-caption" data-curatescape-screenreader-only="'.(option('curatescape_home_map_caption') ? 'false' : 'true').'">';
 					$html .= $caption;
 				$html .= '</figcaption>';
@@ -50,12 +52,13 @@ class Curatescape_View_Helper_HookPublicContent extends Zend_View_Helper_Abstrac
 			WHERE i.public
 			SQL
 		);
-		return array_filter(array_map(
+		$range = array_map(
 			function($item) use ($range){
 				if(hasLocation($item) && isCuratescapeStory($item)){
 					return $item->id;
 				}
 				return null;
-			}, $items ) );
+			}, $items );
+		return array_values(array_filter($range));
 	}
 }

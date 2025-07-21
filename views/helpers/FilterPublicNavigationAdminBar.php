@@ -5,33 +5,41 @@ class Curatescape_View_Helper_FilterPublicNavigationAdminBar extends Zend_View_H
 		if(!option('curatescape_admin_bar_edit')) return $nav;
 		$user = current_user();
 		$view = $this->view;
+		$bypass = array();
+		if(plugin_is_active('AdminTools')){
+			if($enabled = unserialize(get_option('admin_tools_public_edit_link_types'))){
+				foreach($enabled as $type){
+					$bypass[$type] = true;
+				}
+			}
+		}
 		if (isset($user) && isset($view)){
 			$acl = get_acl();
-			if(isset($view->item) && $acl->isAllowed($user, $view->item, 'edit')){
+			if(isset($view->item) && $acl->isAllowed($user, $view->item, 'edit') && !isset($bypass['Items'])){
 				$link = array(
 					'class' =>'curatescape-admin-edit',
 					'label' => __('Edit Item'),
 					'uri' => admin_url('/items/edit/' . metadata('items', 'id')),
 				);
-			}elseif(isset($view->collection) && $acl->isAllowed($user, $view->collection, 'edit')){
+			}elseif(isset($view->collection) && $acl->isAllowed($user, $view->collection, 'edit') && !isset($bypass['Collections'])){
 				$link = array(
 					'class' =>'curatescape-admin-edit',
 					'label' => __('Edit Collection'),
 					'uri' => admin_url('/collections/edit/' . metadata('collections', 'id')),
 				);
-			}elseif(isset($view->file) && $acl->isAllowed($user, $view->file, 'edit')){
+			}elseif(isset($view->file) && $acl->isAllowed($user, $view->file, 'edit') && !isset($bypass['Files'])){
 				$link = array(
 					'class' =>'curatescape-admin-edit',
 					'label' => __('Edit File'),
 					'uri' => admin_url('/files/edit/' . metadata('files', 'id')),
 				);
-			}elseif(isset($view->exhibit) && $acl->isAllowed($user, $view->exhibit, 'edit')){
+			}elseif(isset($view->exhibit) && $acl->isAllowed($user, $view->exhibit, 'edit') && !isset($bypass['Exhibits'])){
 				$link = array(
 					'class' =>'curatescape-admin-edit',
 					'label' => __('Edit Exhibit'),
 					'uri' => admin_url('/exhibits/edit/' . metadata('exhibit', 'id')),
 				);
-			}elseif(isset($view->simple_pages_page) && $acl->isAllowed($user, $view->simple_pages_page, 'edit')){
+			}elseif(isset($view->simple_pages_page) && $acl->isAllowed($user, $view->simple_pages_page, 'edit') && !isset($bypass['Simple Pages'])){
 				$link = array(
 					'class' =>'curatescape-admin-edit',
 					'label' => __('Edit Page'),

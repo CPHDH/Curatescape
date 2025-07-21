@@ -8,8 +8,8 @@ class Curatescape_View_Helper_HookPublicHead extends Zend_View_Helper_Abstract{
 		if($ga = option('curatescape_google_analytics')){
 			$this->gaTags($ga);
 		}
-		if(strlen(trim(strip_tags(option('curatescape_app_ios')))) > 7 ){ 
-			$this->smartBanner(trim(strip_tags(option('curatescape_app_ios'))));
+		if($iosIdentifier = option('curatescape_app_ios')){ 
+			$this->smartBanner($iosIdentifier);
 		}
 		if(option('curatescape_plugin_styles')){ 
 			queue_css_file('global', 'all', false, 'css', 
@@ -66,7 +66,7 @@ class Curatescape_View_Helper_HookPublicHead extends Zend_View_Helper_Abstract{
 				queue_js_file('lightgallery', 'javascripts', array('defer'=>'defer'));
 			}
 			queue_js_file('items-show', 'javascripts', array('defer'=>'defer'));
-			if($params = $this->getQueryParams()){
+			if($params = getQueryParams()){
 				if(isset($params['tour']) && isset($params['index'])){
 					queue_js_file('curatescape-tour-nav', 'javascripts', array('defer'=>'defer'));
 				}
@@ -154,8 +154,6 @@ class Curatescape_View_Helper_HookPublicHead extends Zend_View_Helper_Abstract{
 	?>
 
 	<!-- Meta Tags (Curatescape plugin) -->
-	<meta name="title" content="<?php echo strip_formatting($metaTitle);?>" />
-	<meta name="description" content="<?php echo snippet($metaText, 0, 500);?>" />
 	<meta property="og:site_name" content="<?php echo option('site_title');?>">
 	<meta property="og:type" content="website" />
 	<meta property="og:url" content="<?php echo $metaUrl;?>" />
@@ -174,6 +172,8 @@ class Curatescape_View_Helper_HookPublicHead extends Zend_View_Helper_Abstract{
 	private function smartBanner($iosIdentifier=null)
 	{
 	if(!$iosIdentifier) return null;
+	$iosIdentifier = trim(strip_tags($iosIdentifier));
+	if(strlen($iosIdentifier) <= 7) return null;
 	?>
 	
 	<!-- App Store Banner (Curatescape plugin) -->
@@ -185,7 +185,6 @@ class Curatescape_View_Helper_HookPublicHead extends Zend_View_Helper_Abstract{
 	private function gaTags($ga)
 	{
 	if(!$ga) return null;
-	if(get_theme_option('google_analytics') == $ga) return null;
 	?>
 
 	<!-- Google Analytics (Curatescape plugin) -->
@@ -199,12 +198,4 @@ class Curatescape_View_Helper_HookPublicHead extends Zend_View_Helper_Abstract{
 
 	<?php
 	}
-	
-	private function getQueryParams()
-	{
-		$params = array();
-		parse_str($_SERVER['QUERY_STRING'], $params);
-		return array_map('htmlspecialchars', $params);
-	}
-	
 }

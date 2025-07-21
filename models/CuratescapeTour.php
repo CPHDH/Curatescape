@@ -313,9 +313,12 @@ class CuratescapeTour extends Omeka_Record_AbstractRecord
 	public function tourGeolocationMap($html = null)
 	{
 		$height = option('geolocation_item_map_height') ? 'height='.option('geolocation_item_map_height') : null;
-		$range = implode(',', array_column($this->getItems(), 'id'));
-		$html .= '<figure class="tour-items-map" data-tour-id="'.$this->id.'" data-tour-items="'.$range.'">';
-			$html .=  get_view()->shortcodes('[geolocation range='.$range.' '.$height.']');
+		$range = array_column($this->getItems(), 'id');
+		if(!count($range)) return null;
+		setMinValuePluginOption('geolocation_per_page', count($range));
+		$map = apply_filters('curatescape_tour_map', get_view()->shortcodes('[geolocation range='.implode(',',$range).' '.$height.']'), array('range'=>$range, 'height'=>$height, 'tour'=>$this));
+		$html .= '<figure class="tour-items-map" data-tour-id="'.$this->id.'" data-tour-items="'.implode(',', $range).'">';
+			$html .=  $map;
 			$html .= '<figcaption class="curatescape-map-caption">';
 				$html .=  __('%1s Map', tourLabelString());
 			$html .= '</figcaption>';
