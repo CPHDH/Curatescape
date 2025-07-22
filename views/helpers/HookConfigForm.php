@@ -4,23 +4,35 @@ class Curatescape_View_Helper_HookConfigForm extends Zend_View_Helper_Abstract{
 		?>
 		<style>
 			fieldset > p{
-				padding:1lh;
-				background-color:#F5f5f5;
-				border-left:1px solid #ccc;
+				padding-bottom: 0.5lh;
+				border-bottom: 1px solid #DCDCDC;
+				color: #777;
+				margin-bottom: 1.5lh !important;
 			}
 			.intro{
-				margin-top:0;
-				padding:1lh;
-				background-image:linear-gradient(10deg, #445a66,#15455b,#2987b3);
-				color:#F5f5f5;
+				margin: 0 0 1lh;
+				padding: 1lh;
+				background-image: radial-gradient(circle at -35% center, #445a66,#15455b,#002C42,#001228);
+				color: #F5f5f5;
+				text-shadow: 1px 1px #15455b;
 			}
 			.intro a{
-				color:#fff}legend + p{
-				margin-top:-8px;
-				margin-bottom:20px;
+				color: #76D4FF;
+			}
+			legend + p{
+				margin-top: -8px;
 			}
 			code{
 				font-size: .9em;
+			}
+			.field:last-child::after {
+			  content: '';
+			  height: 1lh;
+			  display: flex;
+			  position: relative;
+			  bottom: 0;
+			  left: 0;
+			  width: 100%;
 			}
 		</style>
 
@@ -28,7 +40,7 @@ class Curatescape_View_Helper_HookConfigForm extends Zend_View_Helper_Abstract{
 
 		<fieldset>
 			<legend><?php echo __('Item Type Settings'); ?></legend>
-			<p><?php echo __('The following options change the way the <a href="%1s" target="_blank">%2s Item Type</a> is displayed to end users.', itemTypeURL(), _CURATESCAPE_ITEM_TYPE_NAME_);?></p>
+			<p><?php echo __('Use the following options to change the way the <a href="%1s" target="_blank">%2s Item Type</a> is displayed to end users.', itemTypeURL(), _CURATESCAPE_ITEM_TYPE_NAME_);?></p>
 
 			<!-- Alt Item Type Name -->
 			<?php echo $this->configFormText('curatescape_alt_item_type_name', 'Alternate Name', __('Enter an alternate display name for the %1s Item Type. You may also need to adjust the corresponding link label in <a href="%2s" target="_blank">Navigation settings</a>.', _CURATESCAPE_ITEM_TYPE_NAME_, admin_url('appearance/edit-navigation')), 'Example: Story');?>
@@ -38,7 +50,7 @@ class Curatescape_View_Helper_HookConfigForm extends Zend_View_Helper_Abstract{
 
 		<fieldset>
 			<legend><?php echo __('Item Record Settings'); ?></legend>
-			<p><?php echo __('The following options apply to Item records.');?></p>
+			<p><?php echo __('Use the following options to customize the functionality, layout, and content of Item records.');?></p>
 
 			<!-- Recommended Template -->
 			<?php echo $this->configFormCheckBox('curatescape_template', 'Metadata Template', __("If checked, the Item metadata display will be modified to use an enhanced layout for Items using the %s Item Type. Other Item Types will fall back to the Omeka default template.", _CURATESCAPE_ITEM_TYPE_NAME_) );?>
@@ -60,7 +72,7 @@ class Curatescape_View_Helper_HookConfigForm extends Zend_View_Helper_Abstract{
 
 		<fieldset>
 			<legend><?php echo __('File Display Settings'); ?></legend>
-			<p><?php echo __('The following options control how files are displayed on Item and File records.');?></p>
+			<p><?php echo __('Use the following options to customize the display of files on Item and File records.');?></p>
 
 			<!-- Media Style-->
 			<?php echo $this->configFormSelect('curatescape_gallery_style', 'Media Gallery', 'Select the style to be used for displaying images and other media files. Each style will adapt to the available space as determined by the theme layout and browser dimensions. May not be supported by all themes.', array( 'gallery-grid' => __('Thumbnail Grid (default)'), 'gallery-inline-captions' => __('Inline Captions'), 'gallery-slides' => __('Slides'), 'gallery-table' => __('Files Table'), 'none' => __('None (use theme)') ) );?>
@@ -74,7 +86,7 @@ class Curatescape_View_Helper_HookConfigForm extends Zend_View_Helper_Abstract{
 
 		<fieldset>
 			<legend><?php echo __('Tour Settings'); ?></legend>
-			<p><?php echo __('Items using the %s Item Type (along with Geolocation data) can be collected into walking, cycling, and driving tours. The following options apply to Tours.', _CURATESCAPE_ITEM_TYPE_NAME_);?></p>
+			<p><?php echo __('Items using the %s Item Type (along with Geolocation data) can be collected into walking, cycling, and driving tours. Use the following options to customize the display of Tours.', _CURATESCAPE_ITEM_TYPE_NAME_);?></p>
 			
 			<!-- Alt Tour Name -->
 			<?php echo $this->configFormText('curatescape_alt_tour_name', 'Alternate Name', __('Enter an alternate display name for Tours. You may also need to adjust the corresponding link label in <a href="%s" target="_blank">Navigation settings</a>.', admin_url('appearance/edit-navigation')), 'Example: Tour');?>
@@ -88,7 +100,7 @@ class Curatescape_View_Helper_HookConfigForm extends Zend_View_Helper_Abstract{
 
 		<fieldset>
 			<legend><?php echo __('Homepage Settings'); ?></legend>
-			<p><?php echo __('Use these settings to add content to the homepage.');?></p>
+			<p><?php echo __('Use the following options to display and customize %s content on the homepage.', _PLUGIN_NAME_);?></p>
 			<!-- Home Map -->
 			<?php echo $this->configFormSelect('curatescape_home_map', 'Map Location', __('Select a location on the homepage for displaying a map of %s.', _CURATESCAPE_ITEM_TYPE_NAME_PLURAL_), array( 'top' => __('Top (default)'), 'bottom' => __('Bottom'), 'none' => __('None')));?>
 			<!-- Home Map Heading -->
@@ -99,19 +111,19 @@ class Curatescape_View_Helper_HookConfigForm extends Zend_View_Helper_Abstract{
 		
 		<fieldset>
 			<legend><?php echo __('Navigation Settings'); ?></legend>
-			<p><?php echo __('The following settings apply to the primary and secondary/Item navigation menus, as well as the Omeka admin bar.');?></p>
+			<p><?php echo __('Use the following options to customize the primary and secondary (item) navigation menus, as well as the Omeka admin bar.');?></p>
 
 			<!-- Admin Bar Edit-->
 			<?php echo $this->configFormCheckBox('curatescape_admin_bar_edit', 'Admin Bar', 'If checked, an "Edit" link will be appended to the default Omeka admin bar for supported record types. Theme support varies. Note that this option will be selectively ignored if the Admin Tools plugin is active and configured to add its own edit link for a given record type.');?>
 			<!-- Secondary Nav -->
 			<?php echo $this->configFormCheckBox('curatescape_append_secondary_nav', 'Append Secondary', 'If checked, new navigation items for Featured and Curatescape Stories will be added to the secondary/Item navigation for the items/browse view.');?>
 			<!-- Secondary Nav Shorten -->
-			<?php echo $this->configFormCheckBox('curatescape_shorten_secondary_nav', 'Shorten Secondary', 'If checked, the secondary/Item navigation labels will be shortened to preserve space in some themes. For example, "Browse By Tags" will be shortened to "Tags."');?>
+			<?php echo $this->configFormCheckBox('curatescape_shorten_secondary_nav', 'Shorten Secondary', 'If checked, the secondary (item) navigation labels will be shortened to preserve space in some themes. For example, "Browse By Tags" will be shortened to "Tags."');?>
 		</fieldset>
 
 		<fieldset>
 			<legend><?php echo __('Output Settings'); ?></legend>
-			<p><?php echo __('These settings apply to the various output formats available via the %s plugin.', _PLUGIN_NAME_);?></p>
+			<p><?php echo __('Use the following options to customize the %s JSON and RSS output formats.', _PLUGIN_NAME_);?></p>
 
 			<?php echo $this->configFormSelect('curatescape_json_cache', 'JSON Browser Cache', __('When enabled, Curatescape JSON feeds (e.g. for <a href="%1s" target="_blank">items/browse</a>) will be cached in-browser for the selected duration. Browser cache rules are bypassed for logged in users and apply only to repeat loads within the selected duration.', items_output_url('mobile-json') ), array( '0' => __('Disable cache'), '60' => __('1 minute'), '300' => __('5 minutes'), '600' => __('10 minutes (default)'), '1800' => __('30 minutes'), '3600' => __('1 hour'), '43200' => __('12 hours'), '86400' => __('24 hours') ) );?>
 
@@ -125,10 +137,10 @@ class Curatescape_View_Helper_HookConfigForm extends Zend_View_Helper_Abstract{
 			<!-- Enhanced RSS-->
 			<?php echo $this->configFormCheckBox('curatescape_rss', 'Enhanced RSS', __('If checked, the default RSS feed will be replaced with an <a href="%s" target="_blank">enhanced format</a> that has been customized for narrative content.', items_output_url('rss-plus')));?>
 		</fieldset>
-		
+
 		<fieldset>
 			<legend><?php echo __('Preview Settings'); ?></legend>
-			<p><?php echo __('The following settings control the way your content is represented on search engines and social media websites.');?></p>
+			<p><?php echo __('Use the following options to control the way your content is represented on search engines and social media websites.');?></p>
 
 			<!-- Meta Tags -->
 			<?php echo $this->configFormCheckBox('curatescape_meta_tags', 'Meta Tags', __('If checked, use enhanced &lt;meta&gt; tags for improved search engine optimization and social media sharing.', _PLUGIN_NAME_) );?>
@@ -138,25 +150,15 @@ class Curatescape_View_Helper_HookConfigForm extends Zend_View_Helper_Abstract{
 
 		<fieldset>
 			<legend><?php echo __('Analytics'); ?></legend>
-			<p><?php echo __('The following settings control third-party analytics integrations.');?></p>
+			<p><?php echo __('Use the following options to configure third-party analytics integrations.');?></p>
 
 			<!-- Google Analytics -->
 			<?php echo $this->configFormText('curatescape_google_analytics', 'Google Analytics', 'Enter the Web Stream Measurement ID for this website as shown in your Google Analytics account dashboard to create a Google Analytics Tracking Code using the default configurations. May conflict with themes and plugins that already include Google Analytics by other means.', 'Example: G-0123456789');?>
 		</fieldset>
 
 		<fieldset>
-			<legend><?php echo __('App Store Settings'); ?></legend>
-			<p><?php echo __('Did you know that Curatescape is a not-for-profit, university-based project with a mission to build (surprisingly affordable) mobile apps for humanities organizations? Learn more at %1s. The following options apply to projects with corresponding mobile apps. To display app store buttons use the shortcode: %2s. Refer to the %3s for full list of shortcode options.', '<a href="https://curatescape.org" target="_blank">curatescape.org</a>', '<code>[curatescape_app_buttons icons="true"]</code>', '<a href="https://omeka.org/classic/plugins/'._PLUGIN_NAME_.'" target="_blank">plugin documentation</a>');?></p>
-
-			<!-- iOS-->
-			<?php echo $this->configFormText('curatescape_app_ios', 'iOS App', __('Enter the numeric identifier for the iOS app, found in Apple App Store Connect account. When this option is enabled, an iOS Smart App Banner will be added to your site, and you will be able to use the %s shortcode to display iOS App Store links. Some themes may also use this option to systematically display iOS App Store links.', '<code>[curatescape_app_buttons]</code>'), 'Example: 0123456789');?>
-			<!-- Android-->
-			<?php echo $this->configFormText('curatescape_app_android', 'Android App', __('Enter the alphanumeric package name/identifier for the Android app, found in Google Play Console account. When this option is enabled, you will be able to use the %s shortcode to display Google Play app links. Some themes may also use this option to systematically display Google Play app links.', '<code>[curatescape_app_buttons]</code>'), 'Example: com.developer.appname');?>
-		</fieldset>
-		
-		<fieldset>
 			<legend><?php echo __('Dashboard Settings'); ?></legend>
-			<p><?php echo __('The following settings enable the addition of useful information, tools, and resources to the <a href="/admin/" target="_blank">admin dashboard</a>.');?></p>
+			<p><?php echo __('Use the following options to add new panels to the <a href="/admin/" target="_blank">admin dashboard</a>.');?></p>
 			
 			<!-- Content Audit -->
 			<?php echo $this->configFormCheckBox('curatescape_dashboard_audit', 'Content Audit', __('If checked, the admin dashboard will display the results of a content audit to ensure that authors are employing the recommended best practices for %s. Audit results are cached on the server side and refreshed when any item is saved.', _CURATESCAPE_ITEM_TYPE_NAME_PLURAL_) );?>
@@ -170,8 +172,18 @@ class Curatescape_View_Helper_HookConfigForm extends Zend_View_Helper_Abstract{
 		</fieldset>
 
 		<fieldset>
+			<legend><?php echo __('App Store Settings'); ?></legend>
+			<p><?php echo __('Did you know that Curatescape is a not-for-profit, university-based project with a mission to build (surprisingly affordable) mobile apps for humanities organizations? Learn more at %1s. The following options apply to projects with corresponding mobile apps. To display app store buttons use the shortcode: %2s. Refer to the %3s for full list of shortcode options.', '<a href="https://curatescape.org" target="_blank">curatescape.org</a>', '<code>[curatescape_app_buttons icons="true"]</code>', '<a href="https://omeka.org/classic/plugins/'._PLUGIN_NAME_.'" target="_blank">plugin documentation</a>');?></p>
+		
+			<!-- iOS-->
+			<?php echo $this->configFormText('curatescape_app_ios', 'iOS App', __('Enter the numeric identifier for the iOS app, found in Apple App Store Connect account. When this option is enabled, an iOS Smart App Banner will be added to your site, and you will be able to use the %s shortcode to display iOS App Store links. Some themes may also use this option to systematically display iOS App Store links.', '<code>[curatescape_app_buttons]</code>'), 'Example: 0123456789');?>
+			<!-- Android-->
+			<?php echo $this->configFormText('curatescape_app_android', 'Android App', __('Enter the alphanumeric package name/identifier for the Android app, found in Google Play Console account. When this option is enabled, you will be able to use the %s shortcode to display Google Play app links. Some themes may also use this option to systematically display Google Play app links.', '<code>[curatescape_app_buttons]</code>'), 'Example: com.developer.appname');?>
+		</fieldset>
+
+		<fieldset>
 			<legend><?php echo __('Advanced Settings'); ?></legend>
-			<p><?php echo __('The following settings may be especially useful for site administrators, designers, developers, and other advanced users. Come back here if you are troubleshooting a specific issue.');?></p>
+			<p><?php echo __('The following options may be especially useful for site administrators, designers, developers, and other advanced users. Come back here if you are troubleshooting a specific issue.');?></p>
 
 			<!-- Plugin Styles -->
 			<?php echo $this->configFormCheckBox('curatescape_plugin_styles', 'Plugin Styles', __('If checked, use CSS styles provided by the %1s plugin. Turning this off may be useful for theme developers, but should otherwise remain checked.', _PLUGIN_NAME_) );?>

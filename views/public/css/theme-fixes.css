@@ -1,126 +1,126 @@
-/* Prepend all with .curatescape-fix-{themedir}.curatescape-styles */
+/* Prepend all with .curatescape-fix-{themedir} */
 /* ITEMS */
-.curatescape-fix-freedom.curatescape-styles.type-curatescape-story.items.show .metadata h3{
+.curatescape-fix-freedom.type-curatescape-story.items.show .metadata h3{
 	margin-top: revert;
 }
-.curatescape-fix-freedom.curatescape-styles.type-curatescape-story.items.show .metadata h2{
+.curatescape-fix-freedom.type-curatescape-story.items.show .metadata h2{
 	font-size: 2.3rem;
 }
-.curatescape-fix-rhythm.curatescape-styles.type-curatescape-story .curatescape-byline,
-.curatescape-fix-rhythm.curatescape-styles.type-curatescape-story .curatescape-lede{
+.curatescape-fix-rhythm.type-curatescape-story .curatescape-byline,
+.curatescape-fix-rhythm.type-curatescape-story .curatescape-lede{
 	margin-block-end: 24px; 
 }
-.curatescape-fix-rhythm.curatescape-styles #omeka-lightgallery img{
+.curatescape-fix-rhythm #omeka-lightgallery img{
 	float: none !important;
 	height: 100% !important;
 }
-.curatescape-fix-bigstuff.curatescape-styles table.curatescape-additional-files,
-.curatescape-fix-berlin.curatescape-styles table.curatescape-additional-files,
-.curatescape-fix-rhythm.curatescape-styles table.curatescape-additional-files{
+.curatescape-fix-bigstuff table.curatescape-additional-files,
+.curatescape-fix-berlin table.curatescape-additional-files,
+.curatescape-fix-rhythm table.curatescape-additional-files{
 	display: table-caption;
 	padding: 0 10px 0 0;
 }
-.curatescape-fix-foundation.curatescape-styles table.curatescape-additional-files th,
-.curatescape-fix-foundation.curatescape-styles table.curatescape-additional-files td{
+.curatescape-fix-foundation table.curatescape-additional-files th,
+.curatescape-fix-foundation table.curatescape-additional-files td{
 	padding-left: 0.625rem;
 }
-.curatescape-fix-santa-fe.curatescape-styles table.curatescape-additional-files th,
-.curatescape-fix-santa-fe.curatescape-styles table.curatescape-additional-files td{
+.curatescape-fix-santa-fe table.curatescape-additional-files th,
+.curatescape-fix-santa-fe table.curatescape-additional-files td{
 	padding-left: 9px
 }
-.curatescape-fix-default.curatescape-styles table.curatescape-additional-files th,
-.curatescape-fix-default.curatescape-styles table.curatescape-additional-files td{
+.curatescape-fix-default table.curatescape-additional-files th,
+.curatescape-fix-default table.curatescape-additional-files td{
 	padding-left: 4px;
 }
-.curatescape-fix-foundation.curatescape-styles.type-curatescape-story .curatescape-lede{
+.curatescape-fix-foundation.type-curatescape-story .curatescape-lede{
 	margin-block-start: 1rem;
 }
-.curatescape-fix-big-picture.curatescape-styles .curatescape-factoids .factoid p{
+.curatescape-fix-big-picture .curatescape-factoids .factoid p{
 	font-size: 1rem;
 }
-.curatescape-fix-bigstuff.curatescape-styles .curatescape-factoids .factoid p,
-.curatescape-fix-santa-fe.curatescape-styles .curatescape-factoids .factoid p,
-.curatescape-fix-santa-fe.curatescape-styles #factoid-heading,
-.curatescape-fix-emiglio.curatescape-styles .curatescape-factoids .factoid p,
-.curatescape-fix-emiglio.curatescape-styles #factoid-heading{
+.curatescape-fix-bigstuff .curatescape-factoids .factoid p,
+.curatescape-fix-santa-fe .curatescape-factoids .factoid p,
+.curatescape-fix-santa-fe #factoid-heading,
+.curatescape-fix-emiglio .curatescape-factoids .factoid p,
+.curatescape-fix-emiglio #factoid-heading{
 	font-size: unset;
 }
-.curatescape-fix-rhythm.curatescape-styles .curatescape-files{
+.curatescape-fix-rhythm .curatescape-files{
 	padding-left: 1px;
 	padding-right: 1px;
 }
-.curatescape-fix-emiglio.curatescape-styles .curatescape-image-gallery.gallery-grid .curatescape-image-figure img{
+.curatescape-fix-emiglio .curatescape-image-gallery.gallery-grid .curatescape-image-figure img{
 	margin: unset;
 	padding:unset;
 	border:unset;
 	background-color:unset;
 }
-.curatescape-fix-bigstuff.curatescape-styles .curatescape-image-gallery.gallery-grid,
-.curatescape-fix-berlin.curatescape-styles .curatescape-image-gallery.gallery-grid {
+.curatescape-fix-bigstuff .curatescape-image-gallery.gallery-grid,
+.curatescape-fix-berlin .curatescape-image-gallery.gallery-grid {
 	margin-right: 10px;
 	margin-top: 5px;
 }
 @media screen and (min-width: 800px) {
-	.curatescape-fix-the-daily.curatescape-styles.type-curatescape-story h2{
+	.curatescape-fix-the-daily.type-curatescape-story h2{
 		width: 25%;
 		display: block;
 		text-align: right;
 	}
 }
 @media screen and (min-width: 800px) {
-	.curatescape-fix-big-picture.curatescape-styles.type-curatescape-story.items.show.gallery .item-metadata{
+	.curatescape-fix-big-picture.type-curatescape-story.items.show.gallery .item-metadata{
 		width: 35% !important;
 	}
-	.curatescape-fix-big-picture.curatescape-styles.type-curatescape-story.items.show div#itemfiles,
-	.curatescape-fix-big-picture.curatescape-styles.type-curatescape-story.items.show div.lightgallery{
+	.curatescape-fix-big-picture.type-curatescape-story.items.show div#itemfiles,
+	.curatescape-fix-big-picture.type-curatescape-story.items.show div.lightgallery{
 		width: 65% !important;
 	}
 }
 /* TOURS */
-.curatescape-fix-emiglio.curatescape-styles#tours.browse .tour:not(:last-child) {
+.curatescape-fix-emiglio#tours.browse .tour:not(:last-child) {
 	border-bottom: 1px solid #ddd;
 }
-.curatescape-fix-rhythm.curatescape-styles#tours.browse .tour:not(:last-child) {
+.curatescape-fix-rhythm#tours.browse .tour:not(:last-child) {
 	border-bottom: 1px dashed;
 }
-.curatescape-fix-berlin.curatescape-styles#tours.browse .tour:not(:last-child) {
+.curatescape-fix-berlin#tours.browse .tour:not(:last-child) {
 	border-bottom: 1px solid #eee;
 }
-.curatescape-fix-bigstuff.curatescape-styles#tours.browse .tour:not(:last-child) {
+.curatescape-fix-bigstuff#tours.browse .tour:not(:last-child) {
 	border-bottom: 1px solid #cccccc;
 }
-.curatescape-fix-bigpicture.curatescape-styles#tours.browse .tour:not(:last-child) {
+.curatescape-fix-bigpicture#tours.browse .tour:not(:last-child) {
 	border-bottom: 1px solid #cecece;
 }
-.curatescape-fix-foundation.curatescape-styles#tours.browse .tour:not(:last-child) {
+.curatescape-fix-foundation#tours.browse .tour:not(:last-child) {
 	border-bottom: 1px solid #e6e6e6;;
 }
-.curatescape-fix-default.curatescape-styles#tours.browse .tour:not(:last-child) {
+.curatescape-fix-default#tours.browse .tour:not(:last-child) {
 	border-bottom: 1px solid #ccc;
 }
-.curatescape-fix-santa-fe.curatescape-styles#tours.browse .tour:not(:last-child) {
+.curatescape-fix-santa-fe#tours.browse .tour:not(:last-child) {
 	border-bottom: 1px solid #d3d6bc;
 }
-.curatescape-fix-minimalist.curatescape-styles#tours.browse .tour{
+.curatescape-fix-minimalist#tours.browse .tour{
 	border-top: 4px solid #ddd;
 	padding-top: 1em;
 }
-.curatescape-fix-freedom.curatescape-styles#tours.browse h2{
+.curatescape-fix-freedom#tours.browse h2{
 	font-size: 2rem;
 }
-.curatescape-fix-foundation.curatescape-styles#tours.browse h2{
+.curatescape-fix-foundation#tours.browse h2{
 	font-size: 1.5625rem;
 }
-.curatescape-fix-centerrow.curatescape-styles#tours.browse h2{
+.curatescape-fix-centerrow#tours.browse h2{
 	margin-bottom: 0.25lh;
 }
-.curatescape-fix-freedom.curatescape-styles#tours.browse .tour-image,
-.curatescape-fix-freedom.curatescape-styles#tours.browse svg,
-.curatescape-fix-freedom.curatescape-styles#tours.browse img{
+.curatescape-fix-freedom#tours.browse .tour-image,
+.curatescape-fix-freedom#tours.browse svg,
+.curatescape-fix-freedom#tours.browse img{
 	width: 200px;
 	height: 200px;
 }
-.curatescape-fix-freedom.curatescape-styles#tours.browse .tour-image::after{
+.curatescape-fix-freedom#tours.browse .tour-image::after{
 	content: '';
 	width: 90%;
 	height: 90%;
@@ -134,46 +134,46 @@
 	z-index: 2;
 }
 /* HOME MAP */
-.curatescape-fix-default.curatescape-styles .curatescape-home-content{
+.curatescape-fix-default .curatescape-home-content{
 	padding: 24px;
 }
-.curatescape-fix-bigpicture.curatescape-styles .curatescape-home-content{
+.curatescape-fix-bigpicture .curatescape-home-content{
 	margin: 21px;
 	padding: 21px;
 	width: calc(100% - 42px);
 }
-.curatescape-fix-foundation.curatescape-styles .curatescape-home-content.top{
+.curatescape-fix-foundation .curatescape-home-content.top{
 	border-bottom: 1px solid #cacaca;
 	padding-bottom: 0.5lh;
 	margin-bottom: 1lh;
 }
-.curatescape-fix-santa-fe.curatescape-styles .curatescape-home-content.top{
+.curatescape-fix-santa-fe .curatescape-home-content.top{
 	border-bottom: 1px solid #d3d6bc;
 	margin-bottom: 1lh;
 }
-.curatescape-fix-foundation.curatescape-styles .curatescape-home-content.bottom h2{
+.curatescape-fix-foundation .curatescape-home-content.bottom h2{
 	text-align: center;
 	border-bottom: 1px solid #cacaca;
 	margin-bottom: 2.25rem;
 	padding-bottom: 2.25rem;
 }
-.curatescape-fix-emiglio.curatescape-styles .curatescape-home-content.top{
+.curatescape-fix-emiglio .curatescape-home-content.top{
 	border-bottom: 1px solid #ddd;
 }
-.curatescape-fix-berlin.curatescape-styles .curatescape-home-content.top{
+.curatescape-fix-berlin .curatescape-home-content.top{
 	border-bottom: 1px solid #ccc;
 }
-.curatescape-fix-thedaily.curatescape-styles .curatescape-map-caption{
+.curatescape-fix-thedaily .curatescape-map-caption{
 	background-color: #000000;
 	color: #FFFFFF;
 	padding: 12px;
 	width: max-content;
 }
-.curatescape-fix-thedaily.curatescape-styles .curatescape-map-caption a{
+.curatescape-fix-thedaily .curatescape-map-caption a{
 	color: #FFFF00;
 	text-decoration: underline;
 }
-.curatescape-fix-thedaily.curatescape-styles h2.curatescape-map-title{
+.curatescape-fix-thedaily h2.curatescape-map-title{
 	font-size: 31.5px;
 	line-height: 1em;
 	background: #FFFF00;
@@ -183,15 +183,15 @@
 	margin: 0;
 }
 @media screen and (min-width:800px){
-	.curatescape-fix-thedaily.curatescape-styles h2.curatescape-map-title{
+	.curatescape-fix-thedaily h2.curatescape-map-title{
 		font-size: 22.5px;
 	}
 }
-.curatescape-fix-freedom.curatescape-styles h2.curatescape-map-title{
+.curatescape-fix-freedom h2.curatescape-map-title{
 	border-bottom: 1px solid #ececec;
 	padding-bottom: 1rem;
 }
-.curatescape-fix-freedom.curatescape-styles h2.curatescape-map-title::after {
+.curatescape-fix-freedom h2.curatescape-map-title::after {
 	display: block;
 	content: "";
 	background-color: var(--primary);
@@ -202,7 +202,7 @@
 	width: 64px;
 }
 /* TAGS */
-.curatescape-fix-freedom.curatescape-styles.tags .hTagcloud ul {
+.curatescape-fix-freedom.tags .hTagcloud ul {
 	display: flex;
 	align-items: center;
 	flex-shrink: 0;
@@ -215,25 +215,25 @@
 	justify-content: center;
 	margin-top: 3rem;
 }
-.curatescape-fix-freedom.curatescape-styles.tags#tours .hTagcloud ul li a{
+.curatescape-fix-freedom.tags#tours .hTagcloud ul li a{
 	padding: 5px 10px;
 	text-decoration: none;
 	font-weight: 600;
 	color: #333;
 	background-color: hsl(2605185669, 100%, 87.5%);
 }
-.curatescape-fix-freedom.curatescape-styles.tags#tours .hTagcloud ul li:nth-child(2n) a{
+.curatescape-fix-freedom.tags#tours .hTagcloud ul li:nth-child(2n) a{
 	background: hsl(2345449404, 100%, 87.5%);
 }
-.curatescape-fix-freedom.curatescape-styles.tags#tours .hTagcloud ul li:nth-child(3n) a{
+.curatescape-fix-freedom.tags#tours .hTagcloud ul li:nth-child(3n) a{
 	background: hsl(103051168, 100%, 87.5%)
 }
-.curatescape-fix-freedom.curatescape-styles.tags#tours .hTagcloud ul li:nth-child(4n) a{
+.curatescape-fix-freedom.tags#tours .hTagcloud ul li:nth-child(4n) a{
 	background: hsl(408066808, 100%, 87.5%);
 }
-.curatescape-fix-freedom.curatescape-styles.tags#tours .hTagcloud ul li:nth-child(5n) a{
+.curatescape-fix-freedom.tags#tours .hTagcloud ul li:nth-child(5n) a{
 	background: hsl(844765985, 100%, 87.5%);
 }
-.curatescape-fix-freedom.curatescape-styles.tags#tours .hTagcloud ul li:nth-child(6n) a{
+.curatescape-fix-freedom.tags#tours .hTagcloud ul li:nth-child(6n) a{
 	background: hsl(1885528553, 100%, 87.5%);
 }

@@ -26,7 +26,7 @@
 	position: absolute;
 	pointer-events: none;
 }
-/* gallery! */
+/* photoswipe! */
 .pswp__bg{
 	background: linear-gradient(to top, rgb(0, 0, 0) 65%, rgba(0,0,0,.85));
 }
@@ -114,9 +114,9 @@
 		max-height: 90vh;
 	}
 }
-/* From here, all rules should use the .curatescape-styles body class! */
-.curatescape-styles .curatescape-tour-button-container,
-.curatescape-styles .curatescape-image-gallery.gallery-inline-captions .curatescape-image-figure > figcaption > .curatescape-tour-button-container{
+/* buttons */
+.curatescape-tour-button-container,
+.curatescape-image-gallery.gallery-inline-captions .curatescape-image-figure > figcaption > .curatescape-tour-button-container{
 	display: block;
 	margin-top: 0.5lh;
 	display: flex;
@@ -124,7 +124,8 @@
 	justify-items: flex-start;
 	gap: 0.5lh;
 }
-.curatescape-styles .curatescape-article-header-styles .curatescape-subtitle{
+/* subtitle */
+.curatescape-article-header-styles .curatescape-subtitle{
 	display: block;
 	font-size: .9em;
 	font-variant-caps: all-small-caps;
@@ -132,24 +133,19 @@
 	display: block;
 	line-height: 1.1em;
 }
-.curatescape-styles .curatescape-article-header-styles .curatescape-subtitle-separator{
+.curatescape-article-header-styles .curatescape-subtitle-separator{
 	position: absolute;
 	visibility: hidden;
 }
-.curatescape-styles .curatescape-lede{
+/* lede */
+.curatescape-lede{
 	font-size: 1.3em;
 	line-height: 1.4em;
 	font-weight: 500;
 	font-style: italic;
 }
-.curatescape-styles #factoid-heading{
-	font-weight: 600;
-	font-variant-caps: all-small-caps;
-	font-variant-caps: all-petite-caps;
-	font-size: 1rem;
-	margin-bottom: 0.25rem;
-}
-.curatescape-styles .curatescape-factoids{
+/* factoids */
+.curatescape-factoids{
 	position: relative;
 	display: flex;
 	flex-direction: row;
@@ -159,8 +155,8 @@
 	padding: 1rem;
 	margin: 1rem 0 2rem;
 }
-.curatescape-styles .curatescape-factoids::before{
-	content:'';
+.curatescape-factoids::before{
+	content: '';
 	background-color: currentColor;
 	height: 100%;
 	width: var(--factoid-border-width);
@@ -169,24 +165,31 @@
 	left: 0;
 	opacity: var(--factoid-detail-opacity);
 }
-.curatescape-styles .curatescape-text .curatescape-factoids{
+.curatescape-text .curatescape-factoids{
 	margin-left: 1.5rem;
 	margin-right: 2.5rem;
 	max-width: calc(100% - 5rem - var(--factoid-border-width));
 }
-.curatescape-styles .curatescape-factoids .factoids-container{
+.curatescape-factoids .factoids-container{
 	flex-grow: 1;
 }
-.curatescape-styles .curatescape-factoids .factoid p{
+.curatescape-factoids #factoid-heading{
+	font-weight: 600;
+	font-variant-caps: all-small-caps;
+	font-variant-caps: all-petite-caps;
+	font-size: 1rem;
+	margin-bottom: 0.25rem;
+}
+.curatescape-factoids .factoid p{
 	margin: 0;
 	padding: 0;
 	font-size: var(--factoid-text-size);
 }
-.curatescape-styles .curatescape-factoids .factoid + .factoid{
+.curatescape-factoids .factoid + .factoid{
 	margin-top: var(--factoid-multiples-vertical-spacing);
 	padding-top: var(--factoid-multiples-vertical-spacing);
 }
-.curatescape-styles .curatescape-factoids .factoid + .factoid::before{
+.curatescape-factoids .factoid + .factoid::before{
 	content: '';
 	position: relative;
 	height: 1px;
@@ -197,12 +200,12 @@
 	left: 0;
 	
 }
-.curatescape-styles .factoids-decorator{
+.factoids-decorator{
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 }
-.curatescape-styles .factoids-decorator svg{
+.factoids-decorator svg{
 	height: 2rem;
 	width: 2rem;
 	margin: 0 calc(1rem + var(--factoid-border-width)) 0 1rem;
@@ -210,122 +213,85 @@
 	opacity: var(--factoid-detail-opacity);
 	user-select: none;
 }
-.curatescape-styles .curatescape-files{
+/* files */
+.curatescape-files{
 	display: block;
 	width: 100%;
 	container-name: gallerycontainer; /* <== Container */
 	container-type: inline-size; /* <== Container */
 	padding-bottom: 0.5em;
 }
-.curatescape-styles .curatescape-files cite::before {
+.curatescape-files cite::before {
 	content: none;
 }
-.curatescape-styles .curatescape-files cite{
+.curatescape-files cite{
 	font-size: inherit;
 	color: inherit;
 	display: inline;
 }
-.curatescape-styles .curatescape-home-content{
-	width: 100%;
-	clear: both;
-}
-.curatescape-styles .curatescape-home-content.top{
-	padding-bottom: 1lh;
-}
-.curatescape-styles .curatescape-home-content.bottom{
-	padding-top: 1lh;
-	padding-bottom: 1lh;
-}
-.curatescape-styles .curatescape-files figure,
-.curatescape-styles .curatescape-home-content figure{
+.curatescape-files figure{
 	margin: 0 auto;
 }
-.curatescape-styles #geolocation figure{
-	margin: 0;
-	padding: 0;
-}
-.curatescape-styles .curatescape-map-caption{
-	padding-top: 0.5lh;
-	margin-bottom: 0;
-	font-style: italic;
-}
-.curatescape-styles .curatescape-map-title{
-	position: relative;
-	width: 100%;
-	clear: both;
-}
-.curatescape-styles figcaption cite,
-.curatescape-styles table cite{
+.curatescape-files figcaption cite,
+.curatescape-files table cite{
 	font-weight: 600;
 }
-.curatescape-styles .curatescape-shortcode-app-buttons-container{
-	container-name: appbuttonscontainer; /* <== Container */
-	container-type: inline-size; /* <== Container */
+/* file figures */
+.curatescape-file-figure img,
+.curatescape-file-figure audio,
+.curatescape-file-figure video,
+.curatescape-file-figure object,
+.curatescape-file-figure iframe{
+	display: block;
+	margin: 0 auto;
+	max-width: 100%;
 }
-.curatescape-styles .curatescape-shortcode-app-buttons{
-	margin-bottom: 1lh;
+.curatescape-file-figure audio{
+	width: calc(100% - 1lh);
+	padding: 0.5lh 0;
 }
-.curatescape-styles .curatescape-shortcode-app-buttons a + a {
-	margin-inline-start: 0.25lh;
+.curatescape-file-figure video,
+.curatescape-file-figure object,
+.curatescape-file-figure iframe{
+	width: 100%;
 }
-.curatescape-styles .curatescape-shortcode-app-buttons a.curatescape-shortcode-button {
-	text-decoration: none;
-	display: inline-flex;
-	flex-direction: row;
-	border: 1px solid currentcolor;
-	padding: 0.25lh 0.5lh;
+.curatescape-file-figure object,
+.curatescape-file-figure iframe{
+	min-height: 70vh;
 }
-@container appbuttonscontainer (width < 720px){
-	.curatescape-styles .curatescape-shortcode-app-buttons{
-		display: flex;
-		flex-direction: row;
-	}
-	.curatescape-styles .curatescape-shortcode-app-buttons a{
-		flex-grow: 1;
-		justify-content: center;
-	}
-}
-@container appbuttonscontainer (width < 500px){
-	.curatescape-styles .curatescape-shortcode-app-buttons{
-		flex-direction: column;
-	}
-	.curatescape-styles .curatescape-shortcode-app-buttons a + a{
-		margin-inline-start: 0;
-		margin-top: 0.25lh
-	}
-}
-.curatescape-styles .filestablecontainer{
+/* files table */
+.filestablecontainer{
 	container-name: filestablecontainer; /* <== Container */
 	container-type: inline-size; /* <== Container */
 }
-.curatescape-styles table.curatescape-additional-files a.button{
+table.curatescape-additional-files a.button{
 	text-decoration: none;
 	margin: 0.25lh 0;
 }
-.curatescape-styles table.curatescape-additional-files caption{
+table.curatescape-additional-files caption{
 	text-align:start;
 	font-style: normal;
 }
-.curatescape-styles table.curatescape-additional-files caption h3{
+table.curatescape-additional-files caption h3{
 	margin: 0;
 }
-.curatescape-styles table.curatescape-additional-files th,
-.curatescape-styles table.curatescape-additional-files td{
+table.curatescape-additional-files th,
+table.curatescape-additional-files td{
 	padding-left: 0;
 	text-align: left;
 }
-.curatescape-styles table.curatescape-additional-files td:first-child{
+table.curatescape-additional-files td:first-child{
 	padding-right: 1lh;
 }
-.curatescape-styles table.curatescape-additional-files td:last-child{
+table.curatescape-additional-files td:last-child{
 	white-space: nowrap;
 	height: 100%;
 }
-.curatescape-styles table.curatescape-additional-files td:last-child span.file-download{
+table.curatescape-additional-files td:last-child span.file-download{
 	display: inline-table;
 	margin: 0.5lh 0 0;
 }
-.curatescape-styles table.curatescape-additional-files td span.type{
+table.curatescape-additional-files td span.type{
 	text-transform: uppercase;
 	display: block;
 	margin: 0.25lh 0 0 0;
@@ -333,22 +299,89 @@
 	text-align: center;
 }
 @container filestablecontainer (width < 600px){
-	.curatescape-styles table.curatescape-additional-files thead{
+	table.curatescape-additional-files thead{
 		visibility: collapse;
 		opacity: 0;
 		position: absolute;
 		z-index: -1;
 	}
-	.curatescape-styles table.curatescape-additional-files tbody tr{
+	table.curatescape-additional-files tbody tr{
 		display: flex;
 		flex-direction: column;
 		border-collapse: collapse;
 	}
-	.curatescape-styles table.curatescape-additional-files tbody tr + tr{
+	table.curatescape-additional-files tbody tr + tr{
 		margin-top: 1lh
 	}
 }
-.curatescape-styles .curatescape-shortcode-app-buttons a .curatescape-icon {
+/* home */
+.curatescape-home-content{
+	width: 100%;
+	clear: both;
+}
+.curatescape-home-content.top{
+	padding-bottom: 1lh;
+}
+.curatescape-home-content.bottom{
+	padding-top: 1lh;
+	padding-bottom: 1lh;
+}
+.curatescape-home-content figure{
+	margin: 0 auto;
+}
+/* map */
+#geolocation figure{
+	margin: 0;
+	padding: 0;
+}
+.curatescape-map-caption{
+	padding-top: 0.5lh;
+	margin-bottom: 0;
+	font-style: italic;
+}
+.curatescape-map-title{
+	position: relative;
+	width: 100%;
+	clear: both;
+}
+/* app buttons shortcode */
+.curatescape-shortcode-app-buttons-container{
+	container-name: appbuttonscontainer; /* <== Container */
+	container-type: inline-size; /* <== Container */
+}
+.curatescape-shortcode-app-buttons{
+	margin-bottom: 1lh;
+}
+.curatescape-shortcode-app-buttons a + a {
+	margin-inline-start: 0.25lh;
+}
+.curatescape-shortcode-app-buttons a.curatescape-shortcode-button {
+	text-decoration: none;
+	display: inline-flex;
+	flex-direction: row;
+	border: 1px solid currentcolor;
+	padding: 0.25lh 0.5lh;
+}
+@container appbuttonscontainer (width < 720px){
+	.curatescape-shortcode-app-buttons{
+		display: flex;
+		flex-direction: row;
+	}
+	.curatescape-shortcode-app-buttons a{
+		flex-grow: 1;
+		justify-content: center;
+	}
+}
+@container appbuttonscontainer (width < 500px){
+	.curatescape-shortcode-app-buttons{
+		flex-direction: column;
+	}
+	.curatescape-shortcode-app-buttons a + a{
+		margin-inline-start: 0;
+		margin-top: 0.25lh
+	}
+}
+.curatescape-shortcode-app-buttons a .curatescape-icon {
 	display: flex;
 	flex-direction: column;
 	align-self: center;
@@ -356,28 +389,6 @@
 	width: 1lh;
 	margin-right: 0.5lh;
 }
-.curatescape-styles .curatescape-shortcode-app-buttons a .curatescape-icon svg{
+.curatescape-shortcode-app-buttons a .curatescape-icon svg{
 	fill: currentColor;
-}
-.curatescape-styles .curatescape-file-figure img,
-.curatescape-styles .curatescape-file-figure audio,
-.curatescape-styles .curatescape-file-figure video,
-.curatescape-styles .curatescape-file-figure object,
-.curatescape-styles .curatescape-file-figure iframe{
-	display: block;
-	margin: 0 auto;
-	max-width: 100%;
-}
-.curatescape-styles .curatescape-file-figure audio{
-	width: calc(100% - 1lh);
-	padding: 0.5lh 0;
-}
-.curatescape-styles .curatescape-file-figure video,
-.curatescape-styles .curatescape-file-figure object,
-.curatescape-styles .curatescape-file-figure iframe{
-	width:100%;
-}
-.curatescape-styles .curatescape-file-figure object,
-.curatescape-styles .curatescape-file-figure iframe{
-	min-height: 70vh;
 }

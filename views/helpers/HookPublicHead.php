@@ -11,18 +11,20 @@ class Curatescape_View_Helper_HookPublicHead extends Zend_View_Helper_Abstract{
 		if($iosIdentifier = option('curatescape_app_ios')){ 
 			$this->smartBanner($iosIdentifier);
 		}
-		if(option('curatescape_plugin_styles')){ 
-			queue_css_file('global', 'all', false, 'css', 
-				get_plugin_ini(_PLUGIN_NAME_, 'version'));
-			if(option('curatescape_theme_fixes')){ 
-				queue_css_file('theme-fixes', 'all', false, 'css', 
-					get_plugin_ini(_PLUGIN_NAME_, 'version'));
-			}
+		// CSS global
+		if(option('curatescape_plugin_styles')){
+			queue_css_file('global', 'all', false, 'css', get_plugin_ini(_PLUGIN_NAME_, 'version'));
 		}
-		if(is_current_url('/tours')){
+		// CSS theme fixes
+		if(option('curatescape_theme_fixes')){ 
+			queue_css_file('theme-fixes', 'all', false, 'css', get_plugin_ini(_PLUGIN_NAME_, 'version'));
+		}
+		// CSS tours
+		if(is_current_url('/tours') && option('curatescape_plugin_styles')){
 			queue_css_file('tours', 'all', false, 'css', get_plugin_ini(_PLUGIN_NAME_, 'version'));
 		}
-		if(is_current_url('/tours/show')){
+		// CSS tours/show
+		if(is_current_url('/tours/show') && option('curatescape_plugin_styles')){
 			if(option('curatescape_gallery_style_tour') == 'gallery-inline-captions'){
 				queue_css_file('gallery-inline-captions', 'all', false, 'css', get_plugin_ini(_PLUGIN_NAME_, 'version'));
 			}
@@ -30,7 +32,8 @@ class Curatescape_View_Helper_HookPublicHead extends Zend_View_Helper_Abstract{
 				queue_css_file('gallery-grid', 'all', false, 'css', get_plugin_ini(_PLUGIN_NAME_, 'version'));
 			}
 		}
-		if(is_current_url('/items/show')){ 
+		// CSS items/show
+		if(is_current_url('/items/show') && option('curatescape_plugin_styles')){ 
 			if(option('curatescape_gallery_style') == 'gallery-inline-captions'){
 				queue_css_file('gallery-inline-captions', 'all', false, 'css', get_plugin_ini(_PLUGIN_NAME_, 'version'));
 			}
@@ -41,17 +44,18 @@ class Curatescape_View_Helper_HookPublicHead extends Zend_View_Helper_Abstract{
 				queue_css_file('gallery-slides', 'all', false, 'css', get_plugin_ini(_PLUGIN_NAME_, 'version'));
 			}
 		}
+		// JS global
 		queue_js_file('global', 'javascripts');
+		// JS tours/show
 		if(is_current_url('/tours/show')){
 			queue_js_file('tour', 'javascripts', array('defer'=>'defer'));
+			if(option('curatescape_gallery_style_tour') !== 'gallery-inline-captions'){
+				$this->photoSwipeModule();
+			}
 		}
-		if(
-			is_current_url('/tours/show') && 
-			option('curatescape_gallery_style_tour') !== 'gallery-inline-captions'
-		){
-			$this->photoSwipeModule();
-		}
-		if(is_current_url('/items/show')){ 
+		// JS items/show
+		if(is_current_url('/items/show')){
+			queue_js_file('items-show', 'javascripts', array('defer'=>'defer'));
 			if(
 				option('curatescape_lightbox') && 
 				option('curatescape_gallery_style') !== 'gallery-slides'
@@ -59,25 +63,27 @@ class Curatescape_View_Helper_HookPublicHead extends Zend_View_Helper_Abstract{
 				$this->photoSwipeModule();
 			}
 			if(option('curatescape_gallery_style') == 'gallery-slides'){
-				if(!get_theme_option('lightgallery_caption')){
-					set_theme_option('lightgallery_caption', 'none'); // @todo: add title/description option
-				}
-				queue_lightgallery_assets();
-				queue_js_file('lightgallery', 'javascripts', array('defer'=>'defer'));
+				$this->lightGallerySetup();
 			}
-			queue_js_file('items-show', 'javascripts', array('defer'=>'defer'));
 			if($params = getQueryParams()){
 				if(isset($params['tour']) && isset($params['index'])){
 					queue_js_file('curatescape-tour-nav', 'javascripts', array('defer'=>'defer'));
 				}
 			}
 		}
-		if(
-			is_current_url('/items/browse') || 
-			is_current_url('/tours/browse')
-		){
+		// JS items/browse and tours/browse
+		if(is_current_url('/items/browse') || is_current_url('/tours/browse')){
 			queue_js_file('secondary-nav-fix', 'javascripts', array('defer'=>'defer'));
 		}
+	}
+
+	private function lightGallerySetup()
+	{
+		if(!get_theme_option('lightgallery_caption')){
+			set_theme_option('lightgallery_caption', 'none'); // @todo: add title/description option
+		}
+		queue_lightgallery_assets();
+		queue_js_file('lightgallery', 'javascripts', array('defer'=>'defer'));
 	}
 
 	private function photoSwipeModule()

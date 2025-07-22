@@ -289,9 +289,9 @@ class CuratescapeTour extends Omeka_Record_AbstractRecord
 		}
 		$caption = implode(' | ', $meta);
 		if(hasLocation($tourItem)){
-			$mapShowButton = '<a class="button" data-item-id="'.$tourItem->id.'" href="javascript:void(0)">'.__('Show on Map').'</a>';
+			$mapShowButton = '<a role="button" class="button" data-item-id="'.$tourItem->id.'" href="javascript:void(0)">'.__('Show on Map').'</a>';
 		}
-		$actions = '<div class="curatescape-tour-button-container">'.$this->linkToTourItem($tourItem, __('Read More'), array('class'=>'button curatescape-button curatescape-tour-button'), 'show').$mapShowButton.'</div>';
+		$actions = '<div class="curatescape-tour-button-container">'.$this->linkToTourItem($tourItem, __('View %s', storyLabelString()), array('class'=>'button curatescape-button curatescape-tour-button', 'title'=>__('Read more about %s', dc($tourItem,'Title', array('no_filter'=>true)))), 'show').$mapShowButton.'</div>';
 		
 		return $caption.$actions;
 	}
@@ -326,16 +326,18 @@ class CuratescapeTour extends Omeka_Record_AbstractRecord
 		return $html;
 	}
 
-	public function tourItemsOutput($galleryType = 'gallery-inline-captions', $isLazy = 'true', $html = null)
+	public function tourItemsOutput($galleryType = 'gallery-inline-captions', $html = null)
 	{
 		if($galleryType == 'none') return null;
 		$html .= '<div class="curatescape-files">';
 			$html .= '<div id="pswp-container" class="curatescape-image-gallery '.$galleryType.'">';
-			foreach($this->Items as $tourItem){
+			foreach($this->Items as $i=>$tourItem){
+				$potentialLCP = ($galleryType == 'gallery-inline-captions' && $i < 1 || $galleryType == 'gallery-grid' && $i < 3);
+				$loadingAttr = $potentialLCP ? null : 'loading="lazy"'; // Avoid delay loading above-the-fold/LCP content
 				$html .= '<figure class="curatescape-image-figure" itemtype="https://schema.org/ImageObject">';
 					$imgDetails = preferredItemImageUrl($tourItem, 'fullsize', true);
-					$tourItemImage = '<img '.($isLazy ? 'loading="lazy"' : '').' title="'.$this->tourItemTitleString($tourItem).'" src="'.$imgDetails['url'].'" class="item-file" width="'.$imgDetails['width'].'" height="'.$imgDetails['height'].'"/>';
-					$html .= $this->linkToTourItem($tourItem, $tourItemImage, array('class'=>'gallery-image '.$imgDetails['orientation'].' pswp-item', 'data-pswp-src'=>$imgDetails['url'], 'data-pswp-width'=>$imgDetails['width'], 'data-pswp-height'=>$imgDetails['height']), 'show');
+					$tourItemImage = '<img '.$loadingAttr.' alt="'.dc($tourItem,'Title', array('no_filter'=>true)).'" src="'.$imgDetails['url'].'" class="item-file" width="'.$imgDetails['width'].'" height="'.$imgDetails['height'].'"/>';
+					$html .= $this->linkToTourItem($tourItem, $tourItemImage, array('aria-label'=>__('Read more about %s', dc($tourItem,'Title', array('no_filter'=>true))),'class'=>'gallery-image '.$imgDetails['orientation'].' pswp-item', 'data-pswp-src'=>$imgDetails['url'], 'data-pswp-width'=>$imgDetails['width'], 'data-pswp-height'=>$imgDetails['height']), 'show');
 					$html .= '<figcaption>'.$this->tourItemCaption($tourItem).'</figcaption>';
 				$html .= '</figure>';
 			}

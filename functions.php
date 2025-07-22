@@ -399,16 +399,17 @@ function publicNavTours()
 	);
 }
 
-function linkToTour($tour = null, $text = null, $props = array(), $action = 'show')
+function linkToTour($tour = null, $action = 'show', $text = null, $props = array())
 {
 	if(!$tour) {
 		throw new Exception('Missing tour object');
 	}
-	if(empty( $text)) {
+	if(empty($text)) {
 		$title = metadata($tour, 'Title');
 		$text = (!empty($title)) ? $title : '[Untitled]';
 	}
-	return link_to($tour, $action, $text, $props);
+	$linkto = link_to($tour, $action, $text, $props);
+	return str_replace(array('/curatescape-','/curatescape/'), '/', $linkto);
 }
 
 function filesOutputFigures($images = array(), $audio = array(), $video = array(), $other = array(), $galleryType = 'gallery-inline-captions', $html = null)
@@ -423,18 +424,18 @@ function filesOutputFigures($images = array(), $audio = array(), $video = array(
 	return $html;
 }
 
-function imageLinkMarkup($file, $size='fullsize', $linkClass='gallery-image', $imgClass='item-file', $isLazy = true, $itemprop='associatedMedia', $html = null)
+function imageLinkMarkup($file, $size='fullsize', $linkClass='gallery-image', $imgClass='item-file', $itemprop='associatedMedia', $html = null)
 {
 	if(!$file) return null;
 	$dimensions = dimensions($file, $size);
 	$fileHref = !option('link_to_file_metadata') ? record_image_url($file, $size) : $file->getProperty('permalink');
 	$html .= '<a'.($itemprop ? ' itemprop='.$itemprop : null).' href="'.$fileHref.'" class="pswp-item '.$linkClass.' '.$dimensions['orientation'].' file-'.$file->id.'" data-pswp-width="'.$dimensions['width'].'" data-pswp-height="'.$dimensions['height'].'" data-pswp-src="'.record_image_url($file, $size).'" data-pswp-type="image" data-pswp-fallbackmessage="'.__('Download').'">';
-		$html .= '<img'.($isLazy ? ' loading="lazy"' : null).' class="'.$imgClass.'" src="'.record_image_url($file, 'fullsize').'" width="'.$dimensions['width'].'" height="'.$dimensions['height'].'" alt="'.htmlentities($file->getProperty('display_title')).'" />';
+		$html .= '<img loading="lazy" class="'.$imgClass.'" src="'.record_image_url($file, 'fullsize').'" width="'.$dimensions['width'].'" height="'.$dimensions['height'].'" alt="'.htmlentities($file->getProperty('display_title')).'" />';
 	$html .= '</a>';
 	return $html;
 }
 
-function mediaLinkMarkup($file, $filetype, $linkClass='gallery-image', $imgClass='fallback', $isLazy = true, $itemprop='associatedMedia', $html = null)
+function mediaLinkMarkup($file, $filetype, $linkClass='gallery-image', $imgClass='fallback', $itemprop='associatedMedia', $html = null)
 {
 	if(!$file || !$filetype) return null;
 	$dimensions = array(
@@ -452,14 +453,14 @@ function mediaLinkMarkup($file, $filetype, $linkClass='gallery-image', $imgClass
 		$html .= '</div>';
 	}else{
 		$html .= '<a'.($itemprop ? ' itemprop='.$itemprop : null).' href="'.$fileHref.'" class="pswp-item '.$linkClass.' square file-'.$file->id.'" data-pswp-width="'.$dimensions['width'].'" data-pswp-height="'.$dimensions['height'].'" data-pswp-src="'.$file->getProperty('uri').'" data-pswp-type="'.$filetype.'" data-pswp-fallbackmessage="'.__('Download').'">';
-			$html .= '<img'.($isLazy ? ' loading="lazy"' : null).' class="'.$imgClass.'" src="'.record_image_url($file, 'fullsize').'" width="'.$dimensions['width'].'" height="'.$dimensions['height'].'" alt="'.htmlentities($file->getProperty('display_title')).'" />';
+			$html .= '<img loading="lazy" class="'.$imgClass.'" src="'.record_image_url($file, 'fullsize').'" width="'.$dimensions['width'].'" height="'.$dimensions['height'].'" alt="'.htmlentities($file->getProperty('display_title')).'" />';
 		$html .= '</a>';
 	}
 	
 	return $html;
 }
 
-function documentLinkMarkup($file, $linkClass='gallery-image', $imgClass='document', $isLazy = true, $itemprop='associatedMedia', $html = null)
+function documentLinkMarkup($file, $linkClass='gallery-image', $imgClass='document', $itemprop='associatedMedia', $html = null)
 {
 	if(!$file ) return null;
 	$dimensions = array(
@@ -469,7 +470,6 @@ function documentLinkMarkup($file, $linkClass='gallery-image', $imgClass='docume
 	$fileHref = !option('link_to_file_metadata') ? $file->getProperty('uri') : $file->getProperty('permalink');
 	if(boolval(option('curatescape_gallery_style') === 'gallery-inline-captions') && option('curatescape_lightbox_docs') === '0'){
 		$html .= '<div'.($itemprop ? ' itemprop='.$itemprop : null).' href="'.$fileHref.'" class="curatescape-inline-document file-'.$file->id.'">';
-			//$html .= '<img'.($isLazy ? ' loading="lazy"' : null).' class="'.$imgClass.'" src="'.record_image_url($file, 'fullsize').'" width="'.$dimensions['width'].'" height="'.$dimensions['height'].'" alt="'.htmlentities($file->getProperty('display_title')).'" />';
 			if(browserCategory() == 'chromium'){
 				$html .= '<iframe width="'.$dimensions['width'].'" height="'.$dimensions['height'].'" src="'.$file->getWebPath('original').'"></iframe>';
 			}elseif(browserCategory() == 'firefox'){
@@ -480,7 +480,7 @@ function documentLinkMarkup($file, $linkClass='gallery-image', $imgClass='docume
 		$html .= '</div>';
 	}else{
 		$html .= '<a'.($itemprop ? ' itemprop='.$itemprop : null).' href="'.$fileHref.'" class="pswp-item '.$linkClass.' square file-'.$file->id.'" data-pswp-width="'.$dimensions['width'].'" data-pswp-height="'.$dimensions['height'].'" data-pswp-src="'.$file->getProperty('uri').'" data-pswp-type="document" data-pswp-fallbackmessage="'.__('Download').'">';
-			$html .= '<img'.($isLazy ? ' loading="lazy"' : null).' class="'.$imgClass.'" src="'.record_image_url($file, 'fullsize').'" width="'.$dimensions['width'].'" height="'.$dimensions['height'].'" alt="'.htmlentities($file->getProperty('display_title')).'" />';
+			$html .= '<img loading="lazy" class="'.$imgClass.'" src="'.record_image_url($file, 'fullsize').'" width="'.$dimensions['width'].'" height="'.$dimensions['height'].'" alt="'.htmlentities($file->getProperty('display_title')).'" />';
 		$html .= '</a>';
 	}
 	return $html;

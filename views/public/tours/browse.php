@@ -13,7 +13,7 @@ echo head(array('title' => $pageTitle, 'bodyid'=>'tours','bodyclass' => 'browse'
 		<div class="tour">
 			<div class="tour-flex-container">
 				<?php if ($tourImage = $tour->getFileCustom()): ?>
-					<?php echo linkToTour($tour, $tourImage, array('class'=>'tour-image'), 'show'); ?>
+					<?php echo linkToTour($tour, 'show', $tourImage, array('class'=>'tour-image')); ?>
 				<?php endif; ?>
 				<div class="details">
 					<h2>
