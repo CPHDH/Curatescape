@@ -13,6 +13,10 @@ class Curatescape_ToursController extends Omeka_Controller_AbstractActionControl
 
 		$this->view->assign(compact('tags'));
 	}
+	public function indexAction()
+	{
+		$this->_helper->redirector->gotoUrl('/tours/browse');
+	}
 
 	public function browseAction()
 	{
