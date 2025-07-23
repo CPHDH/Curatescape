@@ -1,5 +1,6 @@
 <?php
-// @TODO: Subjects Browse, More User Roles
+// @TODO: Subjects Browse]
+// @TODO: More User Roles
 
 // Includes
 include 'functions.php';
@@ -81,6 +82,7 @@ class CuratescapePlugin extends Omeka_Plugin_AbstractPlugin{
 		'curatescape_file_markup'=> 1,
 		'curatescape_filter_text' => 1,
 		'curatescape_form_enforcement' => 1,
+		'curatescape_form_recommended_only'=> 0,
 		'curatescape_format_warnings' => 1,
 		'curatescape_gallery_style_tour' => 'gallery-inline-captions',
 		'curatescape_gallery_style'=> 'gallery-grid',

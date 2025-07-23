@@ -36,7 +36,7 @@ class Curatescape_View_Helper_HookConfigForm extends Zend_View_Helper_Abstract{
 			}
 		</style>
 
-		<p class="intro"><?php echo __('%1s adds a number of features to better support location-based narrative content. For documentation and other important information, visit %2s. For support, create an account at %3s.', _PLUGIN_NAME_, '<a href="https://curatescape.org" target="_blank">curatescape.org</a>', '<a href="https://forum.curatescape.org" target="_blank">forum.curatescape.org</a>');?></p>
+		<p class="intro"><?php echo __('%1s adds a number of features to better support location-based narrative content. For documentation and other important information, or to learn about %2s mobile apps for iOS and Android, visit %3s. For support, create an account at %4s.', _PLUGIN_NAME_, _PLUGIN_NAME_, '<a href="https://curatescape.org" target="_blank">curatescape.org</a>', '<a href="https://forum.curatescape.org" target="_blank">forum.curatescape.org</a>');?></p>
 
 		<fieldset>
 			<legend><?php echo __('Item Type Settings'); ?></legend>
@@ -122,6 +122,19 @@ class Curatescape_View_Helper_HookConfigForm extends Zend_View_Helper_Abstract{
 		</fieldset>
 
 		<fieldset>
+		<legend><?php echo __('Form Settings'); ?></legend>
+		<p><?php echo __('Use the following options to configure the item form for maximal compatibility with %s.', _PLUGIN_NAME_);?></p>
+			<!-- Filter Text-->
+			<?php echo $this->configFormCheckBox('curatescape_filter_text', 'Filter Text', __('If checked, use additional text filters when saving Items. %s elements will be filtered to remove unsupported HTML. Invalid markup from desktop word processing software will be removed from all Item elements. Strongly recommended for mobile app projects and generally recommended for all.', _CURATESCAPE_ITEM_TYPE_NAME_));?>
+			<!-- Format Warnings-->
+			<?php echo $this->configFormCheckBox('curatescape_format_warnings', 'Format Warnings', 'If checked, display a warning after the user has saved an Item that appears to violate the recommended formatting rules (for example, by including a new line within a Subject term). This option does not result in the modification of any content. Strongly recommended for mobile app projects and generally recommended for all.');?>
+			<!-- Form Enforcement -->
+			<?php echo $this->configFormCheckBox('curatescape_form_enforcement', 'Form Enforcement', __('If checked, the "Use HTML" and "Add Input" buttons in the Item form will be disabled for select elements in order to enforce the recommended formatting rules. Labels will be appended to indicate %s-recommended elements.', _PLUGIN_NAME_) );?>
+			<!-- Form Restrictions -->
+			<?php echo $this->configFormCheckBox('curatescape_form_recommended_only', 'Form Restrictions', __('If checked, only %s-recommended elements and item types will be allowed. All other elements and item types will be hidden from view. Strongly recommended for all mobile app projects, as well as classroom-based projects and others that may involve novice users.', _PLUGIN_NAME_) );?>
+		</fieldset>
+
+		<fieldset>
 			<legend><?php echo __('Output Settings'); ?></legend>
 			<p><?php echo __('Use the following options to customize the %s JSON and RSS output formats.', _PLUGIN_NAME_);?></p>
 
@@ -189,12 +202,6 @@ class Curatescape_View_Helper_HookConfigForm extends Zend_View_Helper_Abstract{
 			<?php echo $this->configFormCheckBox('curatescape_plugin_styles', 'Plugin Styles', __('If checked, use CSS styles provided by the %1s plugin. Turning this off may be useful for theme developers, but should otherwise remain checked.', _PLUGIN_NAME_) );?>
 			<!-- Theme Fixes -->
 			<?php echo $this->configFormCheckBox('curatescape_theme_fixes', 'Theme Fixes', __('If checked, use theme-specific CSS styles provided by the %1s plugin. These styles apply to select themes and only affect elements related to the %2s plugin.', _PLUGIN_NAME_, _PLUGIN_NAME_));?>
-			<!-- Filter Text-->
-			<?php echo $this->configFormCheckBox('curatescape_filter_text', 'Filter Text', __('If checked, use additional text filters when saving Items. %s elements will be filtered to remove unsupported HTML. Invalid markup from desktop word processing software will be removed from all Item elements. Required for mobile app projects and generally recommended for all.', _CURATESCAPE_ITEM_TYPE_NAME_));?>
-			<!-- Format Warnings-->
-			<?php echo $this->configFormCheckBox('curatescape_format_warnings', 'Format Warnings', 'If checked, display a warning after the user has saved an Item that appears to violate the recommended formatting rules (for example, by including a new line within a Subject term). This option does not result in the modification of any content. Required for mobile app projects and generally recommended for all.');?>
-			<!-- Form Enforcement -->
-			<?php echo $this->configFormCheckBox('curatescape_form_enforcement', 'Form Enforcement', __('If checked, the "Use HTML" and "Add Input" buttons in the Item form will be disabled for select elements in order to enforce the recommended formatting rules.') );?>
 			<!-- Omit Redundant -->
 			<?php echo $this->configFormCheckBox('curatescape_omit_redundant_elements', 'Omit Redundant', __('If checked, the Title and Subtitle elements for the Item will be omitted from the metadata table since they already appear as part of the page heading. Likewise, the Coverage element will be omitted since it already appears as part of the map caption (which consists of the Street Address and Access Information texts).', _CURATESCAPE_ITEM_TYPE_NAME_) );?>
 		</fieldset>

@@ -25,6 +25,11 @@ class Curatescape_View_Helper_HookAdminHead extends Zend_View_Helper_Abstract{
 		$this->itemFormCss();
 		$this->itemTypeFormJs();
 	}
+	private function itemTypeId(){
+		$itemType=get_record('ItemType', array('name'=>_CURATESCAPE_ITEM_TYPE_NAME_));
+		if(!$itemType) return null;
+		return $itemType->id;
+	}
 	private function modifiedFormElements()
 	{
 		return array(
@@ -108,7 +113,7 @@ class Curatescape_View_Helper_HookAdminHead extends Zend_View_Helper_Abstract{
 		if($modification == 'highlight'){
 			return array_map(
 				function($id) use($append){
-					return '#label_element_'.$id.$append;
+					return '#element-'.$id.$append;
 				}, array_column($elements, 'id'));
 		}
 		return array();
@@ -123,7 +128,7 @@ class Curatescape_View_Helper_HookAdminHead extends Zend_View_Helper_Abstract{
 	private function adminJs()
 	{
 		if(is_current_url('/admin/tours/')){
-			queue_js_file('browse', 'javascripts');
+			queue_js_file('tours', 'javascripts');
 		}
 	}
 	private function compatibilityCheck($warnings = array())
@@ -182,23 +187,50 @@ class Curatescape_View_Helper_HookAdminHead extends Zend_View_Helper_Abstract{
 	?>
 
 	<style>
-		/* add Curatescape-recommended to select labels (title attr added via js below) */
-		<?php echo implode(',', $this->cssSelectorsForModification('highlight','::after'));?>{
-			content:'<?php echo __('Curatescape');?>';
-			display: block;
-			font-weight: normal;
-			width: max-content;
-			background-color: #445a66;
-			color: #F5f5f5;
-			padding: 0 5px;
-			text-transform: uppercase;
-			font-size: 0.9rem;
+		#dublin-core-description{
+			visibility: hidden;
+			height: 0;
+			width: 0;
+			padding: 0;
+			margin: 0;
+			font-size: 0;
+			line-height: 0;
+			color: transparent;
+			position: absolute;
+			pointer-events: none;
 		}
-		@media (min-width: 768px) and (max-width: 991px) {
-			<?php echo implode(',', $this->cssSelectorsForModification('highlight','::after'));?>{
-				margin-bottom: 5px;
+		<?php if(option('curatescape_form_recommended_only')):?>
+			/* hide all but recommended */
+			#item-type option:not([value="<?php echo $this->itemTypeId();?>"],[value=""]){
+				display: none;
 			}
-		}
+			#item-type-metadata-metadata #type-metadata-form > div,
+			#dublin-core-metadata > .set > .field{
+				display: none;
+			}
+			<?php echo implode(',', $this->cssSelectorsForModification('highlight', '.field'));?>{
+				display: revert !important;
+			}
+		<?php endif;?>
+		<?php if(!option('curatescape_form_recommended_only')):?>
+			/* add Curatescape-recommended to select labels (title attr added via js below) */
+			<?php echo implode(',', $this->cssSelectorsForModification('highlight',' label[id^=label_element]::after'));?>{
+				content:'<?php echo __('Curatescape');?>';
+				display: block;
+				font-weight: normal;
+				width: max-content;
+				background-color: #445a66;
+				color: #F5f5f5;
+				padding: 0 5px;
+				text-transform: uppercase;
+				font-size: 0.9rem;
+			}
+			@media (min-width: 768px) and (max-width: 991px) {
+				<?php echo implode(',', $this->cssSelectorsForModification('highlight',' label[id^=label_element]::after'));?>{
+					margin-bottom: 5px;
+				}
+			}
+		<?php endif;?>
 		/* bigger text area for Story */
 		<?php echo implode(',', $this->cssSelectorsForModification('largertextarea'));?>{
 			min-height: 60vh;
@@ -218,29 +250,62 @@ class Curatescape_View_Helper_HookAdminHead extends Zend_View_Helper_Abstract{
 	</style>
 
 	<script defer>
+		const message = '<?php echo __('This form has been modified by the %s plugin. Only recommended elements and features are available. Default functionality may be restored in plugin settings by an admninistator.',_PLUGIN_NAME_);?>';
+	
 		const addTitleAttribute = ()=>{
-			document.querySelectorAll('<?php echo implode(',', $this->cssSelectorsForModification('highlight'));?>').forEach(el=>{
+			document.querySelectorAll('<?php echo implode(',', $this->cssSelectorsForModification('highlight',' label[id^=label_element]'));?>').forEach(el=>{
 				if(typeof el.attributes.title == 'undefined'){
 					el.setAttribute('title','<?php echo __('This element is recommended for %1s content.', _PLUGIN_NAME_);?>');
 				}
 			});
 		} 
-		const itemTypeFormCallback = (mutationList, observer) => {
+		const selectItemType = (value)=>{
+			let typeSelect = document.querySelector('select#item-type');
+			let changeEvent = new Event('change', { bubbles: true });
+			setTimeout(()=>{
+				if(typeSelect.value !== value){
+					typeSelect.value = value;
+					typeSelect.dispatchEvent(changeEvent)
+				}
+			},300)
+		}
+		const itemTypeFormCallback = (mutationList, observeItemType) => {
 			for (const mutation of mutationList) {
+				<?php if(!option('curatescape_form_recommended_only')):?>
 				if (mutation.type === "childList") {
 					addTitleAttribute();
 				}
+				<?php endif;?>
+				<?php if(option('curatescape_form_recommended_only')):?>
+				if (mutation.type === 'attributes' && mutation.attributeName === 'style') {
+					if(mutation.target.style.display !== 'none' && mutation.target.style.visibility !== 'hidden'){
+						selectItemType(<?php echo $this->itemTypeId();?>);
+						observeItemType.disconnect();
+					}
+				}
+				<?php endif;?>
 			}
-		};
+		}
+		const modifySetDescription = ()=>{
+			let description = document.querySelector('#dublin-core-description');
+			description.innerHTML = message; // visually hidden via css
+		}
 		addEventListener("DOMContentLoaded", (e) => {
+			const observeItemType = new MutationObserver(itemTypeFormCallback);
+			<?php if(!option('curatescape_form_recommended_only')):?>
 			addTitleAttribute(); // repeat with each change of the item type form
-			const observer = new MutationObserver(itemTypeFormCallback);
-			observer.observe(document.getElementById("item-type-metadata-metadata"),{
+			<?php endif;?>
+			<?php if(option('curatescape_form_recommended_only')):?>
+			modifySetDescription();
+			<?php endif;?>
+			observeItemType.observe(document.getElementById("item-type-metadata-metadata"),{
 				childList: true,
 				subtree: true,
+				attributes: true, 
+				attributeFilter: ['style'],
 			});
 		});
-		console.info('<?php echo __('The "Add Input" and "Use HTML" buttons for select elements have been disabled by the %1s plugin. This option can be disabled at %2s',_PLUGIN_NAME_, WEB_ROOT.'/admin/plugins/config?name='._PLUGIN_NAME_);?>');
+		console.info(message);
 	</script>
 
 	<?php

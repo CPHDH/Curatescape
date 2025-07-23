@@ -236,13 +236,13 @@ class Curatescape_View_Helper_HookAdminDashboard extends Zend_View_Helper_Abstra
 		}else{
 			$messageTitle = __('No Issues Detected');
 			$messageText = __('Great job. No recommended changes at this time.');
-			$messageIcon = svg('sparkles');
+			$messageIcon = svg('ribbon');
 			$messageClass = 'success';
 		}
 		$html .= '<section class="panel five columns curatescape-panel">';
 			$html .= '<h2>'.__('Content Audit').'</h2>';
 			$html .= '<h3>'.__('Results').'</h3>';
-			$html .= '<p>'.__('Content audit results apply only to published items that use the %s item type.', '<em>'._CURATESCAPE_ITEM_TYPE_NAME_.'</em>').'</p>';
+			$html .= '<p>'.__('Content audit results apply only to published items that use the %s item type. Results are cached for up to 24 hours or until an item record is added or modified.', '<em>'._CURATESCAPE_ITEM_TYPE_NAME_.'</em>').'</p>';
 			$html .= '<span class="highlight '.$messageClass.'">';
 				$html .= '<h3>'.$messageIcon.$messageTitle.'</h3>';
 				$html .= '<p>'.$messageText.'</p>';
@@ -273,7 +273,7 @@ class Curatescape_View_Helper_HookAdminDashboard extends Zend_View_Helper_Abstra
 			$html .= '<h3>'.__('Statistics').'</h3>';
 			$html .= $fileStats;
 			$html .= '<span class="highlight info">';
-				$html .= '<h3>'.svg('information-circle').__('Recommended Formats').'</h3>';
+				$html .= '<h3>'.svg('bookmark').__('Recommended Formats').'</h3>';
 				$html .= '<p>'.__('To maximize compatibility with all app platforms and web browsers, the following file formats are recommended:').'</p>';
 				$html .= '<ul>';
 					$html .= '<li>'.__('Images').': JPG or PNG</li>';
