@@ -1,6 +1,5 @@
 <?php
-// @TODO: Subjects Browse]
-// @TODO: More User Roles
+// @TODO: Maps
 
 // Includes
 include 'functions.php';
@@ -96,6 +95,10 @@ class CuratescapePlugin extends Omeka_Plugin_AbstractPlugin{
 		'curatescape_json_storage' => '300',
 		'curatescape_lightbox_docs' => 0,
 		'curatescape_lightbox' => 1,
+		'curatescape_map_fixed_center' => 0,
+		'curatescape_map_marker_color' => null,
+		'curatescape_map_marker_featured_color' => null,
+		'curatescape_map_marker_featured_star' => 0,
 		'curatescape_meta_image' => null,
 		'curatescape_meta_tags'=> 1,
 		'curatescape_metadata_browse' => 1,

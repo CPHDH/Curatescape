@@ -12,12 +12,14 @@ function itm($record, $elementName, $options = array())
 	return metadata($record, array('Item Type Metadata', $elementName), $options);
 }
 
-function svg($name){
-	// @todo: cacheable "sprite sheet"
+function svg($name, $path = null){
 	if(!$name) return null;
-	$path = _PLUGIN_DIR_."/views/shared/images/svg/$name.svg";
-	if(!file_exists($path)) return null;
-	return file_get_contents($path);
+	if(!$path){
+		$path = _PLUGIN_DIR_."/views/shared/images/svg/ionicons/";
+	}
+	$filepath = $path.$name.'.svg';
+	if(!file_exists($filepath)) return null;
+	return file_get_contents($filepath);
 }
 
 function isCuratescapeStory($record)
@@ -28,7 +30,7 @@ function isCuratescapeStory($record)
 	return true;
 }
 
-function normalizeTextBlocks($text, $output=null)
+function normalizeTextBlocks($text, $output = null)
 {
 	if(!$text) return null;
 	// breaks to paragraphs

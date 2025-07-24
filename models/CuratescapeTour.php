@@ -226,7 +226,7 @@ class CuratescapeTour extends Omeka_Record_AbstractRecord
 		$svg .= '</svg>';
 		return $svg;
 	}
-
+	
 	public function getTourItem($itemId)
 	{
 		$db = get_db();
@@ -277,8 +277,18 @@ class CuratescapeTour extends Omeka_Record_AbstractRecord
 		}
 		return normalizeTextBlocks(implode($separator, $colophonArray));
 	}
+	
+	public function tourItemActions($tourItem, $showOnMap = false, $html = null){
+		$readStoryLink = $this->linkToTourItem($tourItem, __('View %s', storyLabelString()), array('class'=>'button curatescape-button curatescape-tour-button', 'title'=>__('Read more about %s', dc($tourItem,'Title', array('no_filter'=>true)))), 'show');
+		$showOnMapButton = ($showOnMap && hasLocation($tourItem)) ? '<a role="button" class="button" data-item-id="'.$tourItem->id.'" href="javascript:void(0)">'.__('Show on Map').'</a>' : '';
+		$html .= '<div class="curatescape-tour-button-container">';
+		$html .= $readStoryLink;
+		$html .= $showOnMapButton;
+		$html .= '</div>';
+		return $html;
+	}
 
-	public function tourItemCaption($tourItem, $meta = array(), $mapShowButton = null)
+	public function tourItemCaption($tourItem, $meta = array())
 	{
 		if(!$tourItem) return null;
 		if($title=$this->tourItemTitleString($tourItem)){
@@ -288,12 +298,7 @@ class CuratescapeTour extends Omeka_Record_AbstractRecord
 			$meta[] = '<span class="file-text">'.strip_tags($text).'</span>';
 		}
 		$caption = implode(' | ', $meta);
-		if(hasLocation($tourItem)){
-			$mapShowButton = '<a role="button" class="button" data-item-id="'.$tourItem->id.'" href="javascript:void(0)">'.__('Show on Map').'</a>';
-		}
-		$actions = '<div class="curatescape-tour-button-container">'.$this->linkToTourItem($tourItem, __('View %s', storyLabelString()), array('class'=>'button curatescape-button curatescape-tour-button', 'title'=>__('Read more about %s', dc($tourItem,'Title', array('no_filter'=>true)))), 'show').$mapShowButton.'</div>';
-		
-		return $caption.$actions;
+		return $caption;
 	}
 
 	public function linkToTourItem($item, $text = null, $props = array())
@@ -310,25 +315,14 @@ class CuratescapeTour extends Omeka_Record_AbstractRecord
 		return link_to($item, 'show', $text, $props, array('tour'=>$this->id, 'index'=>$tourItemIndex));
 	}
 
-	public function tourGeolocationMap($html = null)
-	{
-		$height = option('geolocation_item_map_height') ? 'height='.option('geolocation_item_map_height') : null;
-		$range = array_column($this->getItems(), 'id');
-		if(!count($range)) return null;
-		setMinValuePluginOption('geolocation_per_page', count($range));
-		$map = apply_filters('curatescape_tour_map', get_view()->shortcodes('[geolocation range='.implode(',',$range).' '.$height.']'), array('range'=>$range, 'height'=>$height, 'tour'=>$this));
-		$html .= '<figure class="tour-items-map" data-tour-id="'.$this->id.'" data-tour-items="'.implode(',', $range).'">';
-			$html .=  $map;
-			$html .= '<figcaption class="curatescape-map-caption">';
-				$html .=  __('%1s Map', tourLabelString());
-			$html .= '</figcaption>';
-		$html .= '</figure>';
-		return $html;
-	}
-
-	public function tourItemsOutput($galleryType = 'gallery-inline-captions', $html = null)
+	public function tourItemsOutput($galleryType = 'gallery-inline-captions', $showOnMap = null, $html = null)
 	{
 		if($galleryType == 'none') return null;
+		if(!isset($showOnMap) && $galleryType = 'gallery-inline-captions'){
+			$showOnMap = true;
+		}else{
+			$showOnMap = false;
+		}
 		$html .= '<div class="curatescape-files">';
 			$html .= '<div id="pswp-container" class="curatescape-image-gallery '.$galleryType.'">';
 			foreach($this->Items as $i=>$tourItem){
@@ -338,7 +332,7 @@ class CuratescapeTour extends Omeka_Record_AbstractRecord
 					$imgDetails = preferredItemImageUrl($tourItem, 'fullsize', true);
 					$tourItemImage = '<img '.$loadingAttr.' alt="'.dc($tourItem,'Title', array('no_filter'=>true)).'" src="'.$imgDetails['url'].'" class="item-file" width="'.$imgDetails['width'].'" height="'.$imgDetails['height'].'"/>';
 					$html .= $this->linkToTourItem($tourItem, $tourItemImage, array('aria-label'=>__('Read more about %s', dc($tourItem,'Title', array('no_filter'=>true))),'class'=>'gallery-image '.$imgDetails['orientation'].' pswp-item', 'data-pswp-src'=>$imgDetails['url'], 'data-pswp-width'=>$imgDetails['width'], 'data-pswp-height'=>$imgDetails['height']), 'show');
-					$html .= '<figcaption>'.$this->tourItemCaption($tourItem).'</figcaption>';
+					$html .= '<figcaption>'.$this->tourItemCaption($tourItem).$this->tourItemActions($tourItem, $showOnMap).'</figcaption>';
 				$html .= '</figure>';
 			}
 			$html .= '</div>';

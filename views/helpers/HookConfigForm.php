@@ -99,6 +99,20 @@ class Curatescape_View_Helper_HookConfigForm extends Zend_View_Helper_Abstract{
 		</fieldset>
 
 		<fieldset>
+			<legend><?php echo __('Map Settings'); ?></legend>
+			<p><?php echo __('Use the following options to customize %s maps. Additional Map configurations can be found in <a target="_blank" href="%2s">Geolocation plugin settings</a>.', _PLUGIN_NAME_, '/admin/plugins/config?name=Geolocation');?></p>
+
+			<!-- Marker Color -->
+			<?php echo $this->configFormText('curatescape_map_marker_color', 'Marker Color', __('Enter an HTML color code to use for map markers.'), 'Example: #222222');?>
+			<!-- Featured Marker Color -->
+			<?php echo $this->configFormText('curatescape_map_marker_featured_color', 'Featured Marker Color', __('Enter an HTML color code to use for featured item map markers.'), 'Example: #222222');?>
+			<!-- Featured Marker Star Icon -->
+			<?php echo $this->configFormCheckBox('curatescape_map_marker_featured_star', 'Featured Marker Icon', 'If checked, use a star icon inside featured item map markers.');?>
+			<!-- Fixed Center-->
+			<?php echo $this->configFormCheckBox('curatescape_map_fixed_center', 'Fixed Center', 'If checked, the initial center of your multi-marker maps (for example on the homepage) will always adhere to the <a target="_blank" href="%s">Geolocation plugin settings</a> for default latitude, longitude, and zoom level. This option does not apply to tours, to single items, or to maps where the user has explicitly chosen a specific set of parameters (such as a subject term). This option may be useful if your map contains outliers beyond the expected bounds of your coverage area.', '/admin/plugins/config?name=Geolocation');?>
+		</fieldset>
+
+		<fieldset>
 			<legend><?php echo __('Homepage Settings'); ?></legend>
 			<p><?php echo __('Use the following options to display and customize %s content on the homepage.', _PLUGIN_NAME_);?></p>
 			<!-- Home Map -->

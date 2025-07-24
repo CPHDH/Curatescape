@@ -13,7 +13,10 @@ $tourItems = $tour->Items;
 		
 		<div class="tour-map">
 			<?php if(count($tourItems)):?>
-				<?php echo $tour->tourGeolocationMap();?>
+				<?php 
+				// echo get_view()->CuratescapeMap()->GeolocationShortcode(null, $tour, null, "tour-items-map");
+				echo get_view()->CuratescapeMap()->Multi();
+				?>
 			<?php endif;?>
 		</div>
 

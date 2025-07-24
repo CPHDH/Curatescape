@@ -16,7 +16,7 @@ class Curatescape_View_Helper_HookAdminHead extends Zend_View_Helper_Abstract{
 		'curatescape-echo' => '2.0'
 	);
 	const MINVERSIONPLUGINS = array(
-		'Geolocation' => '3.4', // @todo: change before release, awaiting PR
+		'Geolocation' => '3.3',
 	);
 	public function HookAdminHead($args){
 		$this->adminCss();

@@ -8,8 +8,9 @@ class Curatescape_View_Helper_JsonItem extends Zend_View_Helper_Abstract
 				'id' => $item->id,
 				'featured' => $item->featured,
 				'modified' => $item->modified,
-				'latitude' => $location[ 'latitude' ],
-				'longitude' => $location[ 'longitude' ],
+				'latitude' => $location['latitude'],
+				'longitude' => $location['longitude'],
+				'zoom' => $location['zoom_level'],
 				'title' => dc($item, 'Title', array('no_filter'=>true)),
 				'subtitle' => itm($item, 'Subtitle'),
 				'thumbnail' => preferredItemImageUrl($item, 'square_thumbnail'),
@@ -24,9 +25,9 @@ class Curatescape_View_Helper_JsonItem extends Zend_View_Helper_Abstract
 				$itemMetadata['accessinfo'] = itm($item, 'Access Information');
 				$itemMetadata['lede'] = itm($item, 'Lede');
 				$itemMetadata['website'] = itm($item, 'Official Website');
-				$itemMetadata[ 'related_resources' ] = $this->getRelatedResources($item);
-				$itemMetadata[ 'factoids' ] = $this->getFactoids($item);
-				$itemMetadata[ 'files' ] = $this->getFiles($item);
+				$itemMetadata['related_resources' ] = $this->getRelatedResources($item);
+				$itemMetadata['factoids'] = $this->getFactoids($item);
+				$itemMetadata['files'] = $this->getFiles($item);
 			}
 			return $itemMetadata;
 		}
