@@ -108,6 +108,8 @@ class Curatescape_View_Helper_HookConfigForm extends Zend_View_Helper_Abstract{
 			<?php echo $this->configFormText('curatescape_map_marker_featured_color', 'Featured Marker Color', __('Enter an HTML color code to use for featured item map markers.'), 'Example: #222222');?>
 			<!-- Featured Marker Star Icon -->
 			<?php echo $this->configFormCheckBox('curatescape_map_marker_featured_star', 'Featured Marker Icon', 'If checked, use a star icon inside featured item map markers.');?>
+			<!-- Subjects Select -->
+			<?php echo $this->configFormCheckBox('curatescape_map_subjects_select', 'Subjects Select', 'If checked, allow users to select from a dropdown of Subject terms to filter items on the global/homepage map. Note that this option is only recommended when all items have been given at least one Subject term. Use of the <a target="_blank" href="%s">Simple Vocab plugin</a> is strongly recommended.', 'https://omeka.org/classic/plugins/SimpleVocab/');?>
 			<!-- Fixed Center-->
 			<?php echo $this->configFormCheckBox('curatescape_map_fixed_center', 'Fixed Center', 'If checked, the initial center of your multi-marker maps (for example on the homepage) will always adhere to the <a target="_blank" href="%s">Geolocation plugin settings</a> for default latitude, longitude, and zoom level. This option does not apply to tours, to single items, or to maps where the user has explicitly chosen a specific set of parameters (such as a subject term). This option may be useful if your map contains outliers beyond the expected bounds of your coverage area.', '/admin/plugins/config?name=Geolocation');?>
 		</fieldset>

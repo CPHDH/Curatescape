@@ -29,7 +29,7 @@ class Curatescape_View_Helper_HookPublicContent extends Zend_View_Helper_Abstrac
 		?>
 		<div class="curatescape-home-content <?php echo $class;?>">
 			<?php echo $heading;?>
-			<?php get_view()->CuratescapeMap()->Multi($figcaption, true, "home", '/items/browse?output=mobile-json');?>
+			<?php get_view()->CuratescapeMap()->Multi($figcaption, true, "home", WEB_ROOT.'/items/browse?output=mobile-json');?>
 			<?php // echo get_view()->CuratescapeMap()->GeolocationShortcode(null, null, $figcaption, "home-items-map");?>
 		</div>
 		<?php

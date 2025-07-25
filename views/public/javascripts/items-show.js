@@ -1,4 +1,11 @@
 document.addEventListener('DOMContentLoaded', function() { // deferred
+	const wrap = (el, wrapper) =>{
+		// wrap element in tag
+		if (el && el.parentNode) {
+			el.parentNode.insertBefore(wrapper, el);
+			wrapper.appendChild(el);
+		}
+	}
 	// GEOLOCATION PLUGIN MAP TO FIGURE + FIGCAPTION
 	let geolocation_plugin_map = document.querySelector("#geolocation .geolocation-map");
 	let curatescape_map_caption = document.querySelector("figcaption.curatescape-map-caption");

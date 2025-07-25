@@ -13,6 +13,31 @@ const getVideoDimensions = (url) => {
 		});
 	});
 }
+const getCalculatedLinkColor = (opacity = 1)=>{
+	// try to derive light-on-dark color based on current theme 
+	let sampleElement = document.querySelector('a');
+	let colorSample = sampleElement ? window.getComputedStyle(sampleElement).color : false;
+	let colorLightened = colorSample ? 'hsl(from '+colorSample+' h s 70% / ' + opacity + ')' : false;
+	return colorLightened ? '--calculated-accent-color:'+colorLightened : '';
+}
+const browserString = ()=>{
+	// used to determine document viewer availability for HTML
+	// used to determine audio player characteristics for CSS
+	let ua = navigator.userAgent;
+	if(/Chrome/.test(ua)){
+		return 'chromium';
+	}
+	if(/Firefox/.test(ua)){
+		return 'firefox';
+	}
+	if(/iPad|iPhone|iPod/.test(ua)){
+		return 'ios-webkit';
+	}
+	if(/Safari/.test(ua)){
+		return 'macos-webkit';
+	}
+	return 'other';
+}
 const initLightbox = ()=>{
 	let data = [];
 	document.querySelectorAll('#pswp-container .pswp-item').forEach((item,i) => {

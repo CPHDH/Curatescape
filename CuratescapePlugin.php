@@ -99,6 +99,7 @@ class CuratescapePlugin extends Omeka_Plugin_AbstractPlugin{
 		'curatescape_map_marker_color' => null,
 		'curatescape_map_marker_featured_color' => null,
 		'curatescape_map_marker_featured_star' => 0,
+		'curatescape_map_subjects_select' => 0,
 		'curatescape_meta_image' => null,
 		'curatescape_meta_tags'=> 1,
 		'curatescape_metadata_browse' => 1,

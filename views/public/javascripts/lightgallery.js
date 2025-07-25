@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function() { // deferred
 	const lightgallery = document.querySelector('.lightgallery');
 	if(lightgallery){
 		lightgallery.addEventListener('lgAfterOpen', () => {

@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function() { // deferred
 	// FIX DOUBLE ACTIVE CLASS ON SECONDARY NAVIGATION
 	let secondary_nav_actives = document.querySelectorAll(".active .curatescape_secondary-nav-fix-js");
 	if (secondary_nav_actives.length) {

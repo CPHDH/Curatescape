@@ -1,15 +1,27 @@
 <?php
 function dc($record, $elementName, $options = array())
 {
-	if(!$record || !$elementName) return null;
 	return metadata($record, array('Dublin Core', $elementName), $options);
 }
 
 function itm($record, $elementName, $options = array())
 {
-	if(!$record || !$elementName) return null;
 	if(!element_exists('Item Type Metadata', $elementName)) return null;
 	return metadata($record, array('Item Type Metadata', $elementName), $options);
+}
+
+function flexOption($optionName = null, $fallback = null, $themeEquivalent = false)
+{	
+	if($themeEquivalent == true){
+		return !empty(get_theme_option($optionName)) ? get_theme_option($optionName) : flexOption($optionName, $fallback, false);
+	}
+	return !empty(get_option($optionName)) ? get_option($optionName) : $fallback;
+}
+
+function setOptionMinValue($optionName, $minValue)
+{
+	if(!is_numeric(get_option($optionName))) return null;
+	return set_option($optionName, max((int)get_option($optionName), (int)$minValue));
 }
 
 function svg($name, $path = null){
@@ -241,32 +253,26 @@ function activeSort($objects, $sort = array())
 	return $objects;
 }
 
-function availableTourItemsJSON()
-{
-		$db = get_db();
-		$itemTable = $db->getTable( 'Item' );
-		$items = $itemTable->fetchObjects(
-			<<<SQL
-			SELECT i.* FROM {$db->prefix}items i 
-			ORDER BY i.modified DESC
-			SQL
-		);
-		foreach($items as $index => $item) {
-			if(!hasLocation($item) || !isCuratescapeStory($item)) continue;
-			$items[$index]['label'] = dc( $item,'Title');
-		}
-		return json_encode($items);
+function elementValuesById($elementId){	
+	$db = get_db();
+	$prefix=$db->prefix;
+	$q = $db->query(
+		<<<SQL
+		SELECT TRIM(et.text) as text, count(*) as total, LOWER(LEFT(text, 1)) as letter
+		FROM {$prefix}items as i
+		INNER JOIN {$prefix}element_texts as et ON i.id = et.record_id
+		WHERE public = 1 AND element_id = {$elementId}
+		GROUP BY text
+		ORDER BY text ASC
+		SQL
+	);
+	$values = $q->fetchAll();
+	return $values;
 }
 
 function hasLocation($item)
 {
 	return boolval( get_db()->getTable( 'Location' )->findLocationByItem( $item, true ) );
-}
-
-function setMinValuePluginOption($optionName, $minValue)
-{
-	if(!is_numeric(get_option($optionName))) return null;
-	return set_option($optionName, max((int)get_option($optionName), (int)$minValue));
 }
 
 function altLabelIsValid($text)
@@ -441,8 +447,8 @@ function mediaLinkMarkup($file, $filetype, $linkClass='gallery-image', $imgClass
 {
 	if(!$file || !$filetype) return null;
 	$dimensions = array(
-		'height' => round(option('fullsize_constraint') * 9/16),
-		'width' => option('fullsize_constraint'),
+		'height' => round(flexOption('fullsize_constraint', 200) * 9/16),
+		'width' => flexOption('fullsize_constraint', 200),
 	); // 16:9 placeholder/fallback dimensions (see JS)
 	$fileHref = !option('link_to_file_metadata') ? $file->getProperty('uri') : $file->getProperty('permalink');
 	if(boolval(option('curatescape_gallery_style') === 'gallery-inline-captions')){
@@ -466,8 +472,8 @@ function documentLinkMarkup($file, $linkClass='gallery-image', $imgClass='docume
 {
 	if(!$file ) return null;
 	$dimensions = array(
-		'height' => option('fullsize_constraint'),
-		'width' => option('fullsize_constraint'),
+		'height' => flexOption('fullsize_constraint', 200),
+		'width' => flexOption('fullsize_constraint', 200),
 	); // 16:9 placeholder/fallback dimensions (see JS)
 	$fileHref = !option('link_to_file_metadata') ? $file->getProperty('uri') : $file->getProperty('permalink');
 	if(boolval(option('curatescape_gallery_style') === 'gallery-inline-captions') && option('curatescape_lightbox_docs') === '0'){

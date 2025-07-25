@@ -44,11 +44,9 @@ class Curatescape_View_Helper_HookPublicHead extends Zend_View_Helper_Abstract{
 				queue_css_file('gallery-slides', 'all', false, 'css', get_plugin_ini(_PLUGIN_NAME_, 'version'));
 			}
 		}
-		// JS global
-		queue_js_file('global', 'javascripts');
 		// JS tours/show
 		if(is_current_url('/tours/show')){
-			queue_js_file('tour', 'javascripts', array('defer'=>'defer'));
+			// queue_js_file('geolocation-map-tour', 'javascripts', array('defer'=>'defer'));
 			if(option('curatescape_gallery_style_tour') !== 'gallery-inline-captions'){
 				$this->photoSwipeModule();
 			}
@@ -67,7 +65,7 @@ class Curatescape_View_Helper_HookPublicHead extends Zend_View_Helper_Abstract{
 			}
 			if($params = getQueryParams()){
 				if(isset($params['tour']) && isset($params['index'])){
-					queue_js_file('curatescape-tour-nav', 'javascripts', array('defer'=>'defer'));
+					$this->tourNavModule();
 				}
 			}
 		}
@@ -80,36 +78,53 @@ class Curatescape_View_Helper_HookPublicHead extends Zend_View_Helper_Abstract{
 	private function lightGallerySetup()
 	{
 		if(!get_theme_option('lightgallery_caption')){
-			set_theme_option('lightgallery_caption', 'none'); // @todo: add title/description option
+			set_theme_option('lightgallery_caption', 'none'); // @todo: add title/description option?
 		}
 		queue_lightgallery_assets();
 		queue_js_file('lightgallery', 'javascripts', array('defer'=>'defer'));
 	}
 
+	private function tourNavModule()
+	{
+	?>
+	<!-- CuratescapeTourNav (Curatescape plugin) -->
+	<script type="module" src="<?php echo src('curatescape-tour-nav.js', 'javascripts');?>"></script>
+	<?php
+	}
+
 	private function photoSwipeModule()
 	{
 	?>
-
 	<!-- PhotoSwipe (Curatescape plugin) -->
 	<link rel="stylesheet" href="<?php echo src('photoswipe.css', 'javascripts/PhotoSwipe/dist');?>">
-	<script defer type="module" src="<?php echo src('photoswipe.js', 'javascripts');?>"></script>
-
+	<script type="module" src="<?php echo src('photoswipe.js', 'javascripts');?>"></script>
 	<?php
 	}
 	
-	private function metaImage($url = ''){
-		if(option('curatescape_meta_image') && strlen(option('curatescape_meta_image')) > 6){
+	private function metaImage(){
+		if(get_option('curatescape_meta_image') !== null){
 			// string/url (plugin option)
-			$url = trim(option('curatescape_meta_image'));
-		}elseif(get_theme_option('curatescape_meta_image') && strlen(get_theme_option('curatescape_meta_image')) > 5){
-			// theme upload (available for theme developers)
-			$url = WEB_ROOT.'/files/theme_uploads/'.trim(get_theme_option('curatescape_meta_image')); 
-		}elseif(get_theme_option('custom_meta_img') && strlen(get_theme_option('custom_meta_img')) > 5){
-			// theme upload (legacy)
-			$url = WEB_ROOT.'/files/theme_uploads/'.trim(get_theme_option('custom_meta_img')); 
+			return $this->validateMetaImage(
+				trim(option('curatescape_meta_image')));
 		}
+		if(get_theme_option('curatescape_meta_image') !== null){
+			// theme upload (available for theme developers)
+			return $this->validateMetaImage(
+				WEB_ROOT.'/files/theme_uploads/'.
+				trim(get_theme_option('curatescape_meta_image'))); 
+		}
+		if(get_theme_option('custom_meta_img') !== null){
+			// theme upload (legacy)
+			return $this->validateMetaImage(
+				WEB_ROOT.'/files/theme_uploads/'.
+				trim(get_theme_option('custom_meta_img'))); 
+		}
+		return '';
+	}
+
+	private function validateMetaImage($url = null)
+	{
 		if(!$url) return '';
-		// validate/sanitize
 		$url = html_escape(filter_var($url, FILTER_SANITIZE_URL));
 		if(substr($url,0,4) !== "http" || !allowedExtensionImg($url)){
 			return '';
@@ -117,7 +132,6 @@ class Curatescape_View_Helper_HookPublicHead extends Zend_View_Helper_Abstract{
 		if(filter_var($url, FILTER_VALIDATE_URL, FILTER_FLAG_PATH_REQUIRED) === FALSE) {
 			return '';
 		}
-		return $url;
 	}
 
 	private function metaTags($args)
@@ -158,7 +172,6 @@ class Curatescape_View_Helper_HookPublicHead extends Zend_View_Helper_Abstract{
 			$metaImg = $this->metaImage();
 		}
 	?>
-
 	<!-- Meta Tags (Curatescape plugin) -->
 	<meta property="og:site_name" content="<?php echo option('site_title');?>">
 	<meta property="og:type" content="website" />
@@ -171,7 +184,6 @@ class Curatescape_View_Helper_HookPublicHead extends Zend_View_Helper_Abstract{
 	<meta property="twitter:title" content="<?php echo strip_formatting($metaTitle);?>" />
 	<meta property="twitter:description" content="<?php echo snippet($metaText, 0, 500);?>" />
 	<meta property="twitter:image" content="<?php echo $metaImg;?>" />
-
 	<?php 
 	}
 	
@@ -181,18 +193,15 @@ class Curatescape_View_Helper_HookPublicHead extends Zend_View_Helper_Abstract{
 	$iosIdentifier = trim(strip_tags($iosIdentifier));
 	if(strlen($iosIdentifier) <= 7) return null;
 	?>
-	
 	<!-- App Store Banner (Curatescape plugin) -->
 	<meta name="apple-itunes-app" content="app-id=<?php echo $iosIdentifier;?>">
-	
 	<?php
 	}
-	
+
 	private function gaTags($ga)
 	{
 	if(!$ga) return null;
 	?>
-
 	<!-- Google Analytics (Curatescape plugin) -->
 	<script async src="https://www.googletagmanager.com/gtag/js?id=<?php echo $ga;?>"></script>
 	<script>
@@ -201,7 +210,6 @@ class Curatescape_View_Helper_HookPublicHead extends Zend_View_Helper_Abstract{
 		gtag('js', new Date());
 		gtag('config', '<?php echo $ga;?>');
 	</script>
-
 	<?php
 	}
 }

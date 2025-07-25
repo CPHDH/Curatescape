@@ -37,6 +37,7 @@ class Curatescape_View_Helper_HookConfig extends Zend_View_Helper_Abstract{
 		set_option('curatescape_map_marker_color', $_POST['curatescape_map_marker_color']);
 		set_option('curatescape_map_marker_featured_color', $_POST['curatescape_map_marker_featured_color']);
 		set_option('curatescape_map_marker_featured_star', $_POST['curatescape_map_marker_featured_star']);
+		set_option('curatescape_map_subjects_select', $_POST['curatescape_map_subjects_select']);
 		set_option('curatescape_meta_image', $_POST['curatescape_meta_image']);
 		set_option('curatescape_meta_tags', $_POST['curatescape_meta_tags']);
 		set_option('curatescape_metadata_browse', $_POST['curatescape_metadata_browse']);

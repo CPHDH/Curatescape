@@ -13,21 +13,16 @@ class Curatescape_View_Helper_CuratescapeMap extends Zend_View_Helper_Abstract{
 		if(!$figcaption){
 			$figcaption = $this->defaultFigcaption();
 		}
-		$basemap = (get_option('geolocation_basemap')) ? get_option('geolocation_basemap') : 'CartoDB.Voyager';
-		$height = (get_option('geolocation_item_map_height')) ? get_option('geolocation_item_map_height') : 0;
-		$mapboxMapId = (get_option('geolocation_mapbox_map_id')) ? get_option('geolocation_mapbox_map_id') : '';
-		$mapboxAccessToken = (get_option('geolocation_mapbox_access_token')) ? get_option('geolocation_mapbox_access_token') : '';
-		$color = (get_option('curatescape_map_marker_color')) ? get_option('curatescape_map_marker_color') : '#222';
 		?>
 		<figure id="curatescape-map-figure" class="<?php echo $class;?>"
 			data-json-source="<?php echo $jsonSource;?>"
-			data-primary-layer="<?php echo $basemap;?>"
+			data-primary-layer="<?php echo flexOption('geolocation_basemap','CartoDB.Voyager');?>"
 			data-secondary-layer=""
-			data-mapbox-id="<?php echo $mapboxMapId;?>"
-			data-mapbox-token="<?php echo $mapboxAccessToken;?>"
+			data-mapbox-id="<?php echo flexOption('geolocation_mapbox_map_id', '');?>"
+			data-mapbox-token="<?php echo flexOption('geolocation_mapbox_access_token', '');?>"
 			data-root-url="<?php echo WEB_ROOT;?>"
-			data-color="<?php echo $color;?>"
-			data-height="<?php echo $height;?>"
+			data-color="<?php echo flexOption('curatescape_map_marker_color', '#222');?>"
+			data-height="<?php echo flexOption('geolocation_item_map_height', 0);?>"
 		>
 			<div class="curatescape-map">
 				<div id="curatescape-map-canvas"></div>
@@ -45,38 +40,26 @@ class Curatescape_View_Helper_CuratescapeMap extends Zend_View_Helper_Abstract{
 		if(!$figcaption){
 			$figcaption = $this->defaultFigcaption();
 		}
-		$fixedCenter = (get_option('geolocation_default_latitude')) ? get_option('geolocation_default_latitude') : '';
-		$pluginlat = (get_option('geolocation_default_latitude')) ? get_option('geolocation_default_latitude') : '';
-		$pluginlon = (get_option('geolocation_default_longitude')) ? get_option('geolocation_default_longitude') : '';
-		$zoom = (get_option('geolocation_default_zoom_level')) ? get_option('geolocation_default_zoom_level') : 12;
-		$primary = (get_option('geolocation_basemap')) ? get_option('geolocation_basemap') : 'CartoDB.Voyager';
-		$cluster = (get_option('geolocation_cluster')) ? get_option('geolocation_cluster') : false; 
-		$height = (get_option('geolocation_item_map_height')) ? get_option('geolocation_item_map_height') : 0;
-		$mapboxMapId = (get_option('geolocation_mapbox_map_id')) ? get_option('geolocation_mapbox_map_id') : '';
-		$mapboxAccessToken = (get_option('geolocation_mapbox_access_token')) ? get_option('geolocation_mapbox_access_token') : '';
-		$color = (get_option('curatescape_map_marker_color')) ? get_option('curatescape_map_marker_color') : '#222';
-		$colorFeatured = (get_option('curatescape_map_marker_featured_color')) ? get_option('curatescape_map_marker_featured_color') : '#222';
-		$star = (get_option('curatescape_map_marker_featured_star')) ? get_option('curatescape_map_marker_featured_star') : 0;
 		?>
 		<figure id="curatescape-map-figure" class="<?php echo $class;?>"
 			data-json-source="<?php echo $jsonSource;?>"
-			data-primary-layer="<?php echo $primary;?>"
+			data-primary-layer="<?php echo flexOption('geolocation_basemap','CartoDB.Voyager');?>"
 			data-secondary-layer=""
-			data-lat="<?php echo $pluginlat;?>"
-			data-lon="<?php echo $pluginlon;?>"
-			data-zoom="<?php echo $zoom;?>"
-			data-mapbox-id="<?php echo $mapboxMapId;?>"
-			data-mapbox-token="<?php echo $mapboxAccessToken;?>"
-			data-cluster="<?php echo $cluster;?>"
+			data-lat="<?php echo flexOption('geolocation_default_latitude', '');?>"
+			data-lon="<?php echo flexOption('geolocation_default_longitude', '');?>"
+			data-zoom="<?php echo flexOption('geolocation_default_zoom_level', 12);?>"
+			data-mapbox-id="<?php echo flexOption('geolocation_mapbox_map_id', '');?>"
+			data-mapbox-token="<?php echo flexOption('geolocation_mapbox_access_token', '');?>"
+			data-cluster="<?php echo flexOption('geolocation_cluster', false);?>"
+			data-height="<?php echo flexOption('geolocation_item_map_height', 0);?>"
 			data-root-url="<?php echo WEB_ROOT;?>"
 			data-fitbounds-label="<?php echo __('Zoom to fit all');?>" 
-			data-color="<?php echo $color;?>"
-			data-featured-color="<?php echo $colorFeatured;?>"
-			data-featured-star="<?php echo $star;?>"
-			data-fixed-center="<?php echo $isGlobal ? $fixedCenter : 0;?>"
-			data-height="<?php echo $height;?>"
+			data-color="<?php echo $color = flexOption('curatescape_map_marker_color', '#222');?>"
+			data-featured-color="<?php echo flexOption('curatescape_map_marker_featured_color', $color);?>"
+			data-featured-star="<?php echo flexOption('curatescape_map_marker_featured_star', 0);?>"
+			data-fixed-center="<?php echo $isGlobal ? flexOption('curatescape_map_fixed_center', 0) : 0;?>"
 		>
-			<?php echo $isGlobal ? $this->subjectSelect() : null;?>
+			<?php echo $isGlobal && get_option('curatescape_map_subjects_select') ? $this->subjectSelect() : null;?>
 			<div class="curatescape-map">
 				<div id="curatescape-map-canvas"></div>
 			</div>
@@ -95,8 +78,9 @@ class Curatescape_View_Helper_CuratescapeMap extends Zend_View_Helper_Abstract{
 		if($tour){
 			$range = array_column($tour->getItems(), 'id');
 		}
+		setOptionMinValue('geolocation_per_page', count($range));
 		$map = get_view()->shortcodes('[geolocation range='.implode(',',$range).' '.$height.']');
-		$html .= '<figure id="curatescape-map-figure" class="'.$class.'">';
+		$html .= '<figure id="curatescape-map-figure" class="'.$class.'" data-range="'.implode(',',$range).'">';
 			$html .=  $map;
 			$html .= '<figcaption class="curatescape-map-caption">';
 				$html .= $figcaption;
@@ -104,10 +88,17 @@ class Curatescape_View_Helper_CuratescapeMap extends Zend_View_Helper_Abstract{
 		$html .= '</figure>';
 		return $html;
 	}
-	private function subjectSelect()
+	private function subjectSelect($html = null)
 	{
-		// @todo...
-		return null;
+		$subjects = elementValuesById('49');
+		if(!count($subjects)) return null;
+		$html .= '<select hidden>';
+		$html .= '<option value="">'.__('All %s', storyLabelString('plural')).': '.count($subjects).'</option>';
+		foreach($subjects as $subject){
+		  $html .= '<option value="'.strip_tags(urlencode($subject['text'])).'">'.strip_tags($subject['text']).': '.$subject['total'].'</option>';
+		}
+		$html .= '</select>';
+		return $html;
 	}
 	private function defaultFigcaption()
 	{
@@ -135,7 +126,7 @@ class Curatescape_View_Helper_CuratescapeMap extends Zend_View_Helper_Abstract{
 			if($addlParams = getQueryParams()){
 				$params = array_merge($addlParams, $params);
 			}
-			return html_escape(url().'?'.http_build_query($params));
+			return WEB_ROOT.html_escape(url().'?'.http_build_query($params));
 		}
 		return null;
 	}

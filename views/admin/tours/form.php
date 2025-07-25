@@ -17,6 +17,22 @@ $strings = array( // translatable strings used in js
 	'title_remove' =>__('Remove'),
 	'title_edit' =>__('Edit'),
 );
+function availableTourItemsJSON()
+{
+	$db = get_db();
+	$itemTable = $db->getTable( 'Item' );
+	$items = $itemTable->fetchObjects(
+		<<<SQL
+		SELECT i.* FROM {$db->prefix}items i 
+		ORDER BY i.modified DESC
+		SQL
+	);
+	foreach($items as $index => $item) {
+		if(!hasLocation($item) || !isCuratescapeStory($item)) continue;
+		$items[$index]['label'] = dc( $item,'Title');
+	}
+	return json_encode($items);
+}
 ?>
 
 <section class="seven columns alpha" id="edit-form">
