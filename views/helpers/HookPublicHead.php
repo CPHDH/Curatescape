@@ -65,7 +65,7 @@ class Curatescape_View_Helper_HookPublicHead extends Zend_View_Helper_Abstract{
 			}
 			if($params = getQueryParams()){
 				if(isset($params['tour']) && isset($params['index'])){
-					$this->tourNavModule();
+					$this->curatescapeTourNavModule();
 				}
 			}
 		}
@@ -84,7 +84,7 @@ class Curatescape_View_Helper_HookPublicHead extends Zend_View_Helper_Abstract{
 		queue_js_file('lightgallery', 'javascripts', array('defer'=>'defer'));
 	}
 
-	private function tourNavModule()
+	private function curatescapeTourNavModule()
 	{
 	?>
 	<!-- CuratescapeTourNav (Curatescape plugin) -->

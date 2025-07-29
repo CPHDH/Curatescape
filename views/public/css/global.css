@@ -330,6 +330,10 @@ table.curatescape-additional-files td span.type{
 	margin: 0 auto;
 }
 /* map */
+#curatescape-map-canvas{
+	width: 100%;
+	min-height: 400px;
+}
 #geolocation figure{
 	margin: 0;
 	padding: 0;
@@ -344,6 +348,24 @@ table.curatescape-additional-files td span.type{
 	width: 100%;
 	clear: both;
 }
+@media screen{
+	.leaflet-control-layers-base{
+		display: flex;
+		flex-direction: column;
+	}
+	.leaflet-control-layers-base input,
+	.leaflet-control-layers-base label{
+		margin: 0;
+	}
+	.leaflet-control-layers-base label:first-child{
+		margin-bottom: 4px;
+	}
+	.leaflet-control-layers-list{
+		padding: 0 !important;
+		border: 0 none transparent !important;
+	}
+}
+
 /* app buttons shortcode */
 .curatescape-shortcode-app-buttons-container{
 	container-name: appbuttonscontainer; /* <== Container */

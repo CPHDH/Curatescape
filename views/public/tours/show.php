@@ -10,31 +10,30 @@ $tourItems = $tour->Items;
 		<div class="tour-description">
 			<?php echo normalizeTextBlocks(metadata('tour', 'Description'));?>
 		</div>
-		
 		<div class="tour-map">
 			<?php if(count($tourItems)):?>
 				<?php 
-				// echo get_view()->CuratescapeMap()->GeolocationShortcode(null, $tour, null, "tour-items-map");
-				echo get_view()->CuratescapeMap()->Multi();
+				if(option('curatescape_map_mirror_geolocation')){
+					echo get_view()->CuratescapeMap()->GeolocationShortcode(null, $tour, null, "tour-items-map");
+				}
+				else{
+					echo get_view()->CuratescapeMap()->Multi();
+				}
 				?>
 			<?php endif;?>
 		</div>
-
 		<div class="tour-items">
 			<?php if(count($tourItems)):?>
-
-				<?php if($tourItemsDiplay = $tour->tourItemsOutput(option('curatescape_gallery_style_tour'))):?>
+				<?php if($tourItemsDiplay = $tour->tourItemsOutput(option('curatescape_gallery_style_tour'),!option('curatescape_map_mirror_geolocation'))):?>
 					<h2><?php echo storyLabelString(true);?> 
 						<span class="tour-item-count" aria-label="<?php echo __('(%s total)', count($tourItems));?>">
 							<?php echo count($tourItems);?>
 						</span>
 					</h2>
-
 					<div class="tour-items-browse">
 						<?php echo $tourItemsDiplay;?>
 					</div>
 				<?php endif;?>
-
 			<?php else:?>
 				<p class="tour-no-items">
 					<?php echo __('This %1s does not have any %2s.', strtolower(tourLabelString()), strtolower(storyLabelString(true)));?>

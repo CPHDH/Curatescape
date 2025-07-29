@@ -217,6 +217,5 @@ class CuratescapeTourNav extends HTMLElement {
 }
 
 document.addEventListener('DOMContentLoaded', function() { 
-	// register and initialize component
 	customElements.define('curatescape-tour-nav', CuratescapeTourNav);
 });

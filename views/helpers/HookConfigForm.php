@@ -25,7 +25,7 @@ class Curatescape_View_Helper_HookConfigForm extends Zend_View_Helper_Abstract{
 			code{
 				font-size: .9em;
 			}
-			.field:last-child::after {
+			fieldset::after {
 			  content: '';
 			  height: 1lh;
 			  display: flex;
@@ -63,7 +63,13 @@ class Curatescape_View_Helper_HookConfigForm extends Zend_View_Helper_Abstract{
 			<!-- Repeat Story Header -->
 			<?php echo $this->configFormCheckBox('curatescape_inner_heading', 'Repeat Story Header', 'If checked, the Title and Subtitle will be displayed above the Lede, even if they have already appeared on the page. This might be useful for themes that display the Item files at the top of the page.');?>
 			<!-- Byline -->
-			<?php echo $this->configFormSelect('curatescape_byline', 'Byline Location', 'Select the location where the formatted byline should be displayed.', array( 'after_lede' => __('After Lede (default)'), 'before_lede' => __('Before Lede'), 'none' => __('None (do not display)') ) );?>
+			<?php echo $this->configFormSelect('curatescape_byline', 'Byline Location', 'Select the location where the formatted byline should be displayed.',
+				array(
+				'after_lede' => __('After Lede (default)'),
+				'before_lede' => __('Before Lede'),
+				'none' => __('None (do not display)')
+				)
+			);?>
 			<!-- Inline Factoids -->
 			<?php echo $this->configFormCheckBox('curatescape_inline_factoids', 'Inline Factoids', 'If checked, Factoids will be displayed within the main text. If the main text is more than five paragraphs in length, Factoids will be displayed after the third paragraph. Factoids are always wrapped in an &lt;aside&gt; tag for optimal accessibility.');?>
 			<!-- Factoid Label -->
@@ -75,7 +81,15 @@ class Curatescape_View_Helper_HookConfigForm extends Zend_View_Helper_Abstract{
 			<p><?php echo __('Use the following options to customize the display of files on Item and File records.');?></p>
 
 			<!-- Media Style-->
-			<?php echo $this->configFormSelect('curatescape_gallery_style', 'Media Gallery', 'Select the style to be used for displaying images and other media files. Each style will adapt to the available space as determined by the theme layout and browser dimensions. May not be supported by all themes.', array( 'gallery-grid' => __('Thumbnail Grid (default)'), 'gallery-inline-captions' => __('Inline Captions'), 'gallery-slides' => __('Slides'), 'gallery-table' => __('Files Table'), 'none' => __('None (use theme)') ) );?>
+			<?php echo $this->configFormSelect('curatescape_gallery_style', 'Media Gallery', 'Select the style to be used for displaying images and other media files. Each style will adapt to the available space as determined by the theme layout and browser dimensions. May not be supported by all themes.', 
+				array(
+				'gallery-grid' => __('Thumbnail Grid (default)'),
+				'gallery-inline-captions' => __('Inline Captions'),
+				'gallery-slides' => __('Slides'),
+				'gallery-table' => __('Files Table'), 
+				'none' => __('None (use theme)')
+				)
+			);?>
 			<!-- Image Lightbox-->
 			<?php echo $this->configFormCheckBox('curatescape_lightbox', 'Image Lightbox', 'If checked, image links will open in lightbox overlay (PhotoSwipe). If unchecked, image links will open to either the file or the file record, based on site settings. Requires use of plugin media styles, selected above.');?>
 			<!-- Docs in Lightbox-->
@@ -93,32 +107,92 @@ class Curatescape_View_Helper_HookConfigForm extends Zend_View_Helper_Abstract{
 			<!-- Alt Tour Name (Plural) -->
 			<?php echo $this->configFormText('curatescape_alt_tour_name_p', 'Alternate Name Plural', __('Enter the plural form of your alternate display name for Tours. You may also need to adjust the corresponding link label in <a href="%s" target="_blank">Navigation settings</a>.', admin_url('appearance/edit-navigation')), 'Example: Tours');?>
 			<!-- Thumb Style-->
-			<?php echo $this->configFormSelect('curatescape_tour_thumb_style', 'Tour Thumbnail', 'Select the style of thumbnail image to use when browsing tours. The composite style combines the first image from the first four Items on the Tour to create a mini-collage.', array( 'composite' => __('Composite (default)'), 'first-image' => __('First image from first tour stop'), 'none' => __('None') ) );?>
+			<?php echo $this->configFormSelect('curatescape_tour_thumb_style', 'Tour Thumbnail', 'Select the style of thumbnail image to use when browsing tours. The composite style combines the first image from the first four Items on the Tour to create a mini-collage.', 
+				array(
+				'composite' => __('Composite (default)'),
+				'first-image' => __('First image from first tour stop'),
+				'none' => __('None')
+				) 
+			);?>
 			<!-- Tour Item Gallery Style-->
-			<?php echo $this->configFormSelect('curatescape_gallery_style_tour', 'Tour Item Gallery', 'Select the style to be used for displaying tour items in list form. Each style will adapt to the available space as determined by the theme layout and browser dimensions.', array( 'gallery-inline-captions' => __('Inline Captions (default)'), 'gallery-grid' => __('Thumbnail Grid'), 'none' => __('None') ) );?>
+			<?php echo $this->configFormSelect('curatescape_gallery_style_tour', 'Tour Item Gallery', 'Select the style to be used for displaying tour items in list form. Each style will adapt to the available space as determined by the theme layout and browser dimensions.', 
+				array(
+				'gallery-inline-captions' => __('Inline Captions (default)'),
+				'gallery-grid' => __('Thumbnail Grid'),
+				'none' => __('None') 
+				)
+			);?>
 		</fieldset>
 
 		<fieldset>
 			<legend><?php echo __('Map Settings'); ?></legend>
 			<p><?php echo __('Use the following options to customize %s maps. Additional Map configurations can be found in <a target="_blank" href="%2s">Geolocation plugin settings</a>.', _PLUGIN_NAME_, '/admin/plugins/config?name=Geolocation');?></p>
-
-			<!-- Marker Color -->
-			<?php echo $this->configFormText('curatescape_map_marker_color', 'Marker Color', __('Enter an HTML color code to use for map markers.'), 'Example: #222222');?>
-			<!-- Featured Marker Color -->
-			<?php echo $this->configFormText('curatescape_map_marker_featured_color', 'Featured Marker Color', __('Enter an HTML color code to use for featured item map markers.'), 'Example: #222222');?>
-			<!-- Featured Marker Star Icon -->
-			<?php echo $this->configFormCheckBox('curatescape_map_marker_featured_star', 'Featured Marker Icon', 'If checked, use a star icon inside featured item map markers.');?>
-			<!-- Subjects Select -->
-			<?php echo $this->configFormCheckBox('curatescape_map_subjects_select', 'Subjects Select', 'If checked, allow users to select from a dropdown of Subject terms to filter items on the global/homepage map. Note that this option is only recommended when all items have been given at least one Subject term. Use of the <a target="_blank" href="%s">Simple Vocab plugin</a> is strongly recommended.', 'https://omeka.org/classic/plugins/SimpleVocab/');?>
-			<!-- Fixed Center-->
-			<?php echo $this->configFormCheckBox('curatescape_map_fixed_center', 'Fixed Center', 'If checked, the initial center of your multi-marker maps (for example on the homepage) will always adhere to the <a target="_blank" href="%s">Geolocation plugin settings</a> for default latitude, longitude, and zoom level. This option does not apply to tours, to single items, or to maps where the user has explicitly chosen a specific set of parameters (such as a subject term). This option may be useful if your map contains outliers beyond the expected bounds of your coverage area.', '/admin/plugins/config?name=Geolocation');?>
+			
+			<!-- Mirror Geolocation -->
+			<?php echo $this->configFormCheckBox('curatescape_map_mirror_geolocation', 'Mirror Geolocation', __('If checked, use the maps provided by the Geolocation plugin. This option is recommended for most projects in order to maintain consistency across page templates. Uncheck and configure custom options if you are using a Curatescape theme or if you have developed a Curatescape-optimized custom theme. Additional information available in <a target="_blank" href="%s"> plugin documentation</a>.', 'https://omeka.org/classic/plugins/'._PLUGIN_NAME_));?>
+			<span class="map-settings">
+				<?php $mapLayers = array(
+					'CARTO_VOYAGER'=>__('Carto Voyager (default)'),
+					'CARTO_DARKMATTER'=>__('Carto Dark Matter'),
+					'CARTO_POSITRON'=>__('Carto Positron'),
+					'OSM_HUMANITARIAN'=>__('Open Street Maps | Humanitarian'), 
+					'MAPBOX'=>__('MapBox (account required)'),
+					'STADIA_OSMBRIGHT'=>__('Stadia | OSM Bright (account required)'),
+					'STADIA_OUTDOORS'=>__('Stadia | Outdoors (account required)'),
+					'STADIA_STAMENTONER'=>__('Stadia | Stamen Toner (account required)'),
+					'STADIA_STAMENTERRAIN'=>__('Stadia | Stamen Terrain (account required)'),
+					'STADIA_ALIDADESMOOTH'=>__('Stadia | Alidade Smooth (account required)'),
+					'STADIA_ALIDADESATELLITE'=>__('Stadia | Alidade Smooth Lite (account required)'),
+					'STADIA_ALIDADESMOOTHDARK'=>__('Stadia | Alidade Smooth Dark (account required)'),
+				);?>
+				<!-- Map Primary Layer -->
+				<?php echo $this->configFormSelect('curatescape_map_primary_layer', 'Primary Map Tiles', 'Select the primary map tile set ', 
+					$mapLayers
+				);?>
+				<!-- Map Secondary Layer -->
+				<?php echo $this->configFormSelect('curatescape_map_secondary_layer', 'Secondary Map Tiles', 'Select the primary map tile set ',
+					array_merge(array(''=>__('None (default)')), $mapLayers)
+				);?>
+				<span class="mapbox-settings">
+					<!-- Mapbox Username -->
+					<?php echo $this->configFormText('curatescape_map_mb_user', 'Mapbox Username', __('Enter your Mapbox account username as it appears in the <a href="%s" target="_blank">Mapbox console</a>.', 'https://console.mapbox.com/'), 'Enter Username');?>
+					<!-- Mapbox Style Id -->
+					<?php echo $this->configFormText('curatescape_map_mb_style_id', 'Mapbox Style ID', __('Enter the <a href="%1s" target="_blank">style ID</a> for your map. This is the alphanumeric text string that is used as the last part of your <a href="%2s" target="_blank">style URL</a>. If using Mapbox as for both primary and secondary layers, please enter two style Ids, separated by a comma.', 'https://docs.mapbox.com/help/glossary/style-id/', 'https://docs.mapbox.com/help/glossary/style-url/'), 'Example: xxxxxxxxxxxxxxxxx, xxxxxxxxxxxxxxxxx');?>
+					<!-- Mapbox Token -->
+					<?php echo $this->configFormText('curatescape_map_mb_token', 'Mapbox Access Token', __('Enter the <a href="%1s" target="_blank">access token</a> as found on the <a href="%2s" target="_blank">Access tokens page</a> of the Mapbox console.', 'https://docs.mapbox.com/help/glossary/access-token/', 'https://console.mapbox.com/account/access-tokens/'), 'Example: pk.xxxxxxxxxxxxxxxxxxxxxxxx');?>
+					<!-- Mapbox Label -->
+					<?php echo $this->configFormText('curatescape_map_mb_label', 'Mapbox Label', __('Enter a short label for your map, to be displayed in the interface for switching layers (if enabled). If using Mapbox for both primary and secondary layers, please enter two labels, separated by a comma.'), 'Example: Street (Mapbox), Satellite (Mapbox)');?>
+				</span>
+				<span class="stadia-settings">
+					<!-- Stadia Key -->
+					<?php echo $this->configFormText('curatescape_map_stadia_key', 'Stadia Authentication', __('Stadia Maps can be authenticated by registering this domain (%1s) in your <a target="_blank" href="%2s">Stadia account</a>. Alternately, you may enter your Stadia API key below. At least one method is required. Domain registration is the preferred method.', preg_replace('~^https?://~', '', WEB_ROOT), 'https://stadiamaps.com/'), 'Example: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx');?>
+					<!-- Prefer EU -->
+					<?php echo $this->configFormCheckBox('curatescape_map_prefer_eu', 'EU Preference', 'If checked, load supported map tile sets from servers in the European Union.');?>
+				</span>
+				<!-- Marker Color -->
+				<?php echo $this->configFormText('curatescape_map_marker_color', 'Marker Color', __('Enter an HTML color code to use for map markers.'), 'Example: #222222');?>
+				<!-- Featured Marker Color -->
+				<?php echo $this->configFormText('curatescape_map_marker_featured_color', 'Featured Marker Color', __('Enter an HTML color code to use for featured item map markers.'), 'Example: #222222');?>
+				<!-- Featured Marker Star Icon -->
+				<?php echo $this->configFormCheckBox('curatescape_map_marker_featured_star', 'Featured Marker Icon', 'If checked, use a star icon inside featured item map markers.');?>
+				<!-- Subjects Select -->
+				<?php echo $this->configFormCheckBox('curatescape_map_subjects_select', 'Subjects Select', 'If checked, allow users to select from a dropdown of Subject terms to filter items on the global/homepage map. Note that this option is only recommended when all items have been given at least one Subject term. Use of the <a target="_blank" href="%s">Simple Vocab plugin</a> is strongly recommended.', 'https://omeka.org/classic/plugins/SimpleVocab/');?>
+				<!-- Fixed Center-->
+				<?php echo $this->configFormCheckBox('curatescape_map_fixed_center', 'Fixed Center', 'If checked, the initial center of your multi-marker maps (for example on the homepage) will always adhere to the <a target="_blank" href="%s">Geolocation plugin settings</a> for default latitude, longitude, and zoom level. This option does not apply to tours, to single items, or to maps where the user has explicitly chosen a specific set of parameters (such as a subject term). This option may be useful if your map contains outliers beyond the expected bounds of your coverage area.', '/admin/plugins/config?name=Geolocation');?>
+			</span>
 		</fieldset>
 
 		<fieldset>
 			<legend><?php echo __('Homepage Settings'); ?></legend>
 			<p><?php echo __('Use the following options to display and customize %s content on the homepage.', _PLUGIN_NAME_);?></p>
 			<!-- Home Map -->
-			<?php echo $this->configFormSelect('curatescape_home_map', 'Map Location', __('Select a location on the homepage for displaying a map of %s.', _CURATESCAPE_ITEM_TYPE_NAME_PLURAL_), array( 'top' => __('Top (default)'), 'bottom' => __('Bottom'), 'none' => __('None')));?>
+			<?php echo $this->configFormSelect('curatescape_home_map', 'Map Location', __('Select a location on the homepage for displaying a map of %s.', _CURATESCAPE_ITEM_TYPE_NAME_PLURAL_), 
+				array(
+				'top' => __('Top (default)'),
+				'bottom' => __('Bottom'),
+				'none' => __('None')
+				)
+			);?>
 			<!-- Home Map Heading -->
 			<?php echo $this->configFormText('curatescape_home_map_heading', 'Map Heading', __('Enter a text heading for the homepage map or leave blank to omit the heading.'), 'Example: Story Map');?>
 			<!-- Home Map Caption-->
@@ -154,15 +228,35 @@ class Curatescape_View_Helper_HookConfigForm extends Zend_View_Helper_Abstract{
 			<legend><?php echo __('Output Settings'); ?></legend>
 			<p><?php echo __('Use the following options to customize the %s JSON and RSS output formats.', _PLUGIN_NAME_);?></p>
 
-			<?php echo $this->configFormSelect('curatescape_json_cache', 'JSON Browser Cache', __('When enabled, Curatescape JSON feeds (e.g. for <a href="%1s" target="_blank">items/browse</a>) will be cached in-browser for the selected duration. Browser cache rules are bypassed for logged in users and apply only to repeat loads within the selected duration.', items_output_url('mobile-json') ), array( '0' => __('Disable cache'), '60' => __('1 minute'), '300' => __('5 minutes'), '600' => __('10 minutes (default)'), '1800' => __('30 minutes'), '3600' => __('1 hour'), '43200' => __('12 hours'), '86400' => __('24 hours') ) );?>
-
+			<?php echo $this->configFormSelect('curatescape_json_cache', 'JSON Browser Cache', __('When enabled, Curatescape JSON feeds (e.g. for <a href="%1s" target="_blank">items/browse</a>) will be cached in-browser for the selected duration. Browser cache rules are bypassed for logged in users and apply only to repeat loads within the selected duration.', items_output_url('mobile-json') ), 
+				array(
+				'0' => __('Disable cache'),
+				'60' => __('1 minute'),
+				'300' => __('5 minutes'),
+				'600' => __('10 minutes (default)'),
+				'1800' => __('30 minutes'),
+				'3600' => __('1 hour'),
+				'43200' => __('12 hours'),
+				'86400' => __('24 hours') 
+				) 
+			);?>
 			<!-- JSON Server Cache  -->
 			<?php 
 			$itemjson = WEB_ROOT.'/plugins/'._PLUGIN_NAME_.str_replace(_PLUGIN_DIR_, '', _JSON_ITEMS_FILE_);
 			$tourjson = WEB_ROOT.'/plugins/'._PLUGIN_NAME_.str_replace(_PLUGIN_DIR_, '', _JSON_TOURS_FILE_);
 			$cacheDebugLinks = '<div class="explanation"><a class="button" target="_blank" href="/items/browse?output=mobile-json&curatescape_cache_break=debug">'.__('Clear & Debug Items Cache').'</a><a class="button" target="_blank" href="/tours/browse?output=mobile-json&curatescape_cache_break=debug">'.__('Clear & Debug Tours Cache').'</a></div>';
-			echo $this->configFormSelect('curatescape_json_storage', 'JSON Server Cache', __('When enabled, certain Curatescape JSON feeds will be cached and stored on the server for the selected duration. Increase the duration to improve performance and reduce memory usage for large datasets. Disable this option if you experience errors relating to your server security configurations. All server cache files are automatically cleared when saving an item. The server cache is bypassed for logged in users. %s', $cacheDebugLinks), array( '0' => __('Disable cache'), '60' => __('1 minute'), '300' => __('5 minutes (default)'), '600' => __('10 minutes'), '1800' => __('30 minutes'), '3600' => __('1 hour'), '43200' => __('12 hours'), '86400' => __('24 hours') ) );?>
-
+			echo $this->configFormSelect('curatescape_json_storage', 'JSON Server Cache', __('When enabled, certain Curatescape JSON feeds will be cached and stored on the server for the selected duration. Increase the duration to improve performance and reduce memory usage for large datasets. Disable this option if you experience errors relating to your server security configurations. All server cache files are automatically cleared when saving an item. The server cache is bypassed for logged in users. %s', $cacheDebugLinks), 
+				array(
+				'0' => __('Disable cache'),
+				'60' => __('1 minute'),
+				'300' => __('5 minutes (default)'),
+				'600' => __('10 minutes'),
+				'1800' => __('30 minutes'),
+				'3600' => __('1 hour'),
+				'43200' => __('12 hours'),
+				'86400' => __('24 hours') 
+				) 
+			);?>
 			<!-- Enhanced RSS-->
 			<?php echo $this->configFormCheckBox('curatescape_rss', 'Enhanced RSS', __('If checked, the default RSS feed will be replaced with an <a href="%s" target="_blank">enhanced format</a> that has been customized for narrative content.', items_output_url('rss-plus')));?>
 		</fieldset>
@@ -221,7 +315,34 @@ class Curatescape_View_Helper_HookConfigForm extends Zend_View_Helper_Abstract{
 			<!-- Omit Redundant -->
 			<?php echo $this->configFormCheckBox('curatescape_omit_redundant_elements', 'Omit Redundant', __('If checked, the Title and Subtitle elements for the Item will be omitted from the metadata table since they already appear as part of the page heading. Likewise, the Coverage element will be omitted since it already appears as part of the map caption (which consists of the Street Address and Access Information texts).', _CURATESCAPE_ITEM_TYPE_NAME_) );?>
 		</fieldset>
-
+		
+		<script type="text/javascript">
+			function toggleMapSettings() {
+				jQuery('.map-settings').toggle( jQuery('#curatescape_map_mirror_geolocation').prop('checked') == false );
+			}
+			function toggleMapboxSettings(){
+				jQuery('.mapbox-settings').toggle( 
+					jQuery('#curatescape_map_primary_layer').val().startsWith('MAPBOX') ||
+					jQuery('#curatescape_map_secondary_layer').val().startsWith('MAPBOX')
+				);
+			}
+			function toggleStadiaSettings(){
+				jQuery('.stadia-settings').toggle( 
+					jQuery('#curatescape_map_primary_layer').val().startsWith('STADIA') ||
+					jQuery('#curatescape_map_secondary_layer').val().startsWith('STADIA')	
+				);
+			}
+			jQuery(document).ready(function () {
+				toggleMapSettings();
+				toggleMapboxSettings();
+				toggleStadiaSettings();
+				jQuery('#curatescape_map_mirror_geolocation').on('change', toggleMapSettings);
+				jQuery('#curatescape_map_primary_layer').on('change', toggleMapboxSettings);
+				jQuery('#curatescape_map_secondary_layer').on('change', toggleMapboxSettings);
+				jQuery('#curatescape_map_primary_layer').on('change', toggleStadiaSettings);
+				jQuery('#curatescape_map_secondary_layer').on('change', toggleStadiaSettings);
+			});
+		</script>
 		<?php
 	}
 

@@ -1,5 +1,3 @@
-// (not in use)
-// See Curatescape_View_Helper_HookPublicHead 
 // See Curatescape_View_Helper_CuratescapeMap::GeolocationShortcode
 document.addEventListener('DOMContentLoaded', function() { // deferred
 	// ADD QUERY PARAMETERS TO TOUR ITEM LINKS INSIDE THE GEOLOCATION MAP
@@ -11,6 +9,7 @@ document.addEventListener('DOMContentLoaded', function() { // deferred
 		let tourItemsRange = data.range ? data.range.split(",") : [];
 		if(!tourItemsRange.length) return;
 		let tourId = new URL(window.location.href).pathname.split('/').pop();
+		
 		document.addEventListener('click', function(e) {
 			let target = e.target.closest('.geolocation_balloon a');
 			if(target && target.href){
