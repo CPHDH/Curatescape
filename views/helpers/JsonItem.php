@@ -10,7 +10,6 @@ class Curatescape_View_Helper_JsonItem extends Zend_View_Helper_Abstract
 				'modified' => $item->modified,
 				'latitude' => $location['latitude'],
 				'longitude' => $location['longitude'],
-				'zoom' => $location['zoom_level'],
 				'title' => dc($item, 'Title', array('no_filter'=>true)),
 				'subtitle' => itm($item, 'Subtitle'),
 				'thumbnail' => preferredItemImageUrl($item, 'square_thumbnail'),
@@ -19,6 +18,7 @@ class Curatescape_View_Helper_JsonItem extends Zend_View_Helper_Abstract
 			);
 
 			if($isExtended){
+				$itemMetadata['zoom'] = $location['zoom_level'];
 				$itemMetadata['creator'] = $this->getCreators($item);
 				$itemMetadata['description'] = itm($item, 'Story');
 				$itemMetadata['sponsor'] = itm($item, 'Sponsor');
@@ -34,10 +34,11 @@ class Curatescape_View_Helper_JsonItem extends Zend_View_Helper_Abstract
 		return false;
 	}
 	
-	public function JsonItemsBrowse($items){
+	public function JsonItemsBrowse($items, $allItemTypes = false){
 		$output = array('items'=>array());
 		foreach( $items as $item ){
 			if(!$item->public) continue;
+			if(!$allItemTypes && $item->item_type_id !== itemTypeID()) continue;
 			if($itemMeta = $this->JsonItem( $item, false )){
 				$output['items'][] = $itemMeta;
 			}

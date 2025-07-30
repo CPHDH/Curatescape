@@ -17,7 +17,7 @@ $tourItems = $tour->Items;
 					echo get_view()->CuratescapeMap()->GeolocationShortcode(null, $tour, null, "tour-items-map");
 				}
 				else{
-					echo get_view()->CuratescapeMap()->Multi();
+					echo get_view()->CuratescapeMap()->Multi(null, false, "multi", $tour->id, WEB_ROOT.'/tours/show/'.$tour->id.'?output=mobile-json');
 				}
 				?>
 			<?php endif;?>

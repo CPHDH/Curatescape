@@ -33,7 +33,7 @@ class Curatescape_View_Helper_HookPublicContent extends Zend_View_Helper_Abstrac
 			if(option('curatescape_map_mirror_geolocation')){
 				echo get_view()->CuratescapeMap()->GeolocationShortcode(null, null, $figcaption, "home-items-map");
 			}else{
-				echo get_view()->CuratescapeMap()->Multi($figcaption, true, "home", WEB_ROOT.'/items/browse?output=mobile-json');
+				echo get_view()->CuratescapeMap()->Multi($figcaption, true, "home", null, WEB_ROOT.'/items/browse?output=mobile-json');
 			}
 			?>
 		</div>

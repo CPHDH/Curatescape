@@ -318,7 +318,7 @@ class CuratescapeTour extends Omeka_Record_AbstractRecord
 	public function tourItemsOutput($galleryType = 'gallery-inline-captions', $showOnMap = null, $html = null)
 	{
 		if($galleryType == 'none') return null;
-		if(!isset($showOnMap) && $galleryType = 'gallery-inline-captions'){
+		if(isset($showOnMap) && $galleryType = 'gallery-inline-captions'){
 			$showOnMap = true;
 		}else{
 			$showOnMap = false;

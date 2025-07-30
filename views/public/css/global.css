@@ -332,7 +332,8 @@ table.curatescape-additional-files td span.type{
 /* map */
 #curatescape-map-canvas{
 	width: 100%;
-	min-height: 400px;
+	min-height: 450px;
+	max-height: 90vh;
 }
 #geolocation figure{
 	margin: 0;
@@ -365,7 +366,93 @@ table.curatescape-additional-files td span.type{
 		border: 0 none transparent !important;
 	}
 }
-
+/* map subjects select */
+.curatescape-map{
+	position: relative;
+}
+.curatescape-map,
+.curatescape-map a,
+.curatescape-map a:visited,
+.curatescape-map a:hover{
+	color: #333;
+	text-decoration: none;
+}
+.curatescape-map select{
+	-moz-appearance: none;
+	-webkit-appearance:none;
+	appearance: none;
+	position: absolute;
+	z-index: 401;
+	right: 68px;
+	top: 12px;
+	max-width: calc(100% - 122px);
+	height: 45px;
+	font-size: 16px;
+	border-radius: 5px;
+	background-color: white;
+	border: 2px solid rgba(0,0,0,.2);
+	padding-left: 32px; 
+	background-clip: padding-box;
+	background-image: url("../../shared/images/svg/ionicons/checkmark-circle.svg");
+	background-size: 18px; 
+	background-position: 8px 12.25px;
+	background-repeat: no-repeat;
+}
+/* map info windows */
+.leaflet-popup-content{
+	overflow: hidden;
+	margin: 0;
+	padding: 0;
+}
+.curatescape-iw{
+	position: relative;
+	overflow: hidden;
+	border-radius: 12px;
+}
+.curatescape-iw-content,
+.curatescape-iw-content a:visited,
+.curatescape-iw-content a:hover,
+.curatescape-iw-content a:link{
+	color: #fff;
+	font-size: 0.9rem;
+}
+.curatescape-iw-content{
+	font-size: 1rem;
+	position: relative;
+	min-width: 250px;
+	z-index: 2;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-end;
+	margin-top: 40%;
+	background-image: linear-gradient(to top, rgba(0,0,0,1), rgba(0,0,0,.75));
+	padding: 0.5lh;
+}
+.curatescape-iw-title{
+	font-weight: 600;
+	padding-bottom: 0.25lh;
+	margin-bottom: 0.25lh;
+	border-bottom: 1px solid rgba(256,256,256,.2);
+}
+.curatescape-iw-address{
+	font-size: 0.75rem;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+.curatescape-iw-image{
+	background: rgba(0,0,0);
+	background-position: center 7.5%;
+	background-size: cover;
+	position: absolute;
+	height: 100%;
+	width: 100%;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	z-index: 1;
+}
 /* app buttons shortcode */
 .curatescape-shortcode-app-buttons-container{
 	container-name: appbuttonscontainer; /* <== Container */

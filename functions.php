@@ -132,20 +132,27 @@ function comboTitle($title, $subtitle, $pre = ': ', $post = null)
 	return $title.$pre.html_entity_decode(strip_formatting($subtitle)).$post;
 }
 
-function storiesItemTypeBrowseURL()
-{
-	$itemType=get_record('ItemType', array('name'=>_CURATESCAPE_ITEM_TYPE_NAME_));
-	if(!$itemType) return url();
-	$url = 'items/browse?type='.$itemType->id;
-	return url($url);
+function itemTypeID(){
+	if($itemType = get_record('ItemType', array('name'=>_CURATESCAPE_ITEM_TYPE_NAME_))){
+		return $itemType->id;
+	}
+	return null;
 }
 
 function itemTypeURL()
 {
-	$itemType=get_record('ItemType', array('name'=>_CURATESCAPE_ITEM_TYPE_NAME_));
-	if(!$itemType) return url();
-	$url = 'item-types/show/'.$itemType->id;
+	$itemTypeId=itemTypeID();
+	if(!$itemTypeId) return url();
+	$url = 'item-types/show/'.$itemTypeId;
 	return admin_url($url);
+}
+
+function storiesItemTypeBrowseURL()
+{
+	$itemTypeId=itemTypeID();
+	if(!$itemTypeId) return url();
+	$url = 'items/browse?type='.$itemTypeId;
+	return url($url);
 }
 
 function allowedExtensionImg($filepath, $allowed = array('jpg','jpeg','png', 'webp')){
@@ -251,23 +258,6 @@ function activeSort($objects, $sort = array())
 			break;
 	}
 	return $objects;
-}
-
-function elementValuesById($elementId){	
-	$db = get_db();
-	$prefix=$db->prefix;
-	$q = $db->query(
-		<<<SQL
-		SELECT TRIM(et.text) as text, count(*) as total, LOWER(LEFT(text, 1)) as letter
-		FROM {$prefix}items as i
-		INNER JOIN {$prefix}element_texts as et ON i.id = et.record_id
-		WHERE public = 1 AND element_id = {$elementId}
-		GROUP BY text
-		ORDER BY text ASC
-		SQL
-	);
-	$values = $q->fetchAll();
-	return $values;
 }
 
 function hasLocation($item)
