@@ -106,7 +106,9 @@ class Curatescape_View_Helper_CuratescapeMap extends Zend_View_Helper_Abstract{
 	{
 	?>
 	<script type="importmap">
-		{ "imports": { "leaflet": "https://unpkg.com/leaflet@2.0.0-alpha/dist/leaflet.js" } }
+		{ "imports": { 
+			"leaflet": "https://unpkg.com/leaflet@2.0.0-alpha/dist/leaflet.js" 
+		} }
 	</script>
 	<script type="module" src="<?php echo src('curatescape-map.js', 'javascripts');?>"></script>
 	<?php

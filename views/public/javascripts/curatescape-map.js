@@ -1,4 +1,4 @@
-import { Map, TileLayer, Marker, Popup, Control, FeatureGroup, DivIcon } from 'leaflet'; // req. external importmap
+import { Map, TileLayer, Marker, Popup, Control, FeatureGroup, DivIcon, Browser } from 'leaflet'; // req. external importmap
 const mapcontainer = document.querySelector('#curatescape-map-canvas');
 const mapfigure = document.querySelector('#curatescape-map-figure');
 let requestedMarker = null;
@@ -15,7 +15,7 @@ const tileLayerConfig = (name, mbUser, mbToken, mbStyle, mbLabel, stadiaKey, sta
 		{
 			attribution:
 			'<a href="http://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a> | <a href="https://cartodb.com/attributions" target="_blank">CartoDB</a>',
-			retina: '@2x',
+			retina: Browser.retina ? '@2x' : '',
 			label: 'Street (Carto Positron)',
 		}
 	);
@@ -24,7 +24,7 @@ const tileLayerConfig = (name, mbUser, mbToken, mbStyle, mbLabel, stadiaKey, sta
 		{
 			attribution:
 			'<a href="http://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a> | <a href="https://cartodb.com/attributions" target="_blank">CartoDB</a>',
-			retina: '@2x',
+			retina: Browser.retina ? '@2x' : '',
 			label: 'Street (Carto Dark Matter)',
 		}
 	);
@@ -33,7 +33,7 @@ const tileLayerConfig = (name, mbUser, mbToken, mbStyle, mbLabel, stadiaKey, sta
 		{
 			attribution:
 			'<a href="http://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a> | <a href="https://cartodb.com/attributions" target="_blank">CartoDB</a>',
-			retina: '@2x',
+			retina: Browser.retina ? '@2x' : '',
 			label: 'Street (Carto Voyager)',
 		}
 	);
@@ -50,7 +50,7 @@ const tileLayerConfig = (name, mbUser, mbToken, mbStyle, mbLabel, stadiaKey, sta
 		{
 			server: !stadiaPreferEU ? 'tiles' : 'tiles-eu',
 			attribution: '<a href="https://stadiamaps.com/" target="_blank">Stadia Maps</a> | <a href="https://openmaptiles.org/" target="_blank">OpenMapTiles</a> | <a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a>',
-			retina: '@2x',
+			retina: Browser.retina ? '@2x' : '',
 			label: 'Street (OSM Bright)',
 			stadia_auth_optional: stadiaKey ? '?api_key='+stadiaKey : '',
 		}
@@ -91,7 +91,7 @@ const tileLayerConfig = (name, mbUser, mbToken, mbStyle, mbLabel, stadiaKey, sta
 			server: !stadiaPreferEU ? 'tiles' : 'tiles-eu',
 			attribution:
 			'<a href="https://stadiamaps.com/" target="_blank">Stadia Maps</a> | <a href="https://stamen.com/" target="_blank">Stamen Design</a> | <a href="https://openmaptiles.org/" target="_blank">OpenMapTiles</a>',
-			retina: '@2x',
+			retina: Browser.retina ? '@2x' : '',
 			label: 'Terrain (Stamen Terrain)',
 			stadia_auth_optional: stadiaKey ? '?api_key='+stadiaKey : '',
 		}
@@ -102,7 +102,7 @@ const tileLayerConfig = (name, mbUser, mbToken, mbStyle, mbLabel, stadiaKey, sta
 			server: !stadiaPreferEU ? 'tiles' : 'tiles-eu',
 			attribution:
 			'<a href="https://stadiamaps.com/" target="_blank">Stadia Maps</a> | <a href="https://stamen.com/" target="_blank">Stamen Design</a> | <a href="https://openmaptiles.org/" target="_blank">OpenMapTiles</a>',
-			retina: '@2x',
+			retina: Browser.retina ? '@2x' : '',
 			label: 'Street (Stamen Toner Lite)',
 			stadia_auth_optional: stadiaKey ? '?api_key='+stadiaKey : '',
 		}
@@ -112,17 +112,20 @@ const tileLayerConfig = (name, mbUser, mbToken, mbStyle, mbLabel, stadiaKey, sta
 		{
 			server: !stadiaPreferEU ? 'tiles' : 'tiles-eu',
 			attribution: '<a href="https://stadiamaps.com/" target="_blank">Stadia Maps</a> | <a href="https://openmaptiles.org/" target="_blank">OpenMapTiles</a>',
-			retina: '@2x',
+			retina: Browser.retina ? '@2x' : '',
 			label: 'Street (Stadia Outdoors)',
 		}
 	);
 	tiles.MAPBOX = new TileLayer(
-		"https://api.mapbox.com/styles/v1/{username}/{style_id}/tiles/{z}/{x}/{y}?access_token={access_token}",
+		"https://api.mapbox.com/styles/v1/{username}/{style_id}/tiles/{z}/{x}/{y}{retina}?access_token={access_token}",
 		{
 			attribution: '<a href="http://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a> | <a href="https://www.mapbox.com/about/maps/" target="_blank">Mapbox</a> ',
 			username: mbUser,
 			style_id: mbStyle,
 			access_token: mbToken,
+			tileSize: 512,
+			zoomOffset: -1,
+			retina: Browser.retina ? '@2x' : '',
 			label: mbLabel ? mbLabel : 'Mapbox',
 		}
 	);

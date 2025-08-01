@@ -9,7 +9,8 @@ class Curatescape_View_Helper_Cache extends Zend_View_Helper_Abstract{
 		header('Cache-Control: public, max-age='.intval($seconds));
 	}
 	public function Bypass($bypassLoggedIn = true){
-		return boolval($bypassLoggedIn && current_user()) ;
+		if(!$this->cachablePath()) return true;
+		return boolval($bypassLoggedIn && current_user());
 	}
 	public function FileIsCurrent($filepath, $maxSeconds){
 		return boolval( time()-filemtime($filepath) < intval($maxSeconds) );
@@ -27,6 +28,7 @@ class Curatescape_View_Helper_Cache extends Zend_View_Helper_Abstract{
 		return false;
 	}
 	public function WriteCacheFile($filepath, $content = ''){
+		if(!$this->cachablePath()) return false;
 		if(!file_exists($filepath)){
 			return boolval(file_put_contents($filepath, $content));
 		}
@@ -60,5 +62,8 @@ class Curatescape_View_Helper_Cache extends Zend_View_Helper_Abstract{
 				exit;
 			 }
 		}
+	}
+	private function cachablePath(){
+		return boolval(in_array($_SERVER['REQUEST_URI'], _JSON_CACHEABLE_PATHS_));
 	}
 }
