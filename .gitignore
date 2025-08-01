@@ -1,1 +1,3 @@
 .DS_Store
+views/admin/dashboard-audit.cache.html
+views/admin/dashboard-stats.cache.html
