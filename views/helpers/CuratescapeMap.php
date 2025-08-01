@@ -19,13 +19,11 @@ class Curatescape_View_Helper_CuratescapeMap extends Zend_View_Helper_Abstract{
 		data-json-source="<?php echo $jsonSource;?>"
 		data-primary-layer="<?php echo flexOption('curatescape_map_primary_layer','CARTO_VOYAGER');?>"
 		data-secondary-layer="<?php echo flexOption('curatescape_map_secondary_layer','');?>"
-		data-mb-user="<?php echo flexOption('curatescape_map_mb_user','');?>"
-		data-mb-token="<?php echo flexOption('curatescape_map_mb_token','');?>"
-		data-mb-id="<?php echo flexOption('curatescape_map_mb_style_id','');?>"
-		data-mb-label="<?php echo flexOption('curatescape_map_mb_label','');?>"
+		data-custom-label="<?php echo flexOption('curatescape_map_custom_label','');?>"
 		data-stadia-key="<?php echo flexOption('curatescape_map_stadia_key','');?>"
 		data-prefer-eu="<?php echo flexOption('curatescape_map_prefer_eu',0);?>"
 		data-root-url="<?php echo WEB_ROOT;?>"
+		data-reset-label="<?php echo __('Reset to initial view');?>" 
 		data-color="<?php echo flexOption('curatescape_map_marker_color', '#222');?>"
 		>
 			<div class="curatescape-map">
@@ -52,10 +50,7 @@ class Curatescape_View_Helper_CuratescapeMap extends Zend_View_Helper_Abstract{
 		data-json-source="<?php echo $jsonSource;?>"
 		data-primary-layer="<?php echo flexOption('curatescape_map_primary_layer','CARTO_VOYAGER');?>"
 		data-secondary-layer="<?php echo flexOption('curatescape_map_secondary_layer','');?>"
-		data-mb-user="<?php echo flexOption('curatescape_map_mb_user','');?>"
-		data-mb-token="<?php echo flexOption('curatescape_map_mb_token','');?>"
-		data-mb-id="<?php echo flexOption('curatescape_map_mb_style_id','');?>"
-		data-mb-label="<?php echo flexOption('curatescape_map_mb_label','');?>"
+		data-custom-label="<?php echo flexOption('curatescape_map_custom_label','');?>"
 		data-stadia-key="<?php echo flexOption('curatescape_map_stadia_key','');?>"
 		data-prefer-eu="<?php echo flexOption('curatescape_map_prefer_eu',0);?>"
 		data-lat="<?php echo flexOption('geolocation_default_latitude', '');?>"
@@ -64,6 +59,7 @@ class Curatescape_View_Helper_CuratescapeMap extends Zend_View_Helper_Abstract{
 		data-cluster="<?php echo flexOption('geolocation_cluster', false);?>"
 		data-root-url="<?php echo WEB_ROOT;?>"
 		data-fitbounds-label="<?php echo __('Zoom to fit all');?>" 
+		data-reset-label="<?php echo __('Reset to initial view');?>" 
 		data-color="<?php echo $color = flexOption('curatescape_map_marker_color', '#222');?>"
 		data-featured-color="<?php echo flexOption('curatescape_map_marker_featured_color', $color);?>"
 		data-featured-star="<?php echo flexOption('curatescape_map_marker_featured_star', 0);?>"
@@ -105,11 +101,8 @@ class Curatescape_View_Helper_CuratescapeMap extends Zend_View_Helper_Abstract{
 	private function scriptsCuratescapeMap()
 	{
 	?>
-	<script type="importmap">
-		{ "imports": { 
-			"leaflet": "https://unpkg.com/leaflet@2.0.0-alpha/dist/leaflet.js" 
-		} }
-	</script>
+	<script defer src="https://unpkg.com/maplibre-gl@^5.6.1/dist/maplibre-gl.js"></script>
+	<link href="https://unpkg.com/maplibre-gl@^5.6.1/dist/maplibre-gl.css" rel="stylesheet" />
 	<script type="module" src="<?php echo src('curatescape-map.js', 'javascripts');?>"></script>
 	<?php
 	}

@@ -349,23 +349,6 @@ table.curatescape-additional-files td span.type{
 	width: 100%;
 	clear: both;
 }
-@media screen{
-	.leaflet-control-layers-base{
-		display: flex;
-		flex-direction: column;
-	}
-	.leaflet-control-layers-base input,
-	.leaflet-control-layers-base label{
-		margin: 0;
-	}
-	.leaflet-control-layers-base label:first-child{
-		margin-bottom: 4px;
-	}
-	.leaflet-control-layers-list{
-		padding: 0 !important;
-		border: 0 none transparent !important;
-	}
-}
 /* map subjects select */
 .curatescape-map{
 	position: relative;
@@ -399,15 +382,13 @@ table.curatescape-additional-files td span.type{
 	background-repeat: no-repeat;
 }
 /* map info windows */
-.leaflet-popup-content{
-	overflow: hidden;
-	margin: 0;
-	padding: 0;
+#curatescape-map-figure .maplibregl-popup-content{
+	padding: 3px;
 }
 .curatescape-iw{
 	position: relative;
 	overflow: hidden;
-	border-radius: 12px;
+	border-radius: 3px;
 }
 .curatescape-iw-content,
 .curatescape-iw-content a:visited,

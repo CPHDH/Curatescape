@@ -132,11 +132,10 @@ class Curatescape_View_Helper_HookConfigForm extends Zend_View_Helper_Abstract{
 			<?php echo $this->configFormCheckBox('curatescape_map_mirror_geolocation', 'Mirror Geolocation', __('If checked, use the maps provided by the Geolocation plugin. This option is recommended for most projects in order to maintain consistency across page templates. Uncheck and configure custom options if you are using a Curatescape theme or if you have developed a Curatescape-optimized custom theme. Additional information available in <a target="_blank" href="%s"> plugin documentation</a>.', 'https://omeka.org/classic/plugins/'._PLUGIN_NAME_));?>
 			<span class="map-settings">
 				<?php $mapLayers = array(
-					'CARTO_VOYAGER'=>__('Carto Voyager (default)'),
-					'CARTO_DARKMATTER'=>__('Carto Dark Matter'),
-					'CARTO_POSITRON'=>__('Carto Positron'),
-					'OSM_HUMANITARIAN'=>__('Open Street Maps | Humanitarian'), 
-					'MAPBOX'=>__('MapBox (account required)'),
+					'OFM_LIBERTY'=>__('Open Free Map | Liberty (default)'),
+					'CARTO_VOYAGER'=>__('CartoDB | Voyager'),
+					'CARTO_DARKMATTER'=>__('CartoDB | Dark Matter'),
+					'CARTO_POSITRON'=>__('CartoDB | Positron'),
 					'STADIA_OSMBRIGHT'=>__('Stadia | OSM Bright (account required)'),
 					'STADIA_OUTDOORS'=>__('Stadia | Outdoors (account required)'),
 					'STADIA_STAMENTONER'=>__('Stadia | Stamen Toner (account required)'),
@@ -144,24 +143,19 @@ class Curatescape_View_Helper_HookConfigForm extends Zend_View_Helper_Abstract{
 					'STADIA_ALIDADESMOOTH'=>__('Stadia | Alidade Smooth (account required)'),
 					'STADIA_ALIDADESATELLITE'=>__('Stadia | Alidade Smooth Lite (account required)'),
 					'STADIA_ALIDADESMOOTHDARK'=>__('Stadia | Alidade Smooth Dark (account required)'),
+					'CUSTOM_URL'=>__('Custom URL'),
 				);?>
-				<!-- Map Primary Layer -->
-				<?php echo $this->configFormSelect('curatescape_map_primary_layer', 'Primary Map Tiles', 'Select the primary map tile set ', 
+				<!-- Map Primary -->
+				<?php echo $this->configFormSelect('curatescape_map_primary_layer', 'Primary Map Style', 'Select the primary map style. ', 
 					$mapLayers
 				);?>
-				<!-- Map Secondary Layer -->
-				<?php echo $this->configFormSelect('curatescape_map_secondary_layer', 'Secondary Map Tiles', 'Select the primary map tile set ',
+				<!-- Map Secondary -->
+				<?php echo $this->configFormSelect('curatescape_map_secondary_layer', 'Secondary Map Style', 'Select the secondary map style. ',
 					array_merge(array(''=>__('None (default)')), $mapLayers)
 				);?>
-				<span class="mapbox-settings">
-					<!-- Mapbox Username -->
-					<?php echo $this->configFormText('curatescape_map_mb_user', 'Mapbox Username', __('Enter your Mapbox account username as it appears in the <a href="%s" target="_blank">Mapbox console</a>.', 'https://console.mapbox.com/'), 'Enter Username');?>
-					<!-- Mapbox Style Id -->
-					<?php echo $this->configFormText('curatescape_map_mb_style_id', 'Mapbox Style ID', __('Enter the <a href="%1s" target="_blank">style ID</a> for your map. This is the alphanumeric text string that is used as the last part of your <a href="%2s" target="_blank">style URL</a>. If using Mapbox for both primary and secondary layers, please enter two style Ids, separated by a comma.', 'https://docs.mapbox.com/help/glossary/style-id/', 'https://docs.mapbox.com/help/glossary/style-url/'), 'Example: xxxxxxxxxxxxxxxxx, xxxxxxxxxxxxxxxxx');?>
-					<!-- Mapbox Token -->
-					<?php echo $this->configFormText('curatescape_map_mb_token', 'Mapbox Access Token', __('Enter the <a href="%1s" target="_blank">access token</a> as found on the <a href="%2s" target="_blank">Access tokens page</a> of the Mapbox console.', 'https://docs.mapbox.com/help/glossary/access-token/', 'https://console.mapbox.com/account/access-tokens/'), 'Example: pk.xxxxxxxxxxxxxxxxxxxxxxxx');?>
-					<!-- Mapbox Label -->
-					<?php echo $this->configFormText('curatescape_map_mb_label', 'Mapbox Label', __('Enter a short label for your map, to be displayed in the interface for switching layers (if enabled). If using Mapbox for both primary and secondary layers, please enter two labels, separated by a comma.'), 'Example: Street (Mapbox), Satellite (Mapbox)');?>
+				<span class="custom-settings">
+					<!-- Custom URL -->
+					<?php echo $this->configFormText('curatescape_map_custom_url', 'Custom URL', __('Enter the URL for a vector style source that conforms to the <a href="">MapLibre style specification</a>. If using custom settings for both primary and secondary layers, please enter two URLs, separated by a comma.', 'https://maplibre.org/maplibre-style-spec/'), 'Example: https://api.maptiler.com/maps/my-map/?key=xxxxxxx...');?>
 				</span>
 				<span class="stadia-settings">
 					<!-- Stadia Key -->
@@ -169,6 +163,8 @@ class Curatescape_View_Helper_HookConfigForm extends Zend_View_Helper_Abstract{
 					<!-- Prefer EU -->
 					<?php echo $this->configFormCheckBox('curatescape_map_prefer_eu', 'EU Preference', 'If checked, load supported map tile sets from servers in the European Union.');?>
 				</span>
+				<!-- Custom Label -->
+				<?php echo $this->configFormText('curatescape_map_custom_label', 'Custom Map Label', __('Enter custom labels for your map layers,separated by a comma. These labels will be displayed in the interface for switching between primary and secondary map layers (if enabled).'), 'Example: Street, Satellite');?>
 				<!-- Marker Color -->
 				<?php echo $this->configFormText('curatescape_map_marker_color', 'Marker Color', __('Enter an HTML color code to use for map markers.'), 'Example: #222222');?>
 				<!-- Featured Marker Color -->
@@ -320,10 +316,10 @@ class Curatescape_View_Helper_HookConfigForm extends Zend_View_Helper_Abstract{
 			function toggleMapSettings() {
 				jQuery('.map-settings').toggle( jQuery('#curatescape_map_mirror_geolocation').prop('checked') == false );
 			}
-			function toggleMapboxSettings(){
-				jQuery('.mapbox-settings').toggle( 
-					jQuery('#curatescape_map_primary_layer').val().startsWith('MAPBOX') ||
-					jQuery('#curatescape_map_secondary_layer').val().startsWith('MAPBOX')
+			function toggleCustomSettings(){
+				jQuery('.custom-settings').toggle( 
+					jQuery('#curatescape_map_primary_layer').val().startsWith('CUSTOM') ||
+					jQuery('#curatescape_map_secondary_layer').val().startsWith('CUSTOM')
 				);
 			}
 			function toggleStadiaSettings(){
@@ -334,11 +330,11 @@ class Curatescape_View_Helper_HookConfigForm extends Zend_View_Helper_Abstract{
 			}
 			jQuery(document).ready(function () {
 				toggleMapSettings();
-				toggleMapboxSettings();
+				toggleCustomSettings();
 				toggleStadiaSettings();
 				jQuery('#curatescape_map_mirror_geolocation').on('change', toggleMapSettings);
-				jQuery('#curatescape_map_primary_layer').on('change', toggleMapboxSettings);
-				jQuery('#curatescape_map_secondary_layer').on('change', toggleMapboxSettings);
+				jQuery('#curatescape_map_primary_layer').on('change', toggleCustomSettings);
+				jQuery('#curatescape_map_secondary_layer').on('change', toggleCustomSettings);
 				jQuery('#curatescape_map_primary_layer').on('change', toggleStadiaSettings);
 				jQuery('#curatescape_map_secondary_layer').on('change', toggleStadiaSettings);
 			});
