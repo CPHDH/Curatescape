@@ -99,24 +99,20 @@ const geolocationControls = ()=>{
 }
 const fullscreenControls = ()=>{
 	return map.addControl(new maplibregl.FullscreenControl({
-		container: document.querySelector('body')
+		container: mapfigure
 	}));
 }
 const fitBoundsControl = ()=>{
 	class FitBoundsControl {
-		constructor(bounds, options) {
-			this.bounds = bounds; 
-			this.options = options || {}; 
-		}
 		onAdd(map) {
 			this.map = map;
 			this.container = document.createElement('div');
-			this.container.className = 'maplibregl-ctrl maplibregl-ctrl-group';
+			this.container.className = 'maplibregl-ctrl maplibregl-ctrl-group custom fitbounds';
 			const button = document.createElement('button');
 			button.title = attr('data-fitbounds-label');
-			// button.textContent = ''; // @todo icon
+			button.style.backgroundImage = `url("data:image/svg+xml;charset=utf-8,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E %3Cpath style='fill:%23333333;' d='M396.795 396.8H320V448h128V320h-51.205zM396.8 115.205V192H448V64H320v51.205zM115.205 115.2H192V64H64v128h51.205zM115.2 396.795V320H64v128h128v-51.205z'/%3E %3C/svg%3E")`;
 			button.onclick = () => {
-				this.map.fitBounds(this.bounds, this.options);
+				this.map.fitBounds(bounds, { padding: 50, maxZoom: 15,});
 			};
 			this.container.appendChild(button);
 			return this.container;
@@ -126,7 +122,7 @@ const fitBoundsControl = ()=>{
 			this.map = undefined;
 		}
 	}
-	return map.addControl(new FitBoundsControl([[-79, 43], [-73, 45]],{ padding: 50, maxZoom: 15,}), 'top-right'); 
+	return map.addControl(new FitBoundsControl()); 
 }
 const addControls = ()=>{
 	subjectSelectControls(); // @todo FIX!
@@ -161,9 +157,44 @@ const setStyleLayers = ()=>{
 	// 	// const tileLayersControl = new Control.Layers(tileLayers).addTo(map); 
 	// }
 }
-const newMarker = (popup,lon,lat,featured)=>{
+const markerSVG = (color, featured=false, height=41, width=27)=>{
+	return `<svg display="block" height="${height}px" width="${width}px" viewBox="0 0 ${width} ${height}">
+		<g fill-rule="nonzero">
+			<g transform="translate(3.0, 29.0)" fill="#000000">
+				<ellipse opacity="0.04" cx="10.5" cy="5.80029008" rx="10.5" ry="5.25002273"></ellipse>
+				<ellipse opacity="0.04" cx="10.5" cy="5.80029008" rx="10.5" ry="5.25002273"></ellipse>
+				<ellipse opacity="0.04" cx="10.5" cy="5.80029008" rx="9.5" ry="4.77275007"></ellipse>
+				<ellipse opacity="0.04" cx="10.5" cy="5.80029008" rx="8.5" ry="4.29549936"></ellipse>
+				<ellipse opacity="0.04" cx="10.5" cy="5.80029008" rx="7.5" ry="3.81822308"></ellipse>
+				<ellipse opacity="0.04" cx="10.5" cy="5.80029008" rx="6.5" ry="3.34094679"></ellipse>
+				<ellipse opacity="0.04" cx="10.5" cy="5.80029008" rx="5.5" ry="2.86367051"></ellipse>
+				<ellipse opacity="0.04" cx="10.5" cy="5.80029008" rx="4.5" ry="2.38636864"></ellipse>
+			</g>
+			<g fill="${color}">
+				<path d="M27,13.5 C27,19.074644 20.250001,27.000002 14.75,34.500002 C14.016665,35.500004 12.983335,35.500004 12.25,34.500002 C6.7499993,27.000002 0,19.222562 0,13.5 C0,6.0441559 6.0441559,0 13.5,0 C20.955844,0 27,6.0441559 27,13.5 Z"></path>
+			</g>
+			<g opacity="0.2" fill="#000000">
+				<path d="M13.5,0 C6.0441559,0 0,6.0441559 0,13.5 C0,19.222562 6.7499993,27 12.25,34.5 C13,35.522727 14.016664,35.500004 14.75,34.5 C20.250001,27 27,19.074644 27,13.5 C27,6.0441559 20.955844,0 13.5,0 Z M13.5,1 C20.415404,1 26,6.584596 26,13.5 C26,15.898657 24.495584,19.181431 22.220703,22.738281 C19.945823,26.295132 16.705119,30.142167 13.943359,33.908203 C13.743445,34.180814 13.612715,34.322738 13.5,34.441406 C13.387285,34.322738 13.256555,34.180814 13.056641,33.908203 C10.284481,30.127985 7.4148684,26.314159 5.015625,22.773438 C2.6163816,19.232715 1,15.953538 1,13.5 C1,6.584596 6.584596,1 13.5,1 Z"></path>
+			</g>
+			<g style="${attr('data-featured-star') && featured ? 'visibility: hidden' : 'visibility: visible'}" transform="translate(8.0, 8.0)">
+				<circle fill="#000000" opacity="0.2" stroke="#000000" stroke-width="2" cx="5.5" cy="5.5" r="5.4999962"></circle>
+				<circle fill="#FFFFFF" cx="5.5" cy="5.5" r="5.4999962"></circle>
+			</g>
+			<g style="${attr('data-featured-star') && featured ? 'visibility: visible' : 'visibility: hidden'}">
+				<polygon fill="#000000" stroke="#000000" stroke-width="2" opacity="0.2" points="13.5 17.97 8.02 21.17 9.37 14.97 4.64 10.75 10.95 10.12 13.5 4.32 16.05 10.12 22.36 10.75 17.63 14.97 18.98 21.17 13.5 17.97" />
+				<polygon fill="#FFFFFF" points="13.5 17.94 8.02 21.14 9.37 14.94 4.64 10.72 10.95 10.09 13.5 4.28 16.05 10.09 22.36 10.72 17.63 14.94 18.98 21.14 13.5 17.94" />
+			</g>
+		</g>
+	</svg>`;
+}
+const newMarker = (popup,title,lon,lat,featured)=>{
+	let color = featured ? attr('data-featured-color') : attr('data-color');
+	const icon = document.createElement('div');
+	icon.className = 'maplibregl-marker maplibregl-marker-anchor-center';
+	icon.title = title;
+	icon.innerHTML = markerSVG(color, featured);
 	let marker = new maplibregl.Marker({
-		color: featured ? attr('data-featured-color') : attr('data-color'),
+		element: icon,
 	});
 	marker.setLngLat([lon,lat]);
 	marker.setPopup(popup);
@@ -171,18 +202,22 @@ const newMarker = (popup,lon,lat,featured)=>{
 	return marker;
 }
 const removeAllMarkers = ()=>{
-  markers.forEach((m)=>{
-	m.remove()
-  });
-  markers=[];
+	markers.forEach((m)=>{
+		m.remove()
+	});
+	markers=[];
+	bounds = null
 }
 const setMarkers = (src)=>{
 	removeAllMarkers();
+	bounds = new maplibregl.LngLatBounds();
 	fetch(src).then((response) => response.json()).then((data) => {
 		if(data.items){
 			data.items.forEach((item,i)=>{
-				let popup = new maplibregl.Popup().setHTML(popupContent(item,i,attr('data-tour')));
-				let marker = newMarker(popup,item.longitude,item.latitude,item.featured);
+				let extendloc = new maplibregl.LngLat(item.longitude,item.latitude);
+				bounds.extend(extendloc);
+				let popup = newPopup(item,i,attr('data-tour'));
+				let marker = newMarker(popup,item.title,item.longitude,item.latitude,item.featured);
 				markers[item.id] = marker;
 			});
 		}
@@ -195,7 +230,7 @@ const dataSource = (term)=>{
 		return attr('data-json-source');
 	}
 }
-const popupContent = (item, i, tourid)=>{
+const newPopup = (item, i, tourid)=>{
 	let params = tourid ? "?tour=" + tourid + "&index=" + i : "";
 	let href = attr('data-root-url') + "/items/show/" + item.id + params;
 	let address = item.address ? item.address.replace(/(<([^>]+)>)/gi, "") : item.latitude + "," + item.longitude;
@@ -205,13 +240,13 @@ const popupContent = (item, i, tourid)=>{
 	}
 	let html = `
 	<div class="curatescape-iw">
-		<a href="${href}" class="curatescape-iw-image portrait" style="background-image:url(${item.fullsize}); title="${item.title}"></a>
+		<a href="${href}" class="curatescape-iw-image portrait" style="background-image:url(${item.fullsize});"></a>
 		<div class="curatescape-iw-content">
 			<a href="${href}" class="curatescape-iw-title">${title}</a>
 			<div class="curatescape-iw-address">${address}</div>
 		</div> 
 	</div>`;
-	return html;
+	return new maplibregl.Popup({offset: 22}).setHTML(html);
 }
 // INITIALIZE MAP
 // @todo intersection observer
@@ -219,12 +254,13 @@ const popupContent = (item, i, tourid)=>{
 document.addEventListener('DOMContentLoaded', ()=>{
 	map = new maplibregl.Map({
 		container: mapcanvas,
-		center: [-81.693637, 41.499678],
-		zoom: 15,
+		center: [attr('data-lon'), attr('data-lat')],
+		zoom: attr('data-zoom'),
 		bearing: 0,
-		// pitch: 15,
-		// scrollZoom: false,
+		scrollZoom: (attr('data-maptype') !== 'multi'),
 		// interactive: false,
+	}).once("mousedown",()=>{
+		map.scrollZoom.enable();
 	});
 	setStyleLayers(); // @todo update to handle Custom URLs
 	addControls();

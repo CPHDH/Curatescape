@@ -174,6 +174,7 @@
 	flex-grow: 1;
 }
 .curatescape-factoids #factoid-heading{
+	text-wrap: balance;
 	font-weight: 600;
 	font-variant-caps: all-small-caps;
 	font-variant-caps: all-petite-caps;
@@ -381,9 +382,16 @@ table.curatescape-additional-files td span.type{
 	background-position: 8px 12.25px;
 	background-repeat: no-repeat;
 }
+/* map controls */
+.maplibregl-ctrl-group.custom button{
+	background-size: 90%;
+	background-position: center center;
+	background-repeat: no-repeat;
+}
 /* map info windows */
 #curatescape-map-figure .maplibregl-popup-content{
 	padding: 3px;
+	min-width: 220px;
 }
 .curatescape-iw{
 	position: relative;
@@ -400,12 +408,11 @@ table.curatescape-additional-files td span.type{
 .curatescape-iw-content{
 	font-size: 1rem;
 	position: relative;
-	min-width: 200px;
 	z-index: 2;
 	display: flex;
 	flex-direction: column;
 	justify-content: flex-end;
-	margin-top: 85px;
+	margin-top: max(50%, 100px);
 	background-image: linear-gradient(to top, rgba(0,0,0,1), rgba(0,0,0,.75));
 	padding: 0.5lh;
 }

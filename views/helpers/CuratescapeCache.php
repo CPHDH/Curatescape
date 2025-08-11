@@ -1,6 +1,6 @@
 <?php
-class Curatescape_View_Helper_Cache extends Zend_View_Helper_Abstract{
-	public function Cache(){
+class Curatescape_View_Helper_CuratescapeCache extends Zend_View_Helper_Abstract{
+	public function CuratescapeCache(){
 		return $this;
 	}
 	public function Config($seconds = 300, $bypassLoggedIn = true){
@@ -64,6 +64,6 @@ class Curatescape_View_Helper_Cache extends Zend_View_Helper_Abstract{
 		}
 	}
 	private function cachablePath(){
-		return boolval(in_array($_SERVER['REQUEST_URI'], _JSON_CACHEABLE_PATHS_));
+		return boolval(in_array($_SERVER['REQUEST_URI'], _CACHEABLE_PATHS_));
 	}
 }

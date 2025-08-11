@@ -4,7 +4,7 @@ class Curatescape_View_Helper_HookAdminDashboard extends Zend_View_Helper_Abstra
 		// TOURS (required)
 		echo $this->dashboardTours();
 		// RESOURCES (optional)
-		$cache = get_view()->Cache();
+		$cache = get_view()->CuratescapeCache();
 		$cacheDuration = 3600 * 24;
 		// content audit (24 hour cache, cleared on item save)
 		if(option('curatescape_dashboard_audit')){
