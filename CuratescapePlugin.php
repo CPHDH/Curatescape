@@ -115,6 +115,7 @@ class CuratescapePlugin extends Omeka_Plugin_AbstractPlugin{
 		'curatescape_plugin_styles' => 1,
 		'curatescape_rss' => 1,
 		'curatescape_shorten_secondary_nav' => 1,
+		'curatescape_smart_banner' => 1,
 		'curatescape_subtitle_styles' => 1,
 		'curatescape_template' => 1,
 		'curatescape_theme_fixes' => 1,
@@ -125,6 +126,7 @@ class CuratescapePlugin extends Omeka_Plugin_AbstractPlugin{
 	{
 		add_translation_source(_PLUGIN_DIR_.'/languages');
 		add_shortcode( 'curatescape_app_buttons', array(get_view(),'ShortcodeCuratescapeAppButtons'));
+		add_shortcode( 'curatescape_map', array(get_view(),'ShortcodeCuratescapeMap'));
 	}
 
 	public function hookInstall()

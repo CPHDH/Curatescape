@@ -26,6 +26,26 @@
 	position: absolute;
 	pointer-events: none;
 }
+[data-curatescape-map-skip-link="true"]{
+	position: absolute;
+	z-index: 403;
+	left: 10px;
+	top: 10px;
+	padding: 2px 18px;
+	position: absolute;
+	z-index: 402;
+	min-height: 36px;
+	border-radius: 5px;
+	background-color: white;
+	border: 2px solid rgba(0,0,0,.2);
+	transition: all linear 0.15s;
+	opacity: 0;
+	pointer-events: none;
+}
+[data-curatescape-map-skip-link="true"]:focus{
+	opacity: 1;
+	pointer-events: all;
+}
 /* photoswipe! */
 .pswp__bg{
 	background: linear-gradient(to top, rgb(0, 0, 0) 65%, rgba(0,0,0,.85));
@@ -327,10 +347,11 @@ table.curatescape-additional-files td span.type{
 	padding-top: 1lh;
 	padding-bottom: 1lh;
 }
-.curatescape-home-content figure{
-	margin: 0 auto;
-}
 /* map */
+#curatescape-map-figure{
+	margin: 0 auto;
+	position: relative;
+}
 #curatescape-map-canvas{
 	width: 100%;
 	min-height: 450px;
@@ -340,7 +361,7 @@ table.curatescape-additional-files td span.type{
 	margin: 0;
 	padding: 0;
 }
-.curatescape-map-caption{
+#curatescape-map-caption{
 	padding-top: 0.5lh;
 	margin-bottom: 0;
 	font-style: italic;
@@ -350,7 +371,7 @@ table.curatescape-additional-files td span.type{
 	width: 100%;
 	clear: both;
 }
-/* map subjects select */
+
 .curatescape-map{
 	position: relative;
 }
@@ -361,32 +382,60 @@ table.curatescape-additional-files td span.type{
 	color: #333;
 	text-decoration: none;
 }
-.curatescape-map select{
-	-moz-appearance: none;
-	-webkit-appearance:none;
-	appearance: none;
+/* map subjects select */
+.curatescape-map #subject-select-control{
+	opacity: 0.95;
 	position: absolute;
 	z-index: 401;
-	right: 68px;
-	top: 12px;
-	max-width: calc(100% - 122px);
-	height: 45px;
-	font-size: 16px;
+	right: 49px;
+	top: 8px;
+	min-height: 36px;
 	border-radius: 5px;
 	background-color: white;
 	border: 2px solid rgba(0,0,0,.2);
-	padding-left: 32px; 
+	max-width: calc(100% - 122px);
+	display: flex;
+	flex-direction: row;
+}
+.curatescape-map #subject-select-control .indicator{
+	display: inline-block;
+	flex-grow: 1;
 	background-clip: padding-box;
 	background-image: url("../../shared/images/svg/ionicons/checkmark-circle.svg");
-	background-size: 18px; 
-	background-position: 8px 12.25px;
+	background-size: 1.25em; 
+	background-position: center;
 	background-repeat: no-repeat;
+	width: 36px;
+}
+.curatescape-map #subject-select-control .indicator.loading{
+	animation: spin 1.5s linear infinite;
+	background-image: url("../../shared/images/svg/ionicons/reload-circle.svg");
+}
+.curatescape-map #subject-select-control select{
+	-moz-appearance: none;
+	-webkit-appearance:none;
+	appearance: none;
+	background: transparent;
+	border: 0 none transparent;
+	height: 36px;
+	font-size: 16px;
+	padding: 0 10px 0 4px;
+	margin: 0;
+}
+@keyframes spin { 
+	100% { 
+		-webkit-transform: rotate(360deg); 
+		transform:rotate(360deg); 
+	} 
 }
 /* map controls */
 .maplibregl-ctrl-group.custom button{
 	background-size: 90%;
 	background-position: center center;
 	background-repeat: no-repeat;
+}
+.maplibregl-ctrl-group.custom.styleswap button{
+	background-size: 70%;
 }
 /* map info windows */
 #curatescape-map-figure .maplibregl-popup-content{
@@ -440,6 +489,10 @@ table.curatescape-additional-files td span.type{
 	right: 0;
 	bottom: 0;
 	z-index: 1;
+}
+/* map shortcode */
+#curatescape-map-figure[class^='shortcode']{
+	margin-bottom: 1lh;
 }
 /* app buttons shortcode */
 .curatescape-shortcode-app-buttons-container{

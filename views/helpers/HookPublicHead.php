@@ -8,8 +8,8 @@ class Curatescape_View_Helper_HookPublicHead extends Zend_View_Helper_Abstract{
 		if($ga = option('curatescape_google_analytics')){
 			$this->gaTags($ga);
 		}
-		if($iosIdentifier = option('curatescape_app_ios')){ 
-			$this->smartBanner($iosIdentifier);
+		if(option('curatescape_app_ios') && option('curatescape_smart_banner')){ 
+			$this->smartBanner(option('curatescape_app_ios'));
 		}
 		// CSS global
 		if(option('curatescape_plugin_styles')){
@@ -44,9 +44,15 @@ class Curatescape_View_Helper_HookPublicHead extends Zend_View_Helper_Abstract{
 				queue_css_file('gallery-slides', 'all', false, 'css', get_plugin_ini(_PLUGIN_NAME_, 'version'));
 			}
 		}
+		// JS home
+		if(is_current_url('/')){
+			$this->jsonPreloadHome();
+		}
 		// JS tours/show
 		if(is_current_url('/tours/show')){
-			// queue_js_file('geolocation-map-tour', 'javascripts', array('defer'=>'defer'));
+			if(option('curatescape_map_mirror_geolocation')){
+				queue_js_file('geolocation-map-tour', 'javascripts', array('defer'=>'defer'));
+			}
 			if(option('curatescape_gallery_style_tour') !== 'gallery-inline-captions'){
 				$this->photoSwipeModule();
 			}
@@ -82,6 +88,14 @@ class Curatescape_View_Helper_HookPublicHead extends Zend_View_Helper_Abstract{
 		}
 		queue_lightgallery_assets();
 		queue_js_file('lightgallery', 'javascripts', array('defer'=>'defer'));
+	}
+	
+	private function jsonPreloadHome()
+	{
+	if(option('curatescape_home_map') === 'none') return null;
+	?>
+	<link rel="preload" href="<?php echo WEB_ROOT.'/items/browse?output=mobile-json';?>"  as="fetch"/>
+	<?php
 	}
 
 	private function curatescapeTourNavModule()

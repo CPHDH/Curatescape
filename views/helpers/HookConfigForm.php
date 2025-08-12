@@ -126,7 +126,7 @@ class Curatescape_View_Helper_HookConfigForm extends Zend_View_Helper_Abstract{
 
 		<fieldset>
 			<legend><?php echo __('Map Settings'); ?></legend>
-			<p><?php echo __('Use the following options to customize %s maps. Additional Map configurations can be found in <a target="_blank" href="%2s">Geolocation plugin settings</a>.', _PLUGIN_NAME_, '/admin/plugins/config?name=Geolocation');?></p>
+			<p><?php echo __('Use the following options to customize %s maps. Additional Map configurations can be found in <a target="_blank" href="%2s">Geolocation plugin settings</a>. To display %3s maps use the shortcode: %4s. Refer to the %5s for full list of shortcode options.', _PLUGIN_NAME_, '/admin/plugins/config?name=Geolocation', _PLUGIN_NAME_, '<code>[curatescape_map]</code>', '<a href="https://omeka.org/classic/plugins/'._PLUGIN_NAME_.'" target="_blank">plugin documentation</a>');?></p>
 			
 			<!-- Mirror Geolocation -->
 			<?php echo $this->configFormCheckBox('curatescape_map_mirror_geolocation', 'Mirror Geolocation', __('If checked, use the maps provided by the Geolocation plugin. This option is recommended for most projects in order to maintain consistency across page templates. Uncheck and configure custom options if you are using a Curatescape theme or if you have developed a Curatescape-optimized custom theme. Additional information available in <a target="_blank" href="%s"> plugin documentation</a>.', 'https://omeka.org/classic/plugins/'._PLUGIN_NAME_));?>
@@ -298,6 +298,8 @@ class Curatescape_View_Helper_HookConfigForm extends Zend_View_Helper_Abstract{
 			<?php echo $this->configFormText('curatescape_app_ios', 'iOS App', __('Enter the numeric identifier for the iOS app, found in Apple App Store Connect account. When this option is enabled, an iOS Smart App Banner will be added to your site, and you will be able to use the %s shortcode to display iOS App Store links. Some themes may also use this option to systematically display iOS App Store links.', '<code>[curatescape_app_buttons]</code>'), 'Example: 0123456789');?>
 			<!-- Android-->
 			<?php echo $this->configFormText('curatescape_app_android', 'Android App', __('Enter the alphanumeric package name/identifier for the Android app, found in Google Play Console account. When this option is enabled, you will be able to use the %s shortcode to display Google Play app links. Some themes may also use this option to systematically display Google Play app links.', '<code>[curatescape_app_buttons]</code>'), 'Example: com.developer.appname');?>
+			<!-- Smart Banner -->
+			<?php echo $this->configFormCheckBox('curatescape_smart_banner', 'Safari App Banner', __('If checked, display a banner encouraging Safari users to download the configured iOS mobile app. (Android does not offer an equivalent functionality.)') );?>
 		</fieldset>
 
 		<fieldset>

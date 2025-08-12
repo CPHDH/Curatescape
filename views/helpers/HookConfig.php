@@ -37,7 +37,7 @@ class Curatescape_View_Helper_HookConfig extends Zend_View_Helper_Abstract{
 		set_option('curatescape_map_marker_color', $_POST['curatescape_map_marker_color']);
 		set_option('curatescape_map_marker_featured_color', $_POST['curatescape_map_marker_featured_color']);
 		set_option('curatescape_map_marker_featured_star', $_POST['curatescape_map_marker_featured_star']);
-		set_option('curatescape_map_custom_label', $_POST['curatescape_map_mb_label']);
+		set_option('curatescape_map_custom_label', $_POST['curatescape_map_custom_label']);
 		set_option('curatescape_map_mirror_geolocation', $_POST['curatescape_map_mirror_geolocation']);
 		set_option('curatescape_map_prefer_eu', $_POST['curatescape_map_prefer_eu']);
 		set_option('curatescape_map_primary_layer', $_POST['curatescape_map_primary_layer']);
@@ -51,6 +51,7 @@ class Curatescape_View_Helper_HookConfig extends Zend_View_Helper_Abstract{
 		set_option('curatescape_plugin_styles', $_POST['curatescape_plugin_styles']);
 		set_option('curatescape_rss', $_POST['curatescape_rss']);
 		set_option('curatescape_shorten_secondary_nav', $_POST['curatescape_shorten_secondary_nav']);
+		set_option('curatescape_smart_banner', $_POST['curatescape_smart_banner']);
 		set_option('curatescape_subtitle_styles', $_POST['curatescape_subtitle_styles']);
 		set_option('curatescape_template', $_POST['curatescape_template']);
 		set_option('curatescape_theme_fixes', $_POST['curatescape_theme_fixes']);

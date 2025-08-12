@@ -14,8 +14,11 @@ In compatible themes, media files can be presented in multiple customizable, acc
 ### Tours
 Curatescape adds a new content type called Tours. Each tour is a curated selection of items, placed on a map, and presented with additional metadata and contextual information. Any location-enabled *Curatescape Story* Item can be added to any number of Tours. Tours can be thematic or geographically-based and are presented alongside an interactive map to assist users with navigation.
 
+### Maps
+Curatescape facilitates the use of either the default Geolocation plugin maps or our custom Curatescape maps, which add numerous features and open new possibilities for theme and project customization. If enabled, Curatescape will display items on a WebGL-enhanced vector map with additional controls, customizable markers, and endless map styles using the [MapLibre Style Spec](https://maplibre.org/maplibre-style-spec/). Curatescape maps can be added to the homepage of compatible themes using the built-in plugin settings, and can be added anywhere shortcodes are supported (see shortcode information below). 
+
 ### Sitewide Enhancements
-Curatescape also enables a variety of sitewide enhancements, including the addition of a simple, cacheable JSON API for mobile app and/or headless data exchange of select content; a custom RSS feed designed specifically for narrative content; custom meta tags for rich social media previews; custom shortcodes (see below); Google Analytics integration; admin bar enhancements; and much more. View the plugin configuration page for all options (there are _a lot_ of them).
+Curatescape also enables a variety of sitewide enhancements, including the addition of a simple, cacheable JSON API for mobile app and/or headless data exchange of select content; a custom RSS feed designed specifically for narrative content; custom meta tags for rich social media previews; custom shortcodes (see below); Google Analytics integration; admin bar enhancements; useful dashboard widgets; and much more. View the plugin configuration page for all options (there are _a lot_ of them).
 
 ## Requirements
 The [Geolocation plugin](https://omeka.org/classic/plugins/Geolocation/) is required. 
@@ -29,7 +32,20 @@ This plugin should work with any Omeka Classic theme, though features and level 
 For additional features, [vetted accessibility](https://curatescape.org/accessibility), and improved performance, use the [Curatescape Echo theme](https://github.com/CPHDH/theme-curatescape-echo).
 
 ## Shortcodes
-Curatescape adds the following [shortcodes](https://omeka.org/classic/docs/Content/Shortcodes/).
+Curatescape adds the following [shortcodes](https://omeka.org/classic/docs/Content/Shortcodes/). Most themes support out-of-the-box use of shortcodes through various theme configurations, as well as on Simple Pages and other areas that display user text content. To add shortcodes programmatically, developers can use something like: `<?php get_view()->shortcodes('[curatescape_map]');?>`.
+
+### Curatescape Map
+Uses configured plugin settings to display an interactive map of Curatescape Story items, with optional subjects selection dropdown or custom data source.
+#### Usage
+```
+[curatescape_map subjects="true"]
+```
+#### Parameters
+| Option | Type | Description |
+| -------- | ---- | ----------- |
+| src | string | Replace the default JSON data source. Omit to show all items using the default source. Example: Use `/items/browse?featured=1&output=mobile-json` to display only featured items. Default: `/items/browse?output=mobile-json` |
+| subjects | boolean |  Use `true` to include a dropdown of available Subject terms. Note that this option will override the `src` argument. The Subjects Select option must also be enabled in Curatescape plugin settings. |
+
 ### App Store Buttons
 Uses configured plugin settings for mobile apps to create button-styled links for iOS and Android app stores. With the default CSS classes, the links will be presented in a flexible CSS container that adjusts the layout based on available space.
 #### Usage
@@ -41,8 +57,8 @@ Uses configured plugin settings for mobile apps to create button-styled links fo
 | -------- | ---- | ----------- |
 | buttonclass | string | Replace the default CSS class for the button links. Omit to use the default button link styles. Default class: `curatescape-shortcode-button` |
 | containerclass | string | Replace the default CSS class for the container. Omit to use the default container styles. Default class: `curatescape-shortcode-app-buttons` |
-| icons | boolean |  Use "true" to include vector icons for App Store and Google Play. |
-| platform | string | Use "ios" for the iOS link only or "android" for the Android link only. Omit to include both. When using this option, it is generally recommended to override the default button link and container classes. |
+| icons | boolean |  Use `true` to include vector icons for App Store and Google Play. |
+| platform | string | Use `ios` for the iOS link only or `android` for the Android link only. Omit to include both. When using this option, it is generally recommended to override the default button link and container classes. |
 
 ## Support & Troubleshooting
 ### User Forums

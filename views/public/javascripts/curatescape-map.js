@@ -4,15 +4,18 @@ const mapfigure = document.querySelector('#curatescape-map-figure');
 // SCOPED VARS
 let map = null;
 let bounds = null;
+let term = null;
 let markers = [];
+let styleLayers = [];
+let currentStyleLayer = 0;
 // FUNCTIONS
 const attr = (string, el = mapfigure)=>{
 	return el.hasAttribute(string) ? el.getAttribute(string) : null;
 }
 const safeText = (value) => {
-  var d = document.createElement("div");
-  d.innerHTML = value;
-  return d.innerText;
+	var d = document.createElement("div");
+	d.innerHTML = value;
+	return d.innerText;
 };
 const getCommaSeparatedValue = (string, index)=>{
 	if(!string) return null;
@@ -69,14 +72,32 @@ const stylesConfig = (name, label, stadiaKey, stadiaPreferEU, fallback = 'OFM_LI
 	};
 	return typeof styles[name] !== 'undefined' ? styles[name] : styles[fallback];
 }
-
+const setStyleLayers = (styleIndex = 0)=>{
+	styleLayers[0] = stylesConfig(
+		attr('data-primary-layer'),
+		getCommaSeparatedValue(attr('data-custom-label'), 0),
+		attr('data-stadia-key'),
+		attr('data-prefer-eu')
+	);
+	if(attr('data-secondary-layer')){
+		styleLayers[1] = stylesConfig(
+			attr('data-secondary-layer'),
+			getCommaSeparatedValue(attr('data-custom-label'), 1),
+			attr('data-stadia-key'),
+			attr('data-prefer-eu')
+		);
+	}
+	currentStyleLayer = styleIndex;
+	map.setStyle(styleLayers[currentStyleLayer].url);
+}
 const subjectSelectControls = ()=>{
 	// not a proper control
-	let subjectSelect = document.querySelector(".curatescape-map select");
+	let subjectSelect = document.querySelector('#subject-select-control select');
 	if(subjectSelect){
 		subjectSelect.removeAttribute("hidden");
 		subjectSelect.addEventListener("change", (e)=>{
-			setMarkers(dataSource(e.target.options[e.target.selectedIndex].text));
+			term = e.target.options[e.target.selectedIndex].value;
+			setMarkers(dataSource(term));
 		})
 	}
 }
@@ -99,7 +120,7 @@ const geolocationControls = ()=>{
 }
 const fullscreenControls = ()=>{
 	return map.addControl(new maplibregl.FullscreenControl({
-		container: mapfigure
+		container: mapcanvas
 	}));
 }
 const fitBoundsControl = ()=>{
@@ -124,38 +145,46 @@ const fitBoundsControl = ()=>{
 	}
 	return map.addControl(new FitBoundsControl()); 
 }
+const styleSwapControl = ()=>{
+	class StyleSwapControl {
+		constructor(){
+			this.titlePre = attr('data-style-swap-label') ? attr('data-style-swap-label') + ': ' : '';
+			this.defaultIndex = styleLayers[currentStyleLayer + 1] !== 'undefined' ? currentStyleLayer + 1 : 0;
+			this.buttonLabelDefault = this.titlePre + styleLayers[this.defaultIndex].label;
+		}
+		onAdd(map) {
+			this.map = map;
+			this.container = document.createElement('div');
+			this.container.className = 'maplibregl-ctrl maplibregl-ctrl-group custom styleswap';
+			const button = document.createElement('button');
+			button.title = this.buttonLabelDefault;
+			button.style.backgroundImage = `url("data:image/svg+xml;charset=utf-8,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E %3Cpath style='fill:%23333333;' d='M256 256c-13.47 0-26.94-2.39-37.44-7.17l-148-67.49C63.79 178.26 48 169.25 48 152.24s15.79-26 22.58-29.12l149.28-68.07c20.57-9.4 51.61-9.4 72.19 0l149.37 68.07c6.79 3.09 22.58 12.1 22.58 29.12s-15.79 26-22.58 29.11l-148 67.48C282.94 253.61 269.47 256 256 256zm176.76-100.86z'/%3E %3Cpath style='fill:%23333333;' d='M441.36 226.81L426.27 220l-38.77 17.74-94 43c-10.5 4.8-24 7.19-37.44 7.19s-26.93-2.39-37.42-7.19l-94.07-43L85.79 220l-15.22 6.84C63.79 229.93 48 239 48 256s15.79 26.08 22.56 29.17l148 67.63C229 357.6 242.49 360 256 360s26.94-2.4 37.44-7.19l147.87-67.61c6.81-3.09 22.69-12.11 22.69-29.2s-15.77-26.07-22.64-29.19z'/%3E %3Cpath style='fill:%23333333;' d='M441.36 330.8l-15.09-6.8-38.77 17.73-94 42.95c-10.5 4.78-24 7.18-37.44 7.18s-26.93-2.39-37.42-7.18l-94.07-43L85.79 324l-15.22 6.84C63.79 333.93 48 343 48 360s15.79 26.07 22.56 29.15l148 67.59C229 461.52 242.54 464 256 464s26.88-2.48 37.38-7.27l147.92-67.57c6.82-3.08 22.7-12.1 22.7-29.16s-15.77-26.07-22.64-29.2z'/%3E %3C/svg%3E")`;
+			button.onclick = () => {
+				let nextIndex = typeof styleLayers[currentStyleLayer + 1] !== 'undefined' ? currentStyleLayer + 1 : 0;
+				let previousIndex = nextIndex == 1 ? 0 : 1;
+				setStyleLayers(nextIndex);
+				currentStyleLayer = nextIndex;
+				button.title = this.titlePre + styleLayers[previousIndex].label
+			};
+			this.container.appendChild(button);
+			return this.container;
+		}
+		onRemove() {
+			this.container.parentNode.removeChild(this.container);
+			this.map = undefined;
+		}
+	}
+	return styleLayers.length > 1 ? map.addControl(new StyleSwapControl()) : null; 
+}
 const addControls = ()=>{
-	subjectSelectControls(); // @todo FIX!
+	subjectSelectControls(); 
 	navigationControls();
 	geolocationControls();
-	fullscreenControls();
-	fitBoundsControl(); // @todo add actual bounds!!!! add icon!!!
+	styleSwapControl();
+	fitBoundsControl(); 
+	// fullscreenControls();
 	// @todo add view reset control!!!
-	// @todo add pitch control!!!
 	// @todo add layer control!!!
-}
-
-const setStyleLayers = ()=>{
-	let styleLayers = [];
-	let primary = stylesConfig(
-		attr('data-primary-layer'),
-		getCommaSeparatedValue(attr('data-mb-label'), 0),
-		attr('data-stadia-key'),
-		attr('data-prefer-eu')
-	);
-	styleLayers[primary.label] = primary;
-	map.setStyle(primary.url);
-	// if(attr('data-secondary-layer')){
-	// 	let secondary = stylesConfig(
-	//		attr('data-secondary-layer')
-	// 		getCommaSeparatedValue(attr('data-mb-label'), 1),
-	// 		attr('data-stadia-key'),
-	// 		attr('data-prefer-eu')
-	// 	);
-	// 	styleLayers[secondary.label] = secondary;
-	// 	map.setStyle(secondary.url);
-	// 	// const tileLayersControl = new Control.Layers(tileLayers).addTo(map); 
-	// }
 }
 const markerSVG = (color, featured=false, height=41, width=27)=>{
 	return `<svg display="block" height="${height}px" width="${width}px" viewBox="0 0 ${width} ${height}">
@@ -209,9 +238,10 @@ const removeAllMarkers = ()=>{
 	bounds = null
 }
 const setMarkers = (src)=>{
-	removeAllMarkers();
-	bounds = new maplibregl.LngLatBounds();
+	setLoading(term);
 	fetch(src).then((response) => response.json()).then((data) => {
+		removeAllMarkers();
+		bounds = new maplibregl.LngLatBounds();
 		if(data.items){
 			data.items.forEach((item,i)=>{
 				let extendloc = new maplibregl.LngLat(item.longitude,item.latitude);
@@ -220,12 +250,55 @@ const setMarkers = (src)=>{
 				let marker = newMarker(popup,item.title,item.longitude,item.latitude,item.featured);
 				markers[item.id] = marker;
 			});
+			if(attr('data-fixed-center') == '0' || term){
+				map.fitBounds(bounds, { padding: 50, maxZoom: 15,});
+			}
+			removeLoading();
 		}
+	},(err)=>{
+		removeLoading();
 	});
+}
+const pauseInteractivity = ()=>{
+	map.scrollZoom.disable();
+	map.dragPan.disable();
+	map.doubleClickZoom.disable();
+	map.keyboard.disable();
+	map.boxZoom.disable();
+	map.dragRotate.disable();
+	map.touchZoomRotate.disable();
+}
+const resumeInteractivity = ()=>{
+	map.scrollZoom.enable();
+	map.dragPan.enable();
+	map.doubleClickZoom.enable();
+	map.keyboard.enable();
+	map.boxZoom.enable();
+	map.dragRotate.enable();
+	map.touchZoomRotate.enable();
+}
+const setLoading = (term)=>{
+	pauseInteractivity();
+	let selectIcon = document.querySelector('.curatescape-map #subject-select-control .indicator');
+	if( selectIcon ) selectIcon.classList.add('loading');
+	
+	let mapStatus = document.querySelector('#curatescape-map-canvas #map-status');
+	if(mapStatus){
+		let message = attr('data-initial-load')
+		if(term){
+			message += ': '+term;
+		}
+		mapStatus.innerText = message;
+	}
+}
+const removeLoading = ()=>{
+	resumeInteractivity();
+	let selectIcon = document.querySelector('.curatescape-map #subject-select-control .indicator');
+	if( selectIcon ) selectIcon.classList.remove('loading');
 }
 const dataSource = (term)=>{
 	if(term){
-		return  `${attr('data-root-url')}/items/browse?search=&advanced[0][element_id]=49&advanced[0][type]=contains&advanced[0][terms]=${term}&output=mobile-json`;
+		return `${attr('data-root-url')}/items/browse?search=&advanced[0][element_id]=49&advanced[0][type]=contains&advanced[0][terms]=${term}&output=mobile-json`;
 	}else{
 		return attr('data-json-source');
 	}
@@ -258,7 +331,8 @@ document.addEventListener('DOMContentLoaded', ()=>{
 		zoom: attr('data-zoom'),
 		bearing: 0,
 		scrollZoom: (attr('data-maptype') !== 'multi'),
-		// interactive: false,
+		attributionControl: {compact: true},
+		interactive: false,
 	}).once("mousedown",()=>{
 		map.scrollZoom.enable();
 	});
