@@ -1,3 +1,5 @@
+// IMPORT
+import 'maplibre-gl';
 // CONSTANTS
 const mapcanvas = document.querySelector('#curatescape-map-canvas');
 const mapfigure = document.querySelector('#curatescape-map-figure');
@@ -9,53 +11,53 @@ let markers = [];
 let styleLayers = [];
 let currentStyleLayer = 0;
 // FUNCTIONS
+const htmlEntities = (value)=>{
+	var d = document.createElement('div');
+	d.innerHTML = value;
+	return d.innerText;
+}
 const attr = (string, el = mapfigure)=>{
 	return el.hasAttribute(string) ? el.getAttribute(string) : null;
 }
-const safeText = (value) => {
-	var d = document.createElement("div");
-	d.innerHTML = value;
-	return d.innerText;
-};
 const getCommaSeparatedValue = (string, index)=>{
 	if(!string) return null;
 	let arr = string.split(',');
 	return arr[index] ? arr[index].trim() : null;
 }
-const stylesConfig = (name, label, stadiaKey, stadiaPreferEU, fallback = 'OFM_LIBERTY')=>{
+const stylesConfig = (name, label, stadiaKey, preferEU, fallback = 'OFM_LIBERTY')=>{
 	stadiaKey = stadiaKey ? '?api_key='+stadiaKey : '';
-	stadiaPreferEU = stadiaPreferEU ? 'tiles-eu' : 'tiles';
+	preferEU = preferEU ? 'tiles-eu' : 'tiles';
 	let styles = [];
 	styles.OFM_LIBERTY = {
 		url: `//tiles.openfreemap.org/styles/liberty`, 
 		label: label ? label : 'Open Free Maps | Liberty',
 	};
 	styles.STADIA_OSMBRIGHT = {
-		url: `//${stadiaPreferEU}.stadiamaps.com/styles/osm_bright.json${stadiaKey}`,
+		url: `//${preferEU}.stadiamaps.com/styles/osm_bright.json${stadiaKey}`,
 		label: label ? label : 'Stadia | OSM Bright',
 	};
 	styles.STADIA_ALIDADESMOOTH = {
-		url: `//${stadiaPreferEU}.stadiamaps.com/styles/alidade_smooth.json${stadiaKey}`,
+		url: `//${preferEU}.stadiamaps.com/styles/alidade_smooth.json${stadiaKey}`,
 		label: label ? label : 'Stadia | Alidade Smooth',
 	};
 	styles.STADIA_ALIDADESMOOTHDARK = {
-		url: `//${stadiaPreferEU}.stadiamaps.com/styles/alidade_smooth_dark.json${stadiaKey}`,
+		url: `//${preferEU}.stadiamaps.com/styles/alidade_smooth_dark.json${stadiaKey}`,
 		label: label ? label : 'Stadia | Alidade Smooth Dark',
 	};
 	styles.STADIA_ALIDADESATELLITE = {
-		url: `//${stadiaPreferEU}.stadiamaps.com/styles/alidade_satellite.json${stadiaKey}`,
+		url: `//${preferEU}.stadiamaps.com/styles/alidade_satellite.json${stadiaKey}`,
 		label: label ? label : 'Stadia | Alidade Satellite',
 	};
 	styles.STADIA_STAMENTERRAIN = {
-		url: `//${stadiaPreferEU}.stadiamaps.com/styles/stamen_terrain.json${stadiaKey}`,
+		url: `//${preferEU}.stadiamaps.com/styles/stamen_terrain.json${stadiaKey}`,
 		label: label ? label : 'Stadia | Stamen Terrain',
 	};
 	styles.STADIA_STAMENTONER =  {
-		url: `//${stadiaPreferEU}.stadiamaps.com/styles/stamen_toner_lite.json${stadiaKey}`,
+		url: `//${preferEU}.stadiamaps.com/styles/stamen_toner_lite.json${stadiaKey}`,
 		label: label ? label : 'Stadia | Stamen Toner',
 	};
 	styles.STADIA_OUTDOORS = {
-		url: `//${stadiaPreferEU}.stadiamaps.com/styles/outdoors.json${stadiaKey}`, 
+		url: `//${preferEU}.stadiamaps.com/styles/outdoors.json${stadiaKey}`, 
 		label: label ? label : 'Stadia | Outdoors',
 	};
 	styles.CARTO_POSITRON = {
@@ -94,7 +96,7 @@ const subjectSelectControls = ()=>{
 	// not a proper control
 	let subjectSelect = document.querySelector('#subject-select-control select');
 	if(subjectSelect){
-		subjectSelect.removeAttribute("hidden");
+		subjectSelect.parentElement.removeAttribute("hidden");
 		subjectSelect.addEventListener("change", (e)=>{
 			term = e.target.options[e.target.selectedIndex].value;
 			setMarkers(dataSource(term));
@@ -118,11 +120,11 @@ const geolocationControls = ()=>{
 	});
 	return map.addControl(geolocate);
 }
-const fullscreenControls = ()=>{
-	return map.addControl(new maplibregl.FullscreenControl({
-		container: mapcanvas
-	}));
-}
+// const fullscreenControls = ()=>{
+	// return map.addControl(new maplibregl.FullscreenControl({
+	// 	container: mapcanvas
+	// }));
+// }
 const fitBoundsControl = ()=>{
 	class FitBoundsControl {
 		onAdd(map) {
@@ -176,15 +178,36 @@ const styleSwapControl = ()=>{
 	}
 	return styleLayers.length > 1 ? map.addControl(new StyleSwapControl()) : null; 
 }
+// const resetControl = ()=>{
+	// class ResetControl {
+	// 	onAdd(map) {
+	// 		this.map = map;
+	// 		this.container = document.createElement('div');
+	// 		this.container.className = 'maplibregl-ctrl maplibregl-ctrl-group custom reset';
+	// 		const button = document.createElement('button');
+	// 		button.title = attr('data-fitbounds-label');
+	// 		button.style.backgroundImage = `url("data:image/svg+xml;charset=utf-8,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E %3Cpath fill='none' stroke='currentColor' stroke-linecap='round' stroke-miterlimit='10' stroke-width='32' d='M400 148l-21.12-24.57A191.43 191.43 0 00240 64C134 64 48 150 48 256s86 192 192 192a192.09 192.09 0 00181.07-128'/%3E %3Cpath d='M464 97.42V208a16 16 0 01-16 16H337.42c-14.26 0-21.4-17.23-11.32-27.31L436.69 86.1C446.77 76 464 83.16 464 97.42z'/%3E %3C/svg%3E")`;
+	// 		button.onclick = () => {
+	// 			//this.map.fitBounds(bounds, { padding: 50, maxZoom: 15,});
+	// 		};
+	// 		this.container.appendChild(button);
+	// 		return this.container;
+	// 	}
+	// 	onRemove() {
+	// 		this.container.parentNode.removeChild(this.container);
+	// 		this.map = undefined;
+	// 	}
+	// }
+	// return map.addControl(new ResetControl()); 
+// }
 const addControls = ()=>{
 	subjectSelectControls(); 
 	navigationControls();
 	geolocationControls();
 	styleSwapControl();
 	fitBoundsControl(); 
+	// resetControl();
 	// fullscreenControls();
-	// @todo add view reset control!!!
-	// @todo add layer control!!!
 }
 const markerSVG = (color, featured=false, height=41, width=27)=>{
 	return `<svg display="block" height="${height}px" width="${width}px" viewBox="0 0 ${width} ${height}">
@@ -220,7 +243,7 @@ const newMarker = (popup,title,lon,lat,featured)=>{
 	let color = featured ? attr('data-featured-color') : attr('data-color');
 	const icon = document.createElement('div');
 	icon.className = 'maplibregl-marker maplibregl-marker-anchor-center';
-	icon.title = title;
+	icon.title = htmlEntities(title);
 	icon.innerHTML = markerSVG(color, featured);
 	let marker = new maplibregl.Marker({
 		element: icon,
@@ -319,11 +342,15 @@ const newPopup = (item, i, tourid)=>{
 			<div class="curatescape-iw-address">${address}</div>
 		</div> 
 	</div>`;
-	return new maplibregl.Popup({offset: 22}).setHTML(html);
+	return new maplibregl.Popup({
+		offset: 22,
+		closeButton:true,
+	}).setHTML(html);
 }
 // INITIALIZE MAP
 // @todo intersection observer
-// @todo optimize library load-in
+// @todo external open marker from tour
+// @todo CLUSTERS!!!!
 document.addEventListener('DOMContentLoaded', ()=>{
 	map = new maplibregl.Map({
 		container: mapcanvas,

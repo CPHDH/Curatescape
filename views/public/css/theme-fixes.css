@@ -163,13 +163,13 @@
 .curatescape-fix-berlin .curatescape-home-content.top{
 	border-bottom: 1px solid #ccc;
 }
-.curatescape-fix-thedaily .curatescape-map-caption{
+.curatescape-fix-thedaily #curatescape-map-caption{
 	background-color: #000000;
 	color: #FFFFFF;
 	padding: 12px;
 	width: max-content;
 }
-.curatescape-fix-thedaily .curatescape-map-caption a{
+.curatescape-fix-thedaily #curatescape-map-caption a{
 	color: #FFFF00;
 	text-decoration: underline;
 }

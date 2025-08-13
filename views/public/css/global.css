@@ -338,7 +338,6 @@ table.curatescape-additional-files td span.type{
 /* home */
 .curatescape-home-content{
 	width: 100%;
-	clear: both;
 }
 .curatescape-home-content.top{
 	padding-bottom: 1lh;
@@ -354,7 +353,7 @@ table.curatescape-additional-files td span.type{
 }
 #curatescape-map-canvas{
 	width: 100%;
-	min-height: 450px;
+	min-height: 500px;
 	max-height: 90vh;
 }
 #geolocation figure{
@@ -383,19 +382,26 @@ table.curatescape-additional-files td span.type{
 	text-decoration: none;
 }
 /* map subjects select */
+.curatescape-map #subject-select-control[hidden]{
+	opacity: 0;
+	pointer-events: none;
+}
 .curatescape-map #subject-select-control{
-	opacity: 0.95;
 	position: absolute;
 	z-index: 401;
 	right: 49px;
 	top: 8px;
 	min-height: 36px;
 	border-radius: 5px;
-	background-color: white;
+	background-color: #fff;
 	border: 2px solid rgba(0,0,0,.2);
 	max-width: calc(100% - 122px);
 	display: flex;
 	flex-direction: row;
+}
+.curatescape-map #subject-select-control:hover{
+	transition: background-color 0.15s linear;
+	background-color: #f2f2f2; /* equiv. match to default ui: rgba(0,0,0,.05) */
 }
 .curatescape-map #subject-select-control .indicator{
 	display: inline-block;
@@ -429,12 +435,27 @@ table.curatescape-additional-files td span.type{
 	} 
 }
 /* map controls */
+.maplibregl-ctrl-group button{
+	margin: unset;
+	min-height: unset;
+	padding: unset;
+}
+.maplibregl-ctrl{
+	opacity: 0.95;
+	transition: opacity 0.15s linear;
+}
+.maplibregl-ctrl:hover,
+.maplibregl-ctrl:focus,
+.maplibregl-ctrl:focus-within{
+	opacity: 1;
+}
 .maplibregl-ctrl-group.custom button{
 	background-size: 90%;
 	background-position: center center;
 	background-repeat: no-repeat;
 }
-.maplibregl-ctrl-group.custom.styleswap button{
+.maplibregl-ctrl-group.custom.styleswap button,
+.maplibregl-ctrl-group.custom.reset button{
 	background-size: 70%;
 }
 /* map info windows */
@@ -489,6 +510,35 @@ table.curatescape-additional-files td span.type{
 	right: 0;
 	bottom: 0;
 	z-index: 1;
+}
+.maplibregl-popup-close-button{
+	background-clip: padding-box;
+	background-image: url("../../shared/images/svg/ionicons/close-circle.svg");
+	background-size: 100%; 
+	background-position: center;
+	background-repeat: no-repeat;
+	background-color: rgba(256,256,256,.5) !important;
+	border-radius: 50% !important;
+	right: 10px !important;
+	top: 10px !important;
+	z-index: 1 !important;
+	position: absolute !important;
+	color: transparent;
+	height: 24px;
+	width: 24px;
+	padding: 0;
+	opacity: 0;
+	transition-property: opacity, background-color;
+	transition-timing-function: linear;
+	transition-duration: 0.15s;
+}
+.maplibregl-popup-close-button:hover,
+.maplibregl-popup-close-button:focus{
+	background-color: rgba(256,256,256,1) !important;
+}
+.maplibregl-popup-content:hover .maplibregl-popup-close-button,
+.maplibregl-popup-close-button:focus{
+	opacity: 1;
 }
 /* map shortcode */
 #curatescape-map-figure[class^='shortcode']{

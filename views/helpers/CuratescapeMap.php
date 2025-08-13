@@ -24,7 +24,7 @@ class Curatescape_View_Helper_CuratescapeMap extends Zend_View_Helper_Abstract{
 		data-prefer-eu="<?php echo flexOption('curatescape_map_prefer_eu',0);?>"
 		data-root-url="<?php echo WEB_ROOT;?>"
 		data-reset-label="<?php echo __('Reset to initial view');?>" 
-		data-style-swap-label="<?php echo __('Enable Style');?>" 
+		data-style-swap-label="<?php echo __('Base Map');?>" 
 		data-color="<?php echo flexOption('curatescape_map_marker_color', '#222');?>"
 		>
 			<?php echo $this->skipMapLink();?>
@@ -64,7 +64,7 @@ class Curatescape_View_Helper_CuratescapeMap extends Zend_View_Helper_Abstract{
 		data-root-url="<?php echo WEB_ROOT;?>"
 		data-fitbounds-label="<?php echo __('Zoom to fit all');?>" 
 		data-reset-label="<?php echo __('Reset to initial view');?>" 
-		data-style-swap-label="<?php echo __('Enable Style');?>" 
+		data-style-swap-label="<?php echo __('Base Map');?>" 
 		data-color="<?php echo $color = flexOption('curatescape_map_marker_color', '#222');?>"
 		data-featured-color="<?php echo flexOption('curatescape_map_marker_featured_color', $color);?>"
 		data-featured-star="<?php echo flexOption('curatescape_map_marker_featured_star', 0);?>"
@@ -115,7 +115,13 @@ class Curatescape_View_Helper_CuratescapeMap extends Zend_View_Helper_Abstract{
 	private function scriptsCuratescapeMap()
 	{
 	?>
-	<script defer src="https://unpkg.com/maplibre-gl@^5.6.1/dist/maplibre-gl.js"></script>
+	<script type="importmap">
+		{
+			"imports": {
+				"maplibre-gl": "https://unpkg.com/maplibre-gl@^5.6.1/dist/maplibre-gl.js"
+			}
+		}
+	</script>
 	<link href="https://unpkg.com/maplibre-gl@^5.6.1/dist/maplibre-gl.css" rel="stylesheet" />
 	<script type="module" src="<?php echo src('curatescape-map.js', 'javascripts');?>"></script>
 	<?php
@@ -135,7 +141,7 @@ class Curatescape_View_Helper_CuratescapeMap extends Zend_View_Helper_Abstract{
 		$records_label = $allItemTypes ? __('Items') : storyLabelString('plural');
 		$subjects = $this->getPublicStoryMapTerms(49, $allItemTypes);
 		if(!count($subjects)) return null;
-		$html .= '<div id="subject-select-control"><span class="indicator"></span><select hidden>';
+		$html .= '<div id="subject-select-control" class="maplibregl-ctrl" hidden><span class="indicator"></span><select>';
 		$html .= '<option value="">'.__('All %s', $records_label).': '.$totalItems.'</option>';
 		foreach($subjects as $subject){
 		  $html .= '<option value="'.strip_tags(urlencode($subject['text'])).'">'.strip_tags($subject['text']).': '.$subject['total'].'</option>';

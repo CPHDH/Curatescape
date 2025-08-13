@@ -110,7 +110,7 @@ class Curatescape_View_Helper_HookPublicHead extends Zend_View_Helper_Abstract{
 	{
 	?>
 	<!-- PhotoSwipe (Curatescape plugin) -->
-	<link rel="stylesheet" href="<?php echo src('photoswipe.css', 'javascripts/PhotoSwipe/dist');?>">
+	<link rel="stylesheet" href="https://unpkg.com/photoswipe@^5.4.4/dist/photoswipe.css">
 	<script type="module" src="<?php echo src('photoswipe.js', 'javascripts');?>"></script>
 	<?php
 	}

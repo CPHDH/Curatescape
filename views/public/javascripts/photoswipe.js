@@ -1,4 +1,4 @@
-import PhotoSwipeLightbox from './PhotoSwipe/dist/photoswipe.esm.min.js';
+import PhotoSwipeLightbox from 'https://unpkg.com/photoswipe@^5.4.4/dist/photoswipe.esm.min.js';
 const getVideoDimensions = (url) => {
 	// @todo: revise and run on page load to modify html before this file loads 
 	return new Promise((resolve, reject) => {
@@ -61,7 +61,7 @@ const openLightboxAtIndex = (i,data)=>{
 		dataSource: data,
 		index: i,
 		bgOpacity: 1,
-		pswpModule: () => import('./PhotoSwipe/dist/photoswipe.esm.min.js')
+		pswpModule: () => import('https://unpkg.com/photoswipe@^5.4.4/dist/photoswipe.esm.min.js')
 	});
 	// add captions support
 	lightbox.on('uiRegister', ()=>{
