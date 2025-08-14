@@ -17,7 +17,7 @@
 .curatescape-fix-bigstuff table.curatescape-additional-files,
 .curatescape-fix-berlin table.curatescape-additional-files,
 .curatescape-fix-rhythm table.curatescape-additional-files{
-	display: table-caption;
+	display: table;
 	padding: 0 10px 0 0;
 }
 .curatescape-fix-foundation table.curatescape-additional-files th,

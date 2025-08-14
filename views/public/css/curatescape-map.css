@@ -1,0 +1,271 @@
+/* ACCESSIBILITY */
+[aria-live] {
+	visibility: hidden;
+}
+
+[data-curatescape-map-skip-link] {
+	color: #333;
+	display: inline-flex;
+	flex-direction: column;
+	justify-content: center;
+	position: absolute;
+	font-size: 16px;
+	z-index: 403;
+	left: 8px;
+	top: 8px;
+	padding: 0 10px;
+	height: 36px;
+	border-radius: 5px;
+	background-color: white;
+	border: 2px solid rgba(0, 0, 0, .2);
+	text-decoration: none;
+	transition: all linear 0.15s;
+	opacity: 0;
+	pointer-events: none;
+}
+
+[data-curatescape-map-skip-link]:focus {
+	opacity: 1;
+	pointer-events: all;
+}
+
+/* ANIMATIONS */
+@keyframes spin {
+	0% {
+		transform: rotate(0deg);
+	}
+
+	100% {
+		transform: rotate(360deg);
+	}
+}
+
+/* MAP */
+#curatescape-map-figure {
+	opacity: 0;
+	margin: 0 auto;
+	transition: all 0.15s linear;
+}
+
+#curatescape-map-figure[data-loaded]{
+	opacity: 1;
+}
+
+#curatescape-map-canvas {
+	width: 100%;
+	min-height: 500px;
+	max-height: 90vh;
+}
+
+#geolocation figure {
+	margin: 0;
+	padding: 0;
+}
+
+#curatescape-map-caption {
+	padding-top: 0.5lh;
+	margin-bottom: 0;
+	font-style: italic;
+}
+
+.curatescape-map-title {
+	position: relative;
+	width: 100%;
+	clear: both;
+}
+
+.curatescape-map {
+	position: relative;
+}
+
+.curatescape-map,
+.curatescape-map a,
+.curatescape-map a:visited,
+.curatescape-map a:hover {
+	color: #333;
+	text-decoration: none;
+}
+
+/* MAP SUBJECTS SELECT */
+.curatescape-map #subject-select-control[hidden] {
+	opacity: 0;
+	pointer-events: none;
+}
+
+.curatescape-map #subject-select-control {
+	position: absolute;
+	z-index: 401;
+	right: 49px;
+	top: 8px;
+	min-height: 36px;
+	border-radius: 5px;
+	background-color: #fff;
+	border: 2px solid rgba(0, 0, 0, .2);
+	max-width: calc(100% - 122px);
+	display: flex;
+	flex-direction: row;
+}
+
+.curatescape-map #subject-select-control:hover {
+	transition: background-color 0.15s linear;
+	background-color: #f2f2f2;
+	/* equiv. match to default ui: rgba(0,0,0,.05) */
+}
+
+.curatescape-map #subject-select-control .indicator {
+	display: inline-block;
+	flex-grow: 1;
+	background-clip: padding-box;
+	background-image: url('data:image/svg+xml,<svg height="512" viewBox="0 0 512 512" width="512" xmlns="http://www.w3.org/2000/svg"><path d="m256 48c-114.69 0-208 93.31-208 208s93.31 208 208 208 208-93.31 208-208-93.31-208-208-208zm-38 312.38-80.6-89.57 23.79-21.41 56 62.22 132.81-158.16 24.54 20.54z"/></svg>');
+	background-size: 1.25em;
+	background-position: center;
+	background-repeat: no-repeat;
+	width: 36px;
+}
+
+.curatescape-map #subject-select-control .indicator.loading {
+	animation: spin 1.5s linear infinite;
+	background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" class="ionicon" viewBox="0 0 512 512"><path d="M256 48C141.31 48 48 141.31 48 256s93.31 208 208 208 208-93.31 208-208S370.69 48 256 48zm120 182.15a8.62 8.62 0 01-8.62 8.62h-59.54a8.61 8.61 0 01-6.09-14.71l22.17-22.17-5.6-6.51a87.38 87.38 0 10-62.94 148 87.55 87.55 0 0082.42-58.25A16 16 0 11368 295.8a119.4 119.4 0 11-112.62-159.18 118.34 118.34 0 0186.36 36.95l.56.62 4.31 5 14.68-14.68a8.44 8.44 0 016-2.54 8.61 8.61 0 018.68 8.63z"/></svg>');
+}
+
+.curatescape-map #subject-select-control select {
+	-moz-appearance: none;
+	-webkit-appearance: none;
+	appearance: none;
+	background: transparent;
+	border: 0 none transparent;
+	height: 36px;
+	font-size: 16px;
+	padding: 0 10px 0 4px;
+	margin: 0;
+}
+
+/* MAP CONTROLS */
+.maplibregl-ctrl-group button {
+	margin: unset;
+	min-height: unset;
+	padding: unset;
+}
+
+.maplibregl-ctrl-attrib a {
+	color: inherit;
+}
+
+.maplibregl-ctrl {
+	opacity: 0.95;
+	transition: opacity 0.15s linear;
+}
+
+.maplibregl-ctrl:hover,
+.maplibregl-ctrl:focus,
+.maplibregl-ctrl:focus-within {
+	opacity: 1;
+}
+
+.maplibregl-ctrl-group.custom button {
+	background-size: 90%;
+	background-position: center center;
+	background-repeat: no-repeat;
+}
+
+.maplibregl-ctrl-group.custom.styleswap button,
+.maplibregl-ctrl-group.custom.reset button {
+	background-size: 70%;
+}
+
+/* MAP INFO WINDOWS */
+#curatescape-map-figure .maplibregl-popup-content {
+	padding: 3px;
+	min-width: 220px;
+}
+
+.curatescape-iw {
+	position: relative;
+	overflow: hidden;
+	border-radius: 3px;
+}
+
+.curatescape-iw-content,
+.curatescape-iw-content a:visited,
+.curatescape-iw-content a:hover,
+.curatescape-iw-content a:link {
+	color: #fff;
+	font-size: 0.9rem;
+}
+
+.curatescape-iw-content {
+	font-size: 1rem;
+	position: relative;
+	z-index: 2;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-end;
+	margin-top: max(50%, 100px);
+	background-image: linear-gradient(to top, rgba(0, 0, 0, 1), rgba(0, 0, 0, .75));
+	padding: 0.5lh;
+}
+
+.curatescape-iw-title {
+	font-weight: 600;
+	padding-bottom: 0.25lh;
+	margin-bottom: 0.25lh;
+	border-bottom: 1px solid rgba(256, 256, 256, .2);
+}
+
+.curatescape-iw-address {
+	font-size: 0.75rem;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.curatescape-iw-image {
+	background: rgba(0, 0, 0);
+	background-position: center 30%;
+	background-size: cover;
+	position: absolute;
+	height: 100%;
+	width: 100%;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	z-index: 1;
+}
+
+.maplibregl-popup-close-button {
+	background-clip: padding-box;
+	background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" class="ionicon" viewBox="0 0 512 512"><path d="M256 48C141.31 48 48 141.31 48 256s93.31 208 208 208 208-93.31 208-208S370.69 48 256 48zm75.31 260.69a16 16 0 11-22.62 22.62L256 278.63l-52.69 52.68a16 16 0 01-22.62-22.62L233.37 256l-52.68-52.69a16 16 0 0122.62-22.62L256 233.37l52.69-52.68a16 16 0 0122.62 22.62L278.63 256z"/></svg>');
+	background-size: 100%;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-color: rgba(256, 256, 256, .5);
+	border-radius: 50%;
+	right: 10px;
+	top: 10px;
+	z-index: 1;
+	position: absolute;
+	color: transparent;
+	height: 24px;
+	width: 24px;
+	padding: 0;
+	opacity: 0;
+	transition-property: opacity, background-color;
+	transition-timing-function: linear;
+	transition-duration: 0.15s;
+}
+
+.maplibregl-popup-close-button:hover,
+.maplibregl-popup-close-button:focus {
+	background-color: rgba(256, 256, 256, 1);
+}
+
+.maplibregl-popup-content:hover .maplibregl-popup-close-button,
+.maplibregl-popup-close-button:focus {
+	opacity: 1;
+}
+
+/* MAP SHORTCODE */
+#curatescape-map-figure[class^='shortcode'] {
+	margin-bottom: 1lh;
+}

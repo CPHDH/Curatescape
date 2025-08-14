@@ -21,7 +21,9 @@ class Curatescape_View_Helper_FilterFilesForItem extends Zend_View_Helper_Abstra
 		if($galleryType == 'gallery-table'){
 			$html .= filesOutputTable(array_merge($files['images'], $files['audio'], $files['video'], $files['other']), false);
 		}elseif($galleryType == 'gallery-slides'){
-			$html .= lightgallery(array_merge($files['images'], $files['audio'], $files['video']));
+			if($compat = array_merge($files['images'], $files['audio'], $files['video'])){
+				$html .= lightgallery($compat);
+			}
 			$html .= filesOutputTable($files['other']);
 		}else{
 			// grid or inline

@@ -1,6 +1,15 @@
-// See Curatescape_View_Helper_CuratescapeMap::GeolocationShortcode
 document.addEventListener('DOMContentLoaded', function() { // deferred
-	// ADD QUERY PARAMETERS TO TOUR ITEM LINKS INSIDE THE GEOLOCATION MAP
+	// TRIGGER CURATESCAPE-MAP MARKER EVENT
+	let markerButtons = document.querySelectorAll('[data-item-id]') || [];
+	markerButtons.forEach((marker)=>{
+		marker.addEventListener('click',(e)=>{
+			e.preventDefault;
+			let id = marker.getAttribute('data-item-id');
+			let markerRequest = new CustomEvent("markerRequest", { "detail": id });
+			document.dispatchEvent(markerRequest);
+		})
+	})
+	// INTERCEPT TOUR ITEM LINKS FROM THE GEOLOCATION MAP (and add query params)
 	if(typeof geolocationShortcode1OmekaMapBrowse !== 'undefined'){
 		let mapfigure = document.querySelector('#curatescape-map-figure');
 		if(!mapfigure) return;
@@ -9,8 +18,7 @@ document.addEventListener('DOMContentLoaded', function() { // deferred
 		let tourItemsRange = data.range ? data.range.split(",") : [];
 		if(!tourItemsRange.length) return;
 		let tourId = new URL(window.location.href).pathname.split('/').pop();
-		
-		document.addEventListener('click', function(e) {
+		mapfigure.addEventListener('click', function(e) {
 			let target = e.target.closest('.geolocation_balloon a');
 			if(target && target.href){
 				e.preventDefault();

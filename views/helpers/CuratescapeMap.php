@@ -14,27 +14,30 @@ class Curatescape_View_Helper_CuratescapeMap extends Zend_View_Helper_Abstract{
 			$figcaption = $this->defaultFigcaption();
 		}
 		?>
-		<figure id="curatescape-map-figure" class="<?php echo $class;?>"
-		data-maptype="single"
-		data-json-source="<?php echo $jsonSource;?>"
-		data-primary-layer="<?php echo flexOption('curatescape_map_primary_layer','CARTO_VOYAGER');?>"
-		data-secondary-layer="<?php echo flexOption('curatescape_map_secondary_layer','');?>"
-		data-custom-label="<?php echo flexOption('curatescape_map_custom_label','');?>"
-		data-stadia-key="<?php echo flexOption('curatescape_map_stadia_key','');?>"
-		data-prefer-eu="<?php echo flexOption('curatescape_map_prefer_eu',0);?>"
-		data-root-url="<?php echo WEB_ROOT;?>"
-		data-reset-label="<?php echo __('Reset to initial view');?>" 
-		data-style-swap-label="<?php echo __('Base Map');?>" 
-		data-color="<?php echo flexOption('curatescape_map_marker_color', '#222');?>"
-		>
-			<?php echo $this->skipMapLink();?>
-			<div class="curatescape-map">
-				<div id="curatescape-map-canvas"></div>
-			</div>
-			<figcaption class="curatescape-map-caption"><?php echo $figcaption;?></figcaption>
-		</figure>
+		<curatescape-map>
+			<figure id="curatescape-map-figure" class="<?php echo $class;?>"
+			data-maptype="single"
+			data-json-source="<?php echo $jsonSource;?>"
+			data-primary-layer="<?php echo flexOption('curatescape_map_primary_layer','CARTO_VOYAGER');?>"
+			data-secondary-layer="<?php echo flexOption('curatescape_map_secondary_layer','');?>"
+			data-custom-label="<?php echo flexOption('curatescape_map_custom_label','');?>"
+			data-custom-url="<?php echo flexOption('curatescape_map_custom_url','');?>"
+			data-stadia-key="<?php echo flexOption('curatescape_map_stadia_key','');?>"
+			data-prefer-eu="<?php echo flexOption('curatescape_map_prefer_eu',0);?>"
+			data-root-url="<?php echo WEB_ROOT;?>"
+			data-reset-label="<?php echo __('Reset to initial view');?>" 
+			data-style-swap-label="<?php echo __('Base Map');?>" 
+			data-color="<?php echo flexOption('curatescape_map_marker_color', '#222');?>"
+			>
+				<?php echo $this->skipMapLink();?>
+				<div class="curatescape-map">
+					<div id="curatescape-map-canvas"></div>
+				</div>
+				<figcaption class="curatescape-map-caption"><?php echo $figcaption;?></figcaption>
+				<?php echo $this->scriptsCuratescapeMap();?>
+			</figure>
+		</curatescape-map>
 		<?php
-		$this->scriptsCuratescapeMap();
 	}
 	public function Multi($figcaption = null, $isGlobal = false, $class = "multi", $tourId = null, $jsonSource = null)
 	{
@@ -47,42 +50,45 @@ class Curatescape_View_Helper_CuratescapeMap extends Zend_View_Helper_Abstract{
 		}
 		$ariaLiveMessage = __('Loading %s', storyLabelString('plural'));
 		?>
-		<figure id="curatescape-map-figure" class="<?php echo $class;?>"
-		data-maptype="multi"
-		data-initial-load="<?php echo $ariaLiveMessage;?>"
-		data-tour="<?php echo $tourId;?>"
-		data-json-source="<?php echo $jsonSource;?>"
-		data-primary-layer="<?php echo flexOption('curatescape_map_primary_layer','CARTO_VOYAGER');?>"
-		data-secondary-layer="<?php echo flexOption('curatescape_map_secondary_layer','');?>"
-		data-custom-label="<?php echo flexOption('curatescape_map_custom_label','');?>"
-		data-stadia-key="<?php echo flexOption('curatescape_map_stadia_key','');?>"
-		data-prefer-eu="<?php echo flexOption('curatescape_map_prefer_eu',0);?>"
-		data-lat="<?php echo flexOption('geolocation_default_latitude', '');?>"
-		data-lon="<?php echo flexOption('geolocation_default_longitude', '');?>"
-		data-zoom="<?php echo flexOption('geolocation_default_zoom_level', 12);?>"
-		data-cluster="<?php echo flexOption('geolocation_cluster', false);?>"
-		data-root-url="<?php echo WEB_ROOT;?>"
-		data-fitbounds-label="<?php echo __('Zoom to fit all');?>" 
-		data-reset-label="<?php echo __('Reset to initial view');?>" 
-		data-style-swap-label="<?php echo __('Base Map');?>" 
-		data-color="<?php echo $color = flexOption('curatescape_map_marker_color', '#222');?>"
-		data-featured-color="<?php echo flexOption('curatescape_map_marker_featured_color', $color);?>"
-		data-featured-star="<?php echo flexOption('curatescape_map_marker_featured_star', 0);?>"
-		data-fixed-center="<?php echo $isGlobal ? flexOption('curatescape_map_fixed_center', 0) : 0;?>"
-		>
-			<?php echo $this->skipMapLink($tourId);?>
-			<div class="curatescape-map">
-				<?php if( $isGlobal && get_option('curatescape_map_subjects_select') && $class !== "shortcode-no-subjects"){
-					echo $this->subjectSelect();
-				} ?>
-				<div id="curatescape-map-canvas">
-					<span id="map-status" aria-live="polite" data-curatescape-screenreader-only="true"><?php echo $ariaLiveMessage;?></span>
+		<curatescape-map>
+			<figure id="curatescape-map-figure" class="<?php echo $class;?>"
+			data-maptype="multi"
+			data-initial-load="<?php echo $ariaLiveMessage;?>"
+			data-tour="<?php echo $tourId;?>"
+			data-json-source="<?php echo $jsonSource;?>"
+			data-primary-layer="<?php echo flexOption('curatescape_map_primary_layer','CARTO_VOYAGER');?>"
+			data-secondary-layer="<?php echo flexOption('curatescape_map_secondary_layer','');?>"
+			data-custom-label="<?php echo flexOption('curatescape_map_custom_label','');?>"
+			data-custom-url="<?php echo flexOption('curatescape_map_custom_url','');?>"
+			data-stadia-key="<?php echo flexOption('curatescape_map_stadia_key','');?>"
+			data-prefer-eu="<?php echo flexOption('curatescape_map_prefer_eu',0);?>"
+			data-lat="<?php echo flexOption('geolocation_default_latitude', '');?>"
+			data-lon="<?php echo flexOption('geolocation_default_longitude', '');?>"
+			data-zoom="<?php echo flexOption('geolocation_default_zoom_level', 12);?>"
+			data-cluster="<?php echo flexOption('geolocation_cluster', false);?>"
+			data-root-url="<?php echo WEB_ROOT;?>"
+			data-fitbounds-label="<?php echo __('Zoom to fit all');?>" 
+			data-reset-label="<?php echo __('Reset to initial view');?>" 
+			data-style-swap-label="<?php echo __('Base Map');?>" 
+			data-color="<?php echo $color = flexOption('curatescape_map_marker_color', '#222');?>"
+			data-featured-color="<?php echo flexOption('curatescape_map_marker_featured_color', $color);?>"
+			data-featured-star="<?php echo flexOption('curatescape_map_marker_featured_star', 0);?>"
+			data-fixed-center="<?php echo $isGlobal ? flexOption('curatescape_map_fixed_center', 0) : 0;?>"
+			>
+				<?php echo $this->skipMapLink($tourId);?>
+				<div class="curatescape-map">
+					<?php if( $isGlobal && get_option('curatescape_map_subjects_select') && $class !== "shortcode-no-subjects"){
+						echo $this->subjectSelect();
+					} ?>
+					<div id="curatescape-map-canvas">
+						<span id="map-status" aria-live="polite" data-curatescape-screenreader-only="true"><?php echo $ariaLiveMessage;?></span>
+					</div>
 				</div>
-			</div>
-			<figcaption id="curatescape-map-caption"><?php echo $figcaption;?></figcaption>
-		</figure>
+				<figcaption id="curatescape-map-caption"><?php echo $figcaption;?></figcaption>
+				<?php echo $this->scriptsCuratescapeMap();?>
+			</figure>
+		</curatescape-map>
 		<?php
-		$this->scriptsCuratescapeMap();
 	}
 	public function GeolocationShortcode($range = null, $tour = null, $figcaption = null, $class="items-map", $html = null)
 	{
@@ -103,7 +109,6 @@ class Curatescape_View_Helper_CuratescapeMap extends Zend_View_Helper_Abstract{
 				$html .= $figcaption;
 			$html .= '</figcaption>';
 		$html .= '</figure>';
-		$html .= isset($tour) ? $this->scriptsGeolocationMapTour() : null;
 		return $html;
 	}
 	private function skipMapLink($tourId=null)
@@ -115,21 +120,10 @@ class Curatescape_View_Helper_CuratescapeMap extends Zend_View_Helper_Abstract{
 	private function scriptsCuratescapeMap()
 	{
 	?>
-	<script type="importmap">
-		{
-			"imports": {
-				"maplibre-gl": "https://unpkg.com/maplibre-gl@^5.6.1/dist/maplibre-gl.js"
-			}
-		}
-	</script>
+	<script defer src="https://unpkg.com/maplibre-gl@^5.6.1/dist/maplibre-gl.js"></script>
 	<link href="https://unpkg.com/maplibre-gl@^5.6.1/dist/maplibre-gl.css" rel="stylesheet" />
+	<link href="<?php echo src('curatescape-map.css', 'css');?>" rel="stylesheet" />
 	<script type="module" src="<?php echo src('curatescape-map.js', 'javascripts');?>"></script>
-	<?php
-	}
-	private function scriptsGeolocationMapTour()
-	{
-	?>
-	<script defer="defer" src="<?php echo src('geolocation-map-tour.js', 'javascripts');?>"></script>
 	<?php
 	}
 	private function subjectSelect($html = null, $allItemTypes = false, $totalItems = null)

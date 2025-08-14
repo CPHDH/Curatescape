@@ -1,8 +1,29 @@
-// IMPORT
-import 'maplibre-gl';
-// CONSTANTS
+class CuratescapeMap extends HTMLElement {
+	// using shadow dom to isolate map styles from theme css
+	// @todo: migrate maps to actual web component
+	constructor(){
+		super();
+		this.shadow = this.attachShadow({ mode: "open" });
+	}
+	connectedCallback(){
+		this.styleSheet();
+		this.uiElements();
+	}
+	uiElements(){
+		this.shadow.appendChild(document.querySelector('#curatescape-map-figure'));
+	}
+	styleSheet(){
+		const css = new CSSStyleSheet();
+		css.replaceSync(`:host{}`);
+		this.shadow.adoptedStyleSheets = [css];
+	}
+}
+// CONSTANTS/ELEMENTS
 const mapcanvas = document.querySelector('#curatescape-map-canvas');
 const mapfigure = document.querySelector('#curatescape-map-figure');
+const subjectSelect = document.querySelector('#subject-select-control select');
+const selectIcon = document.querySelector('.curatescape-map #subject-select-control .indicator');
+const mapStatus = document.querySelector('#curatescape-map-canvas #map-status');
 // SCOPED VARS
 let map = null;
 let bounds = null;
@@ -24,7 +45,7 @@ const getCommaSeparatedValue = (string, index)=>{
 	let arr = string.split(',');
 	return arr[index] ? arr[index].trim() : null;
 }
-const stylesConfig = (name, label, stadiaKey, preferEU, fallback = 'OFM_LIBERTY')=>{
+const stylesConfig = (name, label, stadiaKey, preferEU, styleIndex = 0, fallback = 'OFM_LIBERTY')=>{
 	stadiaKey = stadiaKey ? '?api_key='+stadiaKey : '';
 	preferEU = preferEU ? 'tiles-eu' : 'tiles';
 	let styles = [];
@@ -72,6 +93,10 @@ const stylesConfig = (name, label, stadiaKey, preferEU, fallback = 'OFM_LIBERTY'
 		url: `//basemaps.cartocdn.com/gl/voyager-gl-style/style.json`, 
 		label: label ? label : 'CartoDB | Voyager',
 	};
+	styles.CUSTOM_URL = {
+		url: getCommaSeparatedValue(attr('data-custom-url'), styleIndex), 
+		label: label ? label : 'Custom Style',
+	};
 	return typeof styles[name] !== 'undefined' ? styles[name] : styles[fallback];
 }
 const setStyleLayers = (styleIndex = 0)=>{
@@ -79,22 +104,22 @@ const setStyleLayers = (styleIndex = 0)=>{
 		attr('data-primary-layer'),
 		getCommaSeparatedValue(attr('data-custom-label'), 0),
 		attr('data-stadia-key'),
-		attr('data-prefer-eu')
+		attr('data-prefer-eu'),
+		0
 	);
 	if(attr('data-secondary-layer')){
 		styleLayers[1] = stylesConfig(
 			attr('data-secondary-layer'),
 			getCommaSeparatedValue(attr('data-custom-label'), 1),
 			attr('data-stadia-key'),
-			attr('data-prefer-eu')
+			attr('data-prefer-eu'),
+			1
 		);
 	}
 	currentStyleLayer = styleIndex;
 	map.setStyle(styleLayers[currentStyleLayer].url);
 }
 const subjectSelectControls = ()=>{
-	// not a proper control
-	let subjectSelect = document.querySelector('#subject-select-control select');
 	if(subjectSelect){
 		subjectSelect.parentElement.removeAttribute("hidden");
 		subjectSelect.addEventListener("change", (e)=>{
@@ -120,11 +145,6 @@ const geolocationControls = ()=>{
 	});
 	return map.addControl(geolocate);
 }
-// const fullscreenControls = ()=>{
-	// return map.addControl(new maplibregl.FullscreenControl({
-	// 	container: mapcanvas
-	// }));
-// }
 const fitBoundsControl = ()=>{
 	class FitBoundsControl {
 		onAdd(map) {
@@ -178,36 +198,12 @@ const styleSwapControl = ()=>{
 	}
 	return styleLayers.length > 1 ? map.addControl(new StyleSwapControl()) : null; 
 }
-// const resetControl = ()=>{
-	// class ResetControl {
-	// 	onAdd(map) {
-	// 		this.map = map;
-	// 		this.container = document.createElement('div');
-	// 		this.container.className = 'maplibregl-ctrl maplibregl-ctrl-group custom reset';
-	// 		const button = document.createElement('button');
-	// 		button.title = attr('data-fitbounds-label');
-	// 		button.style.backgroundImage = `url("data:image/svg+xml;charset=utf-8,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E %3Cpath fill='none' stroke='currentColor' stroke-linecap='round' stroke-miterlimit='10' stroke-width='32' d='M400 148l-21.12-24.57A191.43 191.43 0 00240 64C134 64 48 150 48 256s86 192 192 192a192.09 192.09 0 00181.07-128'/%3E %3Cpath d='M464 97.42V208a16 16 0 01-16 16H337.42c-14.26 0-21.4-17.23-11.32-27.31L436.69 86.1C446.77 76 464 83.16 464 97.42z'/%3E %3C/svg%3E")`;
-	// 		button.onclick = () => {
-	// 			//this.map.fitBounds(bounds, { padding: 50, maxZoom: 15,});
-	// 		};
-	// 		this.container.appendChild(button);
-	// 		return this.container;
-	// 	}
-	// 	onRemove() {
-	// 		this.container.parentNode.removeChild(this.container);
-	// 		this.map = undefined;
-	// 	}
-	// }
-	// return map.addControl(new ResetControl()); 
-// }
 const addControls = ()=>{
 	subjectSelectControls(); 
 	navigationControls();
 	geolocationControls();
 	styleSwapControl();
 	fitBoundsControl(); 
-	// resetControl();
-	// fullscreenControls();
 }
 const markerSVG = (color, featured=false, height=41, width=27)=>{
 	return `<svg display="block" height="${height}px" width="${width}px" viewBox="0 0 ${width} ${height}">
@@ -302,10 +298,7 @@ const resumeInteractivity = ()=>{
 }
 const setLoading = (term)=>{
 	pauseInteractivity();
-	let selectIcon = document.querySelector('.curatescape-map #subject-select-control .indicator');
 	if( selectIcon ) selectIcon.classList.add('loading');
-	
-	let mapStatus = document.querySelector('#curatescape-map-canvas #map-status');
 	if(mapStatus){
 		let message = attr('data-initial-load')
 		if(term){
@@ -316,7 +309,6 @@ const setLoading = (term)=>{
 }
 const removeLoading = ()=>{
 	resumeInteractivity();
-	let selectIcon = document.querySelector('.curatescape-map #subject-select-control .indicator');
 	if( selectIcon ) selectIcon.classList.remove('loading');
 }
 const dataSource = (term)=>{
@@ -347,11 +339,25 @@ const newPopup = (item, i, tourid)=>{
 		closeButton:true,
 	}).setHTML(html);
 }
-// INITIALIZE MAP
-// @todo intersection observer
-// @todo external open marker from tour
-// @todo CLUSTERS!!!!
-document.addEventListener('DOMContentLoaded', ()=>{
+const flyToById = (id,zoom)=>{
+	let m = markers[id];
+	if(typeof m == 'undefined') return;
+	map.once('moveend', () => {
+		if(!m.getPopup().isOpen()) m.togglePopup()
+	}); 
+	map.flyTo({
+		center: m.getLngLat(),
+		zoom: zoom ? zoom : 16,
+		essential: true,
+	});
+}
+const markerRequestListener = ()=>{
+	document.addEventListener('markerRequest',(e)=>{
+		mapfigure.scrollIntoView({ behavior: "smooth", block: "center", inline: "nearest" });
+		flyToById(e.detail);
+	});
+}
+const CuratescapeMapInit = ()=>{
 	map = new maplibregl.Map({
 		container: mapcanvas,
 		center: [attr('data-lon'), attr('data-lat')],
@@ -362,8 +368,20 @@ document.addEventListener('DOMContentLoaded', ()=>{
 		interactive: false,
 	}).once("mousedown",()=>{
 		map.scrollZoom.enable();
+	}).once('style.load',()=>{
+		mapfigure.setAttribute('data-loaded','true');
+		if(attr('data-tour')) markerRequestListener();
 	});
-	setStyleLayers(); // @todo update to handle Custom URLs
+	setStyleLayers();
 	addControls();
 	setMarkers(dataSource());
+	
+
+}
+// INITIALIZE MAP
+// @todo intersection observer
+// @todo CLUSTERS!!!!
+document.addEventListener('DOMContentLoaded', ()=>{
+	customElements.define('curatescape-map', CuratescapeMap);
+	CuratescapeMapInit();
 });

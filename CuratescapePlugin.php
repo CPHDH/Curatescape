@@ -102,6 +102,7 @@ class CuratescapePlugin extends Omeka_Plugin_AbstractPlugin{
 		'curatescape_map_marker_featured_color' => null,
 		'curatescape_map_marker_featured_star' => 0,
 		'curatescape_map_custom_label' => null,
+		'curatescape_map_custom_url' => null,
 		'curatescape_map_mirror_geolocation' => 1,
 		'curatescape_map_prefer_eu' => 0,
 		'curatescape_map_primary_layer' => 'CARTO_VOYAGER',

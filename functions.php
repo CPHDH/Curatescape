@@ -412,7 +412,7 @@ function linkToTour($tour = null, $action = 'show', $text = null, $props = array
 
 function filesOutputFigures($images = array(), $audio = array(), $video = array(), $other = array(), $galleryType = 'gallery-inline-captions', $html = null)
 {
-	if(!count($images) && !count($audio) && !count($video)) return null;
+	if(!count($images) && !count($audio) && !count($video) && !count($other)) return null;
 	$html .= '<div id="pswp-container" class="curatescape-image-gallery '.$galleryType.'">';
 		$html .= filesOutputImages($images);
 		$html .= filesOutputAudio($audio);

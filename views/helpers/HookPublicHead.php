@@ -50,9 +50,7 @@ class Curatescape_View_Helper_HookPublicHead extends Zend_View_Helper_Abstract{
 		}
 		// JS tours/show
 		if(is_current_url('/tours/show')){
-			if(option('curatescape_map_mirror_geolocation')){
-				queue_js_file('geolocation-map-tour', 'javascripts', array('defer'=>'defer'));
-			}
+			queue_js_file('tour', 'javascripts', array('defer'=>'defer'));
 			if(option('curatescape_gallery_style_tour') !== 'gallery-inline-captions'){
 				$this->photoSwipeModule();
 			}
