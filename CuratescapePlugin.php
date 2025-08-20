@@ -97,6 +97,8 @@ class CuratescapePlugin extends Omeka_Plugin_AbstractPlugin{
 		'curatescape_json_storage' => '300',
 		'curatescape_lightbox_docs' => 0,
 		'curatescape_lightbox' => 1,
+		'curatescape_map_cluster_colors' => null,
+		'curatescape_map_clusters' => 0,
 		'curatescape_map_fixed_center' => 0,
 		'curatescape_map_marker_color' => null,
 		'curatescape_map_marker_featured_color' => null,

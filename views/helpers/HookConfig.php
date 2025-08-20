@@ -33,6 +33,8 @@ class Curatescape_View_Helper_HookConfig extends Zend_View_Helper_Abstract{
 		set_option('curatescape_json_storage', $_POST['curatescape_json_storage']);
 		set_option('curatescape_lightbox_docs', $_POST['curatescape_lightbox_docs']);
 		set_option('curatescape_lightbox', $_POST['curatescape_lightbox']);
+		set_option('curatescape_map_cluster_colors', $_POST['curatescape_map_cluster_colors']);
+		set_option('curatescape_map_clusters', $_POST['curatescape_map_clusters']);
 		set_option('curatescape_map_fixed_center', $_POST['curatescape_map_fixed_center']);
 		set_option('curatescape_map_marker_color', $_POST['curatescape_map_marker_color']);
 		set_option('curatescape_map_marker_featured_color', $_POST['curatescape_map_marker_featured_color']);

@@ -42,6 +42,7 @@
 
 /* MAP */
 #curatescape-map-figure {
+	position: relative;
 	opacity: 0;
 	margin: 0 auto;
 	transition: all 0.15s linear;

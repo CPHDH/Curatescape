@@ -129,7 +129,7 @@ class Curatescape_View_Helper_HookConfigForm extends Zend_View_Helper_Abstract{
 			<p><?php echo __('Use the following options to customize %s maps. Additional Map configurations can be found in <a target="_blank" href="%2s">Geolocation plugin settings</a>. To display %3s maps use the shortcode: %4s. Refer to the %5s for full list of shortcode options.', _PLUGIN_NAME_, '/admin/plugins/config?name=Geolocation', _PLUGIN_NAME_, '<code>[curatescape_map]</code>', '<a href="https://omeka.org/classic/plugins/'._PLUGIN_NAME_.'" target="_blank">plugin documentation</a>');?></p>
 			
 			<!-- Mirror Geolocation -->
-			<?php echo $this->configFormCheckBox('curatescape_map_mirror_geolocation', 'Mirror Geolocation', __('If checked, use the maps provided by the Geolocation plugin. This option is recommended for most projects in order to maintain consistency across page templates. Uncheck and configure custom options if you are using a Curatescape theme or if you have developed a Curatescape-optimized custom theme. Additional information available in <a target="_blank" href="%s"> plugin documentation</a>.', 'https://omeka.org/classic/plugins/'._PLUGIN_NAME_));?>
+			<?php echo $this->configFormCheckBox('curatescape_map_mirror_geolocation', 'Mirror Geolocation', __('If checked, use the maps provided by the Geolocation plugin. This option is recommended for most projects using default themes in order to maintain consistency across page templates. Uncheck and configure custom options if you are using a Curatescape theme or if you have developed a Curatescape-optimized custom theme. Additional information available in <a target="_blank" href="%s"> plugin documentation</a>.', 'https://omeka.org/classic/plugins/'._PLUGIN_NAME_));?>
 			<span class="map-settings">
 				<?php $mapLayers = array(
 					'OFM_LIBERTY'=>__('Open Free Map | Liberty (default)'),
@@ -171,6 +171,12 @@ class Curatescape_View_Helper_HookConfigForm extends Zend_View_Helper_Abstract{
 				<?php echo $this->configFormText('curatescape_map_marker_featured_color', 'Featured Marker Color', __('Enter an HTML color code to use for featured item map markers.'), 'Example: #222222');?>
 				<!-- Featured Marker Star Icon -->
 				<?php echo $this->configFormCheckBox('curatescape_map_marker_featured_star', 'Featured Marker Icon', 'If checked, use a star icon inside featured item map markers.');?>
+				<!-- Clusters -->
+				<?php echo $this->configFormCheckBox('curatescape_map_clusters', 'Clusters', 'If checked, markers on the map will be grouped into clusters at higher zoom levels.');?>
+				<span class="cluster-settings">
+					<!-- Cluster Colors -->
+					<?php echo $this->configFormText('curatescape_map_cluster_colors', 'Cluster Colors', __('Enter three valid CSS colors to customize the map clusters, each separated by a <code>|</code> pipe. The first color will be used for small clusters, the second for medium clusters, and the third for large clusters. Leave blank to use default colors.'), 'Example: teal | #008080 | rgb(0, 128, 128)');?>
+				</span>
 				<!-- Subjects Select -->
 				<?php echo $this->configFormCheckBox('curatescape_map_subjects_select', 'Subjects Select', 'If checked, allow users to select from a dropdown of Subject terms to filter items on the global/homepage map. Note that this option is only recommended when all items have been given at least one Subject term. Use of the <a target="_blank" href="%s">Simple Vocab plugin</a> is strongly recommended.', 'https://omeka.org/classic/plugins/SimpleVocab/');?>
 				<!-- Fixed Center-->
@@ -330,15 +336,20 @@ class Curatescape_View_Helper_HookConfigForm extends Zend_View_Helper_Abstract{
 					jQuery('#curatescape_map_secondary_layer').val().startsWith('STADIA')	
 				);
 			}
+			function toggleClusterSettings(){
+				jQuery('.cluster-settings').toggle( jQuery('#curatescape_map_clusters').prop('checked') == true );
+			}
 			jQuery(document).ready(function () {
 				toggleMapSettings();
 				toggleCustomSettings();
 				toggleStadiaSettings();
+				toggleClusterSettings();
 				jQuery('#curatescape_map_mirror_geolocation').on('change', toggleMapSettings);
 				jQuery('#curatescape_map_primary_layer').on('change', toggleCustomSettings);
 				jQuery('#curatescape_map_secondary_layer').on('change', toggleCustomSettings);
 				jQuery('#curatescape_map_primary_layer').on('change', toggleStadiaSettings);
 				jQuery('#curatescape_map_secondary_layer').on('change', toggleStadiaSettings);
+				jQuery('#curatescape_map_clusters').on('change', toggleClusterSettings);
 			});
 		</script>
 		<?php
