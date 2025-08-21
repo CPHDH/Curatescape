@@ -18,7 +18,7 @@ class Curatescape_View_Helper_CuratescapeMap extends Zend_View_Helper_Abstract{
 			<figure id="curatescape-map-figure" class="<?php echo $class;?>"
 			data-maptype="single"
 			data-json-source="<?php echo $jsonSource;?>"
-			data-primary-layer="<?php echo flexOption('curatescape_map_primary_layer','CARTO_VOYAGER');?>"
+			data-primary-layer="<?php echo flexOption('curatescape_map_primary_layer','OFM_LIBERTY');?>"
 			data-secondary-layer="<?php echo flexOption('curatescape_map_secondary_layer','');?>"
 			data-custom-label="<?php echo flexOption('curatescape_map_custom_label','');?>"
 			data-custom-url="<?php echo flexOption('curatescape_map_custom_url','');?>"
@@ -27,13 +27,15 @@ class Curatescape_View_Helper_CuratescapeMap extends Zend_View_Helper_Abstract{
 			data-root-url="<?php echo WEB_ROOT;?>"
 			data-reset-label="<?php echo __('Reset to initial view');?>" 
 			data-style-swap-label="<?php echo __('Base Map');?>" 
+			data-marker-labels="<?php echo storyLabelString().','.storyLabelString('plural');?>" 
 			data-color="<?php echo flexOption('curatescape_map_marker_color', '#222');?>"
 			>
 				<?php echo $this->skipMapLink();?>
 				<div class="curatescape-map">
-					<div id="curatescape-map-canvas"></div>
+					<div id="curatescape-map-canvas" aria-label="<?php echo __('Interactive Map');?>"
+					></div>
 				</div>
-				<figcaption class="curatescape-map-caption"><?php echo $figcaption;?></figcaption>
+				<figcaption id="curatescape-map-caption"><?php echo $figcaption;?></figcaption>
 				<?php echo $this->scriptsCuratescapeMap();?>
 			</figure>
 		</curatescape-map>
@@ -71,6 +73,8 @@ class Curatescape_View_Helper_CuratescapeMap extends Zend_View_Helper_Abstract{
 			data-fitbounds-label="<?php echo __('Zoom to fit all');?>" 
 			data-reset-label="<?php echo __('Reset to initial view');?>" 
 			data-style-swap-label="<?php echo __('Base Map');?>" 
+			data-marker-labels="<?php echo storyLabelString().','.storyLabelString('plural');?>" 
+			data-cluster-labels="<?php echo __('Cluster').','.__('Clusters');?>" 
 			data-color="<?php echo $color = flexOption('curatescape_map_marker_color', '#222');?>"
 			data-featured-color="<?php echo flexOption('curatescape_map_marker_featured_color', $color);?>"
 			data-featured-star="<?php echo flexOption('curatescape_map_marker_featured_star', 0);?>"
@@ -81,7 +85,7 @@ class Curatescape_View_Helper_CuratescapeMap extends Zend_View_Helper_Abstract{
 					<?php if( $isGlobal && get_option('curatescape_map_subjects_select') && $class !== "shortcode-no-subjects"){
 						echo $this->subjectSelect();
 					} ?>
-					<div id="curatescape-map-canvas">
+					<div id="curatescape-map-canvas" aria-label="<?php echo __('Interactive Map');?>">
 						<span id="map-status" aria-live="polite" data-curatescape-screenreader-only="true"><?php echo $ariaLiveMessage;?></span>
 					</div>
 				</div>
@@ -106,7 +110,7 @@ class Curatescape_View_Helper_CuratescapeMap extends Zend_View_Helper_Abstract{
 		$map = get_view()->shortcodes('[geolocation range='.implode(',',$range).' '.$height.']');
 		$html .= '<figure id="curatescape-map-figure" class="'.$class.'" data-range="'.implode(',',$range).'">';
 			$html .=  $map;
-			$html .= '<figcaption class="curatescape-map-caption">';
+			$html .= '<figcaption id="curatescape-map-caption">';
 				$html .= $figcaption;
 			$html .= '</figcaption>';
 		$html .= '</figure>';

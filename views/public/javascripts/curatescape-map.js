@@ -14,13 +14,14 @@ class CuratescapeMap extends HTMLElement {
 		resetSubjectSelect();
 		resetMarkerRequest();
 		resetMarkerEvents();
+		resetSkipLink();
 		bounds = null;
 		term = null;
 		geojson = null;
 		styleLayers.length = 0;
 		currentStyleLayer = 0;
-		markerRegular = null;
-		markerFeatured = null;
+		bitmapMarkerReg = null;
+		markerBitmapFeat = null;
 	}
 	uiElements() {
 		this.shadow.appendChild(document.querySelector('#curatescape-map-figure'));
@@ -31,12 +32,16 @@ class CuratescapeMap extends HTMLElement {
 		this.shadow.adoptedStyleSheets = [css];
 	}
 }
+// USER PREFS
+const prefReducedMotion = window.matchMedia(`(prefers-reduced-motion: reduce)`) === true || window.matchMedia(`(prefers-reduced-motion: reduce)`).matches === true;
 // ELEMENTS
 const mapcanvas = document.querySelector('#curatescape-map-canvas');
 const mapfigure = document.querySelector('#curatescape-map-figure');
+const mapfigcaption = document.querySelector("#curatescape-map-caption");
 const subjectSelect = document.querySelector('#subject-select-control select');
 const selectIcon = document.querySelector('.curatescape-map #subject-select-control .indicator');
-const mapStatus = document.querySelector('#curatescape-map-canvas #map-status');
+const skipLink = document.querySelector('[data-curatescape-map-skip-link]');
+const ariaLiveRegion = document.querySelector('#curatescape-map-canvas #map-status');
 // SCOPED VARS
 let map = null;
 let bounds = null;
@@ -45,8 +50,8 @@ let geojson = null;
 let popups = [];
 let styleLayers = [];
 let currentStyleLayer = 0;
-let markerRegular = null;
-let markerFeatured = null;
+let bitmapMarkerReg = null;
+let markerBitmapFeat = null;
 // TRACKED EVENTS
 let subjectSelectListener = null;
 let markerRequestListener = null;
@@ -54,14 +59,22 @@ let markerClick = null;
 let clusterClick = null;
 let cursorPointer = null;
 let cursorDefault = null;
+let skipHandler = null;
 // FUNCTIONS
 const htmlEntities = (value) => { // safe/plain text
 	var d = document.createElement('div');
 	d.innerHTML = value;
 	return d.innerText;
 }
-const attr = (string, el = mapfigure) => {
-	return el && el.hasAttribute(string) ? el.getAttribute(string) : null;
+const attr = (string, asInteger = false, el = mapfigure) => {
+	let value = el && el.hasAttribute(string) ? el.getAttribute(string) : null
+	return asInteger ? parseInt(value) : value;
+}
+const announce = (message) => { // aria-live region status updates
+	if (!ariaLiveRegion) return;
+	ariaLiveRegion.innerText = '';
+	// timeout to announce identical messages
+	setTimeout(()=>{ariaLiveRegion.innerText = htmlEntities(message)}, 100);
 }
 const getCommaSeparatedValue = (string, index) => {
 	if (!string) return null;
@@ -110,8 +123,6 @@ const toBitmap = (svgString, retina = true, width = 27, height = 41, mime = 'ima
 };
 const markerSVG = (color, featured = false, star = false, height = 41, width = 27) => {
 	color = (color && typeof color === 'string') ? color : '#2c83cb';
-	featured = Boolean(featured);
-	star = Boolean(star);
 	return `<svg display="block" height="${height}px" width="${width}px" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg">
 		<g fill-rule="nonzero">
 			<g transform="translate(3.0, 29.0)" fill="#000000">
@@ -200,7 +211,7 @@ const setStyleLayers = (styleIndex = 0) => {
 		attr('data-primary-layer'),
 		getCommaSeparatedValue(attr('data-custom-label'), 0),
 		attr('data-stadia-key'),
-		parseInt(attr('data-prefer-eu')),
+		attr('data-prefer-eu', true),
 		0
 	);
 	if (attr('data-secondary-layer')) {
@@ -208,7 +219,7 @@ const setStyleLayers = (styleIndex = 0) => {
 			attr('data-secondary-layer'),
 			getCommaSeparatedValue(attr('data-custom-label'), 1),
 			attr('data-stadia-key'),
-			parseInt(attr('data-prefer-eu')),
+			attr('data-prefer-eu', true),
 			1
 		);
 	}
@@ -222,6 +233,7 @@ const resetSubjectSelect = () => {
 	}
 };
 const subjectSelectControls = () => {
+	// @todo: convert to native control *then* add fullscreen button
 	if (!subjectSelect) return;
 	resetSubjectSelect();
 	subjectSelectListener = (e) => {
@@ -242,7 +254,7 @@ const navigationControls = () => {
 const geolocationControls = () => {
 	let geolocate = new maplibregl.GeolocateControl({
 		positionOptions: { enableHighAccuracy: true },
-		trackUserLocation: true
+		trackUserLocation: false
 	});
 	geolocate.on('click', () => {
 		geolocate.trigger();
@@ -256,7 +268,7 @@ const fitBoundsControl = () => {
 			this.container = document.createElement('div');
 			this.container.className = 'maplibregl-ctrl maplibregl-ctrl-group custom fitbounds';
 			this.button = document.createElement('button');
-			this.button.title = attr('data-fitbounds-label');
+			this.button.title = this.button.ariaLabel = attr('data-fitbounds-label');
 			this.button.style.backgroundImage = `url("data:image/svg+xml;charset=utf-8,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E %3Cpath style='fill:%23333333;' d='M396.795 396.8H320V448h128V320h-51.205zM396.8 115.205V192H448V64H320v51.205zM115.205 115.2H192V64H64v128h51.205zM115.2 396.795V320H64v128h128v-51.205z'/%3E %3C/svg%3E")`;
 			this.clickHandler = () => {
 				if (this.map && bounds) {
@@ -294,7 +306,7 @@ const styleSwapControl = () => {
 			this.container = document.createElement('div');
 			this.container.className = 'maplibregl-ctrl maplibregl-ctrl-group custom styleswap';
 			this.button = document.createElement('button');
-			this.button.title = this.buttonLabelDefault;
+			this.button.title = this.button.ariaLabel = this.buttonLabelDefault;
 			this.button.style.backgroundImage = `url("data:image/svg+xml;charset=utf-8,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E %3Cpath style='fill:%23333333;' d='M256 256c-13.47 0-26.94-2.39-37.44-7.17l-148-67.49C63.79 178.26 48 169.25 48 152.24s15.79-26 22.58-29.12l149.28-68.07c20.57-9.4 51.61-9.4 72.19 0l149.37 68.07c6.79 3.09 22.58 12.1 22.58 29.12s-15.79 26-22.58 29.11l-148 67.48C282.94 253.61 269.47 256 256 256zm176.76-100.86z'/%3E %3Cpath style='fill:%23333333;' d='M441.36 226.81L426.27 220l-38.77 17.74-94 43c-10.5 4.8-24 7.19-37.44 7.19s-26.93-2.39-37.42-7.19l-94.07-43L85.79 220l-15.22 6.84C63.79 229.93 48 239 48 256s15.79 26.08 22.56 29.17l148 67.63C229 357.6 242.49 360 256 360s26.94-2.4 37.44-7.19l147.87-67.61c6.81-3.09 22.69-12.11 22.69-29.2s-15.77-26.07-22.64-29.19z'/%3E %3Cpath style='fill:%23333333;' d='M441.36 330.8l-15.09-6.8-38.77 17.73-94 42.95c-10.5 4.78-24 7.18-37.44 7.18s-26.93-2.39-37.42-7.18l-94.07-43L85.79 324l-15.22 6.84C63.79 333.93 48 343 48 360s15.79 26.07 22.56 29.15l148 67.59C229 461.52 242.54 464 256 464s26.88-2.48 37.38-7.27l147.92-67.57c6.82-3.08 22.7-12.1 22.7-29.16s-15.77-26.07-22.64-29.2z'/%3E %3C/svg%3E")`;
 			this.clickHandler = () => {
 				if (!this.map || !styleLayers || styleLayers.length <= 1) return;
@@ -302,7 +314,7 @@ const styleSwapControl = () => {
 				let previousIndex = nextIndex == 1 ? 0 : 1;
 				setStyleLayers(nextIndex);
 				currentStyleLayer = nextIndex;
-				this.button.title = this.titlePre + styleLayers[previousIndex].label;
+				this.button.title = this.button.ariaLabel = this.titlePre + styleLayers[previousIndex].label;
 				setMarkers(dataSource(term), false);
 			};
 			this.button.addEventListener('click', this.clickHandler);
@@ -355,13 +367,11 @@ const resumeInteractivity = () => {
 const setLoading = (term) => {
 	pauseInteractivity();
 	if (selectIcon) selectIcon.classList.add('loading');
-	if (mapStatus) {
-		let message = attr('data-initial-load')
-		if (term) {
-			message += ': ' + term;
-		}
-		mapStatus.innerText = message;
+	let message = attr('data-initial-load');
+	if(term){
+		message += ': ' + decodeURIComponent(term.replace(/\+/g, " "));
 	}
+	announce(message);
 }
 const removeLoading = () => {
 	resumeInteractivity();
@@ -385,13 +395,13 @@ const flyToById = async (id, zoom = 16) => {
 		return;
 	}
 	map.once('moveend', () => {
-		const popup = setPopup(targetFeature.properties);
-		popup.addTo(map);
+		setPopup(targetFeature.properties);
 	});
 	map.flyTo({
 		center: coordinates,
 		zoom: zoom,
 		essential: true,
+		animate: !prefReducedMotion,
 	});
 };
 const resetMarkerRequest = () => {
@@ -409,10 +419,7 @@ const initMarkerRequestListener = () => {
 	}
 	document.addEventListener('markerRequest', markerRequestListener);
 }
-const markerLayers = async (geojson, clusters = false) => {
-	if (!map) return;
-	clusters = Boolean(clusters);
-	// Cleanup
+const resetMarkerLayers = (clusters) => {
 	if (clusters) {
 		if (map.getLayer('clusters-shader')) map.removeLayer('clusters-shader');
 		if (map.getLayer('clusters')) map.removeLayer('clusters');
@@ -420,6 +427,12 @@ const markerLayers = async (geojson, clusters = false) => {
 	}
 	if (map.getLayer('unclustered-point')) map.removeLayer('unclustered-point');
 	if (map.getSource('pois')) map.removeSource('pois');
+}
+const markerLayers = async (geojson, clusters = false) => {
+	if (!map) return;
+	clusters = Boolean(clusters);
+	// Cleanup
+	resetMarkerLayers(clusters);
 	// Source
 	let sourceConfig = {
 		type: 'geojson',
@@ -576,11 +589,15 @@ const setPopup = (props) => {
 	</div>`;
 	let popup = new maplibregl.Popup({ offset: 22, closeButton: true }).setLngLat([props.longitude, props.latitude]).setHTML(infowindow);
 	popups.push(popup);
-	return popup;
+	popup.addTo(map);
 }
-const setMarkers = (src, fitBoundsAllowed = true) => {
+const setMarkers = async (src, fitBoundsAllowed = true, initialLoad = false) => {
 	if (!map) return;
+	// loading...
 	setLoading(term);
+	// wait for marker images...
+	if(initialLoad) await addImageSources();
+	// Data
 	fetch(src).then((response) => {
 		if (!response.ok) {
 			throw new Error(`HTTP error! status: ${response.status}`);
@@ -597,16 +614,16 @@ const setMarkers = (src, fitBoundsAllowed = true) => {
 			})),
 		};
 		// Add Markers
-		markerLayers(geojson, parseInt(attr('data-cluster')));
+		markerLayers(geojson, attr('data-cluster', true));
 		// Bounds
 		bounds = new maplibregl.LngLatBounds();
 		geojson.features.forEach((f) => bounds.extend(f.geometry.coordinates));
-		if (fitBoundsAllowed && (!Boolean(parseInt(attr('data-fixed-center'))) || term)) {
-			map.fitBounds(bounds, { padding: 50, maxZoom: 15 });
+		if (fitBoundsAllowed && (!attr('data-fixed-center', true) || term)) {
+			map.fitBounds(bounds, { padding: 50, maxZoom: 15, animate: !prefReducedMotion });
 		}
 		// Events
 		initMarkerEvents();
-
+		// end loading...
 		removeLoading();
 	}).catch((err) => {
 		removeLoading();
@@ -635,8 +652,16 @@ const initMarkerEvents = () => {
 	resetMarkerEvents();
 	// Marker Click
 	markerClick = (e) => {
-		let popup = setPopup(e.features[0].properties)
-		popup.addTo(map);
+		let props = e.features[0].properties;
+		let message = getCommaSeparatedValue(attr('data-marker-labels'), 0);
+		if(props.title){
+			message += ': ' + props.title
+		}
+		if(props.address){
+			message += ' (' + props.address + ')'
+		}
+		announce(message);
+		setPopup(props);
 	}
 	map.on('click', 'unclustered-point', markerClick);
 	// Cluster Click
@@ -644,10 +669,17 @@ const initMarkerEvents = () => {
 		const clusterId = e.features[0].properties.cluster_id;
 		const coords = e.features[0].geometry.coordinates;
 		const zoom = await map.getSource('pois').getClusterExpansionZoom(clusterId);
+		const leaves = await map.getSource('pois').getClusterLeaves(clusterId);
+		let message = getCommaSeparatedValue(attr('data-cluster-labels'), 0);
+		if(leaves.length){
+			message += ': ' + leaves.length + ' ' + getCommaSeparatedValue(attr('data-marker-labels'), 1)
+		}
+		announce(message);
 		map.flyTo({
 			center: coords,
 			zoom: zoom,
 			essential: true,
+			animate: !prefReducedMotion,
 		});
 	}
 	if (map.getSource('pois')) {
@@ -667,12 +699,41 @@ const initMarkerEvents = () => {
 }
 const addImageSources = async () => {
 	if (!map) return;
-	markerRegular = await map.loadImage(await toBitmap(markerSVG(attr('data-color'), false, false)));
-	markerFeatured = await map.loadImage(await toBitmap(markerSVG(attr('data-featured-color'), true, true)));
-	if (!map.hasImage('marker-regular')) map.addImage('marker-regular', markerRegular.data);
-	if (!map.hasImage('marker-featured')) map.addImage('marker-featured', markerFeatured.data);
+	if (!map.hasImage('marker-regular')){
+		bitmapMarkerReg = await map.loadImage(await toBitmap(markerSVG(attr('data-color'), false, false)));
+		map.addImage('marker-regular', bitmapMarkerReg.data);
+	}
+	if (!map.hasImage('marker-featured')){
+		let featuredColor = attr('data-featured-color') || attr('data-color');
+		let featuredStar = attr('data-featured-star', true);
+		if(attr('data-color') === featuredColor && !featuredStar){ // identical settings
+			markerBitmapFeat = bitmapMarkerReg; 
+		}
+		markerBitmapFeat = markerBitmapFeat || await map.loadImage(await toBitmap(markerSVG(featuredColor, true, featuredStar)));
+		map.addImage('marker-featured', markerBitmapFeat.data);
+	}
 }
-const CuratescapeMapInit = async () => {
+const resetSkipLink = () => {
+	if(!skipHandler || !skipLink) return;
+	skipLink.removeEventListener('click', skipHandler);
+	skipHandler = null;
+}
+const initSkipLinkListener = () => {
+	if(!skipLink || !mapfigcaption) return;	
+	resetSkipLink();
+	skipHandler = (e) =>{
+		e.preventDefault();
+		mapfigcaption.setAttribute('tabIndex','0');
+		mapfigcaption.scrollIntoView({
+			behavior: (prefReducedMotion ? 'instant' : 'smooth'),
+			block: 'start',
+		})
+		mapfigcaption.focus({preventScroll: true});
+		mapfigcaption.removeAttribute('tabIndex');
+	}
+	skipLink.addEventListener('click', skipHandler);
+}
+const CuratescapeMapInit = () => {
 	if (!mapcanvas) {
 		console.error('Map canvas element not found.');
 		return;
@@ -690,12 +751,12 @@ const CuratescapeMapInit = async () => {
 			map.scrollZoom.enable();
 		}).once('idle', () => {
 			mapfigure.setAttribute('data-loaded', 'true');
+			initSkipLinkListener();
 			if (attr('data-tour')) initMarkerRequestListener();
 		});
 		setStyleLayers();
 		addControls();
-		await addImageSources();
-		setMarkers(dataSource());
+		setMarkers(dataSource(), true, true);
 	} catch (error) {
 		console.error('Failed to initialize map:', error);
 	}
