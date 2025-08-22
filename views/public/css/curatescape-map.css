@@ -3,7 +3,7 @@
 	visibility: hidden;
 }
 
-[data-curatescape-map-skip-link] {
+[data-curatescape-map-keyboard-only] {
 	color: #333;
 	display: inline-flex;
 	flex-direction: column;
@@ -11,8 +11,9 @@
 	position: absolute;
 	font-size: 16px;
 	z-index: 403;
-	left: 8px;
-	top: 8px;
+	top:50%; 
+	left:50%; 
+	transform:translate(-50%, -50%); 
 	padding: 0 10px;
 	height: 36px;
 	border-radius: 5px;
@@ -24,7 +25,7 @@
 	pointer-events: none;
 }
 
-[data-curatescape-map-skip-link]:focus {
+[data-curatescape-map-keyboard-only]:focus {
 	opacity: 1;
 	pointer-events: all;
 }
@@ -87,65 +88,8 @@
 	text-decoration: none;
 }
 
-/* MAP SUBJECTS SELECT */
-.curatescape-map #subject-select-control[hidden] {
-	opacity: 0;
-	pointer-events: none;
-}
-.curatescape-map #subject-select-control,
-.curatescape-map #subject-select-control select,
-.curatescape-map #subject-select-control select option{
-	color: #333;
-}
-.curatescape-map #subject-select-control {
-	position: absolute;
-	z-index: 401;
-	right: 49px;
-	top: 8px;
-	min-height: 36px;
-	border-radius: 5px;
-	background-color: #fff;
-	border: 2px solid rgba(0, 0, 0, .2);
-	max-width: calc(100% - 122px);
-	display: flex;
-	flex-direction: row;
-}
-
-.curatescape-map #subject-select-control:hover {
-	transition: background-color 0.15s linear;
-	background-color: #f2f2f2;
-	/* equiv. match to default ui: rgba(0,0,0,.05) */
-}
-
-.curatescape-map #subject-select-control .indicator {
-	display: inline-block;
-	flex-grow: 1;
-	background-clip: padding-box;
-	background-image: url('data:image/svg+xml,<svg height="512" viewBox="0 0 512 512" width="512" xmlns="http://www.w3.org/2000/svg"><path d="m256 48c-114.69 0-208 93.31-208 208s93.31 208 208 208 208-93.31 208-208-93.31-208-208-208zm-38 312.38-80.6-89.57 23.79-21.41 56 62.22 132.81-158.16 24.54 20.54z"/></svg>');
-	background-size: 1.25em;
-	background-position: center;
-	background-repeat: no-repeat;
-	width: 36px;
-}
-
-.curatescape-map #subject-select-control .indicator.loading {
-	animation: spin 1.5s linear infinite;
-	background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" class="ionicon" viewBox="0 0 512 512"><path d="M256 48C141.31 48 48 141.31 48 256s93.31 208 208 208 208-93.31 208-208S370.69 48 256 48zm120 182.15a8.62 8.62 0 01-8.62 8.62h-59.54a8.61 8.61 0 01-6.09-14.71l22.17-22.17-5.6-6.51a87.38 87.38 0 10-62.94 148 87.55 87.55 0 0082.42-58.25A16 16 0 11368 295.8a119.4 119.4 0 11-112.62-159.18 118.34 118.34 0 0186.36 36.95l.56.62 4.31 5 14.68-14.68a8.44 8.44 0 016-2.54 8.61 8.61 0 018.68 8.63z"/></svg>');
-}
-.curatescape-map #subject-select-control select {
-	-moz-appearance: none;
-	-webkit-appearance: none;
-	appearance: none;
-	background: transparent;
-	border: 0 none transparent;
-	height: 36px;
-	font-size: 16px;
-	padding: 0 10px 0 4px;
-	margin: 0;
-}
-
-/* MAP CONTROLS */
-.maplibregl-ctrl-group button {
+/* MAP CONTROLS GENERAL */
+/* .maplibregl-ctrl-group button {
 	margin: unset;
 	min-height: unset;
 	padding: unset;
@@ -153,7 +97,7 @@
 
 .maplibregl-ctrl-attrib a {
 	color: inherit;
-}
+} */
 
 .maplibregl-ctrl {
 	opacity: 0.95;
@@ -166,15 +110,116 @@
 	opacity: 1;
 }
 
+/* MAP CONTROLS CUSTOM */
 .maplibregl-ctrl-group.custom button {
-	background-size: 90%;
 	background-position: center center;
 	background-repeat: no-repeat;
 }
-
+.maplibregl-ctrl-group.custom.fitbounds button{
+	background-size: 85%;
+}
 .maplibregl-ctrl-group.custom.styleswap button,
 .maplibregl-ctrl-group.custom.reset button {
 	background-size: 70%;
+}
+/* MAP CONTROLS KEYBOARD */
+.maplibregl-ctrl-top-left {
+	position: inherit;
+}
+.maplibregl-ctrl-group.custom.keyboard-only{
+	position: absolute;
+	top:50%; 
+	left:50%; 
+	transform:translate(-50%, -50%); 
+	margin: 0;
+	transition: all linear 0.15s;
+	opacity: 0;
+	pointer-events: none;
+	padding: 10px;
+	background: rgba(256,256,256,.9);
+}
+.maplibregl-ctrl-group.custom.keyboard-only:focus-within{
+	opacity: 1;
+	pointer-events: all;
+}
+.maplibregl-ctrl-group.custom.keyboard-only button{
+	background: #fff;
+	font-size: 16px;
+	padding: 5px 10px;
+	border: 2px solid rgba(0,0,0,.1);
+	width: 100%;
+	height: auto;
+	border-radius: 4px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+.maplibregl-ctrl-group.custom.keyboard-only button + button{
+	margin-top: 5px;
+}
+.maplibregl-ctrl-group.custom.keyboard-only button:hover,
+.maplibregl-ctrl-group.custom.keyboard-only button:focus{
+	background: #f2f2f2;
+}
+
+/* MAP SUBJECTS SELECT CONTROL */
+.maplibregl-ctrl-top-left{
+	max-width: calc(100% - 59px);
+}
+.curatescape-map .subject-select {
+	min-height: 30px;
+	max-width: 100%;
+	display: flex;
+	flex-direction: row;
+	position: absolute;
+	top: 0;
+}
+.curatescape-map .subject-select:hover{
+	background: #f2f2f2;
+}
+.curatescape-map .subject-select .indicator {
+	display: inline-block;
+	flex-grow: 0;
+	flex-shrink: 0;
+	background-clip: padding-box;
+	background-image: url('data:image/svg+xml,<svg height="512" viewBox="0 0 512 512" width="512" xmlns="http://www.w3.org/2000/svg"><path d="m256 48c-114.69 0-208 93.31-208 208s93.31 208 208 208 208-93.31 208-208-93.31-208-208-208zm-38 312.38-80.6-89.57 23.79-21.41 56 62.22 132.81-158.16 24.54 20.54z"/></svg>');
+	background-size: 20px;
+	background-position: center;
+	background-repeat: no-repeat;
+	width: 29px;
+}
+
+.curatescape-map .subject-select .indicator.loading {
+	animation: spin 1.5s linear infinite;
+	background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" class="ionicon" viewBox="0 0 512 512"><path d="M256 48C141.31 48 48 141.31 48 256s93.31 208 208 208 208-93.31 208-208S370.69 48 256 48zm120 182.15a8.62 8.62 0 01-8.62 8.62h-59.54a8.61 8.61 0 01-6.09-14.71l22.17-22.17-5.6-6.51a87.38 87.38 0 10-62.94 148 87.55 87.55 0 0082.42-58.25A16 16 0 11368 295.8a119.4 119.4 0 11-112.62-159.18 118.34 118.34 0 0186.36 36.95l.56.62 4.31 5 14.68-14.68a8.44 8.44 0 016-2.54 8.61 8.61 0 018.68 8.63z"/></svg>');
+}
+.curatescape-map .subject-select select {
+	-moz-appearance: none;
+	-webkit-appearance: none;
+	appearance: none;
+	background: transparent;
+	border: 0 none transparent;
+	height: 30px;
+	font-size: 16px;
+	padding: 0 10px 0 2px;
+	margin: 0;
+	overflow: hidden;
+	white-space:nowrap; 
+	text-overflow: ellipsis
+}
+
+/* MAP CONTROLS FULLSCREEN */
+.maplibregl-ctrl-fullscreen .maplibregl-ctrl-icon {
+	background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" class="ionicon" viewBox="0 0 512 512"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32" d="M432 320v112H320M421.8 421.77L304 304M80 192V80h112M90.2 90.23L208 208M320 80h112v112M421.77 90.2L304 208M192 432H80V320M90.23 421.8L208 304"/></svg>') !important;
+	background-size: 80%;
+}
+.maplibregl-ctrl button.maplibregl-ctrl-shrink .maplibregl-ctrl-icon{
+	background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" class="ionicon" viewBox="0 0 512 512"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32" d="M304 416V304h112M314.2 314.23L432 432M208 96v112H96M197.8 197.77L80 80M416 208H304V96M314.23 197.8L432 80M96 304h112v112M197.77 314.2L80 432"/></svg>') !important;
+	background-size: 80%;
+}
+.maplibregl-ctrl-fullscreen,
+.maplibregl-ctrl-shrink{
+	
 }
 
 /* MAP INFO WINDOWS */

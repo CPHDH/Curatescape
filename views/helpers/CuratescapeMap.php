@@ -27,13 +27,14 @@ class Curatescape_View_Helper_CuratescapeMap extends Zend_View_Helper_Abstract{
 			data-root-url="<?php echo WEB_ROOT;?>"
 			data-reset-label="<?php echo __('Reset to initial view');?>" 
 			data-style-swap-label="<?php echo __('Base Map');?>" 
+			data-skip-link-label="<?php echo __('Skip %s Map', ($tourId ? tourLabelString() : storyLabelString()));?>"
 			data-marker-labels="<?php echo storyLabelString().','.storyLabelString('plural');?>" 
 			data-color="<?php echo flexOption('curatescape_map_marker_color', '#222');?>"
 			>
-				<?php echo $this->skipMapLink();?>
 				<div class="curatescape-map">
-					<div id="curatescape-map-canvas" aria-label="<?php echo __('Interactive Map');?>"
-					></div>
+					<div id="curatescape-map-canvas" aria-label="<?php echo __('Interactive Map');?>">
+						<span id="map-status" aria-live="polite" data-curatescape-screenreader-only="true"><?php echo $ariaLiveMessage;?></span>
+					</div>
 				</div>
 				<figcaption id="curatescape-map-caption"><?php echo $figcaption;?></figcaption>
 				<?php echo $this->scriptsCuratescapeMap();?>
@@ -70,21 +71,20 @@ class Curatescape_View_Helper_CuratescapeMap extends Zend_View_Helper_Abstract{
 			data-cluster="<?php echo flexOption('curatescape_map_clusters', 0);?>"
 			data-cluster-colors="<?php echo flexOption('curatescape_map_cluster_colors', '');?>"
 			data-root-url="<?php echo WEB_ROOT;?>"
-			data-fitbounds-label="<?php echo __('Zoom to fit all');?>" 
-			data-reset-label="<?php echo __('Reset to initial view');?>" 
-			data-style-swap-label="<?php echo __('Base Map');?>" 
+			data-fitbounds-label="<?php echo __('Zoom to fit all');?>"
+			data-reset-label="<?php echo __('Reset to initial view');?>"
+			data-style-swap-label="<?php echo __('Base Map');?>"
+			data-skip-link-label="<?php echo __('Skip %s Map', ($tourId ? tourLabelString() : storyLabelString()));?>"
+			data-map-list-label="<?php echo __('View %s List', storyLabelString('plural'));?>"
 			data-marker-labels="<?php echo storyLabelString().','.storyLabelString('plural');?>" 
 			data-cluster-labels="<?php echo __('Cluster').','.__('Clusters');?>" 
 			data-color="<?php echo $color = flexOption('curatescape_map_marker_color', '#222');?>"
 			data-featured-color="<?php echo flexOption('curatescape_map_marker_featured_color', $color);?>"
 			data-featured-star="<?php echo flexOption('curatescape_map_marker_featured_star', 0);?>"
 			data-fixed-center="<?php echo $isGlobal ? flexOption('curatescape_map_fixed_center', 0) : 0;?>"
+			data-terms-json="<?php echo $this->getTermsJson(49, $isGlobal, $class);?>"
 			>
-				<?php echo $this->skipMapLink($tourId);?>
 				<div class="curatescape-map">
-					<?php if( $isGlobal && get_option('curatescape_map_subjects_select') && $class !== "shortcode-no-subjects"){
-						echo $this->subjectSelect();
-					} ?>
 					<div id="curatescape-map-canvas" aria-label="<?php echo __('Interactive Map');?>">
 						<span id="map-status" aria-live="polite" data-curatescape-screenreader-only="true"><?php echo $ariaLiveMessage;?></span>
 					</div>
@@ -97,8 +97,6 @@ class Curatescape_View_Helper_CuratescapeMap extends Zend_View_Helper_Abstract{
 	}
 	public function GeolocationShortcode($range = null, $tour = null, $figcaption = null, $class="items-map", $html = null)
 	{
-		// GEOLOCATION DOES DO NOT (YET) SUPPORT RANGE IN SHORTCODE
-		// https://github.com/omeka/plugin-Geolocation/pull/61
 		$height = option('geolocation_item_map_height') ? 'height='.option('geolocation_item_map_height') : null;
 		if(!$range && !$tour){
 			$range = $this->defaultRange();
@@ -116,12 +114,6 @@ class Curatescape_View_Helper_CuratescapeMap extends Zend_View_Helper_Abstract{
 		$html .= '</figure>';
 		return $html;
 	}
-	private function skipMapLink($tourId=null)
-	{
-	?>
-	<a href="#curatescape-map-caption" data-curatescape-map-skip-link="true"><?php echo __('Skip %s Map', ($tourId ? tourLabelString() : storyLabelString()));?></a>
-	<?php
-	}
 	private function scriptsCuratescapeMap()
 	{
 	?>
@@ -130,23 +122,6 @@ class Curatescape_View_Helper_CuratescapeMap extends Zend_View_Helper_Abstract{
 	<link href="<?php echo src('curatescape-map.css', 'css');?>" rel="stylesheet" />
 	<script type="module" src="<?php echo src('curatescape-map.js', 'javascripts');?>"></script>
 	<?php
-	}
-	private function subjectSelect($html = null, $allItemTypes = false, $totalItems = null)
-	{
-		
-		if(!isset($totalItems)){
-			$totalItems = $this->totalItems();
-		}
-		$records_label = $allItemTypes ? __('Items') : storyLabelString('plural');
-		$subjects = $this->getPublicStoryMapTerms(49, $allItemTypes);
-		if(!count($subjects)) return null;
-		$html .= '<div id="subject-select-control" class="maplibregl-ctrl" hidden><span class="indicator"></span><select>';
-		$html .= '<option value="">'.__('All %s', $records_label).': '.$totalItems.'</option>';
-		foreach($subjects as $subject){
-		  $html .= '<option value="'.strip_tags(urlencode($subject['text'])).'">'.strip_tags($subject['text']).': '.$subject['total'].'</option>';
-		}
-		$html .= '</select></div>';
-		return $html;
 	}
 	private function totalItems($allItemTypes = false){
 		$ands = array();
@@ -166,8 +141,13 @@ class Curatescape_View_Helper_CuratescapeMap extends Zend_View_Helper_Abstract{
 		$results = $q->fetchAll();
 		return count($results);
 	}
-	private function getPublicStoryMapTerms($elementId, $allItemTypes = false)
+	private function getTermsJson($elementId, $isGlobal, $class, $allItemTypes = false)
 	{
+		if( 
+			!$isGlobal || 
+			!get_option('curatescape_map_subjects_select') || 
+			$class === "shortcode-no-subjects"
+		) return null;
 		$ands = array();
 		if(!$allItemTypes){
 			$ands[] = 'AND i.item_type_id = '.itemTypeID();
@@ -186,7 +166,15 @@ class Curatescape_View_Helper_CuratescapeMap extends Zend_View_Helper_Abstract{
 			SQL
 		);
 		$values = $q->fetchAll();
-		return $values;
+		if($values){
+			array_unshift($values, [
+				'text'=>__('All %s', storyLabelString('plural')),
+				'total'=>$this->totalItems(),
+				'default'=>true,
+			]);
+			return urlencode(json_encode($values));
+		}
+		return null;
 	}
 	private function defaultFigcaption()
 	{

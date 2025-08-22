@@ -11,7 +11,7 @@ class CuratescapeMap extends HTMLElement {
 	disconnectedCallback() {
 		resetMap();
 		resetPopups();
-		resetSubjectSelect();
+		// resetSubjectSelect();
 		resetMarkerRequest();
 		resetMarkerEvents();
 		resetSkipLink();
@@ -39,8 +39,7 @@ const mapcanvas = document.querySelector('#curatescape-map-canvas');
 const mapfigure = document.querySelector('#curatescape-map-figure');
 const mapfigcaption = document.querySelector("#curatescape-map-caption");
 const subjectSelect = document.querySelector('#subject-select-control select');
-const selectIcon = document.querySelector('.curatescape-map #subject-select-control .indicator');
-const skipLink = document.querySelector('[data-curatescape-map-skip-link]');
+const skipLink = document.querySelector('[data-curatescape-map-keyboard-only]');
 const ariaLiveRegion = document.querySelector('#curatescape-map-canvas #map-status');
 // SCOPED VARS
 let map = null;
@@ -52,6 +51,7 @@ let styleLayers = [];
 let currentStyleLayer = 0;
 let bitmapMarkerReg = null;
 let markerBitmapFeat = null;
+let loadingIndicator = null;
 // TRACKED EVENTS
 let subjectSelectListener = null;
 let markerRequestListener = null;
@@ -81,7 +81,7 @@ const getCommaSeparatedValue = (string, index) => {
 	let arr = string.split(',');
 	return arr[index] ? arr[index].trim() : null;
 }
-const rgbParse = (color) => { // returns a comma-separated string of 3 RGB numbers
+const rgbParse = (color) => { // returns a comma-separated string, eg 256,256,256
 	if (!color) return null;
 	try {
 		let el = document.createElement('span');
@@ -226,40 +226,60 @@ const setStyleLayers = (styleIndex = 0) => {
 	currentStyleLayer = styleIndex;
 	map.setStyle(styleLayers[currentStyleLayer].url);
 }
-const resetSubjectSelect = () => {
-	if (subjectSelect && subjectSelectListener) {
-		subjectSelect.removeEventListener("change", subjectSelectListener);
-		subjectSelectListener = null;
-	}
-};
 const subjectSelectControls = () => {
 	// @todo: convert to native control *then* add fullscreen button
-	if (!subjectSelect) return;
-	resetSubjectSelect();
-	subjectSelectListener = (e) => {
-		resetPopups();
-		term = e.target.options[e.target.selectedIndex].value;
-		setMarkers(dataSource(term));
-	};
-	subjectSelect.parentElement.removeAttribute("hidden");
-	subjectSelect.addEventListener("change", subjectSelectListener);
-}
-const navigationControls = () => {
-	return map.addControl(new maplibregl.NavigationControl({
-		visualizePitch: true,
-		showZoom: true,
-		showCompass: true
-	}));
-}
-const geolocationControls = () => {
-	let geolocate = new maplibregl.GeolocateControl({
-		positionOptions: { enableHighAccuracy: true },
-		trackUserLocation: false
-	});
-	geolocate.on('click', () => {
-		geolocate.trigger();
-	});
-	return map.addControl(geolocate);
+	let data = attr('data-terms-json');
+	if(!data) return;
+	class SubjectSelectControl{
+		constructor() {
+			this.json = decodeURIComponent(data);
+		}
+		onAdd(map) {
+			this.map = map;
+			this.container = document.createElement('div');
+			this.container.className = 'maplibregl-ctrl maplibregl-ctrl-group custom subject-select';
+			this.indicator = document.createElement('span');
+			this.indicator.className = 'indicator';
+			this.container.appendChild(this.indicator);
+			this.select = document.createElement('select');
+			try{
+				JSON.parse(this.json).forEach((term)=>{
+					let option = document.createElement('option');
+					option.value = term.default ? '' : term.text
+					option.innerText = `${decodeURIComponent(term.text.replace(/\+/g, " "))}: ${term.total}`;
+					this.select.appendChild(option);
+				});
+			} catch(error) {
+				console.error('Failed to parse terms for subject select controls:', error);
+				return;
+			}
+			this.changeHandler = (e) => {
+				resetPopups();
+				term = e.target.options[e.target.selectedIndex].value;
+				setMarkers(dataSource(term));
+			}
+			this.select.addEventListener("change", this.changeHandler);
+			this.container.appendChild(this.select);
+			loadingIndicator = this.indicator; // see setLoading()...
+			return this.container;
+		}
+		onRemove(map) {
+			if (this.select && this.clickHandler) {
+				this.select.removeEventListener('change', this.changeHandler);
+			}
+			if (this.container && this.container.parentNode) {
+				this.container.parentNode.removeChild(this.container);
+			}
+			this.changeHandler = null;
+			this.select = null;
+			this.indicator = null;
+			this.container = null;
+			this.json = null;
+			this.map = null;
+		}
+	}
+	return map.addControl(new SubjectSelectControl(), 'top-left');
+	
 }
 const fitBoundsControl = () => {
 	class FitBoundsControl {
@@ -336,9 +356,95 @@ const styleSwapControl = () => {
 	}
 	return styleLayers.length > 1 ? map.addControl(new StyleSwapControl()) : null;
 }
+const keyboardEnhancements = () => {
+	class KeyboardAltControls {
+		onAdd(map) {
+			this.map = map;
+			this.container = document.createElement('div');
+			this.container.className = 'maplibregl-ctrl maplibregl-ctrl-group custom keyboard-only skiplink';
+			// SKIP
+			this.skipButton = document.createElement('button');
+			this.skipButton.innerText = attr('data-skip-link-label');
+			this.skipHandler = (e) =>{
+				e.preventDefault();
+				mapfigcaption.setAttribute('tabIndex','0');
+				mapfigcaption.scrollIntoView({
+					behavior: (prefReducedMotion ? 'instant' : 'smooth'),
+					block: 'start',
+				})
+				mapfigcaption.focus({preventScroll: true});
+				mapfigcaption.removeAttribute('tabIndex');
+			}
+			this.skipButton.addEventListener('click', this.skipHandler);
+			this.container.appendChild(this.skipButton);
+			// LIST
+			this.listButton = document.createElement('button');
+			this.listButton.innerText = attr('data-map-list-label');
+			this.listHandler = (e) =>{
+				e.preventDefault();
+				this.pois = map.getSource('pois');
+				this.pois.getData().then((data)=>{
+					data.features.forEach(i=>{
+						console.log(i.properties.title)
+					})
+				});
+				// @todo: 
+				// announce() while list is being constructed?
+				// pause/resume interactivity?
+				// build html and add to mapfigure with absolute position above map
+				// on open move focus
+				// close button focus?
+			}
+			this.listButton.addEventListener('click', this.listHandler);
+			this.container.appendChild(this.listButton);
+			return this.container;
+		}
+		onRemove() {
+			if (this.skipButton && this.skipHandler) {
+				this.skipButton.removeEventListener('click', this.skipHandler);
+			}
+			if (this.listButton && this.listHandler) {
+				this.listButton.removeEventListener('click', this.listHandler);
+			}
+			if (this.container && this.container.parentNode) {
+				this.container.parentNode.removeChild(this.container);
+			}
+			this.skipHandler = null;
+			this.skipButton = null;
+			this.listHandler = null;
+			this.listButton = null;
+			this.container = null;
+			this.pois = null;
+			this.map = null;
+		}
+	}
+	return map.addControl(new KeyboardAltControls(), 'top-left');
+}
+const navigationControls = () => {
+	return map.addControl(new maplibregl.NavigationControl({
+		visualizePitch: true,
+		showZoom: true,
+		showCompass: true
+	}));
+}
+const geolocationControls = () => {
+	let geolocate = new maplibregl.GeolocateControl({
+		positionOptions: { enableHighAccuracy: true },
+		trackUserLocation: false
+	});
+	geolocate.on('click', () => {
+		geolocate.trigger();
+	});
+	return map.addControl(geolocate);
+}
+const fullscreenControls = () => {
+	return map.addControl(new maplibregl.FullscreenControl());
+}
 const addControls = () => {
 	if (!map) return;
+	keyboardEnhancements();
 	subjectSelectControls();
+	fullscreenControls();
 	navigationControls();
 	geolocationControls();
 	styleSwapControl();
@@ -366,7 +472,7 @@ const resumeInteractivity = () => {
 }
 const setLoading = (term) => {
 	pauseInteractivity();
-	if (selectIcon) selectIcon.classList.add('loading');
+	if (loadingIndicator) loadingIndicator.classList.add('loading');
 	let message = attr('data-initial-load');
 	if(term){
 		message += ': ' + decodeURIComponent(term.replace(/\+/g, " "));
@@ -375,7 +481,7 @@ const setLoading = (term) => {
 }
 const removeLoading = () => {
 	resumeInteractivity();
-	if (selectIcon) selectIcon.classList.remove('loading');
+	if (loadingIndicator) loadingIndicator.classList.remove('loading');
 }
 const dataSource = (term) => {
 	if (term) {
