@@ -132,11 +132,13 @@
 	left:50%; 
 	transform:translate(-50%, -50%); 
 	margin: 0;
-	transition: all linear 0.15s;
 	opacity: 0;
 	pointer-events: none;
 	padding: 10px;
 	background: rgba(256,256,256,.9);
+	transition-property: height, width, opacity;
+	transition-duration: 0.15s;
+	transition-timing-function: linear;
 }
 .maplibregl-ctrl-group.custom.keyboard-only:focus-within{
 	opacity: 1;
@@ -160,6 +162,82 @@
 .maplibregl-ctrl-group.custom.keyboard-only button:hover,
 .maplibregl-ctrl-group.custom.keyboard-only button:focus{
 	background: #f2f2f2;
+}
+/* locations as text list... */
+.keyboard-results {
+	box-sizing: border-box;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	overflow-y: scroll;
+	background-image: linear-gradient(to top, rgba(0,0,0,0.95), rgba(0,0,0,0.75));
+	position: absolute;
+	z-index: 9;
+	padding: 0 1lh 1lh;
+}
+.keyboard-results::after {
+	content: '';
+	position: sticky;
+	z-index: 10;
+	display: block;
+	width: 100%;
+	height: 1lh;
+	bottom: -1lh;
+	left: 0;
+	background-image: linear-gradient(to top, rgba(0,0,0,0.3), rgba(0,0,0,0.15),rgba(0,0,0,0));
+}
+.keyboard-results::before {
+	content: '';
+	position: sticky;
+	z-index: 10;
+	display: block;
+	width: 100%;
+	height: 0.5lh;
+	top: 0;
+	left: 0;
+	background-image: linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(0,0,0,0.15),rgba(0,0,0,0));
+}
+#keyboard-close-button {
+	position: sticky;
+	display: block;
+	float: right;
+	z-index: 11;
+	top: 10px;
+	left: calc(100% - 34px);
+	background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" class="ionicon" viewBox="0 0 512 512"><path d="M256 48C141.31 48 48 141.31 48 256s93.31 208 208 208 208-93.31 208-208S370.69 48 256 48zm75.31 260.69a16 16 0 11-22.62 22.62L256 278.63l-52.69 52.68a16 16 0 01-22.62-22.62L233.37 256l-52.68-52.69a16 16 0 0122.62-22.62L256 233.37l52.69-52.68a16 16 0 0122.62 22.62L278.63 256z"/></svg>');
+	height: 34px;
+	width: 34px;
+	background-size: 100%;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-color: rgba(256, 256, 256, .5);
+	border: 0;
+	border-radius: 50%;
+	text-decoration: none;
+}
+#keyboard-close-button:hover,
+#keyboard-close-button:focus {
+	background-color: rgba(256, 256, 256, 1);
+}
+.keyboard-item-link {
+	display: block;
+	font-size: 16px;
+	border: 2px solid rgba(0,0,0,.1);
+	background: #fff;
+	padding: 0.5lh;
+	border-radius: 4px;
+	text-decoration: none;
+	color: inherit;
+	max-width: max(44rem, calc(100% - 134px));
+	margin:  0.5lh auto 0;
+}
+.keyboard-item-link:hover,
+.keyboard-item-link:focus{
+	background: #f2f2f2;
+}
+.keyboard-item-link small{
+	display: block;
 }
 
 /* MAP SUBJECTS SELECT CONTROL */

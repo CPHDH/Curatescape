@@ -359,7 +359,8 @@ const styleSwapControl = () => {
 const keyboardEnhancements = () => {
 	class KeyboardAltControls {
 		onAdd(map) {
-			this.map = map;
+			this.mapcanvas = mapcanvas;
+			this.mapfigcaption = mapfigcaption;
 			this.container = document.createElement('div');
 			this.container.className = 'maplibregl-ctrl maplibregl-ctrl-group custom keyboard-only skiplink';
 			// SKIP
@@ -367,13 +368,13 @@ const keyboardEnhancements = () => {
 			this.skipButton.innerText = attr('data-skip-link-label');
 			this.skipHandler = (e) =>{
 				e.preventDefault();
-				mapfigcaption.setAttribute('tabIndex','0');
-				mapfigcaption.scrollIntoView({
+				this.mapfigcaption.setAttribute('tabIndex','0');
+				this.mapfigcaption.scrollIntoView({
 					behavior: (prefReducedMotion ? 'instant' : 'smooth'),
 					block: 'start',
 				})
-				mapfigcaption.focus({preventScroll: true});
-				mapfigcaption.removeAttribute('tabIndex');
+				this.mapfigcaption.focus({preventScroll: true});
+				this.mapfigcaption.removeAttribute('tabIndex');
 			}
 			this.skipButton.addEventListener('click', this.skipHandler);
 			this.container.appendChild(this.skipButton);
@@ -381,19 +382,62 @@ const keyboardEnhancements = () => {
 			this.listButton = document.createElement('button');
 			this.listButton.innerText = attr('data-map-list-label');
 			this.listHandler = (e) =>{
+				pauseInteractivity();
 				e.preventDefault();
 				this.pois = map.getSource('pois');
 				this.pois.getData().then((data)=>{
-					data.features.forEach(i=>{
-						console.log(i.properties.title)
-					})
+					let results = '';
+					results = document.createElement('div');
+					results.className = 'keyboard-results';
+					// close button
+					this.closeButton = document.createElement('button');
+					this.closeButton.id = 'keyboard-close-button';
+					this.closeButton.ariaLabel = 'ESC';
+					this.closeHandler = (e) => {
+						e.preventDefault();
+						results = '';
+						if(this.escapeHandler){
+							document.removeEventListener('keyup', this.escapeHandler);
+						}
+						e.target.parentElement.remove();
+						resumeInteractivity();
+					}
+					// escape
+					this.escapeHandler = (e) => {
+						e = e || window.event;
+						var isEscape = false;
+						if ("key" in e) {
+							isEscape = (e.key === "Escape" || e.key === "Esc");
+						} else {
+							isEscape = (e.keyCode === 27);
+						}
+						if (isEscape) {
+							this.closeButton.click();
+						}
+					};
+					this.closeButton.addEventListener('click', this.closeHandler);
+					document.addEventListener('keyup', this.escapeHandler);
+					results.appendChild(this.closeButton);
+					// item list
+					let tourid = attr('data-tour');
+					data.features.forEach(i =>{
+						let props = i.properties;
+						let params = tourid ? "?tour=" + tourid + "&index=" + props.index : "";
+						let item = document.createElement('a');
+							item.className = 'keyboard-item-link';
+							item.href = htmlEntities(`/items/show/${props.id + params}`);
+							item.innerHTML = `<strong>${htmlEntities(props.title)}</strong>`;
+						if(props.address){
+							item.innerHTML += `<small>${htmlEntities(props.address)}</small>`;
+						}
+						results.appendChild(item);
+						item = null;
+					});
+					this.mapcanvas.appendChild(results);
+					results.setAttribute('tabIndex','0');
+					results.focus();
+					results.removeAttribute('tabIndex');
 				});
-				// @todo: 
-				// announce() while list is being constructed?
-				// pause/resume interactivity?
-				// build html and add to mapfigure with absolute position above map
-				// on open move focus
-				// close button focus?
 			}
 			this.listButton.addEventListener('click', this.listHandler);
 			this.container.appendChild(this.listButton);
@@ -406,16 +450,26 @@ const keyboardEnhancements = () => {
 			if (this.listButton && this.listHandler) {
 				this.listButton.removeEventListener('click', this.listHandler);
 			}
+			if(this.closeButton && this.closeHandler) {
+				this.closeButton.removeEventListener('click', this.closeHandler);
+			}
 			if (this.container && this.container.parentNode) {
 				this.container.parentNode.removeChild(this.container);
+			}
+			if(this.escapeHandler){
+				document.removeEventListener('keyup', this.escapeHandler);
 			}
 			this.skipHandler = null;
 			this.skipButton = null;
 			this.listHandler = null;
 			this.listButton = null;
+			this.closeButton = null;
+			this.closeHandler = null;
+			this.escapeHandler = null;
 			this.container = null;
 			this.pois = null;
-			this.map = null;
+			this.mapcanvas = null;
+			this.mapfigcaption = null;
 		}
 	}
 	return map.addControl(new KeyboardAltControls(), 'top-left');
