@@ -292,7 +292,11 @@ const fitBoundsControl = () => {
 			this.button.style.backgroundImage = `url("data:image/svg+xml;charset=utf-8,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E %3Cpath style='fill:%23333333;' d='M396.795 396.8H320V448h128V320h-51.205zM396.8 115.205V192H448V64H320v51.205zM115.205 115.2H192V64H64v128h51.205zM115.2 396.795V320H64v128h128v-51.205z'/%3E %3C/svg%3E")`;
 			this.clickHandler = () => {
 				if (this.map && bounds) {
-					this.map.fitBounds(bounds, { padding: 50, maxZoom: 15 });
+					this.map.fitBounds(bounds, { 
+						padding: {top: 50, bottom:25, left: 25, right: 75}, 
+						maxZoom: 15,
+						animate: !prefReducedMotion, 
+					});
 				}
 			};
 			this.button.addEventListener('click', this.clickHandler);
@@ -366,8 +370,11 @@ const keyboardEnhancements = () => {
 			// SKIP
 			this.skipButton = document.createElement('button');
 			this.skipButton.innerText = attr('data-skip-link-label');
-			this.skipHandler = (e) =>{
+			this.skipHandler = async (e) =>{
 				e.preventDefault();
+				if (document.fullscreenElement) {
+					await document.exitFullscreen();
+				}
 				this.mapfigcaption.setAttribute('tabIndex','0');
 				this.mapfigcaption.scrollIntoView({
 					behavior: (prefReducedMotion ? 'instant' : 'smooth'),
@@ -378,30 +385,36 @@ const keyboardEnhancements = () => {
 			}
 			this.skipButton.addEventListener('click', this.skipHandler);
 			this.container.appendChild(this.skipButton);
+			// multi maps only...
+			if(attr('data-maptype') !== 'multi') return this.container;
 			// LIST
 			this.listButton = document.createElement('button');
-			this.listButton.innerText = attr('data-map-list-label');
+			this.listButton.innerText = getCommaSeparatedValue(attr('data-map-list-labels'), 0);
 			this.listHandler = (e) =>{
 				pauseInteractivity();
 				e.preventDefault();
 				this.pois = map.getSource('pois');
 				this.pois.getData().then((data)=>{
-					let results = '';
-					results = document.createElement('div');
-					results.className = 'keyboard-results';
+					this.results = '';
+					this.results = document.createElement('div');
+					this.results.className = 'keyboard-results';
+					this.results.setAttribute('role','region');
+					this.results.setAttribute('aria-label', getCommaSeparatedValue(attr('data-marker-labels'), 1));
 					// close button
 					this.closeButton = document.createElement('button');
 					this.closeButton.id = 'keyboard-close-button';
 					this.closeButton.ariaLabel = 'ESC';
 					this.closeHandler = (e) => {
 						e.preventDefault();
-						results = '';
+						this.results = '';
 						if(this.escapeHandler){
 							document.removeEventListener('keyup', this.escapeHandler);
 						}
 						e.target.parentElement.remove();
 						resumeInteractivity();
 					}
+					this.closeButton.addEventListener('click', this.closeHandler);
+					this.results.appendChild(this.closeButton);
 					// escape
 					this.escapeHandler = (e) => {
 						e = e || window.event;
@@ -415,28 +428,38 @@ const keyboardEnhancements = () => {
 							this.closeButton.click();
 						}
 					};
-					this.closeButton.addEventListener('click', this.closeHandler);
 					document.addEventListener('keyup', this.escapeHandler);
-					results.appendChild(this.closeButton);
+					// focus out
+					this.focusOutHandler = (e) => {
+						if (this.results.contains(e.relatedTarget)) return;
+						this.results.remove();
+						this.skipButton.focus();
+					}
+					this.results.addEventListener('focusout', this.focusOutHandler);
 					// item list
 					let tourid = attr('data-tour');
+					let ul = document.createElement('ul');
 					data.features.forEach(i =>{
 						let props = i.properties;
 						let params = tourid ? "?tour=" + tourid + "&index=" + props.index : "";
-						let item = document.createElement('a');
-							item.className = 'keyboard-item-link';
-							item.href = htmlEntities(`/items/show/${props.id + params}`);
-							item.innerHTML = `<strong>${htmlEntities(props.title)}</strong>`;
+						let li = document.createElement('li');
+						let a = document.createElement('a');
+							a.className = 'keyboard-item-link';
+							a.href = htmlEntities(`/items/show/${props.id + params}`);
+							let subtitle = props.subtitle ? ': '+props.subtitle : '';
+							a.innerHTML = `<strong>${htmlEntities(props.title + subtitle)}</strong>`;
 						if(props.address){
-							item.innerHTML += `<small>${htmlEntities(props.address)}</small>`;
+							a.innerHTML += `<small>${htmlEntities(props.address)}</small>`;
 						}
-						results.appendChild(item);
-						item = null;
+						li.appendChild(a);
+						ul.appendChild(li);
+						this.results.appendChild(ul);
 					});
-					this.mapcanvas.appendChild(results);
-					results.setAttribute('tabIndex','0');
-					results.focus();
-					results.removeAttribute('tabIndex');
+					this.mapcanvas.appendChild(this.results);
+					this.results.setAttribute('tabIndex','0');
+					this.results.focus();
+					this.results.removeAttribute('tabIndex');
+					announce(getCommaSeparatedValue(attr('data-map-list-labels'), 1));
 				});
 			}
 			this.listButton.addEventListener('click', this.listHandler);
@@ -453,6 +476,9 @@ const keyboardEnhancements = () => {
 			if(this.closeButton && this.closeHandler) {
 				this.closeButton.removeEventListener('click', this.closeHandler);
 			}
+			if(this.results && this.focusOutHandler){
+				this.results.removeEventListener('focusout', this.focusOutHandler);
+			}
 			if (this.container && this.container.parentNode) {
 				this.container.parentNode.removeChild(this.container);
 			}
@@ -466,10 +492,12 @@ const keyboardEnhancements = () => {
 			this.closeButton = null;
 			this.closeHandler = null;
 			this.escapeHandler = null;
+			this.focusOutHandler = null;
 			this.container = null;
 			this.pois = null;
 			this.mapcanvas = null;
 			this.mapfigcaption = null;
+			this.results = null;
 		}
 	}
 	return map.addControl(new KeyboardAltControls(), 'top-left');
@@ -735,12 +763,13 @@ const setPopup = (props) => {
 	resetPopups();
 	let tourid = attr('data-tour');
 	let params = tourid ? "?tour=" + tourid + "&index=" + props.index : "";
+	let subtitle = props.subtitle ? ': '+props.subtitle : '';
 	let infowindow = `
 	<div class="curatescape-iw">
 		<a href="${attr('data-root-url')}/items/show/${props.id + params}" class="curatescape-iw-image portrait" style="background-image:url(${props.fullsize});"></a>
 		<div class="curatescape-iw-content">
 			<a href="${attr('data-root-url')}/items/show/${props.id}" class="curatescape-iw-title">
-				${htmlEntities(props.title)}
+				${htmlEntities(props.title + subtitle)}
 			</a>
 			<div class="curatescape-iw-address">
 				${props.address ? htmlEntities(props.address) : htmlEntities(props.latitude + ',' + props.longitude)}
@@ -779,7 +808,11 @@ const setMarkers = async (src, fitBoundsAllowed = true, initialLoad = false) => 
 		bounds = new maplibregl.LngLatBounds();
 		geojson.features.forEach((f) => bounds.extend(f.geometry.coordinates));
 		if (fitBoundsAllowed && (!attr('data-fixed-center', true) || term)) {
-			map.fitBounds(bounds, { padding: 50, maxZoom: 15, animate: !prefReducedMotion });
+			map.fitBounds(bounds, { 
+				padding: {top: 25, bottom:25, left: 75, right: 75}, 
+				maxZoom: 15, 
+				animate: !prefReducedMotion, 
+			});
 		}
 		// Events
 		initMarkerEvents();

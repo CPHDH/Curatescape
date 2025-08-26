@@ -56,7 +56,6 @@
 #curatescape-map-canvas {
 	width: 100%;
 	min-height: 500px;
-	max-height: 90vh;
 }
 
 #geolocation figure {
@@ -215,6 +214,8 @@
 	border: 0;
 	border-radius: 50%;
 	text-decoration: none;
+	cursor: pointer;
+	transition: background-color 0.15s linear;
 }
 #keyboard-close-button:hover,
 #keyboard-close-button:focus {
@@ -275,6 +276,7 @@
 	-moz-appearance: none;
 	-webkit-appearance: none;
 	appearance: none;
+	color: #333;
 	background: transparent;
 	border: 0 none transparent;
 	height: 30px;
@@ -390,6 +392,12 @@
 .maplibregl-popup-content:hover .maplibregl-popup-close-button,
 .maplibregl-popup-close-button:focus {
 	opacity: 1;
+}
+
+@media screen and (pointer: coarse){
+	.maplibregl-popup-close-button{
+		opacity: 1;
+	}
 }
 
 /* MAP SHORTCODE */
