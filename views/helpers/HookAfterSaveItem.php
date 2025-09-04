@@ -48,7 +48,7 @@ class Curatescape_View_Helper_HookAfterSaveItem extends Zend_View_Helper_Abstrac
 			}
 		}
 		// clear server cache 
-		$cache = get_view()->Cache();
+		$cache = get_view()->CuratescapeCache();
 		$cache->CacheBustManual(_JSON_ITEMS_FILE_, true);
 		$cache->CacheBustManual(_JSON_TOURS_FILE_, true);
 		$cache->CacheBustManual(_HTML_DASHBOARD_FILE_STATS_, true);

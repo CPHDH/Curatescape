@@ -2,6 +2,7 @@ class CuratescapeMap extends HTMLElement {
 	// using shadow DOM to isolate map styles from theme css
 	constructor() {
 		super();
+		this.fig = document.querySelector('#curatescape-map-figure');
 		this.shadow = this.attachShadow({ mode: "open" });
 	}
 	connectedCallback() {
@@ -11,7 +12,6 @@ class CuratescapeMap extends HTMLElement {
 	disconnectedCallback() {
 		resetMap();
 		resetPopups();
-		// resetSubjectSelect();
 		resetMarkerRequest();
 		resetMarkerEvents();
 		resetSkipLink();
@@ -24,7 +24,7 @@ class CuratescapeMap extends HTMLElement {
 		markerBitmapFeat = null;
 	}
 	uiElements() {
-		this.shadow.appendChild(document.querySelector('#curatescape-map-figure'));
+		this.shadow.appendChild(this.fig);
 	}
 	styleSheet() {
 		const css = new CSSStyleSheet();

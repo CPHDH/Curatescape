@@ -242,12 +242,9 @@
 }
 
 /* MAP SUBJECTS SELECT CONTROL */
-.maplibregl-ctrl-top-left{
-	max-width: calc(100% - 59px);
-}
 .curatescape-map .subject-select {
 	min-height: 30px;
-	max-width: 100%;
+	max-width: calc(100% - 59px);
 	display: flex;
 	flex-direction: row;
 	position: absolute;
@@ -316,14 +313,12 @@
 
 .curatescape-iw-content,
 .curatescape-iw-content a:visited,
-.curatescape-iw-content a:hover,
-.curatescape-iw-content a:link {
+.curatescape-iw-content a:hover{
 	color: #fff;
-	font-size: 0.9rem;
+	font-size: 14px;
 }
 
 .curatescape-iw-content {
-	font-size: 1rem;
 	position: relative;
 	z-index: 2;
 	display: flex;
@@ -342,7 +337,7 @@
 }
 
 .curatescape-iw-address {
-	font-size: 0.75rem;
+	font-size: 11px;
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;

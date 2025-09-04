@@ -1,4 +1,15 @@
 <?php
+if (!function_exists('str_contains')) { // PHP back compat
+	function str_contains(string $haystack, string $needle): bool
+	{
+		return '' === $needle || false !== strpos($haystack, $needle);
+	}
+}
+if (!function_exists('str_starts_with')) { // PHP back compat
+	function str_starts_with(string $haystack, string $needle): bool {
+		return substr($haystack, 0, strlen($needle)) === $needle;
+	}
+}
 function dc($record, $elementName, $options = array())
 {
 	return metadata($record, array('Dublin Core', $elementName), $options);
