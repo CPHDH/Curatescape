@@ -603,6 +603,14 @@ function mediaCaptionText($file, $caption = array())
 	return implode(' | ', $caption);
 }
 
+function localImageFilePath($file, $size = 'fullsize')
+{
+	if(!$file) return null;
+	$pathInfo = pathinfo($file->filename);
+	$filename = $pathInfo['filename'] . ($size !== 'original' ? '.jpg' : '.'.$pathInfo['extension']);
+	return FILES_DIR.DIRECTORY_SEPARATOR.$size.DIRECTORY_SEPARATOR.$filename;
+}
+
 function dimensions($file, $size = 'fullsize')
 {
 	if(!$file) return null;
@@ -611,10 +619,10 @@ function dimensions($file, $size = 'fullsize')
 		'width'=>'',
 		'orientation'=>'',
 	);
-	$size = getimagesize(record_image_url($file, $size));
-	if(!$size || !isset($size[1])) return $info;
-	$info['width'] = $size[0];
-	$info['height'] = $size[1];
-	$info['orientation'] = $size[0] > $size[1] ? 'landscape' : 'portrait';
+	$imgsize = getimagesize(localImageFilePath($file, $size));
+	if(!$imgsize || !isset($size[1])) return $info;
+	$info['width'] = $imgsize[0];
+	$info['height'] = $imgsize[1];
+	$info['orientation'] = $imgsize[0] > $imgsize[1] ? 'landscape' : 'portrait';
 	return $info;
 }

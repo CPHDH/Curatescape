@@ -72,7 +72,7 @@ class CuratescapePlugin extends Omeka_Plugin_AbstractPlugin{
 		'curatescape_alt_tour_name' => 'Tour',
 		'curatescape_app_android' => null,
 		'curatescape_app_ios' => null,
-		'curatescape_append_secondary_nav' => 1,
+		'curatescape_append_secondary_nav' => 0,
 		'curatescape_auto_subtitle' => 1,
 		'curatescape_byline' => 'after_lede',
 		'curatescape_dashboard_audit' => 1,
