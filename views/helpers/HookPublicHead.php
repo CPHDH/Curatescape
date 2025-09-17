@@ -188,12 +188,12 @@ class Curatescape_View_Helper_HookPublicHead extends Zend_View_Helper_Abstract{
 	<meta property="og:site_name" content="<?php echo option('site_title');?>">
 	<meta property="og:type" content="website" />
 	<meta property="og:url" content="<?php echo $metaUrl;?>" />
-	<meta property="og:title" content="<?php echo strip_formatting($metaTitle);?>" />
+	<meta property="og:title" content="<?php echo htmlspecialchars($metaTitle);?>" />
 	<meta property="og:description" content="<?php echo snippet($metaText, 0, 500);?>" />
 	<meta property="og:image" content="<?php echo $metaImg;?>" />
 	<meta property="twitter:card" content="summary_large_image" />
 	<meta property="twitter:url" content="<?php echo $metaUrl;?>" />
-	<meta property="twitter:title" content="<?php echo strip_formatting($metaTitle);?>" />
+	<meta property="twitter:title" content="<?php echo htmlspecialchars($metaTitle);?>" />
 	<meta property="twitter:description" content="<?php echo snippet($metaText, 0, 500);?>" />
 	<meta property="twitter:image" content="<?php echo $metaImg;?>" />
 	<?php 

@@ -276,6 +276,22 @@ function hasLocation($item)
 	return boolval( get_db()->getTable( 'Location' )->findLocationByItem( $item, true ) );
 }
 
+function appStoreValidURL($string, $root='https://itunes.apple.com/us/app/id'){
+	$string = str_replace($root, '', $string); // make sure it's not the full url already
+	if(strpos($string, 'id') == 0){
+		$string = str_replace('id', '', $string); // remove leading 'id'
+	}
+	return $string ? $root.$string : null;
+}
+
+function playStoreValidURL($string, $root='https://play.google.com/store/apps/details?id='){
+	$string = str_replace($root, '', $string); // make sure it's not the full url already
+	if(count(explode('.', $string)) < 3){
+		$string = null; // make sure it's a valid package name like com.example.app 
+	}
+	return $string ? $root.$string : null;
+}
+
 function altLabelIsValid($text)
 {
 	return (strlen(trim(strip_tags($text))) > 3);

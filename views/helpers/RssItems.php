@@ -1,6 +1,7 @@
 <?php
 class Curatescape_View_Helper_RssItems extends Zend_View_Helper_Abstract{
 	public function RssItems(){
+		header('X-Robots-Tag: noindex, follow');
 		$feedId = option('curatescape_rss') ? 'rss2' : 'rss-plus';
 		$location = WEB_ROOT.'/items/browse?output='.$feedId;
 		$feed = new Zend_Feed_Writer_Feed;
@@ -30,7 +31,7 @@ class Curatescape_View_Helper_RssItems extends Zend_View_Helper_Abstract{
 			$entry->setDescription($content);
 			$feed->addEntry($entry);
 		}
-		echo get_view()->Cache()->Config(600); // 5 minutes
+		echo get_view()->CuratescapeCache()->Config(600); // 5 minutes
 		echo $feed->export('atom');
 	}
 	
