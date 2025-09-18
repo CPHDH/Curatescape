@@ -23,7 +23,6 @@ class Curatescape_View_Helper_HookConfig extends Zend_View_Helper_Abstract{
 		set_option('curatescape_format_warnings', $_POST['curatescape_format_warnings']);
 		set_option('curatescape_gallery_style', $_POST['curatescape_gallery_style']);
 		set_option('curatescape_gallery_style_tour', $_POST['curatescape_gallery_style_tour']);
-		set_option('curatescape_google_analytics', $_POST['curatescape_google_analytics']);
 		set_option('curatescape_home_map', $_POST['curatescape_home_map']);
 		set_option('curatescape_home_map_caption', $_POST['curatescape_home_map_caption']);
 		set_option('curatescape_home_map_heading', $_POST['curatescape_home_map_heading']);

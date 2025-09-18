@@ -5,9 +5,6 @@ class Curatescape_View_Helper_HookPublicHead extends Zend_View_Helper_Abstract{
 		if(option('curatescape_meta_tags')){ 
 			$this->metaTags($args);
 		}
-		if($ga = option('curatescape_google_analytics')){
-			$this->gaTags($ga);
-		}
 		if(option('curatescape_app_ios') && option('curatescape_smart_banner')){ 
 			$this->smartBanner(option('curatescape_app_ios'));
 		}
@@ -207,21 +204,6 @@ class Curatescape_View_Helper_HookPublicHead extends Zend_View_Helper_Abstract{
 	?>
 	<!-- App Store Banner (Curatescape plugin) -->
 	<meta name="apple-itunes-app" content="app-id=<?php echo $iosIdentifier;?>">
-	<?php
-	}
-
-	private function gaTags($ga)
-	{
-	if(!$ga) return null;
-	?>
-	<!-- Google Analytics (Curatescape plugin) -->
-	<script async src="https://www.googletagmanager.com/gtag/js?id=<?php echo $ga;?>"></script>
-	<script>
-		window.dataLayer = window.dataLayer || [];
-		function gtag(){dataLayer.push(arguments);}
-		gtag('js', new Date());
-		gtag('config', '<?php echo $ga;?>');
-	</script>
 	<?php
 	}
 }

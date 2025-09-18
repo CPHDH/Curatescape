@@ -274,23 +274,15 @@ class Curatescape_View_Helper_HookConfigForm extends Zend_View_Helper_Abstract{
 		</fieldset>
 
 		<fieldset>
-			<legend><?php echo __('Analytics'); ?></legend>
-			<p><?php echo __('Use the following options to configure third-party analytics integrations.');?></p>
-
-			<!-- Google Analytics -->
-			<?php echo $this->configFormText('curatescape_google_analytics', 'Google Analytics', 'Enter the Web Stream Measurement ID for this website as shown in your Google Analytics account dashboard to create a Google Analytics Tracking Code using the default configurations. May conflict with themes and plugins that already include Google Analytics by other means.', 'Example: G-0123456789');?>
-		</fieldset>
-
-		<fieldset>
 			<legend><?php echo __('Dashboard Settings'); ?></legend>
 			<p><?php echo __('Use the following options to add new panels to the <a href="/admin/" target="_blank">admin dashboard</a>.');?></p>
 			
 			<!-- Content Audit -->
-			<?php echo $this->configFormCheckBox('curatescape_dashboard_audit', 'Content Audit', __('If checked, the admin dashboard will display the results of a content audit to ensure that authors are employing the recommended best practices for %s. Audit results are cached on the server side and refreshed when any item is saved.', _CURATESCAPE_ITEM_TYPE_NAME_PLURAL_) );?>
+			<?php echo $this->configFormCheckBox('curatescape_dashboard_audit', 'Content Audit', __('If checked, the admin dashboard will display the results of a content audit to ensure that authors are employing the recommended best practices for %s. Audit results are cached on the server side for up to 1 week or until an item record is added or modified. This option may temporarily slow down loading of the dashboard when the cache is being refreshed.', _CURATESCAPE_ITEM_TYPE_NAME_PLURAL_) );?>
 			<!-- File Stats -->
-			<?php echo $this->configFormCheckBox('curatescape_dashboard_stats', 'File Statistics', __('If checked, the admin dashboard will display file statistics and format recommendations. File statistics are cached on the server side and refreshed when any item is saved.', _PLUGIN_NAME_) );?>
+			<?php echo $this->configFormCheckBox('curatescape_dashboard_stats', 'File Statistics', __('If checked, the admin dashboard will display file statistics and format recommendations. File statistics are cached on the server side for up to 1 week or until an item record is added or modified. This option may temporarily slow down loading of the dashboard when the cache is being refreshed.', _PLUGIN_NAME_) );?>
 			<!-- Project Admin -->
-			<?php echo $this->configFormCheckBox('curatescape_dashboard_project_mgmt', 'Project Management', __('If checked, the admin dashboard will display convenient links to manage configured app store and analytics accounts. See relevant options above.') );?>
+			<?php echo $this->configFormCheckBox('curatescape_dashboard_project_mgmt', 'Project Management', __('If checked, the admin dashboard will display convenient links to manage configured app store and web analytics accounts. See App Store Settings below. Website analytics are derived from theme settings (option name: <code>google_analytics</code>) and supported third-party plugins (e.g. Matomo).') );?>
 			<!-- Resources -->
 			<?php echo $this->configFormCheckBox('curatescape_dashboard_resources', 'Resources', __('If checked, the admin dashboard will display a list of useful %s resources.', _PLUGIN_NAME_) );?>
 			

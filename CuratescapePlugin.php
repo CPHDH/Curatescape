@@ -87,7 +87,6 @@ class CuratescapePlugin extends Omeka_Plugin_AbstractPlugin{
 		'curatescape_format_warnings' => 1,
 		'curatescape_gallery_style_tour' => 'gallery-inline-captions',
 		'curatescape_gallery_style'=> 'gallery-grid',
-		'curatescape_google_analytics' => null,
 		'curatescape_home_map'=>'top',
 		'curatescape_home_map_caption'=> null,
 		'curatescape_home_map_heading' => 'Story Map',

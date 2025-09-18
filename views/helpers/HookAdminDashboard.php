@@ -5,8 +5,8 @@ class Curatescape_View_Helper_HookAdminDashboard extends Zend_View_Helper_Abstra
 		echo $this->dashboardTours();
 		// RESOURCES (optional)
 		$cache = get_view()->CuratescapeCache();
-		$cacheDuration = 3600 * 24;
-		// content audit (24 hour cache, cleared on item save)
+		$cacheDuration = 3600 * 168; // 168 hour / 1 week
+		// content audit (cache cleared on item save)
 		if(option('curatescape_dashboard_audit')){
 			if ($cacheFile = $cache->GetCacheFile(_HTML_DASHBOARD_CONTENT_AUDIT_, $cacheDuration, false)) {
 				echo $cacheFile;
@@ -16,7 +16,7 @@ class Curatescape_View_Helper_HookAdminDashboard extends Zend_View_Helper_Abstra
 				echo $html;
 			}
 		}
-		// file stats and info (1 hour cache, cleared on item save)
+		// file stats and info (cache cleared on item save)
 		if(option('curatescape_dashboard_stats')){
 			if ($cacheFile = $cache->GetCacheFile(_HTML_DASHBOARD_FILE_STATS_, $cacheDuration, false)) {
 				echo $cacheFile;
@@ -242,7 +242,7 @@ class Curatescape_View_Helper_HookAdminDashboard extends Zend_View_Helper_Abstra
 		$html .= '<section class="panel five columns curatescape-panel">';
 			$html .= '<h2>'.__('Content Audit').'</h2>';
 			$html .= '<h3>'.__('Results').'</h3>';
-			$html .= '<p>'.__('Content audit results apply only to published items that use the %s item type. Results are cached for up to 24 hours or until an item record is added or modified.', '<em>'._CURATESCAPE_ITEM_TYPE_NAME_.'</em>').'</p>';
+			$html .= '<p>'.__('Content audit results apply only to published items that use the %s item type.', '<em>'._CURATESCAPE_ITEM_TYPE_NAME_.'</em>').'</p>';
 			$html .= '<span class="highlight '.$messageClass.'">';
 				$html .= '<h3>'.$messageIcon.$messageTitle.'</h3>';
 				$html .= '<p>'.$messageText.'</p>';
@@ -289,15 +289,21 @@ class Curatescape_View_Helper_HookAdminDashboard extends Zend_View_Helper_Abstra
 	{
 		if(
 			option('curatescape_app_android') ||
-			option('curatescape_app_ios') ||
-			option('curatescape_google_analytics')
+			option('curatescape_app_ios')
 		){
 			$html .= '<section class="panel five columns curatescape-panel">';
 				$html .= '<h2>'.__('Project Management').'</h2>';
-				if(option('curatescape_google_analytics')){
+				$ga = get_theme_option('google_analytics'); // theme option
+				$ma = get_option('matomoURL'); // Matomo plugin
+				if($ga || $ma){
 					$html .= '<h3>'.__('Analytics').'</h3>';
-					$html .= '<p>'.__('Track website usage, user demographics, campaign performance, and more. <a target="_blank" href="https://curatescape.org/docs/project-launch-guide/#analytics">Learn more about website analytics</a>.').' </p>';
-					$html .= '<a target="_blank" class="appstore blue button" href="https://analytics.google.com/analytics/web">'.__('Google Analytics').'</a>';
+					$html .= '<p>'.__('Track website usage, user demographics, campaign performance, and more.').' </p>';
+					if($ga){
+						$html .= '<a target="_blank" class="appstore blue button" href="https://analytics.google.com/analytics/web">'.__('Google Analytics').'</a>';
+					}
+					if($ma){
+						$html .= '<a target="_blank" class="appstore blue button" href="'.$ma.'">'.__('Matomo Analytics').'</a>';
+					}
 				}
 				if(option('curatescape_app_android') || option('curatescape_app_ios')){
 					$html .= '<h3>'.__('App Stores').'</h3>';
