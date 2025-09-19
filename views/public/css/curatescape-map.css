@@ -3,6 +3,19 @@
 	visibility: hidden;
 }
 
+[data-curatescape-map-screenreader-only] {
+	visibility: hidden;
+	height: 0;
+	width: 0;
+	padding: 0;
+	margin: 0;
+	font-size: 0;
+	line-height: 0;
+	color: transparent;
+	position: absolute;
+	pointer-events: none;
+}
+
 [data-curatescape-map-keyboard-only] {
 	color: #333;
 	display: inline-flex;
@@ -69,6 +82,9 @@
 	font-style: italic;
 }
 
+#curatescape-map-caption:has([data-curatescape-map-screenreader-only]){
+	display: contents;
+}
 .curatescape-map-title {
 	position: relative;
 	width: 100%;
@@ -310,11 +326,13 @@
 	overflow: hidden;
 	border-radius: 3px;
 }
-
+.curatescape-iw-content a{
+	color: var(--curatescape-color-iw-link, #eaeaea);
+}
 .curatescape-iw-content,
 .curatescape-iw-content a:visited,
 .curatescape-iw-content a:hover{
-	color: #fff;
+	color: var(--curatescape-color-iw-text, #fff);
 	font-size: 14px;
 }
 

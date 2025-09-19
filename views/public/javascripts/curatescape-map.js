@@ -666,17 +666,17 @@ const clusterLayers = (clusterColors = ['110,204,57', '240,194,12', '241,128,23'
 	// Config
 	let clusterConfig = {
 		small: {
-			size: 15,
+			size: 12,
 			rgb: clusterColors[0],
 			max: 10,
 		},
 		medium: {
-			size: 20,
+			size: 16,
 			rgb: clusterColors[1],
-			max: 30,
+			max: 50,
 		},
 		large: {
-			size: 25,
+			size: 20,
 			rgb: clusterColors[2],
 		},
 		shade: {
