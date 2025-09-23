@@ -1,7 +1,11 @@
 <?php
 class Curatescape_View_Helper_FilterDisplayElements extends Zend_View_Helper_Abstract{
 	public function FilterDisplayElements($elementSets){
-		if(is_admin_theme() || !option('curatescape_omit_redundant_elements')) return $elementSets;
+		if(
+			is_admin_theme() || 
+			!option('curatescape_omit_redundant_elements') || 
+			!option('curatescape_template')
+		) return $elementSets;
 		if(!isCuratescapeStory(get_view()->getCurrentRecord('item', false))) return $elementSets;
 		$redundantDC = array('Title','Coverage');
 		$redundantCSIT = array('Subtitle');
