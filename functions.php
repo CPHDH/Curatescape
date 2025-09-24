@@ -642,3 +642,69 @@ function dimensions($file, $size = 'fullsize')
 	$info['orientation'] = $imgsize[0] > $imgsize[1] ? 'landscape' : 'portrait';
 	return $info;
 }
+
+function curatescapejQueryConditional($current_url=null)
+{ // for theme dev optimization
+	$current_url = $current_url ? $current_url : current_url();
+	$whitelist = array(
+		'/items/search',
+		'/guest-user/',
+		'/contribution/',
+		'/exhibits/',
+		'/neatline/',
+		'/users/login',
+	);
+	foreach($whitelist as $allowed){
+		if(0 === strpos($current_url, $allowed)) return true;
+	}
+	return false;
+}
+
+function curatescapeRemoveHeadAssets($view=null, $paths=array())
+{ // for theme dev optimization
+	if ($view) {
+		$scripts = $view->headScript();
+		foreach ($scripts as $key=>$file) {
+			foreach ($paths as $path) {
+				if(
+					0 === strpos(current_url(), '/exhibits/show') && 
+					$path == '/plugins/Geolocation'
+				){
+					// do nothing if this is an exhibit (allow map)
+				}elseif(
+					0 === strpos(current_url(), '/guest-user/') && 
+					$path == '/plugins/GuestUser/views/public/javascripts'
+				){
+					// do nothing if this is a guest user page
+				}elseif (
+					isset($file->attributes['src']) && 
+					strpos($file->attributes['src'], $path) !== false
+				) {
+					$scripts[$key]->type = null;
+					$scripts[$key]->attributes['src'] = null;
+					$scripts[$key]->attributes['source'] = null;
+				}
+			}
+		}
+		$styles = $view->headLink();
+		foreach ($styles as $key=>$file) {
+			foreach ($paths as $path) {
+				if(
+					0 === strpos(current_url(), '/exhibits/show') && 
+					$path == '/plugins/Geolocation'
+				){
+					// do nothing if this is an exhibit (allow map)
+				}elseif (
+					$file->href && 
+					strpos($file->href, $path) !== false
+				) {
+					$styles[$key]->href = null;
+					$styles[$key]->type = null;
+					$styles[$key]->rel = null;
+					$styles[$key]->media = null;
+					$styles[$key]->conditionalStylesheet = null;
+				}
+			}
+		}
+	}
+}

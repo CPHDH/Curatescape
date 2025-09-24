@@ -6,6 +6,7 @@
 	--factoid-text-size: .9rem;
 	--factoid-border-width: 5px;
 	--factoid-multiples-vertical-spacing: 0.5rem;
+	--factoid-heading-size: 1rem;
 	--pswp-caption-text: #fff;
 	--calculated-accent-color: #f2f2f2;
 	/* overridden in photoswipe.js (getCalculatedLinkColor) */
@@ -216,7 +217,7 @@
 	font-weight: 600;
 	font-variant-caps: all-small-caps;
 	font-variant-caps: all-petite-caps;
-	font-size: 1rem;
+	font-size: var(--factoid-heading-size);
 	margin-bottom: 0.25rem;
 }
 

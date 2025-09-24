@@ -60,6 +60,23 @@ Uses configured plugin settings for mobile apps to create button-styled links fo
 | icons | boolean |  Use `true` to include vector icons for App Store and Google Play. |
 | platform | string | Use `ios` for the iOS link only or `android` for the Android link only. Omit to include both. When using this option, it is generally recommended to override the default button link and container classes. |
 
+## Filters
+A few plugin filters are available for theme authors, allowing for more control over content and layout. More filters may be added over time. Feel free to make suggestions.
+
+| Filter Name | Input | Description | Use Case |
+| -------- | ---- | ----------- | ----------- |
+| curatescape_redundant_dcm | array of Dublin Core element names | Replace the default array of elements that are treated as redundant when the Metadata Template option is enabled. | Bypass Creator in order to manually place the byline in an alternate location, e.g. in a custom header. |
+| curatescape_redundant_itm | array of Item Type element names | Replace the default array of elements that are treated as redundant when the Metadata Template option is enabled. | Bypass Related Resources in order to manually place the resources list in an alternate location, e.g. in a custom sidebar. |
+
+### Example Filter Usage
+Add filters to your theme's `custom.php` file.
+```
+add_filter('curatescape_redundant_dcm', 'callbackFn');
+function callbackFn(){
+	return array('Description','Subject','Creator','Title','Coverage');
+}
+``` 
+
 ## Support & Troubleshooting
 ### User Forums
 Use the [Curatescape Forum](https://forum.curatescape.org/) to get support with Curatescape-specific issues. For general Omeka support, please use the [Omeka Forum](https://forum.omeka.org/).

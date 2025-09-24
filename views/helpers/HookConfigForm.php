@@ -309,7 +309,7 @@ class Curatescape_View_Helper_HookConfigForm extends Zend_View_Helper_Abstract{
 			<!-- Theme Fixes -->
 			<?php echo $this->configFormCheckBox('curatescape_theme_fixes', 'Theme Fixes', __('If checked, use theme-specific CSS styles provided by the %1s plugin. These styles apply to select themes and only affect elements related to the %2s plugin.', _PLUGIN_NAME_, _PLUGIN_NAME_));?>
 			<!-- Omit Redundant -->
-			<?php echo $this->configFormCheckBox('curatescape_omit_redundant_elements', 'Omit Redundant', __('If checked, the Title and Subtitle elements for the Item will be omitted from the metadata table since they already appear as part of the page heading. Likewise, the Coverage element will be omitted since it already appears as part of the map caption (which consists of the Street Address and Access Information texts).', _CURATESCAPE_ITEM_TYPE_NAME_) );?>
+			<?php echo $this->configFormCheckBox('curatescape_omit_redundant_elements', 'Omit Redundant', __('If checked, the Title and Subtitle elements for the Item will be omitted from the metadata table since they already appear as part of the page heading. Likewise, the Coverage element will be omitted since it already appears as part of the map caption (which consists of the Street Address and Access Information texts). Theme authors may apply their own filter to omit additional terms.', _CURATESCAPE_ITEM_TYPE_NAME_) );?>
 		</fieldset>
 		
 		<script type="text/javascript">

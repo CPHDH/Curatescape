@@ -36,7 +36,7 @@ function curatescapeStoryElements(){
 		),
 		array(
 			'name'=>'Lede',
-			'description'=>'A brief introductory section that is intended to entice the reader to read the full entry.',
+			'description'=>'A brief introductory text that is intended to entice the reader to read the full entry.',
 			'order'=>2,
 		),
 		array(

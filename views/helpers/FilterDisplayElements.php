@@ -7,8 +7,9 @@ class Curatescape_View_Helper_FilterDisplayElements extends Zend_View_Helper_Abs
 			!option('curatescape_template')
 		) return $elementSets;
 		if(!isCuratescapeStory(get_view()->getCurrentRecord('item', false))) return $elementSets;
-		$redundantDC = array('Title','Coverage');
-		$redundantCSIT = array('Subtitle');
+		// @todo: add filter documentation
+		$redundantDC = apply_filters('curatescape_redundant_dcm',array('Title','Coverage'));
+		$redundantCSIT = apply_filters('curatescape_redundant_itm',array('Subtitle'));
 		foreach($elementSets as $set => $elements) {
 			if ($set == 'Dublin Core') {
 				foreach ($elements as $key => $element) {
