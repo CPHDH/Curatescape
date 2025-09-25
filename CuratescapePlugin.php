@@ -31,6 +31,7 @@ class CuratescapePlugin extends Omeka_Plugin_AbstractPlugin{
 		'public_head',
 		'public_home',
 		'public_content_top',
+		'public_items_show',
 		'uninstall',
 	);
 
@@ -170,10 +171,15 @@ class CuratescapePlugin extends Omeka_Plugin_AbstractPlugin{
 	{
 		return get_view()->HookPublicContent($args)->homeBottom();
 	}
-	
+
 	public function hookPublicContentTop($args)
 	{
 		return get_view()->HookPublicContent($args)->homeTop();
+	}
+
+	public function hookPublicItemsShow($args)
+	{
+		return get_view()->HookPublicItemsShow($args);
 	}
 
 	public function hookDefineRoutes($args)

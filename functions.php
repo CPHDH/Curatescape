@@ -647,6 +647,7 @@ function curatescapejQueryConditional($current_url=null)
 { // for theme dev optimization
 	$current_url = $current_url ? $current_url : current_url();
 	$whitelist = array(
+		'/search',
 		'/items/search',
 		'/guest-user/',
 		'/contribution/',

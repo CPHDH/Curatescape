@@ -78,7 +78,7 @@ class CuratescapeTour extends Omeka_Record_AbstractRecord
 	{
 		$this->public = $post['public'];
 		$this->featured = $post['featured'];
-		$this->ordinal = $post['ordinal'] ? $post['ordinal'] : 0;
+		$this->ordinal = $post['ordinal'] ? $post['ordinal'] : '0';
 		$this->title = $post['title'];
 		$this->credits = $post['credits'];
 		$this->description = $post['description'];
@@ -111,6 +111,11 @@ class CuratescapeTour extends Omeka_Record_AbstractRecord
 		$this->setSearchTextTitle($this->title);
 		$this->addSearchText($this->title);
 		$this->addSearchText($this->description);
+		if($tourItems = $this->getItems()){
+			foreach($tourItems as $item){
+				$this->addSearchText($item->getProperty('display_title'));
+			}
+		}
 	}
 
 	protected function afterSave($args, $index = 0)

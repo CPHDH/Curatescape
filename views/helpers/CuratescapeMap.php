@@ -14,6 +14,7 @@ class Curatescape_View_Helper_CuratescapeMap extends Zend_View_Helper_Abstract{
 			$figcaption = $this->defaultFigcaption();
 		}
 		?>
+		<h2><?php echo __('Map');?></h2>
 		<curatescape-map>
 			<figure id="curatescape-map-figure" class="<?php echo $class;?>"
 			data-maptype="single"
@@ -25,6 +26,7 @@ class Curatescape_View_Helper_CuratescapeMap extends Zend_View_Helper_Abstract{
 			data-stadia-key="<?php echo flexOption('curatescape_map_stadia_key','');?>"
 			data-prefer-eu="<?php echo flexOption('curatescape_map_prefer_eu',0);?>"
 			data-root-url="<?php echo WEB_ROOT;?>"
+			data-fitbounds-label="<?php echo __('Zoom to fit');?>"
 			data-reset-label="<?php echo __('Reset to initial view');?>" 
 			data-style-swap-label="<?php echo __('Base Map');?>" 
 			data-skip-link-label="<?php echo __('Skip %s Map', ($tourId ? tourLabelString() : storyLabelString()));?>"
@@ -117,8 +119,8 @@ class Curatescape_View_Helper_CuratescapeMap extends Zend_View_Helper_Abstract{
 	private function scriptsCuratescapeMap()
 	{
 	?>
-	<script defer src="https://unpkg.com/maplibre-gl@^5.6.1/dist/maplibre-gl.js"></script>
-	<link href="https://unpkg.com/maplibre-gl@^5.6.1/dist/maplibre-gl.css" rel="stylesheet" />
+	<script defer src="https://unpkg.com/maplibre-gl@^5.7.3/dist/maplibre-gl.js"></script>
+	<link href="https://unpkg.com/maplibre-gl@^5.7.3/dist/maplibre-gl.css" rel="stylesheet" />
 	<link href="<?php echo src('curatescape-map.css', 'css');?>" rel="stylesheet" />
 	<script type="module" src="<?php echo src('curatescape-map.js', 'javascripts');?>"></script>
 	<?php
@@ -179,8 +181,13 @@ class Curatescape_View_Helper_CuratescapeMap extends Zend_View_Helper_Abstract{
 	private function defaultFigcaption()
 	{
 		$view = get_view();
+		if($view && isset($view->item)){
+			$sa = itm($view->item, 'Street Address');
+			$ai = itm($view->item, 'Access Information');
+			if($sa || $ai) return '<span class="defaultcaption">'.implode(' | ', array_filter(array($sa,$ai))).'</span>';
+		}
 		if($view && isset($view->tour)){
-			return  '<span class="defaultcaption tour">'.__('%s Map: %2s', tourLabelString(), $view->tour->title).'</span>';
+			return  '<span class="defaultcaption">'.__('%s Map: %2s', tourLabelString(), $view->tour->title).'</span>';
 		}
 		if($view && isset($view->items)){
 			if($searchParams = getQueryParams()){
@@ -188,12 +195,12 @@ class Curatescape_View_Helper_CuratescapeMap extends Zend_View_Helper_Abstract{
 					$tags = array_map(function($tag){
 						return '"'.$tag.'"';
 					},explode(',',$searchParams['tags']));
-					return '<span class="defaultcaption tags">'.__('Map: %1s %2s tagged %3s', count($view->items), storyLabelString('plural'), oxfordAmp($tags)).'</span>';
+					return '<span class="defaultcaption">'.__('Map: %1s %2s tagged %3s', count($view->items), storyLabelString('plural'), oxfordAmp($tags)).'</span>';
 				}
 			}
-			return '<span data-curatescape-map-screenreader-only="true">'.__('Map: %1s %2s', count($view->items), storyLabelString('plural')).'</span>';
+			return '<span class="defaultcaption" data-curatescape-map-screenreader-only="true">'.__('Map: %1s %2s', count($view->items), storyLabelString('plural')).'</span>';
 		}
-		return '<span data-curatescape-map-screenreader-only="true">'.__('Map').'</span>';
+		return '<span class="defaultcaption" data-curatescape-map-screenreader-only="true">'.__('Map').'</span>';
 	}
 	private function defaultJSONSource()
 	{

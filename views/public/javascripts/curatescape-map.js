@@ -794,9 +794,10 @@ const setMarkers = async (src, fitBoundsAllowed = true, initialLoad = false) => 
 		return response.json()
 	}).then((data) => {
 		// Curatescape JSON -> GeoJSON FeatureCollection
+		let items = typeof data.items == 'object' ? data.items : [data]; // single or multi
 		geojson = {
 			type: 'FeatureCollection',
-			features: (data.items || []).map((item, index) => ({
+			features: (items || []).map((item, index) => ({
 				type: 'Feature',
 				geometry: { type: 'Point', coordinates: [+item.longitude, +item.latitude] },
 				properties: { ...item, index },

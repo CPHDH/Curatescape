@@ -55,8 +55,8 @@ Uses configured plugin settings for mobile apps to create button-styled links fo
 #### Parameters
 | Option | Type | Description |
 | -------- | ---- | ----------- |
-| buttonclass | string | Replace the default CSS class for the button links. Omit to use the default button link styles. Default class: `curatescape-shortcode-button` |
-| containerclass | string | Replace the default CSS class for the container. Omit to use the default container styles. Default class: `curatescape-shortcode-app-buttons` |
+| buttonclass | string | Replace the default CSS class for the button links. Omit to use the default button link styles. Default class: curatescape-shortcode-button |
+| containerclass | string | Replace the default CSS class for the container. Omit to use the default container styles. Default class: curatescape-shortcode-app-buttons |
 | icons | boolean |  Use `true` to include vector icons for App Store and Google Play. |
 | platform | string | Use `ios` for the iOS link only or `android` for the Android link only. Omit to include both. When using this option, it is generally recommended to override the default button link and container classes. |
 
@@ -67,6 +67,7 @@ A few plugin filters are available for theme authors, allowing for more control 
 | -------- | ---- | ----------- | ----------- |
 | curatescape_redundant_dcm | array of Dublin Core element names | Replace the default array of elements that are treated as redundant when the Metadata Template option is enabled. | Bypass Creator in order to manually place the byline in an alternate location, e.g. in a custom header. |
 | curatescape_redundant_itm | array of Item Type element names | Replace the default array of elements that are treated as redundant when the Metadata Template option is enabled. | Bypass Related Resources in order to manually place the resources list in an alternate location, e.g. in a custom sidebar. |
+| curatescape_tours_for_item_meta | array of Tour objects or null | Replace or unset the  array of tours that are listed when the Metadata Template option is enabled. | Omit the list of Related Tour links, e.g. in order to create a custom display or to utilize a more complex criteria for relationships. |
 
 ### Example Filter Usage
 Add filters to your theme's `custom.php` file.
