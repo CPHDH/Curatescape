@@ -33,7 +33,7 @@ class CuratescapeMap extends HTMLElement {
 	}
 }
 // USER PREFS
-const prefReducedMotion = window.matchMedia(`(prefers-reduced-motion: reduce)`) === true || window.matchMedia(`(prefers-reduced-motion: reduce)`).matches === true;
+const prefReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 // ELEMENTS
 const mapcanvas = document.querySelector('#curatescape-map-canvas');
 const mapfigure = document.querySelector('#curatescape-map-figure');
@@ -152,7 +152,7 @@ const markerSVG = (color, featured = false, star = false, height = 41, width = 2
 		</g>
 	</svg>`;
 }
-const stylesConfig = (name, label, stadiaKey, preferEU, styleIndex = 0, fallback = 'OFM_LIBERTY') => {
+const stylesConfig = (name, label, stadiaKey, preferEU, styleIndex = 0, fallback = 'CARTO_VOYAGER') => {
 	stadiaKey = stadiaKey ? '?api_key=' + stadiaKey : '';
 	preferEU = Boolean(preferEU) ? 'tiles-eu' : 'tiles';
 	let styles = [];
@@ -223,8 +223,7 @@ const setStyleLayers = (styleIndex = 0) => {
 			1
 		);
 	}
-	currentStyleLayer = styleIndex;
-	map.setStyle(styleLayers[currentStyleLayer].url);
+	map.setStyle(styleLayers[styleIndex].url);
 }
 const subjectSelectControls = () => {
 	// @todo: convert to native control *then* add fullscreen button
@@ -264,7 +263,7 @@ const subjectSelectControls = () => {
 			return this.container;
 		}
 		onRemove(map) {
-			if (this.select && this.clickHandler) {
+			if (this.select && this.changeHandler) {
 				this.select.removeEventListener('change', this.changeHandler);
 			}
 			if (this.container && this.container.parentNode) {
@@ -322,7 +321,7 @@ const styleSwapControl = () => {
 	class StyleSwapControl {
 		constructor() {
 			this.titlePre = attr('data-style-swap-label') ? attr('data-style-swap-label') + ': ' : '';
-			this.defaultIndex = styleLayers[currentStyleLayer + 1] !== 'undefined' ? currentStyleLayer + 1 : 0;
+			this.defaultIndex = typeof styleLayers[currentStyleLayer + 1] !== 'undefined' ? currentStyleLayer + 1 : 0;
 			this.buttonLabelDefault = this.titlePre + styleLayers[this.defaultIndex].label;
 		}
 		onAdd(map) {
@@ -336,10 +335,12 @@ const styleSwapControl = () => {
 				if (!this.map || !styleLayers || styleLayers.length <= 1) return;
 				let nextIndex = typeof styleLayers[currentStyleLayer + 1] !== 'undefined' ? currentStyleLayer + 1 : 0;
 				let previousIndex = nextIndex == 1 ? 0 : 1;
+				map.once('styledata', () => {
+					currentStyleLayer = nextIndex;
+					this.button.title = this.button.ariaLabel = this.titlePre + styleLayers[previousIndex].label;
+					setMarkers(dataSource(term), false);
+				});
 				setStyleLayers(nextIndex);
-				currentStyleLayer = nextIndex;
-				this.button.title = this.button.ariaLabel = this.titlePre + styleLayers[previousIndex].label;
-				setMarkers(dataSource(term), false);
 			};
 			this.button.addEventListener('click', this.clickHandler);
 			this.container.appendChild(this.button);
@@ -577,11 +578,11 @@ const flyToById = async (id, zoom = 16) => {
 	const targetFeature = geojson.features.find(feature =>
 		feature.properties.id == id || feature.properties.id == parseInt(id)
 	);
-	const coordinates = targetFeature.geometry.coordinates;
 	if (!targetFeature) {
 		console.warn(`Marker with id ${id} not found`);
 		return;
 	}
+	const coordinates = targetFeature.geometry.coordinates;
 	map.once('moveend', () => {
 		setPopup(targetFeature.properties);
 	});
@@ -794,7 +795,7 @@ const setMarkers = async (src, fitBoundsAllowed = true, initialLoad = false) => 
 		return response.json()
 	}).then((data) => {
 		// Curatescape JSON -> GeoJSON FeatureCollection
-		let items = typeof data.items == 'object' ? data.items : [data]; // single or multi
+		let items = attr('data-maptype') === 'multi' ? data.items : [data];
 		geojson = {
 			type: 'FeatureCollection',
 			features: (items || []).map((item, index) => ({
@@ -897,6 +898,10 @@ const addImageSources = async () => {
 		bitmapMarkerReg = await map.loadImage(await toBitmap(markerSVG(attr('data-color'), false, false)));
 		map.addImage('marker-regular', bitmapMarkerReg.data);
 	}
+	if(attr('data-maptype') === 'single' && !map.hasImage('marker-featured')) {
+		map.addImage('marker-featured', bitmapMarkerReg.data);
+		return;
+	}
 	if (!map.hasImage('marker-featured')){
 		let featuredColor = attr('data-featured-color') || attr('data-color');
 		let featuredStar = attr('data-featured-star', true);
@@ -947,10 +952,11 @@ const CuratescapeMapInit = () => {
 			mapfigure.setAttribute('data-loaded', 'true');
 			initSkipLinkListener();
 			if (attr('data-tour')) initMarkerRequestListener();
+		}).once('styledata', () => {
+			setMarkers(dataSource(), true, true);
+			addControls();
 		});
 		setStyleLayers();
-		addControls();
-		setMarkers(dataSource(), true, true);
 	} catch (error) {
 		console.error('Failed to initialize map:', error);
 	}

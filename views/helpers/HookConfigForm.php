@@ -132,10 +132,10 @@ class Curatescape_View_Helper_HookConfigForm extends Zend_View_Helper_Abstract{
 			<?php echo $this->configFormCheckBox('curatescape_map_mirror_geolocation', 'Mirror Geolocation', __('If checked, use the maps provided by the Geolocation plugin. This option is recommended for most projects using default themes in order to maintain consistency across page templates. Uncheck and configure custom options if you are using a Curatescape theme or if you have developed a Curatescape-optimized custom theme. Additional information available in <a target="_blank" href="%s"> plugin documentation</a>.', 'https://omeka.org/classic/plugins/'._PLUGIN_NAME_));?>
 			<span class="map-settings">
 				<?php $mapLayers = array(
-					'OFM_LIBERTY'=>__('Open Free Map | Liberty (default)'),
-					'CARTO_VOYAGER'=>__('CartoDB | Voyager'),
+					'CARTO_VOYAGER'=>__('CartoDB | Voyager (default)'),
 					'CARTO_DARKMATTER'=>__('CartoDB | Dark Matter'),
 					'CARTO_POSITRON'=>__('CartoDB | Positron'),
+					'OFM_LIBERTY'=>__('Open Free Map | Liberty'),
 					'STADIA_OSMBRIGHT'=>__('Stadia | OSM Bright (account required)'),
 					'STADIA_OUTDOORS'=>__('Stadia | Outdoors (account required)'),
 					'STADIA_STAMENTONER'=>__('Stadia | Stamen Toner (account required)'),

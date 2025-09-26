@@ -74,6 +74,10 @@ class Curatescape_View_Helper_HookPublicHead extends Zend_View_Helper_Abstract{
 		if(is_current_url('/items/browse') || is_current_url('/tours/browse')){
 			queue_js_file('secondary-nav-fix', 'javascripts', array('defer'=>'defer'));
 		}
+		// Omit unused Geolocation scripts
+		if(!get_option('curatescape_map_mirror_geolocation')) {
+			curatescapeRemoveHeadAssets( $args['view'], array('/plugins/Geolocation') );
+		}
 	}
 
 	private function lightGallerySetup()
