@@ -498,6 +498,7 @@ table.curatescape-additional-files td span.type {
 	position: relative;
 	width: 150px;
 	height: 150px;
+	flex-shrink: 0;
 }
 .tour a.tour-image,
 .tour svg,

@@ -297,12 +297,12 @@ class CuratescapeTour extends Omeka_Record_AbstractRecord
 	{
 		if(!$tourItem) return null;
 		if($title=$this->tourItemTitleString($tourItem)){
-			$meta[] = '<span class="file-title" itemprop="name"><cite>'.$this->linkToTourItem($tourItem, $title, array(), 'show').'</cite></span>';
+			$meta[] = '<span class="file-title" itemprop="name"><h3>'.$this->linkToTourItem($tourItem, $title, array(), 'show').'</h3></span>';
 		}
 		if($text=$this->tourItemTextString($tourItem)){
 			$meta[] = '<span class="file-text">'.strip_tags($text).'</span>';
 		}
-		$caption = implode(' | ', $meta);
+		$caption = implode('', $meta);
 		return $caption;
 	}
 
@@ -323,7 +323,7 @@ class CuratescapeTour extends Omeka_Record_AbstractRecord
 	public function tourItemsOutput($galleryType = 'gallery-inline-captions', $showOnMap = null, $html = null)
 	{
 		if($galleryType == 'none') return null;
-		if($showOnMap && $galleryType = 'gallery-inline-captions'){
+		if($showOnMap && $galleryType == 'gallery-inline-captions'){
 			$showOnMap = true;
 		}else{
 			$showOnMap = false;

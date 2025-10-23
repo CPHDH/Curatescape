@@ -606,7 +606,7 @@ function mediaCaptionText($file, $caption = array())
 {
 	if(!$file) return null;
 	$title = dc($file, 'Title') ? dc($file, 'Title') : __('File #%s: [Untitled]', $file->getProperty('id'));
-	$caption['title'] = '<span class="file-title" itemprop="name"><cite><a title="'.__('View File Record').'" href="'.$file->getProperty('permalink').'">'.strip_tags($title).'</a></cite></span>';
+	$captionTitle = '<span class="file-title" itemprop="name"><h3><a title="'.__('View File Record').'" href="'.$file->getProperty('permalink').'">'.strip_tags($title).'</a></h3></span>';
 	if($description = dc($file, 'Description')) {
 		$caption['description'] = '<span class="file-description">'.strip_tags($description,'<a><cite><em><i><strong><b>').'</span>';
 	}
@@ -616,7 +616,7 @@ function mediaCaptionText($file, $caption = array())
 	if($date = dc($file, 'Date')) {
 		$caption['date'] = '<span class="file-date"><span>'.__('Date').'</span>: '.strip_tags($date).'</span>';
 	}
-	return implode(' | ', $caption);
+	return $captionTitle.implode(' | ', $caption);
 }
 
 function localImageFilePath($file, $size = 'fullsize')
@@ -643,10 +643,16 @@ function dimensions($file, $size = 'fullsize')
 	return $info;
 }
 
-function curatescapejQueryConditional($current_url=null)
+function curatescapejQueryConditional($current_url=null, $whitelist=array())
 { // for theme dev optimization
 	$current_url = $current_url ? $current_url : current_url();
-	$whitelist = array(
+	if(
+		get_option('curatescape_gallery_style') == 'gallery-slides' &&
+		strpos($current_url, '/items/show/') == '0'
+	){
+		return true;
+	}
+	$whitelist = count($whitelist) ? $whitelist : array(
 		'/search',
 		'/items/search',
 		'/guest-user/',
