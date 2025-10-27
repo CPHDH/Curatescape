@@ -13,10 +13,12 @@ class Curatescape_View_Helper_CuratescapeMap extends Zend_View_Helper_Abstract{
 		if(!$figcaption){
 			$figcaption = $this->defaultFigcaption();
 		}
+		$item = get_view()->item;
 		?>
 		<h2><?php echo __('Map');?></h2>
 		<curatescape-map>
 			<figure id="curatescape-map-figure" class="<?php echo $class;?>"
+			data-item-id="<?php echo $item->id;?>"
 			data-maptype="single"
 			data-json-source="<?php echo $jsonSource;?>"
 			data-primary-layer="<?php echo flexOption('curatescape_map_primary_layer','CARTO_VOYAGER');?>"

@@ -114,12 +114,12 @@ class CuratescapeTourNav extends HTMLElement {
 			--tour-nav-img-background: rgba(256,256,256,.15);
 			--tour-nav-img-border-width: 1px;
 			--tour-nav-img-border: var(--tour-nav-img-border-width) solid var(--tour-nav-img-background);
-			--tour-nav-img-border-radius: calc(var(--tour-nav-border-radius) - var(--tour-nav-padding) - var(--tour-nav-img-border-width));
+			--tour-nav-img-border-radius: 50vh;
 			--tour-nav-img-width: calc(var(--tour-nav-height) * var(--tour-nav-image-width-multiplier));
 			--tour-nav-padding: 5px;
 			--tour-nav-height: 60px;
 			--tour-nav-max-width: 370px;
-			--tour-nav-border-radius: calc( var(--tour-nav-height) * 0.5);
+			--tour-nav-border-radius: 50vh;
 			--tour-nav-image-width-multiplier: 1.5;
 			--tour-nav-spacer-background-color: rgba(256,256,256, 0.25);
 			--tour-nav-spacer-border: 1px solid transparent;

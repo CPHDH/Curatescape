@@ -77,14 +77,27 @@
 }
 
 #curatescape-map-caption {
-	padding-top: 0.5lh;
-	margin-bottom: 0;
-	font-style: italic;
+	display: var(--curatescape-map-caption-display, block);
+	visibility: var(--curatescape-map-caption-visibility, visible);
+	padding: var(--curatescape-map-caption-padding, 0.5lh 0 0 0);
+	margin: var(--curatescape-map-caption-margin, 0);
+	font-weight: var(--curatescape-map-caption-font-weight, inherit);
+	font-family: var(--curatescape-map-caption-font-family, inherit);
+	font-style: var(--curatescape-map-caption-font-style, italic);
+}
+
+figure[data-maptype="multi"] #curatescape-map-caption{
+	display: var(--curatescape-multimap-caption-display, inherit);
+}
+
+figure[data-maptype="multi"]:not([data-tour=""]) #curatescape-map-caption{
+	display: var(--curatescape-tourmap-caption-display, inherit);
 }
 
 #curatescape-map-caption:has([data-curatescape-map-screenreader-only]){
 	display: contents;
 }
+
 .curatescape-map-title {
 	position: relative;
 	width: 100%;
@@ -99,7 +112,7 @@
 .curatescape-map a,
 .curatescape-map a:visited,
 .curatescape-map a:hover {
-	color: #333;
+	color: var(--curatescape-map-color, #333);
 	text-decoration: none;
 }
 
@@ -289,7 +302,7 @@
 	-moz-appearance: none;
 	-webkit-appearance: none;
 	appearance: none;
-	color: #333;
+	color: color: var(--curatescape-map-color, #333);
 	background: transparent;
 	border: 0 none transparent;
 	height: 30px;
@@ -317,23 +330,28 @@
 
 /* MAP INFO WINDOWS */
 #curatescape-map-figure .maplibregl-popup-content {
-	padding: 3px;
+	padding: var(--curatescape-iw-padding, 3px);
 	min-width: 220px;
 }
 
 .curatescape-iw {
 	position: relative;
 	overflow: hidden;
-	border-radius: 3px;
+	border-radius: var(--curatescape-iw-border-radius, 3px);
+	font-size: var(--curatescape-iw-font-size, 14px);
 }
-.curatescape-iw-content a{
-	color: var(--curatescape-color-iw-link, #eaeaea);
+.curatescape-iw-content {
+	color: var(--curatescape-iw-text-color, #fff);
 }
-.curatescape-iw-content,
-.curatescape-iw-content a:visited,
-.curatescape-iw-content a:hover{
-	color: var(--curatescape-color-iw-text, #fff);
-	font-size: 14px;
+.curatescape-iw-content a,
+.curatescape-iw-content a:visited {
+	color: var(--curatescape-iw-link-color, #eaeaea);
+	transition: color 0.15s linear;
+}
+
+.curatescape-iw-content a:focus,
+.curatescape-iw-content a:hover {
+	color: var(--curatescape-iw-link-color-hover, var(--curatescape-iw-text-color, #fff));
 }
 
 .curatescape-iw-content {

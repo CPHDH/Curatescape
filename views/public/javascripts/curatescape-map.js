@@ -591,6 +591,7 @@ const flyToById = async (id, zoom = 16) => {
 		zoom: zoom,
 		essential: true,
 		animate: !prefReducedMotion,
+		offset: [22, 88],
 	});
 };
 const resetMarkerRequest = () => {
@@ -951,7 +952,9 @@ const CuratescapeMapInit = () => {
 		}).once('idle', () => {
 			mapfigure.setAttribute('data-loaded', 'true');
 			initSkipLinkListener();
-			if (attr('data-tour')) initMarkerRequestListener();
+			if(typeof attr('data-tour') == 'string'){
+				initMarkerRequestListener();
+			}
 		}).once('styledata', () => {
 			setMarkers(dataSource(), true, true);
 			addControls();
