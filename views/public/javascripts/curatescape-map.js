@@ -76,10 +76,16 @@ const announce = (message) => { // aria-live region status updates
 	// timeout to announce identical messages
 	setTimeout(()=>{ariaLiveRegion.innerText = htmlEntities(message)}, 100);
 }
-const getCommaSeparatedValue = (string, index) => {
+const getCommaSeparatedValue = (string, index, allowFallback = false, fallbackIndex = 0) => {
 	if (!string) return null;
 	let arr = string.split(',');
-	return arr[index] ? arr[index].trim() : null;
+	let value = arr[index] ? arr[index].trim() : null;
+	if(!value && allowFallback){
+		// fallback used to address potential index mismatch in custom map settings
+		// e.g. when only *second* layer is set to CUSTOM_URL (at *first/only* index)
+		value = arr[fallbackIndex] ? arr[fallbackIndex].trim() : null;
+	}
+	return value;
 }
 const rgbParse = (color) => { // returns a comma-separated string, eg 256,256,256
 	if (!color) return null;
@@ -93,11 +99,9 @@ const rgbParse = (color) => { // returns a comma-separated string, eg 256,256,25
 		let match = rgb.match(/\d+/g);
 		document.body.removeChild(el);
 		return match ? match.slice(0, 3).join(',') : null;
-	} finally {
-		// just in case
-		if (el && el.parentNode) {
-			el.parentNode.removeChild(el);
-		}
+	} catch(error) {
+		console.error('Failed to parse RGB colors:', error);
+		return;
 	}
 }
 const toBitmap = (svgString, retina = true, width = 27, height = 41, mime = 'image/png') => { // symbol layers must use bitmap
@@ -201,7 +205,7 @@ const stylesConfig = (name, label, stadiaKey, preferEU, styleIndex = 0, fallback
 		label: label ? label : 'CartoDB | Voyager',
 	};
 	styles.CUSTOM_URL = {
-		url: getCommaSeparatedValue(attr('data-custom-url'), styleIndex),
+		url: getCommaSeparatedValue(attr('data-custom-url'), styleIndex, true),
 		label: label ? label : 'Custom Style',
 	};
 	return typeof styles[name] !== 'undefined' ? styles[name] : styles[fallback];
@@ -591,7 +595,7 @@ const flyToById = async (id, zoom = 16) => {
 		zoom: zoom,
 		essential: true,
 		animate: !prefReducedMotion,
-		offset: [22, 88],
+		offset: [0, 88],
 	});
 };
 const resetMarkerRequest = () => {
@@ -814,7 +818,7 @@ const setMarkers = async (src, fitBoundsAllowed = true, initialLoad = false) => 
 			map.fitBounds(bounds, { 
 				padding: {top: 25, bottom:25, left: 75, right: 75}, 
 				maxZoom: 15, 
-				animate: !prefReducedMotion, 
+				animate: !prefReducedMotion && items.length !== 1, // no animation for single
 			});
 		}
 		// Events
@@ -857,7 +861,20 @@ const initMarkerEvents = () => {
 			message += ' (' + props.address + ')'
 		}
 		announce(message);
-		setPopup(props);
+		if(attr('data-maptype') === 'single'){
+			map.once('moveend', () => {
+				setPopup(props);
+			});
+			map.flyTo({
+				center: [props.longitude, props.latitude],
+				essential: true,
+				animate: !prefReducedMotion,
+				offset: [0, 88],
+				speed: 0.5,
+			});
+		} else {
+			setPopup(props);
+		}
 	}
 	map.on('click', 'unclustered-point', markerClick);
 	// Cluster Click
@@ -950,7 +967,6 @@ const CuratescapeMapInit = () => {
 		}).once("mousedown", () => {
 			map.scrollZoom.enable();
 		}).once('idle', () => {
-			mapfigure.setAttribute('data-loaded', 'true');
 			initSkipLinkListener();
 			if(typeof attr('data-tour') == 'string'){
 				initMarkerRequestListener();
@@ -958,6 +974,7 @@ const CuratescapeMapInit = () => {
 		}).once('styledata', () => {
 			setMarkers(dataSource(), true, true);
 			addControls();
+			mapfigure.setAttribute('data-loaded', 'true');
 		});
 		setStyleLayers();
 	} catch (error) {

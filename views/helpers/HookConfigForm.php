@@ -164,7 +164,7 @@ class Curatescape_View_Helper_HookConfigForm extends Zend_View_Helper_Abstract{
 					<?php echo $this->configFormCheckBox('curatescape_map_prefer_eu', 'EU Preference', 'If checked, load supported map tile sets from servers in the European Union.');?>
 				</span>
 				<!-- Custom Label -->
-				<?php echo $this->configFormText('curatescape_map_custom_label', 'Custom Map Label', __('Enter custom labels for your map layers,separated by a comma. These labels will be displayed in the interface for switching between primary and secondary map layers (if enabled).'), 'Example: Street, Satellite');?>
+				<?php echo $this->configFormText('curatescape_map_custom_label', 'Custom Map Label', __('Enter custom labels for your map layers, separated by a comma. These labels will be displayed in the interface for switching between primary and secondary map layers (if enabled). The number of labels should match the number of map layers.'), 'Example: Street, Satellite');?>
 				<!-- Marker Color -->
 				<?php echo $this->configFormText('curatescape_map_marker_color', 'Marker Color', __('Enter an HTML color code to use for map markers.'), 'Example: #222222');?>
 				<!-- Featured Marker Color -->
