@@ -861,18 +861,7 @@ const initMarkerEvents = () => {
 			message += ' (' + props.address + ')'
 		}
 		announce(message);
-		if(attr('data-maptype') === 'single'){
-			map.once('moveend', () => {
-				setPopup(props);
-			});
-			map.flyTo({
-				center: [props.longitude, props.latitude],
-				essential: true,
-				animate: !prefReducedMotion,
-				offset: [0, 88],
-				speed: 0.5,
-			});
-		} else {
+		if(attr('data-maptype') !== 'single'){
 			setPopup(props);
 		}
 	}
