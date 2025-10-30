@@ -1,12 +1,11 @@
 /* vars! */
 :root {
-	--factoid-detail-opacity: .25;
-	--factoid-innerborder-opacity: .15;
-	--factoid-background-opacity: .025;
-	--factoid-text-size: .9rem;
-	--factoid-border-width: 5px;
-	--factoid-multiples-vertical-spacing: 0.5rem;
-	--factoid-heading-size: 1rem;
+	--factoid-text-size: inherit;
+	--factoid-heading-size: inherit;
+	--factoid-background-color: rgba(0,0,0,.025);
+	--factoid-background-color-odd: rgba(0,0,0,.045);
+	--factoid-multiples-vertical-spacing: 10px;
+	--factoid-box-shadow: -1px 1px 2px rgba(0,0,0,.15);
 	--pswp-caption-text: #fff;
 	--calculated-accent-color: #f2f2f2;
 	/* overridden in photoswipe.js (getCalculatedLinkColor) */
@@ -179,84 +178,66 @@
 
 /* factoids */
 .curatescape-factoids {
-	position: relative;
-	display: flex;
-	flex-direction: row;
-	max-width: 100%;
-	background-color: rgba(0, 0, 0, var(--factoid-background-opacity));
-	/* old browsers */
-	background-color: color-mix(in srgb, currentColor calc(var(--factoid-background-opacity) * 100%), transparent);
-	/* color-mixing currentColor addresses both light and dark dark backgrounds */
-	padding: 1rem;
+	padding: 1rem 3px;
 	margin: 1rem 0 2rem;
 }
 
-.curatescape-factoids::before {
-	content: '';
-	background-color: currentColor;
-	height: 100%;
-	width: var(--factoid-border-width);
-	position: absolute;
-	top: 0;
-	left: 0;
-	opacity: var(--factoid-detail-opacity);
-}
-
 .curatescape-text .curatescape-factoids {
-	margin-left: 1.5rem;
-	margin-right: 2.5rem;
-	max-width: calc(100% - 5rem - var(--factoid-border-width));
-}
-
-.curatescape-factoids .factoids-container {
-	flex-grow: 1;
+	padding: 1em;
+	margin-left: 2.5rem;
+	margin-right: 3.5rem;
 }
 
 .curatescape-factoids #factoid-heading {
+	margin-left: 0px;
 	text-wrap: balance;
 	font-weight: 600;
 	font-variant-caps: all-small-caps;
 	font-variant-caps: all-petite-caps;
 	font-size: var(--factoid-heading-size);
-	margin-bottom: 0.25rem;
-}
-
-.curatescape-factoids .factoid p {
-	margin: 0;
-	padding: 0;
-	font-size: var(--factoid-text-size);
-}
-
-.curatescape-factoids .factoid+.factoid {
-	margin-top: var(--factoid-multiples-vertical-spacing);
-	padding-top: var(--factoid-multiples-vertical-spacing);
-}
-
-.curatescape-factoids .factoid+.factoid::before {
-	content: '';
-	position: relative;
-	height: 1px;
-	display: block;
-	background: currentcolor;
-	opacity: var(--factoid-innerborder-opacity);
-	top: calc(0rem - var(--factoid-multiples-vertical-spacing));
-	left: 0;
-
+	display: flex;
+	flex-direction: row;
+	margin-bottom: 5px;
 }
 
 .factoids-decorator {
 	display: flex;
 	flex-direction: column;
-	justify-content: center;
+	align-self: center;
+	margin-inline-end: 10px;
 }
 
 .factoids-decorator svg {
-	height: 2rem;
-	width: 2rem;
-	margin: 0 calc(1rem + var(--factoid-border-width)) 0 1rem;
 	fill: currentColor;
-	opacity: var(--factoid-detail-opacity);
-	user-select: none;
+	height: 20px;
+	width: 20px;
+}
+
+.curatescape-factoids .factoid{
+	background: var(--factoid-background-color);
+	border-radius: 16px;
+	box-shadow: var(--factoid-box-shadow);
+	padding: 20px 30px;
+}
+
+.curatescape-factoids .factoid p {
+	display: inline-block;
+	margin: 0;
+	font-size: var(--factoid-text-size);
+	hyphens: inherit;
+}
+
+.curatescape-factoids .factoid p + p{
+	margin-top: 0.5lh;
+}
+
+.curatescape-factoids .factoid + .factoid {
+	margin-top: var(--factoid-multiples-vertical-spacing);
+}
+
+
+.curatescape-factoids .factoid:nth-child(odd) {
+	background: var(--factoid-background-color-odd);
 }
 
 /* files */

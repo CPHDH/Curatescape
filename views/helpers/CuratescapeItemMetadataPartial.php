@@ -124,7 +124,7 @@ class Curatescape_View_Helper_CuratescapeItemMetadataPartial extends Zend_View_H
 		foreach($factoids as $factoid){
 			$html .= '<div class="factoid">'.normalizeTextBlocks($factoid).'</div>';
 		}
-		return '<aside aria-labelledby="factoid-heading" class="curatescape-factoids"><div class="factoids-decorator">'.svg('sparkles').'</div><div class="factoids-container"><div id="factoid-heading">'.__($label).'</div>'.$html.'</div></aside>';
+		return '<aside aria-labelledby="factoid-heading" class="curatescape-factoids"><div class="factoids-container"><div id="factoid-heading"><div class="factoids-decorator">'.svg('sparkles').'</div>'.__($label).'</div>'.$html.'</div></aside>';
 	}
 
 	private function insertAfterNth($original, $countable, $insert, $n) {

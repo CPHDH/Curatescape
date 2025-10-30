@@ -69,6 +69,7 @@
 #curatescape-map-canvas {
 	width: 100%;
 	min-height: 500px;
+	border-radius: var(--curatescape-map-border-radius, 4px);
 }
 
 #geolocation figure {

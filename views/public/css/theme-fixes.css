@@ -35,16 +35,6 @@
 .curatescape-fix-foundation.type-curatescape-story .curatescape-lede{
 	margin-block-start: 1rem;
 }
-.curatescape-fix-big-picture .curatescape-factoids .factoid p{
-	font-size: 1rem;
-}
-.curatescape-fix-bigstuff .curatescape-factoids .factoid p,
-.curatescape-fix-santa-fe .curatescape-factoids .factoid p,
-.curatescape-fix-santa-fe #factoid-heading,
-.curatescape-fix-emiglio .curatescape-factoids .factoid p,
-.curatescape-fix-emiglio #factoid-heading{
-	font-size: unset;
-}
 .curatescape-fix-rhythm .curatescape-files{
 	padding-left: 1px;
 	padding-right: 1px;
