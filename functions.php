@@ -652,6 +652,12 @@ function curatescapejQueryConditional($current_url=null, $whitelist=array())
 	){
 		return true;
 	}
+	if(
+		get_option('curatescape_map_mirror_geolocation') == true &&
+		strpos($current_url, '/items/show/') == '0'
+	){
+		return true;
+	}
 	$whitelist = count($whitelist) ? $whitelist : array(
 		'/search',
 		'/items/search',
