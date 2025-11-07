@@ -115,18 +115,18 @@ class Curatescape_View_Helper_HookPublicHead extends Zend_View_Helper_Abstract{
 	}
 	
 	private function metaImage(){
-		if(get_option('curatescape_meta_image') !== null){
+		if(!empty(get_option('curatescape_meta_image'))){
 			// string/url (plugin option)
 			return $this->validateMetaImage(
 				trim(option('curatescape_meta_image')));
 		}
-		if(get_theme_option('curatescape_meta_image') !== null){
+		if(!empty(get_theme_option('curatescape_meta_image'))){
 			// theme upload (available for theme developers)
 			return $this->validateMetaImage(
 				WEB_ROOT.'/files/theme_uploads/'.
 				trim(get_theme_option('curatescape_meta_image'))); 
 		}
-		if(get_theme_option('custom_meta_img') !== null){
+		if(!empty(get_theme_option('custom_meta_img'))){
 			// theme upload (legacy)
 			return $this->validateMetaImage(
 				WEB_ROOT.'/files/theme_uploads/'.
@@ -145,6 +145,7 @@ class Curatescape_View_Helper_HookPublicHead extends Zend_View_Helper_Abstract{
 		if(filter_var($url, FILTER_VALIDATE_URL, FILTER_FLAG_PATH_REQUIRED) === FALSE) {
 			return '';
 		}
+		return $url;
 	}
 
 	private function metaTags($args)

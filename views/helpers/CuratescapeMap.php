@@ -4,7 +4,7 @@ class Curatescape_View_Helper_CuratescapeMap extends Zend_View_Helper_Abstract{
 	{
 		return $this;
 	}
-	public function Single($figcaption = null, $class = "single", $jsonSource = null)
+	public function Single($figcaption = null, $class = "single", $jsonSource = null, $heading=true)
 	{
 		if(!$jsonSource){
 			$jsonSource = $this->defaultJSONSource();
@@ -15,7 +15,7 @@ class Curatescape_View_Helper_CuratescapeMap extends Zend_View_Helper_Abstract{
 		}
 		$item = get_view()->item;
 		?>
-		<h2><?php echo __('Map');?></h2>
+		<?php if($heading) echo '<h2>'.__('Map').'</h2>';?>
 		<curatescape-map>
 			<figure id="curatescape-map-figure" class="<?php echo $class;?>"
 			data-item-id="<?php echo $item->id;?>"
@@ -54,7 +54,7 @@ class Curatescape_View_Helper_CuratescapeMap extends Zend_View_Helper_Abstract{
 		}
 		if(!$jsonSource) return null;
 		if(!$figcaption){
-			$figcaption = $this->defaultFigcaption();
+			$figcaption = $this->defaultFigcaption(true);
 		}
 		$ariaLiveMessage = __('Loading %s', storyLabelString('plural'));
 		?>
@@ -181,9 +181,12 @@ class Curatescape_View_Helper_CuratescapeMap extends Zend_View_Helper_Abstract{
 		}
 		return null;
 	}
-	private function defaultFigcaption()
+	private function defaultFigcaption($srOnly=false)
 	{
 		$view = get_view();
+		if($srOnly) {
+			return '<span class="defaultcaption" data-curatescape-map-screenreader-only="true">'.__('Map').'</span>';
+		}
 		if($view && isset($view->item)){
 			$sa = itm($view->item, 'Street Address');
 			$ai = itm($view->item, 'Access Information');

@@ -222,6 +222,7 @@ class Curatescape_View_Helper_HookAdminHead extends Zend_View_Helper_Abstract{
 				background-color: #445a66;
 				color: #F5f5f5;
 				padding: 0 5px;
+				margin-bottom: 5px;
 				text-transform: uppercase;
 				font-size: 0.9rem;
 			}
@@ -235,17 +236,19 @@ class Curatescape_View_Helper_HookAdminHead extends Zend_View_Helper_Abstract{
 		<?php echo implode(',', $this->cssSelectorsForModification('largertextarea'));?>{
 			min-height: 60vh;
 		}
-		/* disable add input for select elements */
+		/* disable add input button for select elements */
 		<?php echo implode(',',  $this->cssSelectorsForModification('noaddinput'));?>{
 			opacity: 0;
 			cursor:not-allowed;
 			pointer-events: none;
+			position: absolute;
 		}
 		/* disable html for select elements */
 		<?php echo implode(',', $this->cssSelectorsForModification('nohtml'));?>{
 			opacity: 0;
 			cursor: not-allowed;
 			pointer-events: none;
+			position: absolute;
 		}
 	</style>
 

@@ -175,7 +175,18 @@ function getQueryParams()
 {
 	$params = array();
 	parse_str($_SERVER['QUERY_STRING'], $params);
-	return array_map('htmlspecialchars', $params);
+	return arrayMapRecursive('htmlspecialchars', $params);
+}
+
+function arrayMapRecursive($callback, $array)
+{
+	$result = array();
+	foreach ($array as $key => $value) {
+		$result[$key] = is_array($value) 
+			? arrayMapRecursive($callback, $value)
+			: $callback($value);
+	}
+	return $result;
 }
 
 function browserCategory(){

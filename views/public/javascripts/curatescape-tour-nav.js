@@ -204,6 +204,7 @@ class CuratescapeTourNav extends HTMLElement {
 			display: flex;
 			flex-direction: row;
 			align-items: center;
+			font-size: var(--tour-nav-font-size, inherit);
 		}
 		svg{
 			height: 1.5em;

@@ -266,7 +266,7 @@ const subjectSelectControls = () => {
 			loadingIndicator = this.indicator; // see setLoading()...
 			return this.container;
 		}
-		onRemove(map) {
+		onRemove() {
 			if (this.select && this.changeHandler) {
 				this.select.removeEventListener('change', this.changeHandler);
 			}
@@ -578,7 +578,7 @@ const dataSource = (term) => {
 	}
 }
 const flyToById = async (id, zoom = 16) => {
-	if (!map) return;
+	if (!map || !geojson || !geojson.features) return;
 	const targetFeature = geojson.features.find(feature =>
 		feature.properties.id == id || feature.properties.id == parseInt(id)
 	);
@@ -612,6 +612,7 @@ const initMarkerRequestListener = () => {
 		flyToById(e.detail);
 	}
 	document.addEventListener('markerRequest', markerRequestListener);
+	document.querySelector('curatescape-map').dataset.status = 'listening';
 }
 const resetMarkerLayers = (clusters) => {
 	if (clusters) {
@@ -825,6 +826,7 @@ const setMarkers = async (src, fitBoundsAllowed = true, initialLoad = false) => 
 		initMarkerEvents();
 		// end loading...
 		removeLoading();
+		document.querySelector('curatescape-map').dataset.markers = 'loaded';
 	}).catch((err) => {
 		removeLoading();
 		console.error('Failed to load markers:', err);
@@ -957,9 +959,7 @@ const CuratescapeMapInit = () => {
 			map.scrollZoom.enable();
 		}).once('idle', () => {
 			initSkipLinkListener();
-			if(typeof attr('data-tour') == 'string'){
-				initMarkerRequestListener();
-			}
+			initMarkerRequestListener();
 		}).once('styledata', () => {
 			setMarkers(dataSource(), true, true);
 			addControls();
