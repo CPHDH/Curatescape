@@ -129,7 +129,7 @@ class Curatescape_View_Helper_HookConfigForm extends Zend_View_Helper_Abstract{
 			<p><?php echo __('Use the following options to customize %s maps. Additional Map configurations can be found in <a target="_blank" href="%2s">Geolocation plugin settings</a>. To display %3s maps use the shortcode: %4s. Refer to the %5s for full list of shortcode options.', _PLUGIN_NAME_, '/admin/plugins/config?name=Geolocation', _PLUGIN_NAME_, '<code>[curatescape_map]</code>', '<a href="https://omeka.org/classic/plugins/'._PLUGIN_NAME_.'" target="_blank">plugin documentation</a>');?></p>
 			
 			<!-- Mirror Geolocation -->
-			<?php echo $this->configFormCheckBox('curatescape_map_mirror_geolocation', 'Mirror Geolocation', __('If checked, use the maps provided by the Geolocation plugin. This option is recommended for most projects using default themes in order to maintain consistency across page templates. Uncheck and configure custom options if you are using a Curatescape theme or if you have developed a Curatescape-optimized custom theme. Additional information available in <a target="_blank" href="%s"> plugin documentation</a>.', 'https://omeka.org/classic/plugins/'._PLUGIN_NAME_));?>
+			<?php echo $this->configFormCheckBox('curatescape_map_mirror_geolocation', 'Mirror Geolocation', __('If checked, use the maps provided by the Geolocation plugin. Uncheck and configure custom options if you are using a Curatescape theme or if you have developed a Curatescape-optimized custom theme. Additional information available in <a target="_blank" href="%s"> plugin documentation</a>.', 'https://omeka.org/classic/plugins/'._PLUGIN_NAME_));?>
 			<span class="map-settings">
 				<?php $mapLayers = array(
 					'CARTO_VOYAGER'=>__('CartoDB | Voyager (default)'),

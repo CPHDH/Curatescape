@@ -12,9 +12,8 @@ class Curatescape_View_Helper_JsonItem extends Zend_View_Helper_Abstract
 				'longitude' => $location['longitude'],
 				'title' => dc($item, 'Title', array('no_filter'=>true)),
 				'subtitle' => itm($item, 'Subtitle'),
-				'thumbnail' => preferredItemImageUrl($item, 'square_thumbnail'),
 				'fullsize' => preferredItemImageUrl($item),
-				'address' => itm($item, 'Street Address'),
+				'address' => strip_tags(itm($item, 'Street Address')),
 			);
 
 			if($isExtended){
@@ -22,7 +21,7 @@ class Curatescape_View_Helper_JsonItem extends Zend_View_Helper_Abstract
 				$itemMetadata['creator'] = $this->getCreators($item);
 				$itemMetadata['description'] = itm($item, 'Story');
 				$itemMetadata['sponsor'] = itm($item, 'Sponsor');
-				$itemMetadata['accessinfo'] = itm($item, 'Access Information');
+				$itemMetadata['accessinfo'] = strip_tags(itm($item, 'Access Information'));
 				$itemMetadata['lede'] = itm($item, 'Lede');
 				$itemMetadata['website'] = itm($item, 'Official Website');
 				$itemMetadata['related_resources' ] = $this->getRelatedResources($item);
@@ -99,13 +98,14 @@ class Curatescape_View_Helper_JsonItem extends Zend_View_Helper_Abstract
 
 	private function getCreators($item, $output = array())
 	{
-		if($authors = dc($item, 'Creator', array( 'all' => true ) )){
+		if($authors = dc($item, 'Creator', array( 'all' => true, 'no_filter' => true ) )){
 			foreach($authors as $author){
 				array_push($output, html_entity_decode(strip_formatting($author)));
 			}
 		}else{
 			array_push($output, get_option('site_title'));
 		}
+		return $output;
 	}
 
 }
