@@ -83,11 +83,11 @@ class Curatescape_View_Helper_CuratescapeItemMetadataPartial extends Zend_View_H
 		if(isset($articleElements['story'])){
 			$text = normalizeTextBlocks($articleElements['story'][0]);
 			if((option('curatescape_inline_factoids')) && count($factoidElements) > 0 && substr_count($text, '<p>') > 4){
-				$text = $this->insertAfterNth($text, '</p>', $this->factoid($factoidElements), 3);
+				$text = insertAfterNth($text, '</p>', factoid($factoidElements), 3);
 				$factoidCount++;
 			}
 			$html .= '<div class="curatescape-text">'.$text.'</div>';
-			$html .= ($factoidCount == 0) ? $this->factoid($factoidElements) : null;
+			$html .= ($factoidCount == 0) ? factoid($factoidElements) : null;
 		}
 		return $html;
 	}
@@ -114,29 +114,6 @@ class Curatescape_View_Helper_CuratescapeItemMetadataPartial extends Zend_View_H
 		$html .= implode(' | ', $flattened);
 		// hidden; used for JS map figure
 		return '<figcaption class="curatescape-map-caption" data-curatescape-hidden="true">'.strip_tags($html,'<a>').'</figcaption>';
-	}
-
-	public function factoid($factoidElements = array(), $html = null){
-		if(!$factoidElements || count($factoidElements) <= 0) return null;
-		$factoids = array_merge(...array_values($factoidElements));
-		$customLabel = option('curatescape_factoids_label');
-		$label = $customLabel ? $customLabel : __(plural('Factoid','Factoids', count($factoids)) ,count($factoids));
-		foreach($factoids as $factoid){
-			$html .= '<div class="factoid">'.normalizeTextBlocks($factoid).'</div>';
-		}
-		return '<aside aria-labelledby="factoid-heading" class="curatescape-factoids"><div class="factoids-container"><div id="factoid-heading"><div class="factoids-decorator">'.svg('sparkles').'</div>'.__($label).'</div>'.$html.'</div></aside>';
-	}
-
-	private function insertAfterNth($original, $countable, $insert, $n) {
-		$pos = 0;
-		for ($i = 0; $i < $n; $i++) {
-			$pos = strpos($original, $countable, $pos);
-			if (!$pos) {
-				return $original;
-			}
-			$pos += strlen($countable);
-		}
-		return substr($original, 0, $pos) . $insert . substr($original, $pos);
 	}
 
 }

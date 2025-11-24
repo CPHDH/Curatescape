@@ -35,6 +35,29 @@ function setOptionMinValue($optionName, $minValue)
 	return set_option($optionName, max((int)get_option($optionName), (int)$minValue));
 }
 
+function insertAfterNth($original, $countable, $insert, $n) {
+	$pos = 0;
+	for ($i = 0; $i < $n; $i++) {
+		$pos = strpos($original, $countable, $pos);
+		if (!$pos) {
+			return $original;
+		}
+		$pos += strlen($countable);
+	}
+	return substr($original, 0, $pos) . $insert . substr($original, $pos);
+}
+
+function factoid($factoidElements = array(), $html = null){
+	if(!$factoidElements || count($factoidElements) <= 0) return null;
+	$factoids = array_merge(...array_values($factoidElements));
+	$customLabel = option('curatescape_factoids_label');
+	$label = $customLabel ? $customLabel : __(plural('Factoid','Factoids', count($factoids)) ,count($factoids));
+	foreach($factoids as $factoid){
+		$html .= '<div class="factoid">'.normalizeTextBlocks($factoid).'</div>';
+	}
+	return '<aside aria-labelledby="factoid-heading" class="curatescape-factoids"><div class="factoids-container"><div id="factoid-heading"><div class="factoids-decorator">'.svg('sparkles').'</div>'.__($label).'</div>'.$html.'</div></aside>';
+}
+
 function svg($name, $path = null){
 	if(!$name) return null;
 	if(!$path){
