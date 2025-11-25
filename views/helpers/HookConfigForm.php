@@ -65,8 +65,8 @@ class Curatescape_View_Helper_HookConfigForm extends Zend_View_Helper_Abstract{
 			<!-- Byline -->
 			<?php echo $this->configFormSelect('curatescape_byline', 'Byline Location', 'Select the location where the formatted byline should be displayed.',
 				array(
-				'after_lede' => __('After Lede (default)'),
-				'before_lede' => __('Before Lede'),
+				'before_lede' => __('Before Lede (default)'),
+				'after_lede' => __('After Lede'),
 				'none' => __('None (do not display)')
 				)
 			);?>

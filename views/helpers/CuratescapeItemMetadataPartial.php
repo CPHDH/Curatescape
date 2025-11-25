@@ -83,7 +83,7 @@ class Curatescape_View_Helper_CuratescapeItemMetadataPartial extends Zend_View_H
 		if(isset($articleElements['story'])){
 			$text = normalizeTextBlocks($articleElements['story'][0]);
 			if((option('curatescape_inline_factoids')) && count($factoidElements) > 0 && substr_count($text, '<p>') > 4){
-				$text = insertAfterNth($text, '</p>', factoid($factoidElements), 3);
+				$text = insertAfterNth($text, '</p>', factoid($factoidElements), floor(substr_count($text, '<p>') / 2)); // 2.1 to
 				$factoidCount++;
 			}
 			$html .= '<div class="curatescape-text">'.$text.'</div>';
