@@ -124,6 +124,12 @@ class Curatescape_View_Helper_HookAdminHead extends Zend_View_Helper_Abstract{
 		if(is_current_url('/admin/tours/')){
 			queue_css_file('tours', 'all', false, 'css', get_plugin_ini(_PLUGIN_NAME_, 'version'));
 		}
+		if(
+			is_current_url('/admin/plugins/config?name='._PLUGIN_NAME_) ||
+			is_current_url('/admin/plugins/config/name/'._PLUGIN_NAME_)
+		){
+			queue_css_file('config', 'all', false, 'css', get_plugin_ini(_PLUGIN_NAME_, 'version'));
+		}
 	}
 	private function adminJs()
 	{

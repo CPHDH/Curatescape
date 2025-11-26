@@ -43,8 +43,6 @@ class CuratescapePlugin extends Omeka_Plugin_AbstractPlugin{
 		'body_tag_attributes',
 		'display_elements',
 		'display_option_description',
-		'files_for_item',
-		'file_markup',
 		'filterCreatorAsLink' => array('Display', 'Item', 'Dublin Core', 'Creator'),
 		'filterDCTitleWithSubtitle' => array('Display', 'Item', 'Dublin Core', 'Title'),
 		'filterDisplayTitleWithSubtitle' => array('Display', 'Item', 'display_title'),
@@ -81,13 +79,11 @@ class CuratescapePlugin extends Omeka_Plugin_AbstractPlugin{
 		'curatescape_dashboard_resources' => 1,
 		'curatescape_dashboard_stats' => 1,
 		'curatescape_factoids_label' => 'Did you know?',
-		'curatescape_file_markup'=> 1,
 		'curatescape_filter_text' => 1,
 		'curatescape_form_enforcement' => 1,
 		'curatescape_form_recommended_only'=> 0,
 		'curatescape_format_warnings' => 1,
-		'curatescape_gallery_style_tour' => 'gallery-inline-captions',
-		'curatescape_gallery_style'=> 'gallery-grid',
+		// 'curatescape_gallery_style_tour' => 'gallery-inline-captions', /* @todo */
 		'curatescape_home_map'=>'top',
 		'curatescape_home_map_caption'=> null,
 		'curatescape_home_map_heading' => 'Story Map',
@@ -95,8 +91,6 @@ class CuratescapePlugin extends Omeka_Plugin_AbstractPlugin{
 		'curatescape_inner_heading' => 0,
 		'curatescape_json_cache' => '600',
 		'curatescape_json_storage' => '300',
-		'curatescape_lightbox_docs' => 0,
-		'curatescape_lightbox' => 1,
 		'curatescape_map_cluster_colors' => null,
 		'curatescape_map_clusters' => 0,
 		'curatescape_map_fixed_center' => 0,
@@ -111,8 +105,6 @@ class CuratescapePlugin extends Omeka_Plugin_AbstractPlugin{
 		'curatescape_map_secondary_layer' => '',
 		'curatescape_map_subjects_select' => 0,
 		'curatescape_map_stadia_key' => null,
-		'curatescape_meta_image' => null,
-		'curatescape_meta_tags'=> 1,
 		'curatescape_metadata_browse' => 1,
 		'curatescape_omit_redundant_elements' => 1,
 		'curatescape_plugin_styles' => 1,
@@ -269,16 +261,6 @@ class CuratescapePlugin extends Omeka_Plugin_AbstractPlugin{
 	public function filterDisplayElements($elementSets)
 	{
 		return get_view()->FilterDisplayElements($elementSets);
-	}
-
-	public function filterFilesForItem($html, $args)
-	{
-		return get_view()->FilterFilesForItem($html, $args);
-	}
-
-	public function filterFileMarkup($html, $args)
-	{
-		return get_view()->FilterFileMarkup($html, $args);
 	}
 
 	public function filterSubjectAsLink($text)

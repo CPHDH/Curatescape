@@ -2,40 +2,6 @@
 class Curatescape_View_Helper_HookConfigForm extends Zend_View_Helper_Abstract{
 	public function HookConfigForm(){
 		?>
-		<style>
-			fieldset > p{
-				padding-bottom: 0.5lh;
-				border-bottom: 1px solid #DCDCDC;
-				color: #777;
-				margin-bottom: 1.5lh !important;
-			}
-			.intro{
-				margin: 0 0 1lh;
-				padding: 1lh;
-				background-image: radial-gradient(circle at -35% center, #445a66,#15455b,#002C42,#001228);
-				color: #F5f5f5;
-				text-shadow: 1px 1px #15455b;
-			}
-			.intro a{
-				color: #76D4FF;
-			}
-			legend + p{
-				margin-top: -8px;
-			}
-			code{
-				font-size: .9em;
-			}
-			fieldset::after {
-			  content: '';
-			  height: 1lh;
-			  display: flex;
-			  position: relative;
-			  bottom: 0;
-			  left: 0;
-			  width: 100%;
-			}
-		</style>
-
 		<p class="intro"><?php echo __('%1s adds a number of features to better support location-based narrative content. For documentation and other important information, or to learn about %2s mobile apps for iOS and Android, visit %3s. For support, create an account at %4s.', _PLUGIN_NAME_, _PLUGIN_NAME_, '<a href="https://curatescape.org" target="_blank">curatescape.org</a>', '<a href="https://forum.curatescape.org" target="_blank">forum.curatescape.org</a>');?></p>
 
 		<fieldset>
@@ -74,28 +40,6 @@ class Curatescape_View_Helper_HookConfigForm extends Zend_View_Helper_Abstract{
 			<?php echo $this->configFormCheckBox('curatescape_inline_factoids', 'Inline Factoids', 'If checked, Factoids will be displayed within the main text. If the main text is more than five paragraphs in length, Factoids will be displayed after the third paragraph. Factoids are always wrapped in an &lt;aside&gt; tag for optimal accessibility.');?>
 			<!-- Factoid Label -->
 			<?php echo $this->configFormText('curatescape_factoids_label', 'Factoids Label', 'Enter a custom label to replace the default heading for Factoids.', 'Example: Did you know?');?>
-		</fieldset>
-
-		<fieldset>
-			<legend><?php echo __('File Display Settings'); ?></legend>
-			<p><?php echo __('Use the following options to customize the display of files on Item and File records.');?></p>
-
-			<!-- Media Style-->
-			<?php echo $this->configFormSelect('curatescape_gallery_style', 'Media Gallery', 'Select the style to be used for displaying images and other media files. Each style will adapt to the available space as determined by the theme layout and browser dimensions. May not be supported by all themes.', 
-				array(
-				'gallery-grid' => __('Thumbnail Grid (default)'),
-				'gallery-inline-captions' => __('Inline Captions'),
-				'gallery-slides' => __('Slides'),
-				'gallery-table' => __('Files Table'), 
-				'none' => __('None (use theme)')
-				)
-			);?>
-			<!-- Image Lightbox-->
-			<?php echo $this->configFormCheckBox('curatescape_lightbox', 'Image Lightbox', 'If checked, image links will open in lightbox overlay (PhotoSwipe). If unchecked, image links will open to either the file or the file record, based on site settings. Requires use of plugin media styles, selected above.');?>
-			<!-- Docs in Lightbox-->
-			<?php echo $this->configFormCheckBox('curatescape_lightbox_docs', 'PDF Lightbox', 'If checked, PDF document files will be presented alongside images and use the lightbox overlay (PhotoSwipe) with select gallery types. Note that the presentation of PDF document files will vary across different browsers and devices. If unchecked, PDF document files will be listed uniformly in a separate table when the Thumbnail Grid gallery type is active.');?>
-			<!-- Files Show File Markup-->
-			<?php echo $this->configFormCheckBox('curatescape_file_markup', 'File Record Markup', 'If checked, the HTML for files on each single file record (i.e. files/show) will use Curatescape style markup. Potentially useful for projects with audio, video, and PDF files.');?>
 		</fieldset>
 
 		<fieldset>
@@ -261,16 +205,6 @@ class Curatescape_View_Helper_HookConfigForm extends Zend_View_Helper_Abstract{
 			);?>
 			<!-- Enhanced RSS-->
 			<?php echo $this->configFormCheckBox('curatescape_rss', 'Enhanced RSS', __('If checked, the default RSS feed will be replaced with an <a href="%s" target="_blank">enhanced format</a> that has been customized for narrative content.', items_output_url('rss-plus')));?>
-		</fieldset>
-
-		<fieldset>
-			<legend><?php echo __('Preview Settings'); ?></legend>
-			<p><?php echo __('Use the following options to control the way your content is represented on search engines and social media websites.');?></p>
-
-			<!-- Meta Tags -->
-			<?php echo $this->configFormCheckBox('curatescape_meta_tags', 'Meta Tags', __('If checked, use enhanced &lt;meta&gt; tags for improved search engine optimization and social media sharing.', _PLUGIN_NAME_) );?>
-			<!-- Meta Image -->
-			<?php echo $this->configFormText('curatescape_meta_image', 'Meta Image', __('Enter the URL for a PNG or JPG file to serve as the fallback image to represent your site on social media and search engine results. Used only when there is not a content-related image available (for example, on the homepage and browse pages). Recommended dimensions: 1200px × 630px (1.91:1). Alternately, theme developers may create the following theme option to automatically replace this plugin setting with an uploaded file from the theme: %s','<code>curatescape_meta_image.type="file"</code>'), 'Example: '.WEB_ROOT.'/meta.png');?>
 		</fieldset>
 
 		<fieldset>
