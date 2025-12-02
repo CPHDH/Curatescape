@@ -30,12 +30,12 @@ class Curatescape_View_Helper_HookPublicHead extends Zend_View_Helper_Abstract{
 		if(is_current_url('/')){
 			$this->jsonPreloadHome();
 		}
-		// JS tours/show
+		// JS tours/show @todo
 		if(is_current_url('/tours/show')){
-			queue_js_file('tour', 'javascripts', array('defer'=>'defer'));
-			if(option('curatescape_gallery_style_tour') !== 'gallery-inline-captions'){
-				$this->photoSwipeModule();
-			}
+			// queue_js_file('tour', 'javascripts', array('defer'=>'defer'));
+			// if(option('curatescape_gallery_style_tour') !== 'gallery-inline-captions'){
+			// 	$this->photoSwipeModule();
+			// }
 		}
 		// JS items/show
 		if(is_current_url('/items/show')){

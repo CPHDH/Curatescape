@@ -63,7 +63,6 @@ class Curatescape_View_Helper_HookConfigForm extends Zend_View_Helper_Abstract{
 				array(
 				'gallery-inline-captions' => __('Inline Captions (default)'),
 				'gallery-grid' => __('Thumbnail Grid'),
-				'none' => __('None') 
 				)
 			);?>
 		</fieldset>

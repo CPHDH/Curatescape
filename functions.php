@@ -461,7 +461,7 @@ function curatescapejQueryConditional($current_url=null, $whitelist=array())
 { // for theme dev optimization
 	$current_url = $current_url ? $current_url : current_url();
 	if(
-		get_option('curatescape_gallery_style') == 'gallery-slides' &&
+		get_option('curatescapegalleries_gallery_style') == 'gallery-slides' &&
 		strpos($current_url, '/items/show/') == '0'
 	){
 		return true;
@@ -488,7 +488,7 @@ function curatescapejQueryConditional($current_url=null, $whitelist=array())
 }
 
 function curatescapeRemoveHeadAssets($view=null, $paths=array())
-{ // for theme dev optimization
+{
 	if ($view) {
 		$scripts = $view->headScript();
 		foreach ($scripts as $key=>$file) {
