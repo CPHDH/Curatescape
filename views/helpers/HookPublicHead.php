@@ -17,25 +17,13 @@ class Curatescape_View_Helper_HookPublicHead extends Zend_View_Helper_Abstract{
 		if(is_current_url('/tours') && option('curatescape_plugin_styles')){
 			queue_css_file('tours', 'all', false, 'css', get_plugin_ini(_PLUGIN_NAME_, 'version'));
 		}
-		// CSS tours/show @todo
-		if(is_current_url('/tours/show') && option('curatescape_plugin_styles')){
-			// if(option('curatescape_gallery_style_tour') == 'gallery-inline-captions'){
-			// 	queue_css_file('gallery-inline-captions', 'all', false, 'css', get_plugin_ini(_PLUGIN_NAME_, 'version'));
-			// }
-			// if(option('curatescape_gallery_style_tour') == 'gallery-grid'){
-			// 	queue_css_file('gallery-grid', 'all', false, 'css', get_plugin_ini(_PLUGIN_NAME_, 'version'));
-			// }
-		}
 		// JS home
 		if(is_current_url('/')){
 			$this->jsonPreloadHome();
 		}
 		// JS tours/show @todo
 		if(is_current_url('/tours/show')){
-			// queue_js_file('tour', 'javascripts', array('defer'=>'defer'));
-			// if(option('curatescape_gallery_style_tour') !== 'gallery-inline-captions'){
-			// 	$this->photoSwipeModule();
-			// }
+			queue_js_file('tour', 'javascripts', array('defer'=>'defer'));
 		}
 		// JS items/show
 		if(is_current_url('/items/show')){

@@ -33,20 +33,6 @@
   margin: 0;
 }
 
-/* tour buttons */
-.curatescape-tour-button-container,
-.curatescape-image-gallery.gallery-inline-captions
-  .curatescape-image-figure
-  > figcaption
-  > .curatescape-tour-button-container {
-  display: block;
-  margin-top: 0.5lh;
-  display: flex;
-  flex-direction: row;
-  justify-items: flex-start;
-  gap: 0.5lh;
-}
-
 /* subtitle */
 .curatescape-article-header-styles .curatescape-subtitle {
   display: block;
@@ -263,37 +249,4 @@
   .tour h2 {
     text-align: center;
   }
-}
-/* TOUR SHOW */
-#tour-content-container {
-  container-name: tourcontentcontainer; /* <== Container */
-  container-type: inline-size; /* <== Container */
-}
-.tour-items,
-.tour-map {
-  margin-top: 1lh;
-}
-.tour-map figure {
-  margin: 0 auto;
-}
-.tour-item-count {
-  display: inline-flex;
-}
-.tour-item-count::before {
-  content: "(";
-}
-.tour-item-count::after {
-  content: ")";
-}
-.tour-item,
-.tour-colophon {
-  clear: both;
-  display: block;
-}
-.tour-colophon {
-  font-style: italic;
-  margin-top: 2lh;
-}
-.pswp__pswp-caption a[data-item-id] {
-  display: none; // @todo: fix 'open map marker' from pswp caption link
 }

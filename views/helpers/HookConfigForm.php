@@ -58,13 +58,6 @@ class Curatescape_View_Helper_HookConfigForm extends Zend_View_Helper_Abstract{
 				'none' => __('None')
 				) 
 			);?>
-			<!-- Tour Item Gallery Style-->
-			<?php echo $this->configFormSelect('curatescape_gallery_style_tour', 'Tour Item Gallery', 'Select the style to be used for displaying tour items in list form. Each style will adapt to the available space as determined by the theme layout and browser dimensions.', 
-				array(
-				'gallery-inline-captions' => __('Inline Captions (default)'),
-				'gallery-grid' => __('Thumbnail Grid'),
-				)
-			);?>
 		</fieldset>
 
 		<fieldset>

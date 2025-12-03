@@ -320,24 +320,17 @@ class CuratescapeTour extends Omeka_Record_AbstractRecord
 		return link_to($item, 'show', $text, $props, array('tour'=>$this->id, 'index'=>$tourItemIndex));
 	}
 
-	public function tourItemsOutput($galleryType = 'gallery-inline-captions', $showOnMap = null, $html = null)
+	public function tourItemsOutput($html = null)
 	{
-		if($galleryType == 'none') return null;
-		if($showOnMap && $galleryType == 'gallery-inline-captions'){
-			$showOnMap = true;
-		}else{
-			$showOnMap = false;
-		}
-		$html .= '<div class="curatescape-files">';
-			$html .= '<div id="pswp-container" class="curatescape-image-gallery '.$galleryType.'">';
+		$html .= '<div class="curatescape-items">';
+			$html .= '<div class="curatescape-item-gallery">';
 			foreach($this->Items as $i=>$tourItem){
-				$potentialLCP = ($galleryType == 'gallery-inline-captions' && $i < 1 || $galleryType == 'gallery-grid' && $i < 3);
-				$loadingAttr = $potentialLCP ? null : 'loading="lazy"'; // Avoid delay loading above-the-fold/LCP content
-				$html .= '<figure class="curatescape-image-figure" itemtype="https://schema.org/ImageObject">';
+				$loadingAttr = $i < 1 ? null : 'loading="lazy"'; // above-the-fold/LCP content
+				$html .= '<figure class="curatescape-item-figure" itemtype="https://schema.org/ImageObject">';
 					$imgDetails = preferredItemImageUrl($tourItem, 'fullsize', true);
 					$tourItemImage = '<img '.$loadingAttr.' alt="'.dc($tourItem,'Title', array('no_filter'=>true)).'" src="'.$imgDetails['url'].'" class="item-file" width="'.$imgDetails['width'].'" height="'.$imgDetails['height'].'"/>';
-					$html .= $this->linkToTourItem($tourItem, $tourItemImage, array('aria-label'=>__('Read more about %s', dc($tourItem,'Title', array('no_filter'=>true))),'class'=>'gallery-image '.$imgDetails['orientation'].' pswp-item', 'data-pswp-src'=>$imgDetails['url'], 'data-pswp-width'=>$imgDetails['width'], 'data-pswp-height'=>$imgDetails['height']), 'show');
-					$html .= '<figcaption>'.$this->tourItemCaption($tourItem).$this->tourItemActions($tourItem, $showOnMap).'</figcaption>';
+					$html .= $this->linkToTourItem($tourItem, $tourItemImage, array('aria-label'=>__('Read more about %s', dc($tourItem,'Title', array('no_filter'=>true))),'class'=>'gallery-item '.$imgDetails['orientation']), 'show');
+					$html .= '<figcaption>'.$this->tourItemCaption($tourItem).$this->tourItemActions($tourItem, true).'</figcaption>';
 				$html .= '</figure>';
 			}
 			$html .= '</div>';
