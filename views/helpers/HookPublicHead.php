@@ -40,7 +40,7 @@ class Curatescape_View_Helper_HookPublicHead extends Zend_View_Helper_Abstract{
 		}
 		// Omit unused Geolocation scripts
 		if(!get_option('curatescape_map_mirror_geolocation')) {
-			curatescapeRemoveHeadAssets( $args['view'], array('/plugins/Geolocation') );
+			$this->removeHeadAssets( $args['view'], array('/plugins/Geolocation') );
 		}
 	}
 	
@@ -69,5 +69,54 @@ class Curatescape_View_Helper_HookPublicHead extends Zend_View_Helper_Abstract{
 	<!-- App Store Banner (Curatescape plugin) -->
 	<meta name="apple-itunes-app" content="app-id=<?php echo $iosIdentifier;?>">
 	<?php
+	}
+	
+	private function removeHeadAssets($view=null, $paths=array())
+	{
+		if ($view) {
+			$scripts = $view->headScript();
+			foreach ($scripts as $key=>$file) {
+				foreach ($paths as $path) {
+					if(
+						0 === strpos(current_url(), '/exhibits/show') && 
+						$path == '/plugins/Geolocation'
+					){
+						// do nothing if this is an exhibit (allow map)
+					}elseif(
+						0 === strpos(current_url(), '/guest-user/') && 
+						$path == '/plugins/GuestUser/views/public/javascripts'
+					){
+						// do nothing if this is a guest user page
+					}elseif (
+						isset($file->attributes['src']) && 
+						strpos($file->attributes['src'], $path) !== false
+					) {
+						$scripts[$key]->type = null;
+						$scripts[$key]->attributes['src'] = null;
+						$scripts[$key]->attributes['source'] = null;
+					}
+				}
+			}
+			$styles = $view->headLink();
+			foreach ($styles as $key=>$file) {
+				foreach ($paths as $path) {
+					if(
+						0 === strpos(current_url(), '/exhibits/show') && 
+						$path == '/plugins/Geolocation'
+					){
+						// do nothing if this is an exhibit (allow map)
+					}elseif (
+						$file->href && 
+						strpos($file->href, $path) !== false
+					) {
+						$styles[$key]->href = null;
+						$styles[$key]->type = null;
+						$styles[$key]->rel = null;
+						$styles[$key]->media = null;
+						$styles[$key]->conditionalStylesheet = null;
+					}
+				}
+			}
+		}
 	}
 }
