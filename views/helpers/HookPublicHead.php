@@ -7,11 +7,11 @@ class Curatescape_View_Helper_HookPublicHead extends Zend_View_Helper_Abstract{
 		}
 		// CSS global
 		if(option('curatescape_plugin_styles')){
-			queue_css_file('global', 'all', false, 'css', get_plugin_ini(_PLUGIN_NAME_, 'version'));
+			queue_css_file('curatescape-global', 'all', false, 'css', get_plugin_ini(_PLUGIN_NAME_, 'version'));
 		}
 		// CSS theme fixes
 		if(option('curatescape_theme_fixes')){ 
-			queue_css_file('theme-fixes', 'all', false, 'css', get_plugin_ini(_PLUGIN_NAME_, 'version'));
+			queue_css_file('curatescape-theme-fixes', 'all', false, 'css', get_plugin_ini(_PLUGIN_NAME_, 'version'));
 		}
 		// CSS tours
 		if(is_current_url('/tours') && option('curatescape_plugin_styles')){
@@ -20,14 +20,15 @@ class Curatescape_View_Helper_HookPublicHead extends Zend_View_Helper_Abstract{
 		// JS home
 		if(is_current_url('/')){
 			$this->jsonPreloadHome();
+			queue_css_file('curatescape-tours', 'all', false, 'css', get_plugin_ini(_PLUGIN_NAME_, 'version'));
 		}
 		// JS tours/show @todo
 		if(is_current_url('/tours/show')){
-			queue_js_file('tour', 'javascripts', array('defer'=>'defer'));
+			queue_js_file('curatescape-tour', 'javascripts', array('defer'=>'defer'));
 		}
 		// JS items/show
 		if(is_current_url('/items/show')){
-			queue_js_file('items-show', 'javascripts', array('defer'=>'defer'));
+			queue_js_file('curatescape-items-show', 'javascripts', array('defer'=>'defer'));
 			if($params = getQueryParams()){
 				if(isset($params['tour']) && isset($params['index'])){
 					$this->curatescapeTourNavModule();
@@ -36,7 +37,7 @@ class Curatescape_View_Helper_HookPublicHead extends Zend_View_Helper_Abstract{
 		}
 		// JS items/browse and tours/browse
 		if(is_current_url('/items/browse') || is_current_url('/tours/browse')){
-			queue_js_file('secondary-nav-fix', 'javascripts', array('defer'=>'defer'));
+			queue_js_file('curatescape-secondary-nav-fix', 'javascripts', array('defer'=>'defer'));
 		}
 		// Omit unused Geolocation scripts
 		if(!get_option('curatescape_map_mirror_geolocation')) {

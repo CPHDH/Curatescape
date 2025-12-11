@@ -120,21 +120,21 @@ class Curatescape_View_Helper_HookAdminHead extends Zend_View_Helper_Abstract{
 	}
 	private function adminCss()
 	{
-		queue_css_file('dashboard', 'all', false, 'css', get_plugin_ini(_PLUGIN_NAME_, 'version'));
+		queue_css_file('curatescape-dashboard', 'all', false, 'css', get_plugin_ini('Curatescape', 'version'));
 		if(is_current_url('/admin/tours/')){
-			queue_css_file('tours', 'all', false, 'css', get_plugin_ini(_PLUGIN_NAME_, 'version'));
+			queue_css_file('curatescape-tours', 'all', false, 'css', get_plugin_ini('Curatescape', 'version'));
 		}
 		if(
-			is_current_url('/admin/plugins/config?name='._PLUGIN_NAME_) ||
-			is_current_url('/admin/plugins/config/name/'._PLUGIN_NAME_)
+			is_current_url('/admin/plugins/config?name=Curatescape') ||
+			is_current_url('/admin/plugins/config/name/Curatescape')
 		){
-			queue_css_file('config', 'all', false, 'css', get_plugin_ini(_PLUGIN_NAME_, 'version'));
+			queue_css_file('curatescape-config', 'all', false, 'css', get_plugin_ini('Curatescape', 'version'));
 		}
 	}
 	private function adminJs()
 	{
 		if(is_current_url('/admin/tours/')){
-			queue_js_file('tours', 'javascripts');
+			queue_js_file('curatescape-tours', 'javascripts');
 		}
 	}
 	private function compatibilityCheck($warnings = array())
