@@ -15,11 +15,6 @@ class Curatescape_View_Helper_HookPublicHead extends Zend_View_Helper_Abstract{
 		}
 		// CSS tours
 		if(is_current_url('/tours') && option('curatescape_plugin_styles')){
-			queue_css_file('tours', 'all', false, 'css', get_plugin_ini(_PLUGIN_NAME_, 'version'));
-		}
-		// JS home
-		if(is_current_url('/')){
-			$this->jsonPreloadHome();
 			queue_css_file('curatescape-tours', 'all', false, 'css', get_plugin_ini(_PLUGIN_NAME_, 'version'));
 		}
 		// JS tours/show @todo
@@ -43,14 +38,6 @@ class Curatescape_View_Helper_HookPublicHead extends Zend_View_Helper_Abstract{
 		if(!get_option('curatescape_map_mirror_geolocation')) {
 			$this->removeHeadAssets( $args['view'], array('/plugins/Geolocation') );
 		}
-	}
-	
-	private function jsonPreloadHome()
-	{
-	if(option('curatescape_home_map') === 'none') return null;
-	?>
-	<link rel="preload" href="<?php echo WEB_ROOT.'/items/browse?output=mobile-json';?>"  as="fetch"/>
-	<?php
 	}
 
 	private function curatescapeTourNavModule()

@@ -64,11 +64,6 @@ class Curatescape_View_Helper_CuratescapeItemMetadataPartial extends Zend_View_H
 
 	private function story($articleElements = array(), $bylineElements = array(), $factoidElements = array(), $bylineLocation='after_lede', $html = null, $factoidCount = 0)
 	{
-		if(option('curatescape_inner_heading')){
-			$record = get_current_record('item');
-			$args = array('record'=>$record);
-			$html .= '<h1>'.get_view('Curatescape_View_Helper_FilterTitleWithSubtitle')->FilterTitleWithSubtitle(dc($record,'Title',array('no_filter'=>true)), $args, true, true).'</h1>';
-		}
 		if(isset($articleElements['lede'])){
 			$html .= '<div class="curatescape-lede"><p>'.$articleElements['lede'][0].'</p></div>';
 		}

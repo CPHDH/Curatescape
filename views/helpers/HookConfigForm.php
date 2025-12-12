@@ -26,8 +26,6 @@ class Curatescape_View_Helper_HookConfigForm extends Zend_View_Helper_Abstract{
 			<?php echo $this->configFormCheckBox('curatescape_auto_subtitle', 'Append Subtitle', 'If checked, the Subtitle will be automatically appended to the Title anywhere it is displayed, including the record title, &lt;meta&gt; title, and more.');?>
 			<!-- Subtitle Styles -->
 			<?php echo $this->configFormCheckBox('curatescape_subtitle_styles', 'Subtitle Styles', 'If checked, the Subtitle will be formatted using plugin styles that change the color, typography, and layout. If unchecked, the Subtitle will be separated from the title by a colon. Requires use of auto-appending subtitle option, selected above. May not be supported in some themes.');?>
-			<!-- Repeat Story Header -->
-			<?php echo $this->configFormCheckBox('curatescape_inner_heading', 'Repeat Story Header', 'If checked, the Title and Subtitle will be displayed above the Lede, even if they have already appeared on the page. This might be useful for themes that display the Item files at the top of the page.');?>
 			<!-- Byline -->
 			<?php echo $this->configFormSelect('curatescape_byline', 'Byline Location', 'Select the location where the formatted byline should be displayed.',
 				array(
@@ -114,27 +112,10 @@ class Curatescape_View_Helper_HookConfigForm extends Zend_View_Helper_Abstract{
 					<?php echo $this->configFormText('curatescape_map_cluster_colors', 'Cluster Colors', __('Enter three valid CSS colors to customize the map clusters, each separated by a <code>|</code> pipe. The first color will be used for small clusters, the second for medium clusters, and the third for large clusters. Leave blank to use default colors.'), 'Example: teal | #008080 | rgb(0, 128, 128)');?>
 				</span>
 				<!-- Subjects Select -->
-				<?php echo $this->configFormCheckBox('curatescape_map_subjects_select', 'Subjects Select', 'If checked, allow users to select from a dropdown of Subject terms to filter items on the global/homepage map. Note that this option is only recommended when all items have been given at least one Subject term. Use of the <a target="_blank" href="%s">Simple Vocab plugin</a> is strongly recommended.', 'https://omeka.org/classic/plugins/SimpleVocab/');?>
+				<?php echo $this->configFormCheckBox('curatescape_map_subjects_select', 'Subjects Select', 'If checked, allow users to select from a dropdown of Subject terms to filter items on the global map. Note that this option is only recommended when all items have been given at least one Subject term. Use of the <a target="_blank" href="%s">Simple Vocab plugin</a> is strongly recommended.', 'https://omeka.org/classic/plugins/SimpleVocab/');?>
 				<!-- Fixed Center-->
-				<?php echo $this->configFormCheckBox('curatescape_map_fixed_center', 'Fixed Center', 'If checked, the initial center of your multi-marker maps (for example on the homepage) will always adhere to the <a target="_blank" href="%s">Geolocation plugin settings</a> for default latitude, longitude, and zoom level. This option does not apply to tours, to single items, or to maps where the user has explicitly chosen a specific set of parameters (such as a subject term). This option may be useful if your map contains outliers beyond the expected bounds of your coverage area.', '/admin/plugins/config?name=Geolocation');?>
+				<?php echo $this->configFormCheckBox('curatescape_map_fixed_center', 'Fixed Center', 'If checked, the initial center of your multi-marker maps will always adhere to the <a target="_blank" href="%s">Geolocation plugin settings</a> for default latitude, longitude, and zoom level. This option does not apply to tours, to single items, or to maps where the user has explicitly chosen a specific set of parameters (such as a subject term). This option may be useful if your map contains outliers beyond the expected bounds of your coverage area.', '/admin/plugins/config?name=Geolocation');?>
 			</span>
-		</fieldset>
-
-		<fieldset>
-			<legend><?php echo __('Homepage Settings'); ?></legend>
-			<p><?php echo __('Use the following options to display and customize %s content on the homepage.', _PLUGIN_NAME_);?></p>
-			<!-- Home Map -->
-			<?php echo $this->configFormSelect('curatescape_home_map', 'Map Location', __('Select a location on the homepage for displaying a map of %s.', _CURATESCAPE_ITEM_TYPE_NAME_PLURAL_), 
-				array(
-				'top' => __('Top (default)'),
-				'bottom' => __('Bottom'),
-				'none' => __('None')
-				)
-			);?>
-			<!-- Home Map Heading -->
-			<?php echo $this->configFormText('curatescape_home_map_heading', 'Map Heading', __('Enter a text heading for the homepage map or leave blank to omit the heading.'), 'Example: Story Map');?>
-			<!-- Home Map Caption-->
-			<?php echo $this->configFormText('curatescape_home_map_caption', 'Map Caption', __('Enter a text caption to display below the homepage map or leave blank to omit the caption. If blank, a basic description of the map will be made available to screen readers. HTML links are allowed.'), 'Example: Use the Story Map to explore the area.');?>
 		</fieldset>
 		
 		<fieldset>

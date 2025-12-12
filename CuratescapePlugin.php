@@ -1,6 +1,4 @@
 <?php
-// @TODO: Maps
-
 // Includes
 include 'functions.php';
 
@@ -29,8 +27,6 @@ class CuratescapePlugin extends Omeka_Plugin_AbstractPlugin{
 		'initialize',
 		'install',
 		'public_head',
-		'public_home',
-		'public_content_top',
 		'public_items_show',
 		'uninstall',
 	);
@@ -83,11 +79,7 @@ class CuratescapePlugin extends Omeka_Plugin_AbstractPlugin{
 		'curatescape_form_enforcement' => 1,
 		'curatescape_form_recommended_only'=> 0,
 		'curatescape_format_warnings' => 1,
-		'curatescape_home_map'=>'top',
-		'curatescape_home_map_caption'=> null,
-		'curatescape_home_map_heading' => 'Story Map',
 		'curatescape_inline_factoids' => 1,
-		'curatescape_inner_heading' => 0,
 		'curatescape_json_cache' => '600',
 		'curatescape_json_storage' => '300',
 		'curatescape_map_cluster_colors' => null,
@@ -98,7 +90,7 @@ class CuratescapePlugin extends Omeka_Plugin_AbstractPlugin{
 		'curatescape_map_marker_featured_star' => 0,
 		'curatescape_map_custom_label' => null,
 		'curatescape_map_custom_url' => null,
-		'curatescape_map_mirror_geolocation' => 1,
+		'curatescape_map_mirror_geolocation' => 0,
 		'curatescape_map_prefer_eu' => 0,
 		'curatescape_map_primary_layer' => 'CARTO_VOYAGER',
 		'curatescape_map_secondary_layer' => '',
@@ -156,16 +148,6 @@ class CuratescapePlugin extends Omeka_Plugin_AbstractPlugin{
 	public function hookPublicHead($args)
 	{
 		return get_view()->HookPublicHead($args);
-	}
-
-	public function hookPublicHome($args)
-	{
-		return get_view()->HookPublicContent($args)->homeBottom();
-	}
-
-	public function hookPublicContentTop($args)
-	{
-		return get_view()->HookPublicContent($args)->homeTop();
 	}
 
 	public function hookPublicItemsShow($args)
