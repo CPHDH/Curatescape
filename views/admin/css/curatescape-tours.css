@@ -56,7 +56,6 @@ tr.tour .details .middot{
 }
 
 #tour-items-picker #sortable{
-	height: 90vh;
 	min-height: 600px;
 }
 #tour-item-search {
