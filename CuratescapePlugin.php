@@ -137,7 +137,7 @@ class CuratescapePlugin extends Omeka_Plugin_AbstractPlugin{
 
 	public function hookAdminDashboard($view)
 	{
-		return get_view()->HookAdminDashboard($view);
+		return get_view()->HookAdminDashboard($view)->dashboardWidgets();
 	}
 
 	public function hookAdminHead($args)

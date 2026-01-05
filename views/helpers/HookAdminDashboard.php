@@ -1,43 +1,136 @@
 <?php
 class Curatescape_View_Helper_HookAdminDashboard extends Zend_View_Helper_Abstract{
-	public function HookAdminDashboard($view, $html = null){
-		// TOURS (required)
-		echo $this->dashboardTours();
-		// RESOURCES (optional)
+	public function HookAdminDashboard($view=null, $html = null){
+		return $this;
+	}
+	public function dashboardWidgets(){
 		$cache = get_view()->CuratescapeCache();
 		$cacheDuration = 3600 * 168; // 168 hour / 1 week
+		// recent tours
+		echo $this->displayDashboardTours();
 		// content audit (cache cleared on item save)
 		if(option('curatescape_dashboard_audit')){
-			if ($cacheFile = $cache->GetCacheFile(_HTML_DASHBOARD_CONTENT_AUDIT_, $cacheDuration, false)) {
-				echo $cacheFile;
-			}else{
-				$html = $this->dashboardWarnings();
-				$cache->WriteCacheFile(_HTML_DASHBOARD_CONTENT_AUDIT_, $html);
-				echo $html;
-			}
+			echo $this->displayDashboardAudit($cache,$cacheDuration);
 		}
 		// file stats and info (cache cleared on item save)
 		if(option('curatescape_dashboard_stats')){
-			if ($cacheFile = $cache->GetCacheFile(_HTML_DASHBOARD_FILE_STATS_, $cacheDuration, false)) {
-				echo $cacheFile;
-			}else{
-				if($fileStats = $this->dashboardFilesStats()){
-					$html = $this->dashboardFilesSummary($fileStats);
-					$cache->WriteCacheFile(_HTML_DASHBOARD_FILE_STATS_, $html);
-					echo $html;
-				}
-			}
+			echo $this->displayDashboardStats($cache,$cacheDuration);
 		}
 		// project management
 		if(option('curatescape_dashboard_project_mgmt')){
-			echo $this->dashboardProjectManagement();
+			echo $this->displayDashboardProjectManagement();
 		}
 		// resources
 		if(option('curatescape_dashboard_resources')){
-			echo $this->dashboardResources();
+			echo $this->displayDashboardResources();
 		}
 	}
-	private function dashboardWarnings($html = null, $listIssues = array())
+	private function displayDashboardAudit($cache,$cacheDuration,$html = null){
+		if (
+			$cacheFile = $cache->GetCacheFile(
+				_HTML_DASHBOARD_CONTENT_AUDIT_, $cacheDuration, false)
+		) {
+			return $cacheFile;
+		} else {
+			$html = $this->generateDashboardWarnings();
+			$cache->WriteCacheFile(_HTML_DASHBOARD_CONTENT_AUDIT_, $html);
+			return $html;
+		}
+	}
+	private function displayDashboardStats($cache,$cacheDuration,$html = null){
+		if (
+			$cacheFile = $cache->GetCacheFile(
+				_HTML_DASHBOARD_FILE_STATS_, $cacheDuration, false)
+		) {
+			return $cacheFile;
+		} else {
+			if($fileStats = $this->generateDashboardFilesStats()){
+				$html = $this->formatFilesSummary($fileStats);
+				$cache->WriteCacheFile(_HTML_DASHBOARD_FILE_STATS_, $html);
+				return $html;
+			}
+		}
+	}
+	private function displayDashboardProjectManagement($html = null)
+	{
+		if(
+			option('curatescape_app_android') ||
+			option('curatescape_app_ios')
+		){
+			$html .= '<section class="panel five columns curatescape-panel">';
+				$html .= '<h2>'.__('Project Management').'</h2>';
+				$ga = get_theme_option('google_analytics'); // theme option
+				$ma = get_option('matomoURL'); // Matomo plugin
+				if($ga || $ma){
+					$html .= '<h3>'.__('Analytics').'</h3>';
+					$html .= '<p>'.__('Track website usage, user demographics, campaign performance, and more.').' </p>';
+					if($ga){
+						$html .= '<a target="_blank" class="appstore blue button" href="https://analytics.google.com/analytics/web">'.__('Google Analytics').'</a>';
+					}
+					if($ma){
+						$html .= '<a target="_blank" class="appstore blue button" href="'.$ma.'">'.__('Matomo Analytics').'</a>';
+					}
+				}
+				if(option('curatescape_app_android') || option('curatescape_app_ios')){
+					$html .= '<h3>'.__('App Stores').'</h3>';
+					$html .= '<p>'.__('Manage your app store profiles, track downloads, and more. <a target="_blank" href="https://curatescape.org/docs/project-launch-guide/#analytics">Learn more about app management</a>.').' </p>';
+					if(option('curatescape_app_ios')){
+						$html .= '<a target="_blank" class="appstore blue button" href="https://appstoreconnect.apple.com/login">'.__('App Store Connnect').'</a>';
+					}
+					if(option('curatescape_app_android')){
+						$html .= '<a target="_blank" class="appstore blue button" href="https://play.google.com/console/developers">'.__('Google Play Console').'</a>';
+					}
+				}
+			$html .= '</section>';
+		}
+		return $html;
+	}
+	private function displayDashboardTours($html = null)
+	{
+		$db = get_db();
+		$table = $db->getTable('CuratescapeTour');
+		$select = $table->getSelect();
+		$results = $table->fetchObjects($select);
+		$tourItems = null;
+		for($i=0;$i<=10;$i++){
+			if(array_key_exists($i, $results) && is_object($results[$i])){
+				$tourItems .= '<p class="recent">';
+					$tourItems .= '<a href="/admin/tours/show/'.$results[$i]->id.'">'
+					.$results[$i]->title.'</a>';
+				$tourItems .= '</p>';
+				$tourItems .= '<p class="dash-edit">';
+					$tourItems .= '<a href="/admin/tours/edit/'.$results[$i]->id.'">'
+					.__('Edit').'</a>';
+				$tourItems .= '</p>';
+			}
+		}
+		if($tourItems){
+			$html .= '<section class="panel five columns omega">';
+			$html .= '<h2>'.__('Recent Tours').'</h2>';
+			$html .= '<div class="recent-row">';
+			$html .= ''.$tourItems.'';
+			$html .= '</div>';
+			$html .= '<div class="add-new-link"><p><a class="add-tour green button" href="'.html_escape(url('tours/add/')).'">'.__('Add a new tour').'</a></p></div>';
+			$html .= '</section>';
+			return $html;
+		}
+	}
+	private function displayDashboardResources($html = null)
+	{
+		$html .= '<section class="panel five columns curatescape-panel">';
+			$html .= '<h2>'.__('Curatescape Resources').'</h2>';
+			$html .= '<h3>'.__('Documentation').'</h3>';
+			$html .= '<p>'.__('For detailed information on setup, deployment, and usage, please visit %s or contact your project manager.', '<a target="_blank" href="https://curatescape.org/docs/">curatescape.org/docs</a>').'</p>';
+			$html .= '<h3>'.__('Support & Troubleshooting').'</h3>';
+			$html .= '<p>'.__('Join the %s to request support, suggest features, share tips, and more.', '<a target="_blank" href="https://forum.curatescape.org/">Curatescape forum</a>').'</p>';
+			$html .= '<h3>'.__('News & Announcements').'</h3>';
+			$html .= '<p>'.__('Sign up for the %1s and visit the %2s for occasional tips and project updates.', '<a target="_blank" href="https://curatescape.us6.list-manage.com/subscribe?u=597554b8203b974d59fc51d5f&id=844240ad4f">Curatescape newsletter</a>', '<a target="_blank" href="https://curatescape.org/blog/">Curatescape blog</a>').' </p>';
+			$html .= '<h3>'.__('Developers & Server Admins').'</h3>';
+			$html .= '<p>'.__('Watch the %s and configure custom notifications for new releases. Pull requests are welcome.', '<a target="_blank" href="https://github.com/CPHDH/Curatescape">Curatescape Github repository</a>').' </p>';
+		$html .= '</section>';
+		return $html;
+	}
+	public function generateDashboardWarnings($html = null, $listIssues = array())
 	{
 		$itemType=get_record('ItemType', array('name'=>_CURATESCAPE_ITEM_TYPE_NAME_));
 		if(!$itemType) return null;
@@ -46,13 +139,13 @@ class Curatescape_View_Helper_HookAdminDashboard extends Zend_View_Helper_Abstra
 		// missing file meta?
 		$missingFileMeta = array_filter(array_map(function($item){
 			foreach($item->getFiles() as $file){
-				if(dc($file,'Title') == null){
+				if(dc($file,'Title') == null){ // does the file have at least a title?
 					return $item->id;
 				}
 			}
 		}, $items));
 		if(count($missingFileMeta)){
-			$listIssues[] = $this->issueDisplay(
+			$listIssues[] = $this->formatIssueText(
 				$missingFileMeta, 
 				array('range'=>''.implode(',', $missingFileMeta)),
 				__('%1s %2s with missing File Metadata', 
@@ -74,7 +167,7 @@ class Curatescape_View_Helper_HookAdminDashboard extends Zend_View_Helper_Abstra
 			}
 		}, $items));
 		if(count($noImages)){
-			$listIssues[] = $this->issueDisplay(
+			$listIssues[] = $this->formatIssueText(
 				$noImages, 
 				array('range'=>''.implode(',', $noImages)),
 				__('%1s %2s with no Thumbnail Image', 
@@ -91,7 +184,7 @@ class Curatescape_View_Helper_HookAdminDashboard extends Zend_View_Helper_Abstra
 			}
 		}, $items));
 		if(count($noMap)){
-			$listIssues[] = $this->issueDisplay(
+			$listIssues[] = $this->formatIssueText(
 				$noMap, 
 				array('geolocation-mapped'=>'0'),
 				__('%1s %2s with no Map Location', 
@@ -108,7 +201,7 @@ class Curatescape_View_Helper_HookAdminDashboard extends Zend_View_Helper_Abstra
 			}
 		}, $items));
 		if(count($noTags)){
-			$listIssues[] = $this->issueDisplay(
+			$listIssues[] = $this->formatIssueText(
 				$noTags,
 				array('range'=>''.implode(',', $noTags)),
 				__(
@@ -126,7 +219,7 @@ class Curatescape_View_Helper_HookAdminDashboard extends Zend_View_Helper_Abstra
 			}
 		}, $items));
 		if(count($noSubjects)){
-			$listIssues[] = $this->issueDisplay(
+			$listIssues[] = $this->formatIssueText(
 				$noSubjects,
 				array('range'=>''.implode(',', $noSubjects)),
 				__(
@@ -144,7 +237,7 @@ class Curatescape_View_Helper_HookAdminDashboard extends Zend_View_Helper_Abstra
 			}
 		}, $items));
 		if(count($noCreator)){
-			$listIssues[] = $this->issueDisplay(
+			$listIssues[] = $this->formatIssueText(
 				$noCreator,
 				array('range'=>''.implode(',', $noCreator)),
 				__(
@@ -162,7 +255,7 @@ class Curatescape_View_Helper_HookAdminDashboard extends Zend_View_Helper_Abstra
 			}
 		}, $items));
 		if(count($noStory)){
-			$listIssues[] = $this->issueDisplay(
+			$listIssues[] = $this->formatIssueText(
 				$noStory,
 				array('range'=>''.implode(',', $noStory)),
 				__(
@@ -180,7 +273,7 @@ class Curatescape_View_Helper_HookAdminDashboard extends Zend_View_Helper_Abstra
 			}
 		}, $items));
 		if(count($noSubtitles)){
-			$listIssues[] = $this->issueDisplay(
+			$listIssues[] = $this->formatIssueText(
 				$noSubtitles,
 				array('range'=>''.implode(',', $noSubtitles)),
 				__(
@@ -198,7 +291,7 @@ class Curatescape_View_Helper_HookAdminDashboard extends Zend_View_Helper_Abstra
 			}
 		}, $items));
 		if(count($noLede)){
-			$listIssues[] = $this->issueDisplay(
+			$listIssues[] = $this->formatIssueText(
 				$noLede,
 				array('range'=>''.implode(',', $noLede)),
 				__(
@@ -216,7 +309,7 @@ class Curatescape_View_Helper_HookAdminDashboard extends Zend_View_Helper_Abstra
 			}
 		}, $items));
 		if(count($noAddress)){
-			$listIssues[] = $this->issueDisplay(
+			$listIssues[] = $this->formatIssueText(
 				$noAddress,
 				array('range'=>''.implode(',', $noAddress)),
 				__(
@@ -251,105 +344,7 @@ class Curatescape_View_Helper_HookAdminDashboard extends Zend_View_Helper_Abstra
 		$html .= '</section>';
 		return $html;
 	}
-	private function dashboardResources($html = null)
-	{
-		$html .= '<section class="panel five columns curatescape-panel">';
-			$html .= '<h2>'.__('Curatescape Resources').'</h2>';
-			$html .= '<h3>'.__('Documentation').'</h3>';
-			$html .= '<p>'.__('For detailed information on setup, deployment, and usage, please visit %s or contact your project manager.', '<a target="_blank" href="https://curatescape.org/docs/">curatescape.org/docs</a>').'</p>';
-			$html .= '<h3>'.__('Support & Troubleshooting').'</h3>';
-			$html .= '<p>'.__('Join the %s to request support, suggest features, share tips, and more.', '<a target="_blank" href="https://forum.curatescape.org/">Curatescape forum</a>').'</p>';
-			$html .= '<h3>'.__('News & Announcements').'</h3>';
-			$html .= '<p>'.__('Sign up for the %1s and visit the %2s for occasional tips and project updates.', '<a target="_blank" href="https://curatescape.us6.list-manage.com/subscribe?u=597554b8203b974d59fc51d5f&id=844240ad4f">Curatescape newsletter</a>', '<a target="_blank" href="https://curatescape.org/blog/">Curatescape blog</a>').' </p>';
-			$html .= '<h3>'.__('Developers & Server Admins').'</h3>';
-			$html .= '<p>'.__('Watch the %s and configure custom notifications for new releases. Pull requests are welcome.', '<a target="_blank" href="https://github.com/CPHDH/Curatescape">Curatescape Github repository</a>').' </p>';
-		$html .= '</section>';
-		return $html;
-	}
-	private function dashboardFilesSummary($fileStats, $html = null)
-	{
-		$html .= '<section class="panel five columns curatescape-panel">';
-			$html .= '<h2>'.__('File Information').'</h2>';
-			$html .= '<h3>'.__('Statistics').'</h3>';
-			$html .= $fileStats;
-			$html .= '<span class="highlight info">';
-				$html .= '<h3>'.svg('bookmark').__('Recommended Formats').'</h3>';
-				$html .= '<p>'.__('To maximize compatibility with all app platforms and web browsers, the following file formats are recommended:').'</p>';
-				$html .= '<ul>';
-					$html .= '<li>'.__('Images').': JPG or PNG</li>';
-					$html .= '<li>'.__('Audio').': MP3</li>';
-					$html .= '<li>'.__('Video').': MP4 (H.264)</li>';
-					$html .= '<li>'.__('Documents').': PDF</li>';
-				$html .= '</ul>';
-			$html .= '</span>';
-		$html .= '</section>';
-		return $html;
-	}
-	private function dashboardProjectManagement($html = null)
-	{
-		if(
-			option('curatescape_app_android') ||
-			option('curatescape_app_ios')
-		){
-			$html .= '<section class="panel five columns curatescape-panel">';
-				$html .= '<h2>'.__('Project Management').'</h2>';
-				$ga = get_theme_option('google_analytics'); // theme option
-				$ma = get_option('matomoURL'); // Matomo plugin
-				if($ga || $ma){
-					$html .= '<h3>'.__('Analytics').'</h3>';
-					$html .= '<p>'.__('Track website usage, user demographics, campaign performance, and more.').' </p>';
-					if($ga){
-						$html .= '<a target="_blank" class="appstore blue button" href="https://analytics.google.com/analytics/web">'.__('Google Analytics').'</a>';
-					}
-					if($ma){
-						$html .= '<a target="_blank" class="appstore blue button" href="'.$ma.'">'.__('Matomo Analytics').'</a>';
-					}
-				}
-				if(option('curatescape_app_android') || option('curatescape_app_ios')){
-					$html .= '<h3>'.__('App Stores').'</h3>';
-					$html .= '<p>'.__('Manage your app store profiles, track downloads, and more. <a target="_blank" href="https://curatescape.org/docs/project-launch-guide/#analytics">Learn more about app management</a>.').' </p>';
-					if(option('curatescape_app_ios')){
-						$html .= '<a target="_blank" class="appstore blue button" href="https://appstoreconnect.apple.com/login">'.__('App Store Connnect').'</a>';
-					}
-					if(option('curatescape_app_android')){
-						$html .= '<a target="_blank" class="appstore blue button" href="https://play.google.com/console/developers">'.__('Google Play Console').'</a>';
-					}
-				}
-			$html .= '</section>';
-		}
-		return $html;
-	}
-	private function dashboardTours($html = null)
-	{
-		$db = get_db();
-		$table = $db->getTable('CuratescapeTour');
-		$select = $table->getSelect();
-		$results = $table->fetchObjects($select);
-		$tourItems = null;
-		for($i=0;$i<=10;$i++){
-			if(array_key_exists($i, $results) && is_object($results[$i])){
-				$tourItems .= '<p class="recent">';
-					$tourItems .= '<a href="/admin/tours/show/'.$results[$i]->id.'">'
-					.$results[$i]->title.'</a>';
-				$tourItems .= '</p>';
-				$tourItems .= '<p class="dash-edit">';
-					$tourItems .= '<a href="/admin/tours/edit/'.$results[$i]->id.'">'
-					.__('Edit').'</a>';
-				$tourItems .= '</p>';
-			}
-		}
-		if($tourItems){
-			$html .= '<section class="panel five columns omega">';
-			$html .= '<h2>'.__('Recent Tours').'</h2>';
-			$html .= '<div class="recent-row">';
-			$html .= ''.$tourItems.'';
-			$html .= '</div>';
-			$html .= '<div class="add-new-link"><p><a class="add-tour green button" href="'.html_escape(url('tours/add/')).'">'.__('Add a new tour').'</a></p></div>';
-			$html .= '</section>';
-			return $html;
-		}
-	}
-	private function dashboardFilesStats($html = null, $totalFiles = 0, $images = 0, $audio = 0, $video = 0, $docs = 0, $other = 0){
+	public function generateDashboardFilesStats($html = null, $totalFiles = 0, $images = 0, $audio = 0, $video = 0, $docs = 0, $other = 0){
 		$file_dir = $_SERVER['DOCUMENT_ROOT'].'/files/original/';
 		if(!is_dir($file_dir)) return null;
 		$dir = opendir($file_dir);
@@ -386,7 +381,28 @@ class Curatescape_View_Helper_HookAdminDashboard extends Zend_View_Helper_Abstra
 		$html .= '</ul>';
 		return $html;
 	}
-	private function issueDisplay($recordIds, $queryParams, $string, $context = null){
+	public function formatFilesSummary($fileStats, $html = null)
+	{
+		$html .= '<section class="panel five columns curatescape-panel">';
+			$html .= '<h2>'.__('File Information').'</h2>';
+			$html .= '<span>';
+				$html .= '<h3>'.__('Recommended Formats').'</h3>';
+				$html .= '<p>'.__('To maximize compatibility with all app platforms and web browsers, the following file formats are recommended:').'</p>';
+				$html .= '<ul>';
+					$html .= '<li>'.__('Images').': JPG or PNG</li>';
+					$html .= '<li>'.__('Audio').': MP3</li>';
+					$html .= '<li>'.__('Video').': MP4 (H.264)</li>';
+					$html .= '<li>'.__('Documents').': PDF</li>';
+				$html .= '</ul>';
+			$html .= '</span>';
+			$html .= '<span class="highlight info">';
+				$html .= '<h3>'.svg('bookmark').__('Statistics').'</h3>';
+				$html .= $fileStats;
+			$html .= '</span>';
+		$html .= '</section>';
+		return $html;
+	}
+	private function formatIssueText($recordIds, $queryParams, $string, $context = null){
 		$url = url('items/browse', $queryParams);
 		$title = __('View affected %s', count($recordIds) == 1 ? __('item') : __('items'));
 		return '<li data-count="'.sprintf('%05d',count($recordIds)).'"><a title="'.$title.'" href="'.$url.'">'.$string.'</a><span title="'.$context.'">'.svg('information-circle').'</span></li>';
