@@ -27,8 +27,8 @@ class Curatescape_View_Helper_CuratescapeCache extends Zend_View_Helper_Abstract
 		if($content = file_get_contents($filepath)) return $content;
 		return false;
 	}
-	public function WriteCacheFile($filepath, $content = ''){
-		if(!$this->cachablePath()) return false;
+	public function WriteCacheFile($filepath, $content = '', $bypassPathCheck = false){
+		if(!$bypassPathCheck && !$this->cachablePath()) return false;
 		if(!file_exists($filepath)){
 			return boolval(file_put_contents($filepath, $content));
 		}

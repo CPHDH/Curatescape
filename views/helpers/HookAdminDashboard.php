@@ -5,7 +5,7 @@ class Curatescape_View_Helper_HookAdminDashboard extends Zend_View_Helper_Abstra
 	}
 	public function dashboardWidgets(){
 		$cache = get_view()->CuratescapeCache();
-		$cacheDuration = 3600 * 168; // 168 hour / 1 week
+		$cacheDuration = 3600 * 168; // 168 hours (1 week)
 		// recent tours
 		echo $this->displayDashboardTours();
 		// content audit (cache cleared on item save)
@@ -25,6 +25,25 @@ class Curatescape_View_Helper_HookAdminDashboard extends Zend_View_Helper_Abstra
 			echo $this->displayDashboardResources();
 		}
 	}
+	public function refreshDashboardWidgets($cache){
+		// called from HookAfterSaveItem or via Job Dispatcher
+		if(option('curatescape_dashboard_audit')){
+			$html = $this->generateDashboardWarnings();
+			if($html) {
+				$cache->WriteCacheFile(_HTML_DASHBOARD_CONTENT_AUDIT_, $html, true);
+			}
+		}
+		if(option('curatescape_dashboard_stats')){
+			$fileStats = $this->generateDashboardFilesStats();
+			if($fileStats) {
+				$html = $this->formatFilesSummary($fileStats);
+				if($html) {
+					$cache->WriteCacheFile(_HTML_DASHBOARD_FILE_STATS_, $html, true);
+				}
+			}
+		}
+		return $this;
+	}
 	private function displayDashboardAudit($cache,$cacheDuration,$html = null){
 		if (
 			$cacheFile = $cache->GetCacheFile(
@@ -33,7 +52,9 @@ class Curatescape_View_Helper_HookAdminDashboard extends Zend_View_Helper_Abstra
 			return $cacheFile;
 		} else {
 			$html = $this->generateDashboardWarnings();
-			$cache->WriteCacheFile(_HTML_DASHBOARD_CONTENT_AUDIT_, $html);
+			if($html) {
+				$cache->WriteCacheFile(_HTML_DASHBOARD_CONTENT_AUDIT_, $html);
+			}
 			return $html;
 		}
 	}
@@ -46,7 +67,9 @@ class Curatescape_View_Helper_HookAdminDashboard extends Zend_View_Helper_Abstra
 		} else {
 			if($fileStats = $this->generateDashboardFilesStats()){
 				$html = $this->formatFilesSummary($fileStats);
-				$cache->WriteCacheFile(_HTML_DASHBOARD_FILE_STATS_, $html);
+				if($html) {
+					$cache->WriteCacheFile(_HTML_DASHBOARD_FILE_STATS_, $html);
+				}
 				return $html;
 			}
 		}
@@ -130,7 +153,7 @@ class Curatescape_View_Helper_HookAdminDashboard extends Zend_View_Helper_Abstra
 		$html .= '</section>';
 		return $html;
 	}
-	public function generateDashboardWarnings($html = null, $listIssues = array())
+	private function generateDashboardWarnings($html = null, $listIssues = array())
 	{
 		$itemType=get_record('ItemType', array('name'=>_CURATESCAPE_ITEM_TYPE_NAME_));
 		if(!$itemType) return null;
@@ -344,7 +367,7 @@ class Curatescape_View_Helper_HookAdminDashboard extends Zend_View_Helper_Abstra
 		$html .= '</section>';
 		return $html;
 	}
-	public function generateDashboardFilesStats($html = null, $totalFiles = 0, $images = 0, $audio = 0, $video = 0, $docs = 0, $other = 0){
+	private function generateDashboardFilesStats($html = null, $totalFiles = 0, $images = 0, $audio = 0, $video = 0, $docs = 0, $other = 0){
 		$file_dir = $_SERVER['DOCUMENT_ROOT'].'/files/original/';
 		if(!is_dir($file_dir)) return null;
 		$dir = opendir($file_dir);
@@ -381,7 +404,7 @@ class Curatescape_View_Helper_HookAdminDashboard extends Zend_View_Helper_Abstra
 		$html .= '</ul>';
 		return $html;
 	}
-	public function formatFilesSummary($fileStats, $html = null)
+	private function formatFilesSummary($fileStats, $html = null)
 	{
 		$html .= '<section class="panel five columns curatescape-panel">';
 			$html .= '<h2>'.__('File Information').'</h2>';
