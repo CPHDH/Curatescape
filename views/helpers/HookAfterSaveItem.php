@@ -47,13 +47,20 @@ class Curatescape_View_Helper_HookAfterSaveItem extends Zend_View_Helper_Abstrac
 				$flash->addMessage($warningNotification, 'curatescape-warning');
 			}
 		}
-		// clear server cache
+		// cache
 		$cache = get_view()->CuratescapeCache();
+		// clear and rebuild json files
 		$cache->CacheBustManual(_JSON_ITEMS_FILE_, true);
 		$cache->CacheBustManual(_JSON_TOURS_FILE_, true);
+		try {
+			Zend_Registry::get('job_dispatcher')->send('RefreshJsonCache');
+		} catch (Exception $e) {
+			get_view()->JsonItem()->refreshJsonCache($cache);
+			get_view()->JsonTour()->refreshJsonCache($cache);
+		}
+		// clear and rebuild dashboard files
 		$cache->CacheBustManual(_HTML_DASHBOARD_FILE_STATS_, true);
 		$cache->CacheBustManual(_HTML_DASHBOARD_CONTENT_AUDIT_, true);
-		// rebuild dashboard stats
 		try {
 			Zend_Registry::get('job_dispatcher')->send('RefreshDashboardCache');
 		} catch (Exception $e) {

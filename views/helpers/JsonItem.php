@@ -1,8 +1,11 @@
 <?php
 class Curatescape_View_Helper_JsonItem extends Zend_View_Helper_Abstract
 {
-	public function JsonItem( $item, $isExtended = false )
+	public function JsonItem()
 	{
+		return $this;
+	}
+	public function JsonItemsShow($item, $isExtended = false){
 		if($location = get_db()->getTable( 'Location' )->findLocationByItem( $item, true )){
 			$itemMetadata = array(
 				'id' => $item->id,
@@ -15,7 +18,6 @@ class Curatescape_View_Helper_JsonItem extends Zend_View_Helper_Abstract
 				'fullsize' => preferredItemImageUrl($item),
 				'address' => strip_tags(itm($item, 'Street Address')),
 			);
-
 			if($isExtended){
 				$itemMetadata['zoom'] = $location['zoom_level'];
 				$itemMetadata['creator'] = $this->getCreators($item);
@@ -32,13 +34,13 @@ class Curatescape_View_Helper_JsonItem extends Zend_View_Helper_Abstract
 		}
 		return false;
 	}
-	
+
 	public function JsonItemsBrowse($items, $allItemTypes = false){
 		$output = array('items'=>array());
 		foreach( $items as $item ){
 			if(!$item->public) continue;
 			if(!$allItemTypes && $item->item_type_id !== itemTypeID()) continue;
-			if($itemMeta = $this->JsonItem( $item, false )){
+			if($itemMeta = $this->JsonItemsShow( $item, false )){
 				$output['items'][] = $itemMeta;
 			}
 		}
@@ -106,6 +108,19 @@ class Curatescape_View_Helper_JsonItem extends Zend_View_Helper_Abstract
 			array_push($output, get_option('site_title'));
 		}
 		return $output;
+	}
+
+	public function refreshJsonCache($cache)
+	{
+		// called from HookAfterSaveItem or via Job Dispatcher
+		if(intval(option('curatescape_json_storage'))){
+			$items = get_records('Item', array('public' => true), 0);
+			$json = $this->JsonItemsBrowse($items);
+			if($json) {
+				$cache->WriteCacheFile(_JSON_ITEMS_FILE_, $json, true);
+			}
+		}
+		return $this;
 	}
 
 }

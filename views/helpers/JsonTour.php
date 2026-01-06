@@ -1,7 +1,11 @@
 <?php
 class Curatescape_View_Helper_JsonTour extends Zend_View_Helper_Abstract
 {
-	public function JsonTour( $tour, $isExtended = false, $items = array() ){
+	public function JsonTour(){
+		return $this;
+	}
+
+	public function JsonToursShow( $tour = null, $isExtended = false, $items = array() ){
 		foreach( $tour->Items as $item ){
 			if($item->public){
 				set_current_record( 'Item', $item );
@@ -22,7 +26,7 @@ class Curatescape_View_Helper_JsonTour extends Zend_View_Helper_Abstract
 			'items' => $items,
 		);
 	}
-	
+
 	public function JsonToursBrowse($tours){
 		if( count($tours) ){
 			usort( $tours, 'sortByOrdinal' );
@@ -30,7 +34,7 @@ class Curatescape_View_Helper_JsonTour extends Zend_View_Helper_Abstract
 		$output = array('tours'=>array());
 		foreach( $tours as $tour ){
 			if(!$tour->public) continue;
-			if($tourMeta = $this->JsonTour( $tour )){
+			if($tourMeta = $this->JsonToursShow( $tour )){
 				$output['tours'][] = $tourMeta;
 			}
 		}
@@ -58,5 +62,22 @@ class Curatescape_View_Helper_JsonTour extends Zend_View_Helper_Abstract
 			return $itemMeta;
 		}
 		return null;
+	}
+
+	public function refreshJsonCache($cache)
+	{
+		// called from HookAfterSaveItem or via Job Dispatcher
+		if(intval(option('curatescape_json_storage'))){
+			$db = get_db();
+			$table = $db->getTable('CuratescapeTour');
+			$select = $table->getSelect();
+			$select->where('public = ?', 1);
+			$tours = $table->fetchObjects($select);
+			$json = $this->JsonToursBrowse($tours);
+			if($json) {
+				$cache->WriteCacheFile(_JSON_TOURS_FILE_, $json, true);
+			}
+		}
+		return $this;
 	}
 }
