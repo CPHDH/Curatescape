@@ -4,7 +4,7 @@ class Curatescape_View_Helper_CuratescapeMap extends Zend_View_Helper_Abstract{
 	{
 		return $this;
 	}
-	public function Single($figcaption = null, $class = "single", $jsonSource = null, $heading=true)
+	public function Single($figcaption = null, $class = "single", $jsonSource = null, $heading=true, $ariaLiveMessage = '')
 	{
 		if(!$jsonSource){
 			$jsonSource = $this->defaultJSONSource();

@@ -45,7 +45,7 @@ class Curatescape_View_Helper_CuratescapeCache extends Zend_View_Helper_Abstract
 		){
 			file_put_contents($filepath, null);
 			// ?output=mobile-json&curatescape_cache_break=debug
-			if($_GET['curatescape_cache_break'] == 'debug'){
+			if(isset($_GET['curatescape_cache_break']) && $_GET['curatescape_cache_break'] == 'debug'){
 				date_default_timezone_set("UTC");
 				$timeUpdated = date('H:i:s');
 				$webpath = WEB_ROOT.'/plugins/'._PLUGIN_NAME_.str_replace(_PLUGIN_DIR_, '', $filepath);
