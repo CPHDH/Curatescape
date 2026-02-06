@@ -182,7 +182,29 @@ class CuratescapePlugin extends Omeka_Plugin_AbstractPlugin{
 
 	public function filterResponseContexts($contexts)
 	{
-		return get_view()->FilterResponseContexts($contexts);
+		// Note: View helpers aren't available during early bootstrap, so logic is inline here
+		if( !plugin_is_active('CuratescapeJSON') ){
+			$contexts['mobile-json'] = array(
+				'suffix' => 'mjson',
+				'headers' => array(
+					'Content-Type' => 'application/json',
+					'Access-Control-Allow-Origin'=> '*',
+				)
+			);
+		}
+		if( !plugin_is_active('SuperRss') ){
+			$contexts['rss-plus'] = array(
+				'suffix' => 'rss-plus',
+				'headers' => array(
+					'Content-Type' => 'text/xml',
+					'Access-Control-Allow-Origin'=> '*',
+				),
+			);
+			if(get_option('curatescape_rss')){
+				$contexts['rss2'] = $contexts['rss-plus'];
+			}
+		}
+		return $contexts;
 	}
 
 	public function filterActionContexts($contexts, $args)
