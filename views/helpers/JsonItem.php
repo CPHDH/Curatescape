@@ -76,6 +76,7 @@ class Curatescape_View_Helper_JsonItem extends Zend_View_Helper_Abstract
 		return implode(" | ", array_filter(array(
 			dc( $file, 'Description'),
 			dc( $file, 'Source'),
+			dc( $file, 'Date'),
 			dc( $file, 'Creator'),
 		)));
 	}
