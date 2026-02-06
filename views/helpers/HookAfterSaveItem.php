@@ -52,19 +52,30 @@ class Curatescape_View_Helper_HookAfterSaveItem extends Zend_View_Helper_Abstrac
 		// clear and rebuild json files
 		$cache->CacheBustManual(_JSON_ITEMS_FILE_, true);
 		$cache->CacheBustManual(_JSON_TOURS_FILE_, true);
-		try {
-			Zend_Registry::get('job_dispatcher')->send('RefreshJsonCache');
-		} catch (Exception $e) {
-			get_view()->JsonItem()->refreshJsonCache($cache);
-			get_view()->JsonTour()->refreshJsonCache($cache);
-		}
 		// clear and rebuild dashboard files
 		$cache->CacheBustManual(_HTML_DASHBOARD_FILE_STATS_, true);
 		$cache->CacheBustManual(_HTML_DASHBOARD_CONTENT_AUDIT_, true);
+		// dispatch background jobs (with fallback to synchronous)
+		// $flash = Zend_Controller_Action_HelperBroker::getStaticHelper('FlashMessenger');
 		try {
-			Zend_Registry::get('job_dispatcher')->send('RefreshDashboardCache');
-		} catch (Exception $e) {
-			get_view()->HookAdminDashboard()->refreshDashboardWidgets($cache);
+			$jobDispatcher = Zend_Registry::get('bootstrap')->getResource('jobs');
+			$jobDispatcher->sendLongRunning('Curatescape_Job_RefreshJsonCache');
+			$jobDispatcher->sendLongRunning('Curatescape_Job_RefreshDashboardCache');
+			// $flash->addMessage(__('The cache is being reset.'), 'success');
+		} catch (Throwable $e) {
+			// error_log('Curatescape sendLongRunning failed: ' . $e->getMessage());
+			try {
+				$jobDispatcher = Zend_Registry::get('job_dispatcher');
+				$jobDispatcher->send('Curatescape_Job_RefreshJsonCache');
+				$jobDispatcher->send('Curatescape_Job_RefreshDashboardCache');
+				// $flash->addMessage(__('The cache has been reset.'), 'success');
+			} catch (Throwable $e) {
+				// error_log('Curatescape send failed: ' . $e->getMessage());
+				get_view()->JsonItem()->refreshJsonCache($cache);
+				get_view()->JsonTour()->refreshJsonCache($cache);
+				get_view()->HookAdminDashboard()->refreshDashboardWidgets($cache);
+				// $flash->addMessage(__('Improve the time it takes to save items by configuring the PHP background path.'), 'curatescape-warning');
+			}
 		}
 	}
 
