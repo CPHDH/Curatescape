@@ -60,7 +60,7 @@ class CuratescapeTour extends Omeka_Record_AbstractRecord
 		$tourItem->save();
 	}
 
-	private function addTourItemsByPost($post)
+	private function addTourItemsByPost($post, $index = 0)
 	{
 		$ids = explode(',', trim($post['tour_item_ids']));
 		foreach($ids as $id){
