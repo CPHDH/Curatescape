@@ -162,7 +162,7 @@ class Curatescape_View_Helper_HookAdminDashboard extends Zend_View_Helper_Abstra
 		// missing file meta?
 		$missingFileMeta = array_filter(array_map(function($item){
 			foreach($item->getFiles() as $file){
-				if(dc($file,'Title') == null){ // does the file have at least a title?
+				if(dc($file,'Title', array('no_filter'=>true)) == null){ // does the file have at least a title?
 					return $item->id;
 				}
 			}
@@ -182,10 +182,18 @@ class Curatescape_View_Helper_HookAdminDashboard extends Zend_View_Helper_Abstra
 		$noImages = array_filter(array_map(function($item){
 			if(!$item->hasThumbnail()){
 				return $item->id;
-			}elseif(strpos(record_image($item), 'fallback') !== false){
-				// has thumb but first file is a non-image, check if others exist
-				if(!preferredItemImageUrl($item)){
-					return $item->id;
+			}else{
+				try { 
+					$img = record_image($item); 
+				} catch (InvalidArgumentException $e) { 
+					// record_image() can throw in CLI/background context when resolving fallback paths
+					$img = 'fallback'; 
+				}
+				if(strpos($img, 'fallback') !== false){
+					// has thumb but first file is a non-image, check if others exist
+					if(!preferredItemImageUrl($item)){
+						return $item->id;
+					}
 				}
 			}
 		}, $items));
@@ -237,7 +245,7 @@ class Curatescape_View_Helper_HookAdminDashboard extends Zend_View_Helper_Abstra
 		}
 		// no subjects?
 		$noSubjects = array_filter(array_map(function($item){
-			if(dc($item,'Subject') == null){
+			if(dc($item,'Subject', array('no_filter'=>true)) == null){
 				return $item->id;
 			}
 		}, $items));
@@ -255,7 +263,7 @@ class Curatescape_View_Helper_HookAdminDashboard extends Zend_View_Helper_Abstra
 		}
 		// no creator?
 		$noCreator = array_filter(array_map(function($item){
-			if(dc($item,'Creator') == null){
+			if(dc($item,'Creator', array('no_filter'=>true)) == null){
 				return $item->id;
 			}
 		}, $items));
@@ -273,7 +281,7 @@ class Curatescape_View_Helper_HookAdminDashboard extends Zend_View_Helper_Abstra
 		}
 		// no story?
 		$noStory = array_filter(array_map(function($item){
-			if(itm($item,'Story') == null){
+			if(itm($item,'Story', array('no_filter'=>true)) == null){
 				return $item->id;
 			}
 		}, $items));
@@ -291,7 +299,7 @@ class Curatescape_View_Helper_HookAdminDashboard extends Zend_View_Helper_Abstra
 		}
 		// no subtitle?
 		$noSubtitles = array_filter(array_map(function($item){
-			if(itm($item,'Subtitle') == null){
+			if(itm($item,'Subtitle', array('no_filter'=>true)) == null){
 				return $item->id;
 			}
 		}, $items));
@@ -309,7 +317,7 @@ class Curatescape_View_Helper_HookAdminDashboard extends Zend_View_Helper_Abstra
 		}
 		// no lede?
 		$noLede = array_filter(array_map(function($item){
-			if(itm($item,'Lede') == null){
+			if(itm($item,'Lede', array('no_filter'=>true)) == null){
 				return $item->id;
 			}
 		}, $items));
@@ -327,7 +335,7 @@ class Curatescape_View_Helper_HookAdminDashboard extends Zend_View_Helper_Abstra
 		}
 		// no address?
 		$noAddress = array_filter(array_map(function($item){
-			if(hasLocation($item) && itm($item,'Street Address') == null){
+			if(hasLocation($item) && itm($item,'Street Address', array('no_filter'=>true)) == null){
 				return $item->id;
 			}
 		}, $items));
