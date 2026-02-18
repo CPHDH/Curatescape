@@ -171,9 +171,9 @@ class Curatescape_View_Helper_HookAdminDashboard extends Zend_View_Helper_Abstra
 			$listIssues[] = $this->formatIssueText(
 				$missingFileMeta, 
 				array('range'=>''.implode(',', $missingFileMeta)),
-				__('%1s %2s with missing File Metadata', 
-					count($missingFileMeta), 
-					(count($missingFileMeta) == 1 ? __('item') : __('items'))
+				__('%1s %2s with missing File Metadata',
+					count($missingFileMeta),
+					__(plural('item', 'items', count($missingFileMeta)))
 				),
 				__('Each file should have a title and other metadata to meet accessibility standards and provide important context for end users. File metadata is used to generate captions for all media files, as well as alt text for images.')
 			);
@@ -193,9 +193,9 @@ class Curatescape_View_Helper_HookAdminDashboard extends Zend_View_Helper_Abstra
 			$listIssues[] = $this->formatIssueText(
 				$noImages, 
 				array('range'=>''.implode(',', $noImages)),
-				__('%1s %2s with no Thumbnail Image', 
-					count($noImages), 
-					(count($noImages) == 1 ? __('item') : __('items'))
+				__('%1s %2s with no Thumbnail Image',
+					count($noImages),
+					__(plural('item', 'items', count($noImages)))
 				),
 				__('Each item should have at least one image file to help attract user interest and improve the overall user experience.')
 			);
@@ -210,9 +210,9 @@ class Curatescape_View_Helper_HookAdminDashboard extends Zend_View_Helper_Abstra
 			$listIssues[] = $this->formatIssueText(
 				$noMap, 
 				array('geolocation-mapped'=>'0'),
-				__('%1s %2s with no Map Location', 
-					count($noMap), 
-					(count($noMap) == 1 ? __('item') : __('items'))
+				__('%1s %2s with no Map Location',
+					count($noMap),
+					__(plural('item', 'items', count($noMap)))
 				),
 				__('Items without a map location will not be included in Curatescape mobile apps.')
 			);
@@ -228,9 +228,9 @@ class Curatescape_View_Helper_HookAdminDashboard extends Zend_View_Helper_Abstra
 				$noTags,
 				array('range'=>''.implode(',', $noTags)),
 				__(
-					'%1s %2s with no Tags', 
-					count($noTags), 
-					(count($noTags) == 1 ? __('item') : __('items'))
+					'%1s %2s with no Tags',
+					count($noTags),
+					__(plural('item', 'items', count($noTags)))
 				),
 				__('Tags help users to discover related content and filter content by topic, and may be a featured aspect of your theme design.')
 			);
@@ -246,9 +246,9 @@ class Curatescape_View_Helper_HookAdminDashboard extends Zend_View_Helper_Abstra
 				$noSubjects,
 				array('range'=>''.implode(',', $noSubjects)),
 				__(
-					'%1s %2s with no Subject term', 
-					count($noSubjects), 
-					(count($noSubjects) == 1 ? __('item') : __('items'))
+					'%1s %2s with no Subject term',
+					count($noSubjects),
+					__(plural('item', 'items', count($noSubjects)))
 				),
 				__('Subjects help users to discover related content and filter content by topic, and may be a featured aspect of your theme design. Using a controlled vocabulary is strongly recommended and can be managed using the Simple Vocab plugin.')
 			);
@@ -264,9 +264,9 @@ class Curatescape_View_Helper_HookAdminDashboard extends Zend_View_Helper_Abstra
 				$noCreator,
 				array('range'=>''.implode(',', $noCreator)),
 				__(
-					'%1s %2s with no Creator', 
-					count($noCreator), 
-					(count($noCreator) == 1 ? __('item') : __('items'))
+					'%1s %2s with no Creator',
+					count($noCreator),
+					__(plural('item', 'items', count($noCreator)))
 				),
 				__('Items that are not attributed to an author may not feel trustworthy to end users.')
 			);
@@ -282,9 +282,9 @@ class Curatescape_View_Helper_HookAdminDashboard extends Zend_View_Helper_Abstra
 				$noStory,
 				array('range'=>''.implode(',', $noStory)),
 				__(
-					'%1s %2s with no Story text', 
-					count($noStory), 
-					(count($noStory) == 1 ? __('item') : __('items'))
+					'%1s %2s with no Story text',
+					count($noStory),
+					__(plural('item', 'items', count($noStory)))
 				),
 				__('The story is the most fundamental element of a %s item and should be used for every item.', _CURATESCAPE_ITEM_TYPE_NAME_)
 			);
@@ -300,9 +300,9 @@ class Curatescape_View_Helper_HookAdminDashboard extends Zend_View_Helper_Abstra
 				$noSubtitles,
 				array('range'=>''.implode(',', $noSubtitles)),
 				__(
-					'%1s %2s with no Subtitle', 
-					count($noSubtitles), 
-					(count($noSubtitles) == 1 ? __('item') : __('items'))
+					'%1s %2s with no Subtitle',
+					count($noSubtitles),
+					__(plural('item', 'items', count($noSubtitles)))
 				),
 				__('The Subtitle is recommended to add additional interest, context, and detail to the item title.')
 			);
@@ -318,9 +318,9 @@ class Curatescape_View_Helper_HookAdminDashboard extends Zend_View_Helper_Abstra
 				$noLede,
 				array('range'=>''.implode(',', $noLede)),
 				__(
-					'%1s %2s with no Lede', 
-					count($noLede), 
-					(count($noLede) == 1 ? __('item') : __('items'))
+					'%1s %2s with no Lede',
+					count($noLede),
+					__(plural('item', 'items', count($noLede)))
 				),
 				__('The Lede is recommended as an effective way to draw in the reader and may also be used as preview text in certain contexts such as tours.')
 			);
@@ -336,9 +336,9 @@ class Curatescape_View_Helper_HookAdminDashboard extends Zend_View_Helper_Abstra
 				$noAddress,
 				array('range'=>''.implode(',', $noAddress)),
 				__(
-					'%1s %2s with no Street Address', 
-					count($noAddress), 
-					(count($noAddress) == 1 ? __('item') : __('items'))
+					'%1s %2s with no Street Address',
+					count($noAddress),
+					__(plural('item', 'items', count($noAddress)))
 				),
 				__('If an item has a map location, it should also have a street address. The street address provides text-equivalent content for visually impaired users and may also be used to enhance the marker info window in the maps provided by your theme and/or in the Curatescape mobile apps.')
 			);
@@ -394,7 +394,8 @@ class Curatescape_View_Helper_HookAdminDashboard extends Zend_View_Helper_Abstra
 			$totalFiles++;
 		}
 		if(!$totalFiles) return null;
-		$html .= '<p>'.__('Your files directory contains <strong>%1s original files</strong> for an average of about <strong>%2s files per item</strong>. Below is a break down of files by type:', number_format($totalFiles), round($totalFiles/total_records('Item'), 1)).'</p>';
+		$totalItems = total_records('Item');
+		$html .= '<p>'.__('Your files directory contains <strong>%1s original files</strong> for an average of about <strong>%2s files per item</strong>. Below is a break down of files by type:', number_format($totalFiles), $totalItems ? round($totalFiles/$totalItems, 1) : 0).'</p>';
 		$html .= '<ul>';
 			$html .= $images ? '<li>'.__('Images').': '.number_format($images).'</li>' : null;
 			$html .= $audio ? '<li>'.__('Audio').': '.number_format($audio).'</li>' : null;
@@ -427,7 +428,7 @@ class Curatescape_View_Helper_HookAdminDashboard extends Zend_View_Helper_Abstra
 	}
 	private function formatIssueText($recordIds, $queryParams, $string, $context = null){
 		$url = url('items/browse', $queryParams);
-		$title = __('View affected %s', count($recordIds) == 1 ? __('item') : __('items'));
+		$title = __('View affected %s', __(plural('item', 'items', count($recordIds))));
 		return '<li data-count="'.sprintf('%05d',count($recordIds)).'"><a title="'.$title.'" href="'.$url.'">'.$string.'</a><span title="'.$context.'">'.svg('information-circle').'</span></li>';
 	}
 }

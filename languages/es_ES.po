@@ -1172,21 +1172,9 @@ msgstr ""
 #: views/helpers/HookAdminDashboard.php:225
 #: views/helpers/HookAdminDashboard.php:391
 msgid "item"
-msgstr "elemento"
-
-#: views/helpers/HookAdminDashboard.php:60
-#: views/helpers/HookAdminDashboard.php:82
-#: views/helpers/HookAdminDashboard.php:99
-#: views/helpers/HookAdminDashboard.php:117
-#: views/helpers/HookAdminDashboard.php:135
-#: views/helpers/HookAdminDashboard.php:153
-#: views/helpers/HookAdminDashboard.php:171
-#: views/helpers/HookAdminDashboard.php:189
-#: views/helpers/HookAdminDashboard.php:207
-#: views/helpers/HookAdminDashboard.php:225
-#: views/helpers/HookAdminDashboard.php:391
-msgid "items"
-msgstr "elementos"
+msgid_plural "items"
+msgstr[0] "elemento"
+msgstr[1] "elementos"
 
 #: views/helpers/HookAdminDashboard.php:58
 #, php-format

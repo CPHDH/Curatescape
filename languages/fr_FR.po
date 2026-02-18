@@ -995,21 +995,9 @@ msgstr "Utilisez le bouton \"Ajouter une entrée\" pour créer des champs distin
 #: views/helpers/HookAdminDashboard.php:225
 #: views/helpers/HookAdminDashboard.php:391
 msgid "item"
-msgstr "élément"
-
-#: views/helpers/HookAdminDashboard.php:60
-#: views/helpers/HookAdminDashboard.php:82
-#: views/helpers/HookAdminDashboard.php:99
-#: views/helpers/HookAdminDashboard.php:117
-#: views/helpers/HookAdminDashboard.php:135
-#: views/helpers/HookAdminDashboard.php:153
-#: views/helpers/HookAdminDashboard.php:171
-#: views/helpers/HookAdminDashboard.php:189
-#: views/helpers/HookAdminDashboard.php:207
-#: views/helpers/HookAdminDashboard.php:225
-#: views/helpers/HookAdminDashboard.php:391
-msgid "items"
-msgstr "éléments"
+msgid_plural "items"
+msgstr[0] "élément"
+msgstr[1] "éléments"
 
 #: views/helpers/HookAdminDashboard.php:58
 #, php-format
