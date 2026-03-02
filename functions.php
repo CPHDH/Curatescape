@@ -86,7 +86,7 @@ function normalizeTextBlocks($text, $output = null)
 	}
 	// remove empty tags
 	$output =  preg_replace('/<[^\/>]*>([\s]?)*<\/[^>]*>/', '', $output); 
-	return $output;
+	return html_entity_decode( $output );
 }
 
 function plainText($text){
