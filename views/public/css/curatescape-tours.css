@@ -73,6 +73,9 @@
   border: 2px solid transparent;
   box-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
 }
+.tour-items-browse .curatescape-item-gallery .curatescape-item-figure img[src=""] {
+  opacity: 0;
+}
 .tour-items-browse .curatescape-item-gallery .curatescape-item-figure {
   display: flex;
   flex-direction: row;

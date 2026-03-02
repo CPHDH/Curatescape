@@ -177,7 +177,10 @@ class CuratescapeTour extends Omeka_Record_AbstractRecord
 	}
 
 	public function getFileCustom(){
-		if(option('curatescape_tour_thumb_style') == 'composite'){
+		if(
+			option('curatescape_tour_thumb_style') == 'composite' && 
+			count($this->getFilesForComposite(4)) === 4
+		){
 			return $this->compositeSvg();
 		}else{
 			return record_image($this);
