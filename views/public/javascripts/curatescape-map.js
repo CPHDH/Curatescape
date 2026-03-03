@@ -122,7 +122,7 @@ const toBitmap = (svgString, retina = true, width = 27, height = 41, mime = 'ima
 			resolve(pngDataURL);
 		};
 		img.onerror = () => reject(new Error('Failed to load SVG image'));
-		img.src = 'data:image/svg+xml;base64,' + btoa(svgString);
+		img.src = 'data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(svgString)));
 	});
 };
 const markerSVG = (color, featured = false, star = false, height = 41, width = 27) => {
