@@ -8,7 +8,8 @@ class Curatescape_View_Helper_CuratescapeItemMetadataPartial extends Zend_View_H
 		$mapCaptionElements = array();
 		$factoidElements = array();
 		$metaHtml = null;
-		if($tours = apply_filters('curatescape_tours_for_item_meta',toursForItem(get_current_record('item')->id))){
+		$currentItem = get_current_record('item', false);
+		if($currentItem && ($tours = apply_filters('curatescape_tours_for_item_meta',toursForItem($currentItem->id)))){
 			$label = count($tours) > 1 ? tourLabelString('plural') : tourLabelString();
 			$elementsForDisplay[_CURATESCAPE_ITEM_TYPE_SETNAME_][__('Related %s', $label)]['texts'] = $this->getTourLinks($tours);
 		}
