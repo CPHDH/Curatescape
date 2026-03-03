@@ -27,7 +27,8 @@ class Curatescape_View_Helper_HookAdminDashboard extends Zend_View_Helper_Abstra
 	}
 	public function refreshDashboardWidgets($cache){
 		// called from HookAfterSaveItem or via Job Dispatcher
-		if(option('curatescape_dashboard_audit')){
+		// content audit contains admin URLs — skip in CLI context where router base URL is wrong
+		if(option('curatescape_dashboard_audit') && PHP_SAPI !== 'cli'){
 			$html = $this->generateDashboardWarnings();
 			if($html) {
 				$cache->WriteCacheFile(_HTML_DASHBOARD_CONTENT_AUDIT_, $html, true);

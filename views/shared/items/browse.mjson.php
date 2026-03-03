@@ -6,7 +6,7 @@ if ($cacheFile = $cache->GetCacheFile(_JSON_ITEMS_FILE_, option('curatescape_jso
 	echo $cacheFile;
 }else{
 	$json = $this->getHelper('JsonItem')->JsonItemsBrowse($items);
-	if(intval(option('curatescape_json_storage')) && !is_admin_theme()){
+	if(intval(option('curatescape_json_storage')) && !is_admin_theme() && !current_user()){
 		$cache->WriteCacheFile(_JSON_ITEMS_FILE_, $json);
 	}
 	echo $json;
