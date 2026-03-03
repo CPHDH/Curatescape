@@ -93,14 +93,19 @@ class Curatescape_View_Helper_HookAfterSaveItem extends Zend_View_Helper_Abstrac
 				'allowed'=>'<a>'
 				),
 			array(
-				'rule'=>'limited',
+				'rule'=>'formatting',
 				'elements'=>array('Lede','Related Resources', 'Access Information'),
 				'allowed'=>'<b><i><em><strong><cite><a>'
 				),
 			array(
-				'rule'=>'full',
-				'elements'=>array('Story','Factoid'),
+				'rule'=>'structure',
+				'elements'=>array('Factoid'),
 				'allowed'=>'<b><i><em><strong><br><cite><blockquote><a><ul><ol><li>'
+			),
+			array(
+				'rule'=>'full',
+				'elements'=>array('Story'),
+				'allowed'=>'<b><i><em><strong><br><cite><blockquote><a><ul><ol><li><h2><h3><h4><h5>'
 				),
 			);
 	}
