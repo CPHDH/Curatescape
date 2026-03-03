@@ -28,7 +28,7 @@ class Curatescape_View_Helper_CuratescapeCache extends Zend_View_Helper_Abstract
 		return false;
 	}
 	public function WriteCacheFile($filepath, $content = '', $bypassPathCheck = false){
-		if(!$bypassPathCheck && !$this->cachablePath()) return false;
+		if(!$bypassPathCheck && (!$this->cachablePath() || current_user())) return false;
 		if(!file_exists($filepath)){
 			return boolval(file_put_contents($filepath, $content));
 		}
