@@ -29,7 +29,7 @@ class Curatescape_View_Helper_HookAdminDashboard extends Zend_View_Helper_Abstra
 		// called from HookAfterSaveItem or via Job Dispatcher
 		// content audit contains admin URLs — skip in CLI context where router base URL is wrong
 		if(option('curatescape_dashboard_audit') && PHP_SAPI !== 'cli'){
-			$html = $this->generateDashboardWarnings();
+			$html = $this->generateDashboardAudit();
 			if($html) {
 				$cache->WriteCacheFile(_HTML_DASHBOARD_CONTENT_AUDIT_, $html, true);
 			}
@@ -52,7 +52,7 @@ class Curatescape_View_Helper_HookAdminDashboard extends Zend_View_Helper_Abstra
 		) {
 			return $cacheFile;
 		} else {
-			$html = $this->generateDashboardWarnings();
+			$html = $this->generateDashboardAudit();
 			if($html) {
 				$cache->WriteCacheFile(_HTML_DASHBOARD_CONTENT_AUDIT_, $html);
 			}
@@ -154,23 +154,68 @@ class Curatescape_View_Helper_HookAdminDashboard extends Zend_View_Helper_Abstra
 		$html .= '</section>';
 		return $html;
 	}
-	private function generateDashboardWarnings($html = null, $listIssues = array())
+	private function generateDashboardAudit($html = null, $listIssues = array())
 	{
 		$itemType=get_record('ItemType', array('name'=>_CURATESCAPE_ITEM_TYPE_NAME_));
 		if(!$itemType) return null;
 		$items = get_records('Item', array('public'=>true,'type'=>$itemType->id), 0);
 		if(!$items) return null;
-		// missing file meta?
-		$missingFileMeta = array_filter(array_map(function($item){
+		// pre-fetch all locations in one query to avoid per-item hasLocation() calls
+		$mappedItemIds = get_db()->getTable('Location')->findLocationByItem($items, false);
+		$missingFileMeta = $noImages = $noMap = $noTags = $noSubjects = $noCreator = $noStory = $noSubtitles = $noLede = $noAddress = array();
+		foreach($items as $item){
+			if(!$item->public) continue;
+			$id = $item->id;
+			$hasLocation = isset($mappedItemIds[$id]);
+			// missing file meta?
 			foreach($item->getFiles() as $file){
-				if(dc($file,'Title', array('no_filter'=>true)) == null){ // does the file have at least a title?
-					return $item->id;
+				if(dc($file,'Title', array('no_filter'=>true)) == null){
+					$missingFileMeta[] = $id;
+					break;
 				}
 			}
-		}, $items));
+			// no images?
+			if(!$item->hasThumbnail()){
+				$noImages[] = $id;
+			}else{
+				try {
+					$img = record_image($item);
+				} catch (InvalidArgumentException $e) {
+					// record_image() can throw in CLI/background context when resolving fallback paths
+					$img = 'fallback';
+				}
+				if(strpos($img, 'fallback') !== false && !preferredItemImageUrl($item)){
+					$noImages[] = $id;
+				}
+			}
+			if(!$hasLocation) {
+				$noMap[] = $id;
+			}
+			if(!$item->getTags()) {
+				$noTags[] = $id;
+			}
+			if(dc($item,'Subject', array('no_filter'=>true)) == null) {
+				$noSubjects[] = $id;
+			}
+			if(dc($item,'Creator', array('no_filter'=>true)) == null) {
+				$noCreator[] = $id;
+			}
+			if(itm($item,'Story', array('no_filter'=>true)) == null) {
+				$noStory[] = $id;
+			}
+			if(itm($item,'Subtitle', array('no_filter'=>true)) == null) {
+				$noSubtitles[]= $id;
+			}
+			if(itm($item,'Lede', array('no_filter'=>true)) == null) {
+				$noLede[] = $id;
+			}
+			if($hasLocation && itm($item,'Street Address', array('no_filter'=>true)) == null) {
+				$noAddress[] = $id;
+			}
+		}
 		if(count($missingFileMeta)){
 			$listIssues[] = $this->formatIssueText(
-				$missingFileMeta, 
+				$missingFileMeta,
 				array('range'=>''.implode(',', $missingFileMeta)),
 				__('%1s %2s with missing File Metadata',
 					count($missingFileMeta),
@@ -179,28 +224,9 @@ class Curatescape_View_Helper_HookAdminDashboard extends Zend_View_Helper_Abstra
 				__('Each file should have a title and other metadata to meet accessibility standards and provide important context for end users. File metadata is used to generate captions for all media files, as well as alt text for images.')
 			);
 		}
-		// no images?
-		$noImages = array_filter(array_map(function($item){
-			if(!$item->hasThumbnail()){
-				return $item->id;
-			}else{
-				try { 
-					$img = record_image($item); 
-				} catch (InvalidArgumentException $e) { 
-					// record_image() can throw in CLI/background context when resolving fallback paths
-					$img = 'fallback'; 
-				}
-				if(strpos($img, 'fallback') !== false){
-					// has thumb but first file is a non-image, check if others exist
-					if(!preferredItemImageUrl($item)){
-						return $item->id;
-					}
-				}
-			}
-		}, $items));
 		if(count($noImages)){
 			$listIssues[] = $this->formatIssueText(
-				$noImages, 
+				$noImages,
 				array('range'=>''.implode(',', $noImages)),
 				__('%1s %2s with no Thumbnail Image',
 					count($noImages),
@@ -209,15 +235,9 @@ class Curatescape_View_Helper_HookAdminDashboard extends Zend_View_Helper_Abstra
 				__('Each item should have at least one image file to help attract user interest and improve the overall user experience.')
 			);
 		}
-		// no map location?
-		$noMap = array_filter(array_map(function($item){
-			if(!hasLocation($item)){
-				return $item->id;
-			}
-		}, $items));
 		if(count($noMap)){
 			$listIssues[] = $this->formatIssueText(
-				$noMap, 
+				$noMap,
 				array('geolocation-mapped'=>'0'),
 				__('%1s %2s with no Map Location',
 					count($noMap),
@@ -226,126 +246,77 @@ class Curatescape_View_Helper_HookAdminDashboard extends Zend_View_Helper_Abstra
 				__('Items without a map location will not be included in Curatescape mobile apps.')
 			);
 		}
-		// no tags?
-		$noTags = array_filter(array_map(function($item){
-			if(!$item->getTags()){
-				return $item->id;
-			}
-		}, $items));
 		if(count($noTags)){
 			$listIssues[] = $this->formatIssueText(
 				$noTags,
 				array('range'=>''.implode(',', $noTags)),
-				__(
-					'%1s %2s with no Tags',
+				__('%1s %2s with no Tags',
 					count($noTags),
 					__(plural('item', 'items', count($noTags)))
 				),
 				__('Tags help users to discover related content and filter content by topic, and may be a featured aspect of your theme design.')
 			);
 		}
-		// no subjects?
-		$noSubjects = array_filter(array_map(function($item){
-			if(dc($item,'Subject', array('no_filter'=>true)) == null){
-				return $item->id;
-			}
-		}, $items));
 		if(count($noSubjects)){
 			$listIssues[] = $this->formatIssueText(
 				$noSubjects,
 				array('range'=>''.implode(',', $noSubjects)),
-				__(
-					'%1s %2s with no Subject term',
+				__('%1s %2s with no Subject term',
 					count($noSubjects),
 					__(plural('item', 'items', count($noSubjects)))
 				),
 				__('Subjects help users to discover related content and filter content by topic, and may be a featured aspect of your theme design. Using a controlled vocabulary is strongly recommended and can be managed using the Simple Vocab plugin.')
 			);
 		}
-		// no creator?
-		$noCreator = array_filter(array_map(function($item){
-			if(dc($item,'Creator', array('no_filter'=>true)) == null){
-				return $item->id;
-			}
-		}, $items));
 		if(count($noCreator)){
 			$listIssues[] = $this->formatIssueText(
 				$noCreator,
 				array('range'=>''.implode(',', $noCreator)),
-				__(
-					'%1s %2s with no Creator',
+				__('%1s %2s with no Creator',
 					count($noCreator),
 					__(plural('item', 'items', count($noCreator)))
 				),
 				__('Items that are not attributed to an author may not feel trustworthy to end users.')
 			);
 		}
-		// no story?
-		$noStory = array_filter(array_map(function($item){
-			if(itm($item,'Story', array('no_filter'=>true)) == null){
-				return $item->id;
-			}
-		}, $items));
 		if(count($noStory)){
 			$listIssues[] = $this->formatIssueText(
 				$noStory,
 				array('range'=>''.implode(',', $noStory)),
-				__(
-					'%1s %2s with no Story text',
+				__('%1s %2s with no Story text',
 					count($noStory),
 					__(plural('item', 'items', count($noStory)))
 				),
 				__('The story is the most fundamental element of a %s item and should be used for every item.', _CURATESCAPE_ITEM_TYPE_NAME_)
 			);
 		}
-		// no subtitle?
-		$noSubtitles = array_filter(array_map(function($item){
-			if(itm($item,'Subtitle', array('no_filter'=>true)) == null){
-				return $item->id;
-			}
-		}, $items));
 		if(count($noSubtitles)){
 			$listIssues[] = $this->formatIssueText(
 				$noSubtitles,
 				array('range'=>''.implode(',', $noSubtitles)),
-				__(
-					'%1s %2s with no Subtitle',
+				__('%1s %2s with no Subtitle',
 					count($noSubtitles),
 					__(plural('item', 'items', count($noSubtitles)))
 				),
 				__('The Subtitle is recommended to add additional interest, context, and detail to the item title.')
 			);
 		}
-		// no lede?
-		$noLede = array_filter(array_map(function($item){
-			if(itm($item,'Lede', array('no_filter'=>true)) == null){
-				return $item->id;
-			}
-		}, $items));
 		if(count($noLede)){
 			$listIssues[] = $this->formatIssueText(
 				$noLede,
 				array('range'=>''.implode(',', $noLede)),
-				__(
-					'%1s %2s with no Lede',
+				__('%1s %2s with no Lede',
 					count($noLede),
 					__(plural('item', 'items', count($noLede)))
 				),
 				__('The Lede is recommended as an effective way to draw in the reader and may also be used as preview text in certain contexts such as tours.')
 			);
 		}
-		// no address?
-		$noAddress = array_filter(array_map(function($item){
-			if(hasLocation($item) && itm($item,'Street Address', array('no_filter'=>true)) == null){
-				return $item->id;
-			}
-		}, $items));
 		if(count($noAddress)){
 			$listIssues[] = $this->formatIssueText(
 				$noAddress,
 				array('range'=>''.implode(',', $noAddress)),
-				__(
-					'%1s %2s with no Street Address',
+				__('%1s %2s with no Street Address',
 					count($noAddress),
 					__(plural('item', 'items', count($noAddress)))
 				),
