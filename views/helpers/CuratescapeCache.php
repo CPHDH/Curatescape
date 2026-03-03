@@ -18,11 +18,11 @@ class Curatescape_View_Helper_CuratescapeCache extends Zend_View_Helper_Abstract
 	public function GetCacheFile($filepath, $maxSeconds = 0, $bypassLoggedIn = true){
 		if(
 			/* $maxSeconds = '0' means cache is disabled, return false and generate from db */
-			!boolval($maxSeconds) || 
-			!file_exists($filepath) || 
-			!is_readable($filepath) || 
-			!$this->FileIsCurrent($filepath, $maxSeconds) ||
-			$this->Bypass($bypassLoggedIn) 
+			!boolval($maxSeconds) ||
+			$this->Bypass($bypassLoggedIn) ||
+			!file_exists($filepath) ||
+			!is_readable($filepath) ||
+			!$this->FileIsCurrent($filepath, $maxSeconds)
 		) return false;
 		if($content = file_get_contents($filepath)) return $content;
 		return false;
