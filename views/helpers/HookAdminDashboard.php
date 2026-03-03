@@ -435,7 +435,7 @@ class Curatescape_View_Helper_HookAdminDashboard extends Zend_View_Helper_Abstra
 		return $html;
 	}
 	private function formatIssueText($recordIds, $queryParams, $string, $context = null){
-		$url = url('items/browse', $queryParams);
+		$url = admin_url('items/browse?' . http_build_query($queryParams));
 		$title = __('View affected %s', __(plural('item', 'items', count($recordIds))));
 		return '<li data-count="'.sprintf('%05d',count($recordIds)).'"><a title="'.$title.'" href="'.$url.'">'.$string.'</a><span title="'.$context.'">'.svg('information-circle').'</span></li>';
 	}
