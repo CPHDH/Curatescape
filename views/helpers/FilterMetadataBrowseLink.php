@@ -8,15 +8,16 @@ class Curatescape_View_Helper_FilterMetadataBrowseLink extends Zend_View_Helper_
 			!option('curatescape_metadata_browse') ||
 			plugin_is_active('SearchByMetadata')
 		) return $text;
+		$safetext = htmlspecialchars_decode(strip_tags($text), ENT_QUOTES);
 		$browseParams = array(
 			'advanced' => array(
 					array(
 					'element_id' => $elementId,
 					'type' => 'is exactly',
-					'terms' => strip_tags($text),
+					'terms' => $safetext,
 				),
 			),
 		);
-		return link_to_items_browse(strip_tags($text), $browseParams);
+		return link_to_items_browse($safetext, $browseParams);
 	}
 }
