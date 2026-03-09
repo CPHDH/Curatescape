@@ -22,15 +22,81 @@ class Curatescape_View_Helper_HookAdminHead extends Zend_View_Helper_Abstract{
 		$this->adminCss();
 		$this->adminJs();
 		$this->compatibilityCheck();
-		$this->itemFormCss();
-		$this->itemTypeFormJs();
+		$this->itemFormMods();
+		$this->fileFormMods();
+		$this->lockItemTypeForm();
 	}
 	private function itemTypeId(){
 		$itemType=get_record('ItemType', array('name'=>_CURATESCAPE_ITEM_TYPE_NAME_));
 		if(!$itemType) return null;
 		return $itemType->id;
 	}
-	private function modifiedFormElements()
+	private function adminCss()
+	{
+		queue_css_file('curatescape-dashboard', 'all', false, 'css', get_plugin_ini('Curatescape', 'version'));
+		if(is_current_url('/admin/tours/')){
+			queue_css_file('curatescape-tours', 'all', false, 'css', get_plugin_ini('Curatescape', 'version'));
+		}
+		if(
+			is_current_url('/admin/plugins/config?name=Curatescape') ||
+			is_current_url('/admin/plugins/config/name/Curatescape')
+		){
+			queue_css_file('curatescape-config', 'all', false, 'css', get_plugin_ini('Curatescape', 'version'));
+		}
+	}
+	private function adminJs()
+	{
+		if(is_current_url('/admin/tours/')){
+			queue_js_file('curatescape-tours', 'javascripts');
+		}
+	}
+	private function compatibilityCheck()
+	{
+		if(
+			(is_current_url('/admin/plugins/') && !is_current_url('/admin/plugins/uninstall/')) ||
+			is_current_url('/admin/themes/') ||
+			is_current_url('/admin/settings/') ||
+			is_current_url('/admin/tours/')
+		){
+			$warnings = array();
+			foreach(self::DEPRECATEDPLUGINS as $plugin){
+				if(plugin_is_active($plugin)){
+					array_push($warnings, __('The %1s plugin is deprecated and replaced by the %2s plugin. Please deactivate, uninstall, and remove the %3s plugin to avoid conflicts.', $plugin, _PLUGIN_NAME_, $plugin));
+				}
+			}
+			foreach(self::INCOMPATIBLEPLUGINS as $plugin){
+				if(plugin_is_active($plugin)){
+					array_push($warnings, __('The %1s plugin is incompatible with the %2s plugin. Please deactivate and remove the %3s plugin to avoid conflicts.', $plugin, _PLUGIN_NAME_, $plugin));
+				}
+			}
+			foreach(self::MINVERSIONPLUGINS as $plugin=>$minversion){
+				if(plugin_is_active($plugin)){
+					$currentPluginVersion = get_plugin_ini($plugin, 'version');
+					if(version_compare($currentPluginVersion, $minversion, '<')){
+						array_push($warnings, __('The %s plugin needs to be updated. Version %s or higher is required for use with the %s plugin. Your current version is %s.', $plugin, $minversion, _PLUGIN_NAME_, $currentPluginVersion));
+					}
+				}
+			}
+			$currentThemeName = Theme::getCurrentThemeName('public');
+			foreach(self::MINVERSIONTHEMES as $theme=>$minversion){
+				if($theme == $currentThemeName){
+					$currentTheme = Theme::getTheme($currentThemeName);
+					$currentThemeTitle = $currentTheme->title;
+					$currentThemeVersion = $currentTheme->version;
+					if(version_compare($currentThemeVersion, $minversion, '<')){
+						array_push($warnings, __('The %s theme needs to be updated. Version %s or higher is required for the %s plugin. Your current version is %s.', $currentThemeTitle, $minversion, _PLUGIN_NAME_, $currentThemeVersion));
+					}
+				}
+			}
+			if(count($warnings)){
+				$flash = Zend_Controller_Action_HelperBroker::getStaticHelper('FlashMessenger');
+				foreach($warnings as $message){
+					$flash->addMessage($message, 'error');
+				}
+			}
+		}
+	}
+	private function itemFormElements()
 	{
 		return array(
 			array(
@@ -83,11 +149,40 @@ class Curatescape_View_Helper_HookAdminHead extends Zend_View_Helper_Abstract{
 			),
 		);
 	}
-	private function cssSelectorsForModification($modification, $append = null)
+	private function fileFormElements()
+	{
+		return array(
+			array(
+				'id' => $this->elementId('Dublin Core','Title'),
+				'modifications'=>array('highlight','nohtml','noaddinput'),
+			),
+			array(
+				'id' => $this->elementId('Dublin Core','Description'),
+				'modifications'=>array('highlight','noaddinput','largertextarea'),
+			),
+			array(
+				'id' => $this->elementId('Dublin Core','Creator'),
+				'modifications'=>array('highlight','nohtml'),
+			),
+			array(
+				'id' => $this->elementId('Dublin Core','Source'),
+				'modifications'=>array('highlight','noaddinput'),
+			),
+			array(
+				'id' => $this->elementId('Dublin Core','Date'),
+				'modifications'=>array('highlight','noaddinput','nohtml'),
+			),
+			array(
+				'id' => $this->elementId('Dublin Core','Rights'),
+				'modifications'=>array('highlight','noaddinput'),
+			),
+		);
+	}
+	private function cssSelectorsForModification($formElements, $modification, $append = null)
 	{
 		if(!$modification) return array();
 		$elements = array_filter(
-			$this->modifiedFormElements(), 
+			$formElements, 
 			function($element) use ($modification){
 				return in_array($modification, $element['modifications']);
 			});
@@ -118,81 +213,8 @@ class Curatescape_View_Helper_HookAdminHead extends Zend_View_Helper_Abstract{
 		}
 		return array();
 	}
-	private function adminCss()
-	{
-		queue_css_file('curatescape-dashboard', 'all', false, 'css', get_plugin_ini('Curatescape', 'version'));
-		if(is_current_url('/admin/tours/')){
-			queue_css_file('curatescape-tours', 'all', false, 'css', get_plugin_ini('Curatescape', 'version'));
-		}
-		if(
-			is_current_url('/admin/plugins/config?name=Curatescape') ||
-			is_current_url('/admin/plugins/config/name/Curatescape')
-		){
-			queue_css_file('curatescape-config', 'all', false, 'css', get_plugin_ini('Curatescape', 'version'));
-		}
-	}
-	private function adminJs()
-	{
-		if(is_current_url('/admin/tours/')){
-			queue_js_file('curatescape-tours', 'javascripts');
-		}
-	}
-	private function compatibilityCheck($warnings = array())
-	{
-		if(
-			(is_current_url('/admin/plugins/') && !is_current_url('/admin/plugins/uninstall/')) ||
-			is_current_url('/admin/themes/') ||
-			is_current_url('/admin/settings/') ||
-			is_current_url('/admin/tours/')
-		){
-			foreach(self::DEPRECATEDPLUGINS as $plugin){
-				if(plugin_is_active($plugin)){
-					array_push($warnings, __('The %1s plugin is deprecated and replaced by the %2s plugin. Please deactivate, uninstall, and remove the %3s plugin to avoid conflicts.', $plugin, _PLUGIN_NAME_, $plugin));
-				}
-			}
-			foreach(self::INCOMPATIBLEPLUGINS as $plugin){
-				if(plugin_is_active($plugin)){
-					array_push($warnings, __('The %1s plugin is incompatible with the %2s plugin. Please deactivate and remove the %3s plugin to avoid conflicts.', $plugin, _PLUGIN_NAME_, $plugin));
-				}
-			}
-			foreach(self::MINVERSIONPLUGINS as $plugin=>$minversion){
-				if(plugin_is_active($plugin)){
-					$currentPluginVersion = get_plugin_ini($plugin, 'version');
-					if(version_compare($currentPluginVersion, $minversion, '<')){
-						array_push($warnings, __('The %s plugin needs to be updated. Version %s or higher is required for use with the %s plugin. Your current version is %s.', $plugin, $minversion, _PLUGIN_NAME_, $currentPluginVersion));
-					}
-				}
-			}
-			$currentThemeName = Theme::getCurrentThemeName('public');
-			foreach(self::MINVERSIONTHEMES as $theme=>$minversion){
-				if($theme == $currentThemeName){
-					$currentTheme = Theme::getTheme($currentThemeName);
-					$currentThemeTitle = $currentTheme->title;
-					$currentThemeVersion = $currentTheme->version;
-					if(version_compare($currentThemeVersion, $minversion, '<')){
-						array_push($warnings, __('The %s theme needs to be updated. Version %s or higher is required for the %s plugin. Your current version is %s.', $currentThemeTitle, $minversion, _PLUGIN_NAME_, $currentThemeVersion));
-					}
-				}
-			}
-			if(count($warnings)){
-				$flash = Zend_Controller_Action_HelperBroker::getStaticHelper('FlashMessenger');
-				foreach($warnings as $message){
-					$flash->addMessage($message, 'error');
-				}
-			}
-		}
-	}
-	private function itemFormCss()
-	{
-		if(
-			!str_contains(current_url(), 'admin/items/edit') &&
-			!str_contains(current_url(), 'admin/items/add')
-		) return null;
-
-		if(!option('curatescape_form_enforcement')) return null;
-	?>
-
-	<style>
+	private function cssDCHelperText(){
+		echo <<<CSS
 		#dublin-core-description{
 			visibility: hidden;
 			height: 0;
@@ -205,64 +227,117 @@ class Curatescape_View_Helper_HookAdminHead extends Zend_View_Helper_Abstract{
 			position: absolute;
 			pointer-events: none;
 		}
-		<?php if(option('curatescape_form_recommended_only')):?>
-			/* hide all but recommended */
-			#item-type option:not([value="<?php echo $this->itemTypeId();?>"],[value=""]){
+		CSS;
+	}
+	private function cssRecommendedOnly($formElements, $itemTypeId = null){
+		$selectors = implode(',', $this->cssSelectorsForModification($formElements, 'highlight', '.field'));
+		if($itemTypeId) {
+			echo <<<CSS
+			/* hide other item types */
+			#item-type option:not([value=""],[value="{$itemTypeId}"]){
 				display: none;
 			}
-			#item-type-metadata-metadata #type-metadata-form > div,
-			#dublin-core-metadata > .set > .field{
-				display: none;
-			}
-			<?php echo implode(',', $this->cssSelectorsForModification('highlight', '.field'));?>{
-				display: revert !important;
-			}
-		<?php endif;?>
-		<?php if(!option('curatescape_form_recommended_only')):?>
-			/* add Curatescape-recommended to select labels (title attr added via js below) */
-			<?php echo implode(',', $this->cssSelectorsForModification('highlight',' label[id^=label_element]::after'));?>{
-				content:'<?php echo __('Curatescape');?>';
-				display: block;
-				font-weight: normal;
-				width: max-content;
-				background-color: #445a66;
-				color: #F5f5f5;
-				padding: 0 5px;
+			CSS;
+		}
+		echo <<<CSS
+		/* hide all but recommended elements */
+		#item-type-metadata-metadata #type-metadata-form > div,
+		#dublin-core-metadata > .set > .field{
+			display: none;
+		}
+		{$selectors}{
+			display: revert !important;
+		}
+		CSS;
+	}
+	private function cssHighlight($formElements){
+		$selectors = implode(',', $this->cssSelectorsForModification($formElements, 'highlight',' label[id^=label_element]::after'));
+		$label = __('Curatescape');
+		echo <<<CSS
+		/* add Curatescape-recommended to select labels (title attr added via js below) */
+		{$selectors}{
+			content:'{$label}';
+			display: block;
+			font-weight: normal;
+			width: max-content;
+			background-color: #445a66;
+			color: #F5f5f5;
+			padding: 0 5px;
+			margin-bottom: 5px;
+			text-transform: uppercase;
+			font-size: 0.9rem;
+		}
+		@media (min-width: 768px) and (max-width: 991px) {
+			{$selectors}{
 				margin-bottom: 5px;
-				text-transform: uppercase;
-				font-size: 0.9rem;
 			}
-			@media (min-width: 768px) and (max-width: 991px) {
-				<?php echo implode(',', $this->cssSelectorsForModification('highlight',' label[id^=label_element]::after'));?>{
-					margin-bottom: 5px;
-				}
-			}
-		<?php endif;?>
-		/* bigger text area for Story */
-		<?php echo implode(',', $this->cssSelectorsForModification('largertextarea'));?>{
-			min-height: 60vh;
 		}
-		/* disable add input button for select elements */
-		<?php echo implode(',',  $this->cssSelectorsForModification('noaddinput'));?>{
-			opacity: 0;
-			cursor:not-allowed;
-			pointer-events: none;
-			position: absolute;
-		}
+		CSS;
+	}
+	private function cssNoHTML($formElements){
+		$selectors = implode(',', $this->cssSelectorsForModification($formElements, 'nohtml'));
+		echo <<<CSS
 		/* disable html for select elements */
-		<?php echo implode(',', $this->cssSelectorsForModification('nohtml'));?>{
+		{$selectors}{
 			opacity: 0;
 			cursor: not-allowed;
 			pointer-events: none;
 			position: absolute;
 		}
+		CSS;
+	}
+	private function cssNoAddInput($formElements){
+		$selectors = implode(',',  $this->cssSelectorsForModification($formElements, 'noaddinput'));
+		echo <<<CSS
+		/* disable add input button for select elements */
+		{$selectors}{
+			opacity: 0;
+			cursor:not-allowed;
+			pointer-events: none;
+			position: absolute;
+		}
+		CSS;
+	}
+	private function cssLargerTextArea($formElements){
+		$selectors = implode(',', $this->cssSelectorsForModification($formElements, 'largertextarea'));
+		echo <<<CSS
+		/* bigger text area for primary text */
+		{$selectors}{
+			min-height: 40vh;
+		}
+		CSS;
+	}
+	private function itemFormMods()
+	{
+		if(
+			!str_contains(current_url(), 'admin/items/edit') &&
+			!str_contains(current_url(), 'admin/items/add')
+		) return null;
+
+		if(!option('curatescape_form_enforcement')) return null;
+
+		$itemFormElements = $this->itemFormElements();
+	?>
+
+	<style>
+		<?php 
+		echo $this->cssDCHelperText();
+		if(option('curatescape_form_recommended_only')){
+			echo $this->cssRecommendedOnly($itemFormElements, $this->itemTypeId());
+		} else {
+			echo $this->cssHighlight($itemFormElements);
+		}
+		echo $this->cssLargerTextArea($itemFormElements);
+		echo $this->cssNoAddInput($itemFormElements);
+		echo $this->cssNoHTML($itemFormElements);
+		?>
 	</style>
 
 	<script defer>
-		const message = '<?php echo __('This form has been modified by the %s plugin. Only recommended elements and features are available. Default functionality may be restored in plugin settings by an admninistator.',_PLUGIN_NAME_);?>';
+		const message = '<?php echo __('This form has been modified by the %s plugin. Only recommended elements and features are available. Default functionality may be restored in plugin settings by an administator.',_PLUGIN_NAME_);?>';
 	
 		const addTitleAttribute = ()=>{
-			document.querySelectorAll('<?php echo implode(',', $this->cssSelectorsForModification('highlight',' label[id^=label_element]'));?>').forEach(el=>{
+			document.querySelectorAll('<?php echo implode(',', $this->cssSelectorsForModification($itemFormElements, 'highlight',' label[id^=label_element]'));?>').forEach(el=>{
 				if(typeof el.attributes.title == 'undefined'){
 					el.setAttribute('title','<?php echo __('This element is recommended for %1s content.', _PLUGIN_NAME_);?>');
 				}
@@ -319,7 +394,56 @@ class Curatescape_View_Helper_HookAdminHead extends Zend_View_Helper_Abstract{
 
 	<?php
 	}
-	private function itemTypeFormJs()
+	
+	private function fileFormMods()
+	{
+		if( !str_contains(current_url(), 'admin/files/edit') ) return null;
+		if(!option('curatescape_form_enforcement')) return null;
+
+		$fileFormElements = $this->fileFormElements();
+	?>
+	
+	<style>
+		<?php 
+		echo $this->cssDCHelperText();
+		if(option('curatescape_form_recommended_only')){
+			echo $this->cssRecommendedOnly($fileFormElements);
+		} else {
+			echo $this->cssHighlight($fileFormElements);
+		}
+		echo $this->cssLargerTextArea($fileFormElements);
+		echo $this->cssNoAddInput($fileFormElements);
+		echo $this->cssNoHTML($fileFormElements);
+		?>
+	</style>
+	
+	<script defer>
+		const message = '<?php echo __('This form has been modified by the %s plugin. Only recommended elements and features are available. Default functionality may be restored in plugin settings by an administator.',_PLUGIN_NAME_);?>';
+	
+		const addTitleAttribute = ()=>{
+			document.querySelectorAll('<?php echo implode(',', $this->cssSelectorsForModification($fileFormElements, 'highlight',' label[id^=label_element]'));?>').forEach(el=>{
+				if(typeof el.attributes.title == 'undefined'){
+					el.setAttribute('title','<?php echo __('This element is recommended for %1s content.', _PLUGIN_NAME_);?>');
+				}
+			});
+		} 
+		const modifySetDescription = ()=>{
+			let description = document.querySelector('#dublin-core-description');
+			description.innerHTML = message; // visually hidden via css
+		} 
+		addEventListener("DOMContentLoaded", (e) => {
+			modifySetDescription();
+			<?php if(!option('curatescape_form_recommended_only')):?>
+			addTitleAttribute();
+			<?php endif;?>
+			console.info(message);
+		})
+		
+	</script>
+	
+	<?php
+	}
+	private function lockItemTypeForm()
 	{
 		if(!str_contains(current_url(), 'admin/item-types/edit')) return null;
 	?>
@@ -330,13 +454,16 @@ class Curatescape_View_Helper_HookAdminHead extends Zend_View_Helper_Abstract{
 			let input = document.querySelector("#itemtypes_name");
 			if(requiredItemTypeName == input.value){
 				input.style.pointerEvents = 'none';
-				if(deleteItemTypeBtn = document.querySelector("#save .delete-confirm")){
+				const deleteItemTypeBtn = document.querySelector("#save .delete-confirm");
+				if(deleteItemTypeBtn){
 					deleteItemTypeBtn.style.pointerEvents = 'none';
 				}
-				if(AddElementBtn = document.querySelector('#add-element')){
+				const AddElementBtn = document.querySelector('#add-element');
+				if(AddElementBtn){
 					AddElementBtn.style.pointerEvents = 'none';
 				}
-				if(deleteElementBtns = document.querySelectorAll('.delete-element')){
+				const deleteElementBtns = document.querySelectorAll('.delete-element, .delete-drawer');
+				if(deleteElementBtns.length){
 					deleteElementBtns.forEach((btn)=>{
 						btn.style.pointerEvents = 'none';
 					})
@@ -351,7 +478,7 @@ class Curatescape_View_Helper_HookAdminHead extends Zend_View_Helper_Abstract{
 	private function elementId($set = null, $element = null)
 	{
 		if(element_exists($set,$element)){
-			$elementObj= get_record('Element',array('name'=>$element));
+			$elementObj= get_record('Element',array('element_set_name' => $set, 'name'=>$element));
 			return $elementObj->id;
 		}
 	}
