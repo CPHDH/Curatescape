@@ -213,21 +213,41 @@ class Curatescape_View_Helper_HookAdminHead extends Zend_View_Helper_Abstract{
 		}
 		return array();
 	}
-	private function cssDCHelperText(){
-		echo <<<CSS
-		#dublin-core-description{
-			visibility: hidden;
-			height: 0;
-			width: 0;
-			padding: 0;
-			margin: 0;
-			font-size: 0;
-			line-height: 0;
-			color: transparent;
-			position: absolute;
-			pointer-events: none;
-		}
-		CSS;
+	private function jsFormRestrictionsToggle()
+	{
+		if(!option('curatescape_form_recommended_only') || !is_allowed('Users', 'edit')) return;
+		$disable = json_encode(__('Disable Restrictions'));
+		$reenable = json_encode(__('Re-enable Restrictions'));
+		$label = json_encode(__('Form Restrictions'));
+		$desc = json_encode(__('Administrators may temporarily disable form restrictions. See also: <a href="%1s">%2s plugin settings</a>.', '/admin/plugins', 'Curatescape'));
+		echo <<<JS
+		const sheet = document.getElementById('curatescape-form-restrictions');
+		const panel = document.querySelector('#save.panel');
+		const toggleButton = document.createElement('button');
+		toggleButton.type = 'button';
+		toggleButton.textContent = {$disable};
+		toggleButton.addEventListener('click', () => {
+			sheet.disabled = !sheet.disabled;
+			if(sheet.disabled && typeof observeItemType !== 'undefined'){
+				observeItemType.disconnect();
+			} else if(!sheet.disabled && typeof observeItemType !== 'undefined'){
+				observeItemType.observe(document.getElementById('item-type-metadata-metadata'), observeConfig);
+			}
+			toggleButton.textContent = sheet.disabled
+				? {$reenable}
+				: {$disable};
+		});
+		const toggleDCLabel = document.createElement('label');
+		toggleDCLabel.textContent = {$label};
+		const toggleDCDesc = document.createElement('p');
+		toggleDCDesc.innerHTML = {$desc};
+		const toggleDCField = document.createElement('div');
+		toggleDCField.className = 'field';
+		toggleDCField.appendChild(toggleDCLabel);
+		toggleDCField.appendChild(toggleDCDesc);
+		toggleDCField.appendChild(toggleButton);
+		panel.append(toggleDCField);
+		JS;
 	}
 	private function cssRecommendedOnly($formElements, $itemTypeId = null){
 		$selectors = implode(',', $this->cssSelectorsForModification($formElements, 'highlight', '.field'));
@@ -241,7 +261,6 @@ class Curatescape_View_Helper_HookAdminHead extends Zend_View_Helper_Abstract{
 		}
 		echo <<<CSS
 		/* hide all but recommended elements */
-		#item-type-metadata-metadata #type-metadata-form > div,
 		#dublin-core-metadata > .set > .field{
 			display: none;
 		}
@@ -276,6 +295,7 @@ class Curatescape_View_Helper_HookAdminHead extends Zend_View_Helper_Abstract{
 	}
 	private function cssNoHTML($formElements){
 		$selectors = implode(',', $this->cssSelectorsForModification($formElements, 'nohtml'));
+		if(!$selectors) return;
 		echo <<<CSS
 		/* disable html for select elements */
 		{$selectors}{
@@ -287,7 +307,8 @@ class Curatescape_View_Helper_HookAdminHead extends Zend_View_Helper_Abstract{
 		CSS;
 	}
 	private function cssNoAddInput($formElements){
-		$selectors = implode(',',  $this->cssSelectorsForModification($formElements, 'noaddinput'));
+		$selectors = implode(',', $this->cssSelectorsForModification($formElements, 'noaddinput'));
+		if(!$selectors) return;
 		echo <<<CSS
 		/* disable add input button for select elements */
 		{$selectors}{
@@ -300,6 +321,7 @@ class Curatescape_View_Helper_HookAdminHead extends Zend_View_Helper_Abstract{
 	}
 	private function cssLargerTextArea($formElements){
 		$selectors = implode(',', $this->cssSelectorsForModification($formElements, 'largertextarea'));
+		if(!$selectors) return;
 		echo <<<CSS
 		/* bigger text area for primary text */
 		{$selectors}{
@@ -317,13 +339,13 @@ class Curatescape_View_Helper_HookAdminHead extends Zend_View_Helper_Abstract{
 		if(!option('curatescape_form_enforcement')) return null;
 
 		$itemFormElements = $this->itemFormElements();
+		$itemTypeId = $this->itemTypeId();
 	?>
 
-	<style>
-		<?php 
-		echo $this->cssDCHelperText();
+	<style id="curatescape-form-restrictions">
+		<?php
 		if(option('curatescape_form_recommended_only')){
-			echo $this->cssRecommendedOnly($itemFormElements, $this->itemTypeId());
+			echo $this->cssRecommendedOnly($itemFormElements, $itemTypeId);
 		} else {
 			echo $this->cssHighlight($itemFormElements);
 		}
@@ -334,15 +356,15 @@ class Curatescape_View_Helper_HookAdminHead extends Zend_View_Helper_Abstract{
 	</style>
 
 	<script defer>
-		const message = '<?php echo __('This form has been modified by the %s plugin. Only recommended elements and features are available. Default functionality may be restored in plugin settings by an administator.',_PLUGIN_NAME_);?>';
-	
+		<?php if(!option('curatescape_form_recommended_only')):?>
 		const addTitleAttribute = ()=>{
 			document.querySelectorAll('<?php echo implode(',', $this->cssSelectorsForModification($itemFormElements, 'highlight',' label[id^=label_element]'));?>').forEach(el=>{
 				if(typeof el.attributes.title == 'undefined'){
-					el.setAttribute('title','<?php echo __('This element is recommended for %1s content.', _PLUGIN_NAME_);?>');
+					el.setAttribute('title',<?php echo json_encode(__('This element is recommended for %1s content.', _PLUGIN_NAME_));?>);
 				}
 			});
-		} 
+		}
+		<?php else:?>
 		const selectItemType = (value)=>{
 			let typeSelect = document.querySelector('select#item-type');
 			let changeEvent = new Event('change', { bubbles: true });
@@ -353,43 +375,29 @@ class Curatescape_View_Helper_HookAdminHead extends Zend_View_Helper_Abstract{
 				}
 			},300)
 		}
-		const itemTypeFormCallback = (mutationList, observeItemType) => {
-			for (const mutation of mutationList) {
-				<?php if(!option('curatescape_form_recommended_only')):?>
-				if (mutation.type === "childList") {
-					addTitleAttribute();
-				}
-				<?php endif;?>
-				<?php if(option('curatescape_form_recommended_only')):?>
-				if (mutation.type === 'attributes' && mutation.attributeName === 'style') {
-					if(mutation.target.style.display !== 'none' && mutation.target.style.visibility !== 'hidden'){
-						selectItemType(<?php echo $this->itemTypeId();?>);
-						observeItemType.disconnect();
+		<?php endif;?>
+		addEventListener("DOMContentLoaded", (e) => {
+			<?php if(!option('curatescape_form_recommended_only')):?>
+			addTitleAttribute();
+			document.querySelector('select#item-type').addEventListener('change', ()=>{
+				setTimeout(addTitleAttribute, 400);
+			});
+			<?php else:?>
+			const observeItemType = new MutationObserver((mutationList, observer) => {
+				for (const mutation of mutationList) {
+					if(mutation.type === 'attributes' && mutation.attributeName === 'style') {
+						if(mutation.target.style.display !== 'none' && mutation.target.style.visibility !== 'hidden'){
+							<?php if($itemTypeId): ?>selectItemType(<?php echo $itemTypeId;?>);<?php endif; ?>
+							observer.disconnect();
+						}
 					}
 				}
-				<?php endif;?>
-			}
-		}
-		const modifySetDescription = ()=>{
-			let description = document.querySelector('#dublin-core-description');
-			description.innerHTML = message; // visually hidden via css
-		}
-		addEventListener("DOMContentLoaded", (e) => {
-			const observeItemType = new MutationObserver(itemTypeFormCallback);
-			<?php if(!option('curatescape_form_recommended_only')):?>
-			addTitleAttribute(); // repeat with each change of the item type form
-			<?php endif;?>
-			<?php if(option('curatescape_form_recommended_only')):?>
-			modifySetDescription();
-			<?php endif;?>
-			observeItemType.observe(document.getElementById("item-type-metadata-metadata"),{
-				childList: true,
-				subtree: true,
-				attributes: true, 
-				attributeFilter: ['style'],
 			});
+			const observeConfig = { attributes: true, attributeFilter: ['style'] };
+			observeItemType.observe(document.getElementById("item-type-metadata-metadata"), observeConfig);
+			<?php endif;?>
+			<?php $this->jsFormRestrictionsToggle();?>
 		});
-		console.info(message);
 	</script>
 
 	<?php
@@ -403,9 +411,8 @@ class Curatescape_View_Helper_HookAdminHead extends Zend_View_Helper_Abstract{
 		$fileFormElements = $this->fileFormElements();
 	?>
 	
-	<style>
-		<?php 
-		echo $this->cssDCHelperText();
+	<style id="curatescape-form-restrictions">
+		<?php
 		if(option('curatescape_form_recommended_only')){
 			echo $this->cssRecommendedOnly($fileFormElements);
 		} else {
@@ -418,27 +425,21 @@ class Curatescape_View_Helper_HookAdminHead extends Zend_View_Helper_Abstract{
 	</style>
 	
 	<script defer>
-		const message = '<?php echo __('This form has been modified by the %s plugin. Only recommended elements and features are available. Default functionality may be restored in plugin settings by an administator.',_PLUGIN_NAME_);?>';
-	
+		<?php if(!option('curatescape_form_recommended_only')):?>
 		const addTitleAttribute = ()=>{
 			document.querySelectorAll('<?php echo implode(',', $this->cssSelectorsForModification($fileFormElements, 'highlight',' label[id^=label_element]'));?>').forEach(el=>{
 				if(typeof el.attributes.title == 'undefined'){
-					el.setAttribute('title','<?php echo __('This element is recommended for %1s content.', _PLUGIN_NAME_);?>');
+					el.setAttribute('title',<?php echo json_encode(__('This element is recommended for %1s content.', _PLUGIN_NAME_));?>);
 				}
 			});
-		} 
-		const modifySetDescription = ()=>{
-			let description = document.querySelector('#dublin-core-description');
-			description.innerHTML = message; // visually hidden via css
-		} 
+		}
+		<?php endif;?>
 		addEventListener("DOMContentLoaded", (e) => {
-			modifySetDescription();
 			<?php if(!option('curatescape_form_recommended_only')):?>
 			addTitleAttribute();
 			<?php endif;?>
-			console.info(message);
+			<?php $this->jsFormRestrictionsToggle();?>
 		})
-		
 	</script>
 	
 	<?php
@@ -450,7 +451,7 @@ class Curatescape_View_Helper_HookAdminHead extends Zend_View_Helper_Abstract{
 
 	<script defer>
 		document.addEventListener('DOMContentLoaded', ()=>{
-			const requiredItemTypeName = '<?php echo _CURATESCAPE_ITEM_TYPE_NAME_;?>';
+			const requiredItemTypeName = <?php echo json_encode(_CURATESCAPE_ITEM_TYPE_NAME_);?>;
 			let input = document.querySelector("#itemtypes_name");
 			if(requiredItemTypeName == input.value){
 				input.style.pointerEvents = 'none';
@@ -458,9 +459,9 @@ class Curatescape_View_Helper_HookAdminHead extends Zend_View_Helper_Abstract{
 				if(deleteItemTypeBtn){
 					deleteItemTypeBtn.style.pointerEvents = 'none';
 				}
-				const AddElementBtn = document.querySelector('#add-element');
-				if(AddElementBtn){
-					AddElementBtn.style.pointerEvents = 'none';
+				const addElementBtn = document.querySelector('#add-element');
+				if(addElementBtn){
+					addElementBtn.style.pointerEvents = 'none';
 				}
 				const deleteElementBtns = document.querySelectorAll('.delete-element, .delete-drawer');
 				if(deleteElementBtns.length){
@@ -468,7 +469,7 @@ class Curatescape_View_Helper_HookAdminHead extends Zend_View_Helper_Abstract{
 						btn.style.pointerEvents = 'none';
 					})
 				}
-				console.info('<?php echo __('Editing or deleting the contents of the "%1s" Item Type is disabled while the %2s plugin is active. You may still use this page to edit the Item Type description and change the order of Elements. To change the display name for the Item Type, use the plugin settings at %3s.', _CURATESCAPE_ITEM_TYPE_NAME_, _PLUGIN_NAME_, WEB_ROOT.'/admin/plugins/config?name='._PLUGIN_NAME_);?>');
+				console.info(<?php echo json_encode(__('Editing or deleting the contents of the "%1s" Item Type is disabled while the %2s plugin is active. You may still use this page to edit the Item Type description and change the order of Elements. To change the display name for the Item Type, use the plugin settings at %3s.', _CURATESCAPE_ITEM_TYPE_NAME_, _PLUGIN_NAME_, WEB_ROOT.'/admin/plugins/config?name='._PLUGIN_NAME_));?>);
 			}
 		})
 	</script>
