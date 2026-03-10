@@ -38,7 +38,7 @@ class Curatescape_View_Helper_JsonTour extends Zend_View_Helper_Abstract
 				$output['tours'][] = $tourMeta;
 			}
 		}
-		return json_encode($output);
+		return json_encode($output, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
 	}
 
 	private function tourItem($item, $tour, $isExtended = false){

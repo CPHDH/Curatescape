@@ -6,4 +6,4 @@ foreach( loop('search_texts') as $searchText ){
 	}
 }
 echo get_view()->CuratescapeCache()->Config(option('curatescape_json_cache'));
-echo json_encode(array('items' => $searchResults, 'total_items' => count( $searchResults )));
+echo json_encode(array('items' => $searchResults, 'total_items' => count( $searchResults )), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);

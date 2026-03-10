@@ -6,6 +6,6 @@ if(metadata('simple_pages_page', 'is_published')){
 		'text'  => metadata('simple_pages_page', 'text', array('no_escape' => true)),
 	);
 	echo get_view()->CuratescapeCache()->Config(option('curatescape_json_cache'));
-	echo json_encode( $pageData );
+	echo json_encode($pageData, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
 }
 ?>

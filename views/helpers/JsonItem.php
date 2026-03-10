@@ -44,7 +44,7 @@ class Curatescape_View_Helper_JsonItem extends Zend_View_Helper_Abstract
 				$output['items'][] = $itemMeta;
 			}
 		}
-		return json_encode($output);
+		return json_encode($output, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
 	}
 
 	private function getFiles($item, $files = array()){
