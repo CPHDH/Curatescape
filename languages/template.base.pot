@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-03 17:20-0500\n"
+"POT-Creation-Date: 2026-03-10 12:00-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Center for Public History + Digital Humanities at Cleveland State University <digitalhumanities@csuohio.edu>\n"
 "Language-Team: Center for Public History + Digital Humanities at Cleveland State University <digitalhumanities@csuohio.edu>\n"
@@ -16,89 +16,6 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
-
-#: functions.php:322 functions.php:322
-#: views/helpers/FilterSearchRecordTypes.php:4
-msgid "Tour"
-msgstr ""
-
-#: functions.php:325 functions.php:325
-#: views/helpers/FilterAdminDashboardStats.php:6
-#: views/helpers/FilterAdminNavigationMain.php:5
-msgid "Tours"
-msgstr ""
-
-#: functions.php:336 functions.php:336
-msgid "Story"
-msgstr ""
-
-#: functions.php:339 functions.php:339
-msgid "Stories"
-msgstr ""
-
-#: functions.php:366 functions.php:366
-#, php-format
-msgid "%s Tags"
-msgstr ""
-
-#: functions.php:374 functions.php:374 views/admin/tours/show.php:70
-msgid "Private"
-msgstr ""
-
-#: functions.php:376 functions.php:376 views/admin/tours/show.php:104
-#: views/admin/tours/form.php:157
-msgid "Public"
-msgstr ""
-
-#: functions.php:381 functions.php:435 functions.php:381 functions.php:435
-#: views/admin/tours/show.php:108 views/admin/tours/form.php:168
-#: views/admin/tours/browse.php:47 views/admin/tours/browse.php:48
-#: views/helpers/FilterPublicNavigationItems.php:23
-msgid "Featured"
-msgstr ""
-
-#: functions.php:383 functions.php:383
-msgid "Non-featured"
-msgstr ""
-
-#: functions.php:391 functions.php:391
-#, php-format
-msgid "tagged \"%s\""
-msgstr ""
-
-#: functions.php:394 functions.php:430 functions.php:394 functions.php:430
-msgid "All"
-msgstr ""
-
-#: functions.php:396 functions.php:396 views/public/tours/show.php:29
-#, php-format
-msgid "(%s total)"
-msgstr ""
-
-#: functions.php:440 functions.php:440 views/admin/tours/show.php:52
-#: views/admin/tours/form.php:86 views/admin/tours/browse.php:73
-#: views/public/tours/browse.php:29
-msgid "Tags"
-msgstr ""
-
-#: models/CuratescapeTour.php:278
-#, php-format
-msgid "Tour curated by: %s"
-msgstr ""
-
-#: models/CuratescapeTour.php:287
-#, php-format
-msgid "View %s"
-msgstr ""
-
-#: models/CuratescapeTour.php:287 models/CuratescapeTour.php:332
-#, php-format
-msgid "Read more about %s"
-msgstr ""
-
-#: models/CuratescapeTour.php:288
-msgid "Show on Map"
-msgstr ""
 
 #: controllers/ToursController.php:102
 msgid "Tour updated successfully."
@@ -108,62 +25,135 @@ msgstr ""
 msgid "There was an error updating the tour."
 msgstr ""
 
-#: views/admin/tours/show.php:16 views/admin/tours/form.php:44
-#: views/admin/tours/browse.php:31
+#: functions.php:322 views/helpers/FilterSearchRecordTypes.php:4
+msgid "Tour"
+msgstr ""
+
+#: functions.php:325 views/helpers/FilterAdminDashboardStats.php:6
+#: views/helpers/FilterAdminNavigationMain.php:5
+msgid "Tours"
+msgstr ""
+
+#: functions.php:336
+msgid "Story"
+msgstr ""
+
+#: functions.php:339
+msgid "Stories"
+msgstr ""
+
+#: functions.php:366
+#, php-format
+msgid "%s Tags"
+msgstr ""
+
+#: functions.php:374 views/admin/tours/show.php:70
+msgid "Private"
+msgstr ""
+
+#: functions.php:376 views/admin/tours/form.php:157
+#: views/admin/tours/show.php:104
+msgid "Public"
+msgstr ""
+
+#: functions.php:381 functions.php:435 views/admin/tours/browse.php:47
+#: views/admin/tours/browse.php:48 views/admin/tours/form.php:168
+#: views/admin/tours/show.php:108
+#: views/helpers/FilterPublicNavigationItems.php:23
+msgid "Featured"
+msgstr ""
+
+#: functions.php:383
+msgid "Non-featured"
+msgstr ""
+
+#: functions.php:391
+#, php-format
+msgid "tagged \"%s\""
+msgstr ""
+
+#: functions.php:394 functions.php:430
+msgid "All"
+msgstr ""
+
+#: functions.php:396 views/public/tours/show.php:29
+#, php-format
+msgid "(%s total)"
+msgstr ""
+
+#: functions.php:440 views/admin/tours/browse.php:73
+#: views/admin/tours/form.php:86 views/admin/tours/show.php:52
+#: views/public/tours/browse.php:29
+msgid "Tags"
+msgstr ""
+
+#: models/CuratescapeTour.php:281
+#, php-format
+msgid "Tour curated by: %s"
+msgstr ""
+
+#: models/CuratescapeTour.php:290
+#, php-format
+msgid "View %s"
+msgstr ""
+
+#: models/CuratescapeTour.php:290 models/CuratescapeTour.php:335
+#, php-format
+msgid "Read more about %s"
+msgstr ""
+
+#: models/CuratescapeTour.php:291
+msgid "Show on Map"
+msgstr ""
+
+#: views/admin/tours/browse.php:16
+msgid "Get started by adding your first tour."
+msgstr ""
+
+#: views/admin/tours/browse.php:19
+msgid "Add a Tour"
+msgstr ""
+
+#: views/admin/tours/browse.php:31 views/admin/tours/form.php:44
+#: views/admin/tours/show.php:16
 msgid "Title"
 msgstr ""
 
-#: views/admin/tours/show.php:25 views/admin/tours/form.php:54
-#: views/admin/tours/browse.php:65
-msgid "Credits"
+#: views/admin/tours/browse.php:32
+msgid "ID"
 msgstr ""
 
-#: views/admin/tours/show.php:34 views/admin/tours/form.php:64
-msgid "Description"
-msgstr ""
-
-#: views/admin/tours/show.php:43 views/admin/tours/form.php:75
-msgid "Postscript Text"
-msgstr ""
-
-#: views/admin/tours/show.php:63
-msgid "Items"
-msgstr ""
-
-#: views/admin/tours/show.php:83 views/admin/tours/form.php:18
-#: views/admin/tours/browse.php:60 views/helpers/HookAdminDashboard.php:337
-msgid "Edit"
-msgstr ""
-
-#: views/admin/tours/show.php:87 views/admin/tours/form.php:137
-msgid "View Public Page"
-msgstr ""
-
-#: views/admin/tours/show.php:91 views/admin/tours/form.php:142
-msgid "Delete"
-msgstr ""
-
-#: views/admin/tours/show.php:97 views/admin/tours/form.php:148
-#: views/admin/tours/browse.php:33
+#: views/admin/tours/browse.php:33 views/admin/tours/form.php:148
+#: views/admin/tours/show.php:97
 msgid "Custom Order"
 msgstr ""
 
-#: views/admin/tours/show.php:98 views/admin/tours/browse.php:65
-#: views/admin/tours/browse.php:73 views/admin/tours/browse.php:81
-#: views/helpers/HookConfigForm.php:58 views/helpers/HookConfigForm.php:131
+#: views/admin/tours/browse.php:52
+msgid "(Private)"
+msgstr ""
+
+#: views/admin/tours/browse.php:57
+msgid "Details"
+msgstr ""
+
+#: views/admin/tours/browse.php:60 views/admin/tours/form.php:18
+#: views/admin/tours/show.php:83 views/helpers/HookAdminDashboard.php:127
+msgid "Edit"
+msgstr ""
+
+#: views/admin/tours/browse.php:65 views/admin/tours/form.php:54
+#: views/admin/tours/show.php:25
+msgid "Credits"
+msgstr ""
+
+#: views/admin/tours/browse.php:65 views/admin/tours/browse.php:73
+#: views/admin/tours/browse.php:81 views/admin/tours/show.php:98
+#: views/helpers/HookConfigForm.php:56
 msgid "None"
 msgstr ""
 
-#: views/admin/tours/show.php:105 views/admin/tours/show.php:109
-msgid "Yes"
-msgstr ""
-
-#: views/admin/tours/show.php:105 views/admin/tours/show.php:109
-msgid "No"
-msgstr ""
-
-#: views/admin/tours/show.php:114
-msgid "Output Formats"
+#: views/admin/tours/browse.php:69
+msgid "Locations"
 msgstr ""
 
 #: views/admin/tours/form.php:13
@@ -196,8 +186,16 @@ msgid ""
 "tour."
 msgstr ""
 
+#: views/admin/tours/form.php:64 views/admin/tours/show.php:34
+msgid "Description"
+msgstr ""
+
 #: views/admin/tours/form.php:69
 msgid "The main text of the tour."
+msgstr ""
+
+#: views/admin/tours/form.php:75 views/admin/tours/show.php:43
+msgid "Postscript Text"
 msgstr ""
 
 #: views/admin/tours/form.php:80
@@ -226,48 +224,92 @@ msgstr ""
 msgid "Save Changes"
 msgstr ""
 
+#: views/admin/tours/form.php:137 views/admin/tours/show.php:87
+msgid "View Public Page"
+msgstr ""
+
+#: views/admin/tours/form.php:142 views/admin/tours/show.php:91
+msgid "Delete"
+msgstr ""
+
 #: views/admin/tours/form.php:150
 msgid ""
 "Optional: Enter a number greater than 0 to customize the order of this tour. "
 "Enter 0 to use the default order."
 msgstr ""
 
-#: views/admin/tours/browse.php:16
-msgid "Get started by adding your first tour."
+#: views/admin/tours/show.php:63
+msgid "Items"
 msgstr ""
 
-#: views/admin/tours/browse.php:19
-msgid "Add a Tour"
+#: views/admin/tours/show.php:105 views/admin/tours/show.php:109
+msgid "Yes"
 msgstr ""
 
-#: views/admin/tours/browse.php:32
-msgid "ID"
+#: views/admin/tours/show.php:105 views/admin/tours/show.php:109
+msgid "No"
 msgstr ""
 
-#: views/admin/tours/browse.php:52
-msgid "(Private)"
+#: views/admin/tours/show.php:114
+msgid "Output Formats"
 msgstr ""
 
-#: views/admin/tours/browse.php:57
-msgid "Details"
-msgstr ""
-
-#: views/admin/tours/browse.php:69
-msgid "Locations"
-msgstr ""
-
-#: views/public/tours/show.php:39
+#: views/helpers/CuratescapeCache.php:54
 #, php-format
-msgid "This %1s does not have any %2s."
+msgid "API Endpoint: %s"
 msgstr ""
 
-#: views/public/tours/show.php:45
+#: views/helpers/CuratescapeCache.php:55
 #, php-format
-msgid "%s Information"
+msgid "Cache file path (WEB): %s"
 msgstr ""
 
-#: views/public/tours/browse.php:38
-msgid "There are no tours available yet."
+#: views/helpers/CuratescapeCache.php:56
+#, php-format
+msgid "Cache file path (SERVER): %s"
+msgstr ""
+
+#: views/helpers/CuratescapeCache.php:57
+#, php-format
+msgid "Cache file exists: %s"
+msgstr ""
+
+#: views/helpers/CuratescapeCache.php:58
+#, php-format
+msgid "Cache file is readable: %s"
+msgstr ""
+
+#: views/helpers/CuratescapeCache.php:59
+#, php-format
+msgid "Cache file is writable: %s"
+msgstr ""
+
+#: views/helpers/CuratescapeCache.php:60
+#, php-format
+msgid "Cache file size (as of %1s UTC): %2s bytes"
+msgstr ""
+
+#: views/helpers/CuratescapeItemMetadataPartial.php:5
+msgid "Text unavailable."
+msgstr ""
+
+#: views/helpers/CuratescapeItemMetadataPartial.php:14
+#, php-format
+msgid "Related %s"
+msgstr ""
+
+#: views/helpers/CuratescapeItemMetadataPartial.php:55
+msgid "Metadata"
+msgstr ""
+
+#: views/helpers/CuratescapeItemMetadataPartial.php:98
+#, php-format
+msgid "By %s"
+msgstr ""
+
+#: views/helpers/CuratescapeItemMetadataPartial.php:101
+#, php-format
+msgid "with research support from %s"
 msgstr ""
 
 #: views/helpers/CuratescapeMap.php:18 views/helpers/CuratescapeMap.php:188
@@ -342,90 +384,437 @@ msgstr ""
 msgid "Map: %1s %2s"
 msgstr ""
 
-#: views/helpers/CuratescapeItemMetadataPartial.php:5
-msgid "Text unavailable."
-msgstr ""
-
-#: views/helpers/CuratescapeItemMetadataPartial.php:13
+#: views/helpers/FilterItemNextPrevious.php:70
 #, php-format
-msgid "Related %s"
+msgid "%1s: Next %2s"
 msgstr ""
 
-#: views/helpers/CuratescapeItemMetadataPartial.php:54
-msgid "Metadata"
-msgstr ""
-
-#: views/helpers/CuratescapeItemMetadataPartial.php:102
+#: views/helpers/FilterItemNextPrevious.php:79
 #, php-format
-msgid "By %s"
+msgid " %1s: Previous %2s"
 msgstr ""
 
-#: views/helpers/CuratescapeItemMetadataPartial.php:105
+#: views/helpers/FilterItemNextPrevious.php:107
 #, php-format
-msgid "with research support from %s"
+msgid "Navigation for %s"
 msgstr ""
 
-#: views/helpers/ShortcodeCuratescapeAppButtons.php:22
-msgid "App Store"
-msgstr ""
-
-#: views/helpers/ShortcodeCuratescapeAppButtons.php:30
-msgid "Google Play"
-msgstr ""
-
-#: views/helpers/RssItems.php:39 views/helpers/RssItems.php:40
-#: views/helpers/RssItems.php:138
-msgid "[Text Unavailable]"
-msgstr ""
-
-#: views/helpers/RssItems.php:51 views/helpers/RssItems.php:52
-#: views/helpers/RssItems.php:107
-msgid "[Untitled]"
-msgstr ""
-
-#: views/helpers/RssItems.php:125
+#: views/helpers/FilterItemNextPrevious.php:116
 #, php-format
-msgid " (including %s)"
+msgid "%s Info"
 msgstr ""
 
-#: views/helpers/RssItems.php:133
-#, php-format
-msgid "For more %s view the original article"
+#: views/helpers/FilterPublicNavigationAdminBar.php:21
+msgid "Edit Item"
 msgstr ""
 
-#: views/helpers/CuratescapeCache.php:54
-#, php-format
-msgid "API Endpoint: %s"
+#: views/helpers/FilterPublicNavigationAdminBar.php:27
+msgid "Edit Collection"
 msgstr ""
 
-#: views/helpers/CuratescapeCache.php:55
-#, php-format
-msgid "Cache file path (WEB): %s"
+#: views/helpers/FilterPublicNavigationAdminBar.php:33
+msgid "Edit File"
 msgstr ""
 
-#: views/helpers/CuratescapeCache.php:56
-#, php-format
-msgid "Cache file path (SERVER): %s"
+#: views/helpers/FilterPublicNavigationAdminBar.php:39
+msgid "Edit Exhibit"
 msgstr ""
 
-#: views/helpers/CuratescapeCache.php:57
-#, php-format
-msgid "Cache file exists: %s"
+#: views/helpers/FilterPublicNavigationAdminBar.php:45
+msgid "Edit Page"
 msgstr ""
 
-#: views/helpers/CuratescapeCache.php:58
-#, php-format
-msgid "Cache file is readable: %s"
+#: views/helpers/FilterPublicNavigationAdminBar.php:52
+msgid "Edit Tour"
 msgstr ""
 
-#: views/helpers/CuratescapeCache.php:59
-#, php-format
-msgid "Cache file is writable: %s"
+#: views/helpers/HookAdminDashboard.php:85
+msgid "Project Management"
 msgstr ""
 
-#: views/helpers/CuratescapeCache.php:60
+#: views/helpers/HookAdminDashboard.php:89
+msgid "Analytics"
+msgstr ""
+
+#: views/helpers/HookAdminDashboard.php:90
+msgid "Track website usage, user demographics, campaign performance, and more."
+msgstr ""
+
+#: views/helpers/HookAdminDashboard.php:92
+msgid "Google Analytics"
+msgstr ""
+
+#: views/helpers/HookAdminDashboard.php:95
+msgid "Matomo Analytics"
+msgstr ""
+
+#: views/helpers/HookAdminDashboard.php:99
+msgid "App Stores"
+msgstr ""
+
+#: views/helpers/HookAdminDashboard.php:100
+msgid ""
+"Manage your app store profiles, track downloads, and more. <a "
+"target=\"_blank\" href=\"https://curatescape.org/docs/project-launch-guide/"
+"#analytics\">Learn more about app management</a>."
+msgstr ""
+
+#: views/helpers/HookAdminDashboard.php:102
+msgid "App Store Connnect"
+msgstr ""
+
+#: views/helpers/HookAdminDashboard.php:105
+msgid "Google Play Console"
+msgstr ""
+
+#: views/helpers/HookAdminDashboard.php:133
+msgid "Recent Tours"
+msgstr ""
+
+#: views/helpers/HookAdminDashboard.php:137
+msgid "Add a new tour"
+msgstr ""
+
+#: views/helpers/HookAdminDashboard.php:145
+msgid "Curatescape Resources"
+msgstr ""
+
+#: views/helpers/HookAdminDashboard.php:146
+msgid "Documentation"
+msgstr ""
+
+#: views/helpers/HookAdminDashboard.php:147
 #, php-format
-msgid "Cache file size (as of %1s UTC): %2s bytes"
+msgid ""
+"For detailed information on setup, deployment, and usage, please visit %s or "
+"contact your project manager."
+msgstr ""
+
+#: views/helpers/HookAdminDashboard.php:148
+msgid "Support & Troubleshooting"
+msgstr ""
+
+#: views/helpers/HookAdminDashboard.php:149
+#, php-format
+msgid "Join the %s to request support, suggest features, share tips, and more."
+msgstr ""
+
+#: views/helpers/HookAdminDashboard.php:150
+msgid "News & Announcements"
+msgstr ""
+
+#: views/helpers/HookAdminDashboard.php:151
+#, php-format
+msgid ""
+"Sign up for the %1s and visit the %2s for occasional tips and project "
+"updates."
+msgstr ""
+
+#: views/helpers/HookAdminDashboard.php:152
+msgid "Developers & Server Admins"
+msgstr ""
+
+#: views/helpers/HookAdminDashboard.php:153
+#, php-format
+msgid ""
+"Watch the %s and configure custom notifications for new releases. Pull "
+"requests are welcome."
+msgstr ""
+
+#: views/helpers/HookAdminDashboard.php:220
+#, php-format
+msgid "%1s %2s with missing File Metadata"
+msgstr ""
+
+#: views/helpers/HookAdminDashboard.php:224
+msgid ""
+"Each file should have a title and other metadata to meet accessibility "
+"standards and provide important context for end users. File metadata is used "
+"to generate captions for all media files, as well as alt text for images."
+msgstr ""
+
+#: views/helpers/HookAdminDashboard.php:231
+#, php-format
+msgid "%1s %2s with no Thumbnail Image"
+msgstr ""
+
+#: views/helpers/HookAdminDashboard.php:235
+msgid ""
+"Each item should have at least one image file to help attract user interest "
+"and improve the overall user experience."
+msgstr ""
+
+#: views/helpers/HookAdminDashboard.php:242
+#, php-format
+msgid "%1s %2s with no Map Location"
+msgstr ""
+
+#: views/helpers/HookAdminDashboard.php:246
+msgid ""
+"Items without a map location will not be included in Curatescape mobile apps."
+msgstr ""
+
+#: views/helpers/HookAdminDashboard.php:253
+#, php-format
+msgid "%1s %2s with no Tags"
+msgstr ""
+
+#: views/helpers/HookAdminDashboard.php:257
+msgid ""
+"Tags help users to discover related content and filter content by topic, and "
+"may be a featured aspect of your theme design."
+msgstr ""
+
+#: views/helpers/HookAdminDashboard.php:264
+#, php-format
+msgid "%1s %2s with no Subject term"
+msgstr ""
+
+#: views/helpers/HookAdminDashboard.php:268
+msgid ""
+"Subjects help users to discover related content and filter content by topic, "
+"and may be a featured aspect of your theme design. Using a controlled "
+"vocabulary is strongly recommended and can be managed using the Simple Vocab "
+"plugin."
+msgstr ""
+
+#: views/helpers/HookAdminDashboard.php:275
+#, php-format
+msgid "%1s %2s with no Creator"
+msgstr ""
+
+#: views/helpers/HookAdminDashboard.php:279
+msgid ""
+"Items that are not attributed to an author may not feel trustworthy to end "
+"users."
+msgstr ""
+
+#: views/helpers/HookAdminDashboard.php:286
+#, php-format
+msgid "%1s %2s with no Story text"
+msgstr ""
+
+#: views/helpers/HookAdminDashboard.php:290
+#, php-format
+msgid ""
+"The story is the most fundamental element of a %s item and should be used "
+"for every item."
+msgstr ""
+
+#: views/helpers/HookAdminDashboard.php:297
+#, php-format
+msgid "%1s %2s with no Subtitle"
+msgstr ""
+
+#: views/helpers/HookAdminDashboard.php:301
+msgid ""
+"The Subtitle is recommended to add additional interest, context, and detail "
+"to the item title."
+msgstr ""
+
+#: views/helpers/HookAdminDashboard.php:308
+#, php-format
+msgid "%1s %2s with no Lede"
+msgstr ""
+
+#: views/helpers/HookAdminDashboard.php:312
+msgid ""
+"The Lede is recommended as an effective way to draw in the reader and may "
+"also be used as preview text in certain contexts such as tours."
+msgstr ""
+
+#: views/helpers/HookAdminDashboard.php:319
+#, php-format
+msgid "%1s %2s with no Street Address"
+msgstr ""
+
+#: views/helpers/HookAdminDashboard.php:323
+msgid ""
+"If an item has a map location, it should also have a street address. The "
+"street address provides text-equivalent content for visually impaired users "
+"and may also be used to enhance the marker info window in the maps provided "
+"by your theme and/or in the Curatescape mobile apps."
+msgstr ""
+
+#: views/helpers/HookAdminDashboard.php:327
+msgid "Potential Issues Detected"
+msgstr ""
+
+#: views/helpers/HookAdminDashboard.php:328
+msgid ""
+"Use the links to view items with potential content issues. Changes are "
+"recommended but not required."
+msgstr ""
+
+#: views/helpers/HookAdminDashboard.php:333
+msgid "No Issues Detected"
+msgstr ""
+
+#: views/helpers/HookAdminDashboard.php:334
+msgid "Great job. No recommended changes at this time."
+msgstr ""
+
+#: views/helpers/HookAdminDashboard.php:339
+msgid "Content Audit"
+msgstr ""
+
+#: views/helpers/HookAdminDashboard.php:340
+msgid "Results"
+msgstr ""
+
+#: views/helpers/HookAdminDashboard.php:341
+#, php-format
+msgid ""
+"Content audit results apply only to published items that use the %s item "
+"type."
+msgstr ""
+
+#: views/helpers/HookAdminDashboard.php:378
+#, php-format
+msgid ""
+"Your files directory contains <strong>%1s original files</strong> for an "
+"average of about <strong>%2s files per item</strong>. Below is a break down "
+"of files by type:"
+msgstr ""
+
+#: views/helpers/HookAdminDashboard.php:380
+#: views/helpers/HookAdminDashboard.php:396
+msgid "Images"
+msgstr ""
+
+#: views/helpers/HookAdminDashboard.php:381
+#: views/helpers/HookAdminDashboard.php:397
+msgid "Audio"
+msgstr ""
+
+#: views/helpers/HookAdminDashboard.php:382
+#: views/helpers/HookAdminDashboard.php:398
+msgid "Video"
+msgstr ""
+
+#: views/helpers/HookAdminDashboard.php:383
+#: views/helpers/HookAdminDashboard.php:399
+msgid "Documents"
+msgstr ""
+
+#: views/helpers/HookAdminDashboard.php:384
+msgid "Other"
+msgstr ""
+
+#: views/helpers/HookAdminDashboard.php:391
+msgid "File Information"
+msgstr ""
+
+#: views/helpers/HookAdminDashboard.php:393
+msgid "Recommended Formats"
+msgstr ""
+
+#: views/helpers/HookAdminDashboard.php:394
+msgid ""
+"To maximize compatibility with all app platforms and web browsers, the "
+"following file formats are recommended:"
+msgstr ""
+
+#: views/helpers/HookAdminDashboard.php:403
+msgid "Statistics"
+msgstr ""
+
+#: views/helpers/HookAdminDashboard.php:411
+#, php-format
+msgid "View affected %s"
+msgstr ""
+
+#: views/helpers/HookAdminHead.php:64
+#, php-format
+msgid ""
+"The %1s plugin is deprecated and replaced by the %2s plugin. Please "
+"deactivate, uninstall, and remove the %3s plugin to avoid conflicts."
+msgstr ""
+
+#: views/helpers/HookAdminHead.php:69
+#, php-format
+msgid ""
+"The %1s plugin is incompatible with the %2s plugin. Please deactivate and "
+"remove the %3s plugin to avoid conflicts."
+msgstr ""
+
+#: views/helpers/HookAdminHead.php:76
+#, php-format
+msgid ""
+"The %s plugin needs to be updated. Version %s or higher is required for use "
+"with the %s plugin. Your current version is %s."
+msgstr ""
+
+#: views/helpers/HookAdminHead.php:87
+#, php-format
+msgid ""
+"The %s theme needs to be updated. Version %s or higher is required for the "
+"%s plugin. Your current version is %s."
+msgstr ""
+
+#: views/helpers/HookAdminHead.php:219
+msgid "Disable Restrictions"
+msgstr ""
+
+#: views/helpers/HookAdminHead.php:220
+msgid "Re-enable Restrictions"
+msgstr ""
+
+#: views/helpers/HookAdminHead.php:221
+msgid "Form Restrictions"
+msgstr ""
+
+#: views/helpers/HookAdminHead.php:222
+#, php-format
+msgid ""
+"Administrators may temporarily disable form restrictions. See also: <a "
+"href=\"%1s\">%2s plugin settings</a>."
+msgstr ""
+
+#: views/helpers/HookAdminHead.php:274
+msgid "Curatescape"
+msgstr ""
+
+#: views/helpers/HookAdminHead.php:363 views/helpers/HookAdminHead.php:432
+#, php-format
+msgid "This element is recommended for %1s content."
+msgstr ""
+
+#: views/helpers/HookAdminHead.php:472
+#, php-format
+msgid ""
+"Editing or deleting the contents of the \"%1s\" Item Type is disabled while "
+"the %2s plugin is active. You may still use this page to edit the Item Type "
+"description and change the order of Elements. To change the display name for "
+"the Item Type, use the plugin settings at %3s."
+msgstr ""
+
+#: views/helpers/HookAfterSaveItem.php:35
+msgid "Warning"
+msgstr ""
+
+#: views/helpers/HookAfterSaveItem.php:116
+#, php-format
+msgid ""
+"Use the \"Add Input\" button to create separate fields for each Subject. "
+"Avoid using HTML and new lines. Warnings may include false positives and can "
+"be disabled in %s plugin settings."
+msgstr ""
+
+#: views/helpers/HookAfterSaveItem.php:121
+#, php-format
+msgid ""
+"Use the \"Add Input\" button to create separate fields for each Creator. "
+"Avoid using HTML and new lines. Warnings may include false positives and can "
+"be disabled in %s plugin settings."
+msgstr ""
+
+#: views/helpers/HookAfterSaveItem.php:126
+#, php-format
+msgid ""
+"Use the \"Add Input\" button to create separate fields for each Related "
+"Resource. Avoid using new lines. Warnings may include false positives and "
+"can be disabled in %s plugin settings."
 msgstr ""
 
 #: views/helpers/HookConfigForm.php:5
@@ -482,23 +871,23 @@ msgid ""
 "the Omeka default template."
 msgstr ""
 
-#: views/helpers/HookConfigForm.php:34
+#: views/helpers/HookConfigForm.php:32
 msgid "Before Lede (default)"
 msgstr ""
 
-#: views/helpers/HookConfigForm.php:35
+#: views/helpers/HookConfigForm.php:33
 msgid "After Lede"
 msgstr ""
 
-#: views/helpers/HookConfigForm.php:36
+#: views/helpers/HookConfigForm.php:34
 msgid "None (do not display)"
 msgstr ""
 
-#: views/helpers/HookConfigForm.php:46
+#: views/helpers/HookConfigForm.php:44
 msgid "Tour Settings"
 msgstr ""
 
-#: views/helpers/HookConfigForm.php:47
+#: views/helpers/HookConfigForm.php:45
 #, php-format
 msgid ""
 "Items using the %s Item Type (along with Geolocation data) can be collected "
@@ -506,7 +895,7 @@ msgid ""
 "customize the display of Tours."
 msgstr ""
 
-#: views/helpers/HookConfigForm.php:50
+#: views/helpers/HookConfigForm.php:48
 #, php-format
 msgid ""
 "Enter an alternate display name for Tours. You may also need to adjust the "
@@ -514,7 +903,7 @@ msgid ""
 "settings</a>."
 msgstr ""
 
-#: views/helpers/HookConfigForm.php:52
+#: views/helpers/HookConfigForm.php:50
 #, php-format
 msgid ""
 "Enter the plural form of your alternate display name for Tours. You may also "
@@ -522,19 +911,19 @@ msgid ""
 "target=\"_blank\">Navigation settings</a>."
 msgstr ""
 
-#: views/helpers/HookConfigForm.php:56
+#: views/helpers/HookConfigForm.php:54
 msgid "Composite (default)"
 msgstr ""
 
-#: views/helpers/HookConfigForm.php:57
+#: views/helpers/HookConfigForm.php:55
 msgid "First image from first tour stop"
 msgstr ""
 
-#: views/helpers/HookConfigForm.php:64
+#: views/helpers/HookConfigForm.php:62
 msgid "Map Settings"
 msgstr ""
 
-#: views/helpers/HookConfigForm.php:65
+#: views/helpers/HookConfigForm.php:63
 #, php-format
 msgid ""
 "Use the following options to customize %s maps. Additional Map "
@@ -543,7 +932,7 @@ msgid ""
 "the %5s for full list of shortcode options."
 msgstr ""
 
-#: views/helpers/HookConfigForm.php:68
+#: views/helpers/HookConfigForm.php:66
 #, php-format
 msgid ""
 "If checked, use the maps provided by the Geolocation plugin. Uncheck and "
@@ -552,59 +941,59 @@ msgid ""
 "available in <a target=\"_blank\" href=\"%s\"> plugin documentation</a>."
 msgstr ""
 
-#: views/helpers/HookConfigForm.php:71
+#: views/helpers/HookConfigForm.php:69
 msgid "CartoDB | Voyager (default)"
 msgstr ""
 
-#: views/helpers/HookConfigForm.php:72
+#: views/helpers/HookConfigForm.php:70
 msgid "CartoDB | Dark Matter"
 msgstr ""
 
-#: views/helpers/HookConfigForm.php:73
+#: views/helpers/HookConfigForm.php:71
 msgid "CartoDB | Positron"
 msgstr ""
 
-#: views/helpers/HookConfigForm.php:74
+#: views/helpers/HookConfigForm.php:72
 msgid "Open Free Map | Liberty"
 msgstr ""
 
-#: views/helpers/HookConfigForm.php:75
+#: views/helpers/HookConfigForm.php:73
 msgid "Stadia | OSM Bright (account required)"
 msgstr ""
 
-#: views/helpers/HookConfigForm.php:76
+#: views/helpers/HookConfigForm.php:74
 msgid "Stadia | Outdoors (account required)"
 msgstr ""
 
-#: views/helpers/HookConfigForm.php:77
+#: views/helpers/HookConfigForm.php:75
 msgid "Stadia | Stamen Toner (account required)"
 msgstr ""
 
-#: views/helpers/HookConfigForm.php:78
+#: views/helpers/HookConfigForm.php:76
 msgid "Stadia | Stamen Terrain (account required)"
 msgstr ""
 
-#: views/helpers/HookConfigForm.php:79
+#: views/helpers/HookConfigForm.php:77
 msgid "Stadia | Alidade Smooth (account required)"
 msgstr ""
 
-#: views/helpers/HookConfigForm.php:80
+#: views/helpers/HookConfigForm.php:78
 msgid "Stadia | Alidade Smooth Lite (account required)"
 msgstr ""
 
-#: views/helpers/HookConfigForm.php:81
+#: views/helpers/HookConfigForm.php:79
 msgid "Stadia | Alidade Smooth Dark (account required)"
 msgstr ""
 
-#: views/helpers/HookConfigForm.php:82
+#: views/helpers/HookConfigForm.php:80
 msgid "Custom URL"
 msgstr ""
 
-#: views/helpers/HookConfigForm.php:90
+#: views/helpers/HookConfigForm.php:88
 msgid "None (default)"
 msgstr ""
 
-#: views/helpers/HookConfigForm.php:94
+#: views/helpers/HookConfigForm.php:92
 msgid ""
 "Enter the URL for a vector style source that conforms to the <a "
 "href=\"\">MapLibre style specification</a>. If using custom settings for "
@@ -612,7 +1001,7 @@ msgid ""
 "comma."
 msgstr ""
 
-#: views/helpers/HookConfigForm.php:98
+#: views/helpers/HookConfigForm.php:96
 #, php-format
 msgid ""
 "Stadia Maps can be authenticated by registering this domain (%1s) in your <a "
@@ -621,7 +1010,7 @@ msgid ""
 "registration is the preferred method."
 msgstr ""
 
-#: views/helpers/HookConfigForm.php:103
+#: views/helpers/HookConfigForm.php:101
 msgid ""
 "Enter custom labels for your map layers, separated by a comma. These labels "
 "will be displayed in the interface for switching between primary and "
@@ -629,15 +1018,15 @@ msgid ""
 "number of map layers."
 msgstr ""
 
-#: views/helpers/HookConfigForm.php:105
+#: views/helpers/HookConfigForm.php:103
 msgid "Enter an HTML color code to use for map markers."
 msgstr ""
 
-#: views/helpers/HookConfigForm.php:107
+#: views/helpers/HookConfigForm.php:105
 msgid "Enter an HTML color code to use for featured item map markers."
 msgstr ""
 
-#: views/helpers/HookConfigForm.php:114
+#: views/helpers/HookConfigForm.php:112
 msgid ""
 "Enter three valid CSS colors to customize the map clusters, each separated "
 "by a <code>|</code> pipe. The first color will be used for small clusters, "
@@ -645,64 +1034,28 @@ msgid ""
 "blank to use default colors."
 msgstr ""
 
-#: views/helpers/HookConfigForm.php:124
-msgid "Homepage Settings"
-msgstr ""
-
-#: views/helpers/HookConfigForm.php:125
-#, php-format
-msgid ""
-"Use the following options to display and customize %s content on the "
-"homepage."
-msgstr ""
-
-#: views/helpers/HookConfigForm.php:127
-#, php-format
-msgid "Select a location on the homepage for displaying a map of %s."
-msgstr ""
-
-#: views/helpers/HookConfigForm.php:129
-msgid "Top (default)"
-msgstr ""
-
-#: views/helpers/HookConfigForm.php:130
-msgid "Bottom"
-msgstr ""
-
-#: views/helpers/HookConfigForm.php:135
-msgid ""
-"Enter a text heading for the homepage map or leave blank to omit the heading."
-msgstr ""
-
-#: views/helpers/HookConfigForm.php:137
-msgid ""
-"Enter a text caption to display below the homepage map or leave blank to "
-"omit the caption. If blank, a basic description of the map will be made "
-"available to screen readers. HTML links are allowed."
-msgstr ""
-
-#: views/helpers/HookConfigForm.php:141
+#: views/helpers/HookConfigForm.php:122
 msgid "Navigation Settings"
 msgstr ""
 
-#: views/helpers/HookConfigForm.php:142
+#: views/helpers/HookConfigForm.php:123
 msgid ""
 "Use the following options to customize the primary and secondary (item) "
 "navigation menus, as well as the Omeka admin bar."
 msgstr ""
 
-#: views/helpers/HookConfigForm.php:153
+#: views/helpers/HookConfigForm.php:134
 msgid "Form Settings"
 msgstr ""
 
-#: views/helpers/HookConfigForm.php:154
+#: views/helpers/HookConfigForm.php:135
 #, php-format
 msgid ""
 "Use the following options to configure the item form for maximal "
 "compatibility with %s."
 msgstr ""
 
-#: views/helpers/HookConfigForm.php:156
+#: views/helpers/HookConfigForm.php:137
 #, php-format
 msgid ""
 "If checked, use additional text filters when saving Items. %s elements will "
@@ -711,7 +1064,7 @@ msgid ""
 "recommended for mobile app projects and generally recommended for all."
 msgstr ""
 
-#: views/helpers/HookConfigForm.php:160
+#: views/helpers/HookConfigForm.php:141
 #, php-format
 msgid ""
 "If checked, the \"Use HTML\" and \"Add Input\" buttons in the Item form will "
@@ -720,7 +1073,7 @@ msgid ""
 "elements."
 msgstr ""
 
-#: views/helpers/HookConfigForm.php:162
+#: views/helpers/HookConfigForm.php:143
 #, php-format
 msgid ""
 "If checked, only %s-recommended elements and item types will be allowed. All "
@@ -729,17 +1082,17 @@ msgid ""
 "that may involve novice users."
 msgstr ""
 
-#: views/helpers/HookConfigForm.php:166
+#: views/helpers/HookConfigForm.php:147
 msgid "Output Settings"
 msgstr ""
 
-#: views/helpers/HookConfigForm.php:167
+#: views/helpers/HookConfigForm.php:148
 #, php-format
 msgid ""
 "Use the following options to customize the %s JSON and RSS output formats."
 msgstr ""
 
-#: views/helpers/HookConfigForm.php:169
+#: views/helpers/HookConfigForm.php:150
 #, php-format
 msgid ""
 "When enabled, Curatescape JSON feeds (e.g. for <a href=\"%1s\" "
@@ -748,47 +1101,47 @@ msgid ""
 "apply only to repeat loads within the selected duration."
 msgstr ""
 
-#: views/helpers/HookConfigForm.php:171 views/helpers/HookConfigForm.php:188
+#: views/helpers/HookConfigForm.php:152 views/helpers/HookConfigForm.php:169
 msgid "Disable cache"
 msgstr ""
 
-#: views/helpers/HookConfigForm.php:172 views/helpers/HookConfigForm.php:189
+#: views/helpers/HookConfigForm.php:153 views/helpers/HookConfigForm.php:170
 msgid "1 minute"
 msgstr ""
 
-#: views/helpers/HookConfigForm.php:173
+#: views/helpers/HookConfigForm.php:154
 msgid "5 minutes"
 msgstr ""
 
-#: views/helpers/HookConfigForm.php:174
+#: views/helpers/HookConfigForm.php:155
 msgid "10 minutes (default)"
 msgstr ""
 
-#: views/helpers/HookConfigForm.php:175 views/helpers/HookConfigForm.php:192
+#: views/helpers/HookConfigForm.php:156 views/helpers/HookConfigForm.php:173
 msgid "30 minutes"
 msgstr ""
 
-#: views/helpers/HookConfigForm.php:176 views/helpers/HookConfigForm.php:193
+#: views/helpers/HookConfigForm.php:157 views/helpers/HookConfigForm.php:174
 msgid "1 hour"
 msgstr ""
 
-#: views/helpers/HookConfigForm.php:177 views/helpers/HookConfigForm.php:194
+#: views/helpers/HookConfigForm.php:158 views/helpers/HookConfigForm.php:175
 msgid "12 hours"
 msgstr ""
 
-#: views/helpers/HookConfigForm.php:178 views/helpers/HookConfigForm.php:195
+#: views/helpers/HookConfigForm.php:159 views/helpers/HookConfigForm.php:176
 msgid "24 hours"
 msgstr ""
 
-#: views/helpers/HookConfigForm.php:185
+#: views/helpers/HookConfigForm.php:166
 msgid "Clear & Debug Items Cache"
 msgstr ""
 
-#: views/helpers/HookConfigForm.php:185
+#: views/helpers/HookConfigForm.php:166
 msgid "Clear & Debug Tours Cache"
 msgstr ""
 
-#: views/helpers/HookConfigForm.php:186
+#: views/helpers/HookConfigForm.php:167
 #, php-format
 msgid ""
 "When enabled, certain Curatescape JSON feeds will be cached and stored on "
@@ -799,15 +1152,15 @@ msgid ""
 "server cache is bypassed for logged in users. %s"
 msgstr ""
 
-#: views/helpers/HookConfigForm.php:190
+#: views/helpers/HookConfigForm.php:171
 msgid "5 minutes (default)"
 msgstr ""
 
-#: views/helpers/HookConfigForm.php:191
+#: views/helpers/HookConfigForm.php:172
 msgid "10 minutes"
 msgstr ""
 
-#: views/helpers/HookConfigForm.php:199
+#: views/helpers/HookConfigForm.php:180
 #, php-format
 msgid ""
 "If checked, the default RSS feed will be replaced with an <a href=\"%s\" "
@@ -815,17 +1168,17 @@ msgid ""
 "content."
 msgstr ""
 
-#: views/helpers/HookConfigForm.php:203
+#: views/helpers/HookConfigForm.php:184
 msgid "Dashboard Settings"
 msgstr ""
 
-#: views/helpers/HookConfigForm.php:204
+#: views/helpers/HookConfigForm.php:185
 msgid ""
 "Use the following options to add new panels to the <a href=\"/admin/\" "
 "target=\"_blank\">admin dashboard</a>."
 msgstr ""
 
-#: views/helpers/HookConfigForm.php:207
+#: views/helpers/HookConfigForm.php:188
 #, php-format
 msgid ""
 "If checked, the admin dashboard will display the results of a content audit "
@@ -835,7 +1188,7 @@ msgid ""
 "loading of the dashboard when the cache is being refreshed."
 msgstr ""
 
-#: views/helpers/HookConfigForm.php:209
+#: views/helpers/HookConfigForm.php:190
 msgid ""
 "If checked, the admin dashboard will display file statistics and format "
 "recommendations. File statistics are cached on the server side for up to 1 "
@@ -844,7 +1197,7 @@ msgid ""
 "refreshed."
 msgstr ""
 
-#: views/helpers/HookConfigForm.php:211
+#: views/helpers/HookConfigForm.php:192
 msgid ""
 "If checked, the admin dashboard will display convenient links to manage "
 "configured app store and web analytics accounts. See App Store Settings "
@@ -853,17 +1206,17 @@ msgid ""
 "Matomo)."
 msgstr ""
 
-#: views/helpers/HookConfigForm.php:213
+#: views/helpers/HookConfigForm.php:194
 #, php-format
 msgid ""
 "If checked, the admin dashboard will display a list of useful %s resources."
 msgstr ""
 
-#: views/helpers/HookConfigForm.php:218
+#: views/helpers/HookConfigForm.php:199
 msgid "App Store Settings"
 msgstr ""
 
-#: views/helpers/HookConfigForm.php:219
+#: views/helpers/HookConfigForm.php:200
 #, php-format
 msgid ""
 "Did you know that Curatescape is a not-for-profit, university-based project "
@@ -873,7 +1226,7 @@ msgid ""
 "shortcode: %2s. Refer to the %3s for full list of shortcode options."
 msgstr ""
 
-#: views/helpers/HookConfigForm.php:222
+#: views/helpers/HookConfigForm.php:203
 #, php-format
 msgid ""
 "Enter the numeric identifier for the iOS app, found in Apple App Store "
@@ -883,7 +1236,7 @@ msgid ""
 "systematically display iOS App Store links."
 msgstr ""
 
-#: views/helpers/HookConfigForm.php:224
+#: views/helpers/HookConfigForm.php:205
 #, php-format
 msgid ""
 "Enter the alphanumeric package name/identifier for the Android app, found in "
@@ -892,32 +1245,32 @@ msgid ""
 "also use this option to systematically display Google Play app links."
 msgstr ""
 
-#: views/helpers/HookConfigForm.php:226
+#: views/helpers/HookConfigForm.php:207
 msgid ""
 "If checked, display a banner encouraging Safari users to download the "
 "configured iOS mobile app. (Android does not offer an equivalent "
 "functionality.)"
 msgstr ""
 
-#: views/helpers/HookConfigForm.php:230
+#: views/helpers/HookConfigForm.php:211
 msgid "Advanced Settings"
 msgstr ""
 
-#: views/helpers/HookConfigForm.php:231
+#: views/helpers/HookConfigForm.php:212
 msgid ""
 "The following options may be especially useful for site administrators, "
 "designers, developers, and other advanced users. Come back here if you are "
 "troubleshooting a specific issue."
 msgstr ""
 
-#: views/helpers/HookConfigForm.php:234
+#: views/helpers/HookConfigForm.php:215
 #, php-format
 msgid ""
 "If checked, use CSS styles provided by the %1s plugin. Turning this off may "
 "be useful for theme developers, but should otherwise remain checked."
 msgstr ""
 
-#: views/helpers/HookConfigForm.php:236
+#: views/helpers/HookConfigForm.php:217
 #, php-format
 msgid ""
 "If checked, use theme-specific CSS styles provided by the %1s plugin. These "
@@ -925,7 +1278,7 @@ msgid ""
 "plugin."
 msgstr ""
 
-#: views/helpers/HookConfigForm.php:238
+#: views/helpers/HookConfigForm.php:219
 msgid ""
 "If checked, the Title and Subtitle elements for the Item will be omitted "
 "from the metadata table since they already appear as part of the page "
@@ -935,452 +1288,72 @@ msgid ""
 "additional terms."
 msgstr ""
 
-#: views/helpers/FilterItemNextPrevious.php:70
+#: views/helpers/RssItems.php:39 views/helpers/RssItems.php:40
+#: views/helpers/RssItems.php:138
+msgid "[Text Unavailable]"
+msgstr ""
+
+#: views/helpers/RssItems.php:51 views/helpers/RssItems.php:52
+#: views/helpers/RssItems.php:107
+msgid "[Untitled]"
+msgstr ""
+
+#: views/helpers/RssItems.php:125
 #, php-format
-msgid "%1s: Next %2s"
+msgid " (including %s)"
 msgstr ""
 
-#: views/helpers/FilterItemNextPrevious.php:79
+#: views/helpers/RssItems.php:133
 #, php-format
-msgid " %1s: Previous %2s"
+msgid "For more %s view the original article"
 msgstr ""
 
-#: views/helpers/FilterItemNextPrevious.php:107
+#: views/helpers/ShortcodeCuratescapeAppButtons.php:22
+msgid "App Store"
+msgstr ""
+
+#: views/helpers/ShortcodeCuratescapeAppButtons.php:30
+msgid "Google Play"
+msgstr ""
+
+#: views/public/tours/browse.php:38
+msgid "There are no tours available yet."
+msgstr ""
+
+#: views/public/tours/show.php:39
 #, php-format
-msgid "Navigation for %s"
+msgid "This %1s does not have any %2s."
 msgstr ""
 
-#: views/helpers/FilterItemNextPrevious.php:116
+#: views/public/tours/show.php:45
 #, php-format
-msgid "%s Info"
+msgid "%s Information"
 msgstr ""
 
-#: views/helpers/HookAfterSaveItem.php:35
-msgid "Warning"
-msgstr ""
-
-#: views/helpers/HookAfterSaveItem.php:87
-#, php-format
-msgid ""
-"Use the \"Add Input\" button to create separate fields for each Subject. "
-"Avoid using HTML and new lines. Warnings may include false positives and can "
-"be disabled in %s plugin settings."
-msgstr ""
-
-#: views/helpers/HookAfterSaveItem.php:92
-#, php-format
-msgid ""
-"Use the \"Add Input\" button to create separate fields for each Creator. "
-"Avoid using HTML and new lines. Warnings may include false positives and can "
-"be disabled in %s plugin settings."
-msgstr ""
-
-#: views/helpers/HookAfterSaveItem.php:97
-#, php-format
-msgid ""
-"Use the \"Add Input\" button to create separate fields for each Related "
-"Resource. Avoid using new lines. Warnings may include false positives and "
-"can be disabled in %s plugin settings."
-msgstr ""
-
-#: views/helpers/HookAdminDashboard.php:60
-#: views/helpers/HookAdminDashboard.php:82
-#: views/helpers/HookAdminDashboard.php:99
-#: views/helpers/HookAdminDashboard.php:117
-#: views/helpers/HookAdminDashboard.php:135
-#: views/helpers/HookAdminDashboard.php:153
-#: views/helpers/HookAdminDashboard.php:171
-#: views/helpers/HookAdminDashboard.php:189
-#: views/helpers/HookAdminDashboard.php:207
-#: views/helpers/HookAdminDashboard.php:225
-#: views/helpers/HookAdminDashboard.php:391
+#: views/helpers/HookAdminDashboard.php:222
+#: views/helpers/HookAdminDashboard.php:233
+#: views/helpers/HookAdminDashboard.php:244
+#: views/helpers/HookAdminDashboard.php:255
+#: views/helpers/HookAdminDashboard.php:266
+#: views/helpers/HookAdminDashboard.php:277
+#: views/helpers/HookAdminDashboard.php:288
+#: views/helpers/HookAdminDashboard.php:299
+#: views/helpers/HookAdminDashboard.php:310
+#: views/helpers/HookAdminDashboard.php:321
+#: views/helpers/HookAdminDashboard.php:411
 msgid "item"
 msgstr ""
 
-#: views/helpers/HookAdminDashboard.php:60
-#: views/helpers/HookAdminDashboard.php:82
-#: views/helpers/HookAdminDashboard.php:99
-#: views/helpers/HookAdminDashboard.php:117
-#: views/helpers/HookAdminDashboard.php:135
-#: views/helpers/HookAdminDashboard.php:153
-#: views/helpers/HookAdminDashboard.php:171
-#: views/helpers/HookAdminDashboard.php:189
-#: views/helpers/HookAdminDashboard.php:207
-#: views/helpers/HookAdminDashboard.php:225
-#: views/helpers/HookAdminDashboard.php:391
-msgid "items"
-msgstr ""
-
-#: views/helpers/HookAdminDashboard.php:58
-#, php-format
-msgid "%1s %2s with missing File Metadata"
-msgstr ""
-
-#: views/helpers/HookAdminDashboard.php:62
-msgid ""
-"Each file should have a title and other metadata to meet accessibility "
-"standards and provide important context for end users. File metadata is used "
-"to generate captions for all media files, as well as alt text for images."
-msgstr ""
-
-#: views/helpers/HookAdminDashboard.php:80
-#, php-format
-msgid "%1s %2s with no Thumbnail Image"
-msgstr ""
-
-#: views/helpers/HookAdminDashboard.php:84
-msgid ""
-"Each item should have at least one image file to help attract user interest "
-"and improve the overall user experience."
-msgstr ""
-
-#: views/helpers/HookAdminDashboard.php:97
-#, php-format
-msgid "%1s %2s with no Map Location"
-msgstr ""
-
-#: views/helpers/HookAdminDashboard.php:101
-msgid ""
-"Items without a map location will not be included in Curatescape mobile apps."
-msgstr ""
-
-#: views/helpers/HookAdminDashboard.php:115
-#, php-format
-msgid "%1s %2s with no Tags"
-msgstr ""
-
-#: views/helpers/HookAdminDashboard.php:119
-msgid ""
-"Tags help users to discover related content and filter content by topic, and "
-"may be a featured aspect of your theme design."
-msgstr ""
-
-#: views/helpers/HookAdminDashboard.php:133
-#, php-format
-msgid "%1s %2s with no Subject term"
-msgstr ""
-
-#: views/helpers/HookAdminDashboard.php:137
-msgid ""
-"Subjects help users to discover related content and filter content by topic, "
-"and may be a featured aspect of your theme design. Using a controlled "
-"vocabulary is strongly recommended and can be managed using the Simple Vocab "
-"plugin."
-msgstr ""
-
-#: views/helpers/HookAdminDashboard.php:151
-#, php-format
-msgid "%1s %2s with no Creator"
-msgstr ""
-
-#: views/helpers/HookAdminDashboard.php:155
-msgid ""
-"Items that are not attributed to an author may not feel trustworthy to end "
-"users."
-msgstr ""
-
-#: views/helpers/HookAdminDashboard.php:169
-#, php-format
-msgid "%1s %2s with no Story text"
-msgstr ""
-
-#: views/helpers/HookAdminDashboard.php:173
-#, php-format
-msgid ""
-"The story is the most fundamental element of a %s item and should be used "
-"for every item."
-msgstr ""
-
-#: views/helpers/HookAdminDashboard.php:187
-#, php-format
-msgid "%1s %2s with no Subtitle"
-msgstr ""
-
-#: views/helpers/HookAdminDashboard.php:191
-msgid ""
-"The Subtitle is recommended to add additional interest, context, and detail "
-"to the item title."
-msgstr ""
-
-#: views/helpers/HookAdminDashboard.php:205
-#, php-format
-msgid "%1s %2s with no Lede"
-msgstr ""
-
-#: views/helpers/HookAdminDashboard.php:209
-msgid ""
-"The Lede is recommended as an effective way to draw in the reader and may "
-"also be used as preview text in certain contexts such as tours."
-msgstr ""
-
-#: views/helpers/HookAdminDashboard.php:223
-#, php-format
-msgid "%1s %2s with no Street Address"
-msgstr ""
-
-#: views/helpers/HookAdminDashboard.php:227
-msgid ""
-"If an item has a map location, it should also have a street address. The "
-"street address provides text-equivalent content for visually impaired users "
-"and may also be used to enhance the marker info window in the maps provided "
-"by your theme and/or in the Curatescape mobile apps."
-msgstr ""
-
-#: views/helpers/HookAdminDashboard.php:231
-msgid "Potential Issues Detected"
-msgstr ""
-
-#: views/helpers/HookAdminDashboard.php:232
-msgid ""
-"Use the links to view items with potential content issues. Changes are "
-"recommended but not required."
-msgstr ""
-
-#: views/helpers/HookAdminDashboard.php:237
-msgid "No Issues Detected"
-msgstr ""
-
-#: views/helpers/HookAdminDashboard.php:238
-msgid "Great job. No recommended changes at this time."
-msgstr ""
-
-#: views/helpers/HookAdminDashboard.php:243
-msgid "Content Audit"
-msgstr ""
-
+#: views/helpers/HookAdminDashboard.php:222
+#: views/helpers/HookAdminDashboard.php:233
 #: views/helpers/HookAdminDashboard.php:244
-msgid "Results"
-msgstr ""
-
-#: views/helpers/HookAdminDashboard.php:245
-#, php-format
-msgid ""
-"Content audit results apply only to published items that use the %s item "
-"type."
-msgstr ""
-
-#: views/helpers/HookAdminDashboard.php:257
-msgid "Curatescape Resources"
-msgstr ""
-
-#: views/helpers/HookAdminDashboard.php:258
-msgid "Documentation"
-msgstr ""
-
-#: views/helpers/HookAdminDashboard.php:259
-#, php-format
-msgid ""
-"For detailed information on setup, deployment, and usage, please visit %s or "
-"contact your project manager."
-msgstr ""
-
-#: views/helpers/HookAdminDashboard.php:260
-msgid "Support & Troubleshooting"
-msgstr ""
-
-#: views/helpers/HookAdminDashboard.php:261
-#, php-format
-msgid "Join the %s to request support, suggest features, share tips, and more."
-msgstr ""
-
-#: views/helpers/HookAdminDashboard.php:262
-msgid "News & Announcements"
-msgstr ""
-
-#: views/helpers/HookAdminDashboard.php:263
-#, php-format
-msgid ""
-"Sign up for the %1s and visit the %2s for occasional tips and project "
-"updates."
-msgstr ""
-
-#: views/helpers/HookAdminDashboard.php:264
-msgid "Developers & Server Admins"
-msgstr ""
-
-#: views/helpers/HookAdminDashboard.php:265
-#, php-format
-msgid ""
-"Watch the %s and configure custom notifications for new releases. Pull "
-"requests are welcome."
-msgstr ""
-
-#: views/helpers/HookAdminDashboard.php:272
-msgid "File Information"
-msgstr ""
-
-#: views/helpers/HookAdminDashboard.php:273
-msgid "Statistics"
-msgstr ""
-
-#: views/helpers/HookAdminDashboard.php:276
-msgid "Recommended Formats"
-msgstr ""
-
+#: views/helpers/HookAdminDashboard.php:255
+#: views/helpers/HookAdminDashboard.php:266
 #: views/helpers/HookAdminDashboard.php:277
-msgid ""
-"To maximize compatibility with all app platforms and web browsers, the "
-"following file formats are recommended:"
-msgstr ""
-
-#: views/helpers/HookAdminDashboard.php:279
-#: views/helpers/HookAdminDashboard.php:381
-msgid "Images"
-msgstr ""
-
-#: views/helpers/HookAdminDashboard.php:280
-#: views/helpers/HookAdminDashboard.php:382
-msgid "Audio"
-msgstr ""
-
-#: views/helpers/HookAdminDashboard.php:281
-#: views/helpers/HookAdminDashboard.php:383
-msgid "Video"
-msgstr ""
-
-#: views/helpers/HookAdminDashboard.php:282
-#: views/helpers/HookAdminDashboard.php:384
-msgid "Documents"
-msgstr ""
-
-#: views/helpers/HookAdminDashboard.php:295
-msgid "Project Management"
-msgstr ""
-
+#: views/helpers/HookAdminDashboard.php:288
 #: views/helpers/HookAdminDashboard.php:299
-msgid "Analytics"
-msgstr ""
-
-#: views/helpers/HookAdminDashboard.php:300
-msgid "Track website usage, user demographics, campaign performance, and more."
-msgstr ""
-
-#: views/helpers/HookAdminDashboard.php:302
-msgid "Google Analytics"
-msgstr ""
-
-#: views/helpers/HookAdminDashboard.php:305
-msgid "Matomo Analytics"
-msgstr ""
-
-#: views/helpers/HookAdminDashboard.php:309
-msgid "App Stores"
-msgstr ""
-
 #: views/helpers/HookAdminDashboard.php:310
-msgid ""
-"Manage your app store profiles, track downloads, and more. <a "
-"target=\"_blank\" href=\"https://curatescape.org/docs/project-launch-guide/"
-"#analytics\">Learn more about app management</a>."
-msgstr ""
-
-#: views/helpers/HookAdminDashboard.php:312
-msgid "App Store Connnect"
-msgstr ""
-
-#: views/helpers/HookAdminDashboard.php:315
-msgid "Google Play Console"
-msgstr ""
-
-#: views/helpers/HookAdminDashboard.php:343
-msgid "Recent Tours"
-msgstr ""
-
-#: views/helpers/HookAdminDashboard.php:347
-msgid "Add a new tour"
-msgstr ""
-
-#: views/helpers/HookAdminDashboard.php:379
-#, php-format
-msgid ""
-"Your files directory contains <strong>%1s original files</strong> for an "
-"average of about <strong>%2s files per item</strong>. Below is a break down "
-"of files by type:"
-msgstr ""
-
-#: views/helpers/HookAdminDashboard.php:385
-msgid "Other"
-msgstr ""
-
-#: views/helpers/HookAdminDashboard.php:391
-#, php-format
-msgid "View affected %s"
-msgstr ""
-
-#: views/helpers/FilterPublicNavigationAdminBar.php:21
-msgid "Edit Item"
-msgstr ""
-
-#: views/helpers/FilterPublicNavigationAdminBar.php:27
-msgid "Edit Collection"
-msgstr ""
-
-#: views/helpers/FilterPublicNavigationAdminBar.php:33
-msgid "Edit File"
-msgstr ""
-
-#: views/helpers/FilterPublicNavigationAdminBar.php:39
-msgid "Edit Exhibit"
-msgstr ""
-
-#: views/helpers/FilterPublicNavigationAdminBar.php:45
-msgid "Edit Page"
-msgstr ""
-
-#: views/helpers/FilterPublicNavigationAdminBar.php:52
-msgid "Edit Tour"
-msgstr ""
-
-#: views/helpers/HookAdminHead.php:150
-#, php-format
-msgid ""
-"The %1s plugin is deprecated and replaced by the %2s plugin. Please "
-"deactivate, uninstall, and remove the %3s plugin to avoid conflicts."
-msgstr ""
-
-#: views/helpers/HookAdminHead.php:155
-#, php-format
-msgid ""
-"The %1s plugin is incompatible with the %2s plugin. Please deactivate and "
-"remove the %3s plugin to avoid conflicts."
-msgstr ""
-
-#: views/helpers/HookAdminHead.php:162
-#, php-format
-msgid ""
-"The %s plugin needs to be updated. Version %s or higher is required for use "
-"with the %s plugin. Your current version is %s."
-msgstr ""
-
-#: views/helpers/HookAdminHead.php:173
-#, php-format
-msgid ""
-"The %s theme needs to be updated. Version %s or higher is required for the "
-"%s plugin. Your current version is %s."
-msgstr ""
-
-#: views/helpers/HookAdminHead.php:224
-msgid "Curatescape"
-msgstr ""
-
-#: views/helpers/HookAdminHead.php:262
-#, php-format
-msgid ""
-"This form has been modified by the %s plugin. Only recommended elements and "
-"features are available. Default functionality may be restored in plugin "
-"settings by an admninistator."
-msgstr ""
-
-#: views/helpers/HookAdminHead.php:267
-#, php-format
-msgid "This element is recommended for %1s content."
-msgstr ""
-
-#: views/helpers/HookAdminHead.php:344
-#, php-format
-msgid ""
-"Editing or deleting the contents of the \"%1s\" Item Type is disabled while "
-"the %2s plugin is active. You may still use this page to edit the Item Type "
-"description and change the order of Elements. To change the display name for "
-"the Item Type, use the plugin settings at %3s."
+#: views/helpers/HookAdminDashboard.php:321
+#: views/helpers/HookAdminDashboard.php:411
+msgid "items"
 msgstr ""
