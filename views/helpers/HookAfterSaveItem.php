@@ -55,6 +55,9 @@ class Curatescape_View_Helper_HookAfterSaveItem extends Zend_View_Helper_Abstrac
 		// clear and rebuild dashboard files
 		$cache->CacheBustManual(_HTML_DASHBOARD_FILE_STATS_, true);
 		$cache->CacheBustManual(_HTML_DASHBOARD_CONTENT_AUDIT_, true);
+		// Persist WEB_ROOT so the background job can fix the storage adapter's
+		// webDir (which bootstrap.php sets incorrectly in CLI context).
+		set_option('curatescape_web_root', WEB_ROOT);
 		// dispatch background jobs (with fallback to synchronous)
 		// $flash = Zend_Controller_Action_HelperBroker::getStaticHelper('FlashMessenger');
 		try {
