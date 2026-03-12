@@ -10,11 +10,8 @@ class Curatescape_View_Helper_FilterTitleWithSubtitle extends Zend_View_Helper_A
 		$text = trim(strip_tags($text));
 		if($isRich){
 			if(option('curatescape_subtitle_styles')){
-				$req = Zend_Controller_Front::getInstance()->getRequest();
-				if($req->getControllerName()=='items' && $req->getActionName()=='show'){
-					$wrapperPre = '<span class="curatescape-article-header-styles">';
-					$wrapperPost = '</span>';
-				}
+				$wrapperPre = '<span class="curatescape-article-header-styles">';
+				$wrapperPost = '</span>';
 			}
 			// accessible and easily customized with css
 			$separator = '<span class="curatescape-subtitle-separator">:&#32;</span>';
