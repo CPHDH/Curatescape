@@ -119,14 +119,22 @@ function oxfordAmp($names=array(), $html = null)
 
 function preferredItemImageUrl($item, $size = 'fullsize', $returnArray = false, $nullresult = null)
 {
+	if($returnArray) $nullresult = array('url'=>'', 'width'=>'', 'height'=>'', 'orientation'=>'');
 	if(!$item) return $nullresult;
 	if(!$item->hasThumbnail()) return $nullresult;
 	foreach($item->getFiles() as $file){
 		if($file->has_derivative_image){
 			if($returnArray == true){
-				$infoArray = dimensions($file, $size);
-				$infoArray['url'] = record_image_url($file, $size);
-				return $infoArray;
+				$pathInfo = pathinfo($file->filename);
+				$filename = $pathInfo['filename'] . ($size !== 'original' ? '.jpg' : '.'.$pathInfo['extension']);
+				$localPath = FILES_DIR.DIRECTORY_SEPARATOR.$size.DIRECTORY_SEPARATOR.$filename;
+				$imgsize = @getimagesize($localPath);
+				return array(
+					'url' => record_image_url($file, $size),
+					'width' => $imgsize ? $imgsize[0] : '',
+					'height' => $imgsize ? $imgsize[1] : '',
+					'orientation' => ($imgsize && $imgsize[0] > $imgsize[1]) ? 'landscape' : 'portrait',
+				);
 			}
 			return record_image_url($file, $size);
 		}
