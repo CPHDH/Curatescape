@@ -29,6 +29,7 @@ class Curatescape_View_Helper_CuratescapeCache extends Zend_View_Helper_Abstract
 	}
 	public function WriteCacheFile($filepath, $content = '', $bypassPathCheck = false){
 		if(!$bypassPathCheck && !$this->cachablePath()) return false;
+		if(!is_dir(_CURATESCAPE_CACHE_DIR_) && !mkdir(_CURATESCAPE_CACHE_DIR_, 0755, true)) return false;
 		if(!file_exists($filepath)){
 			return boolval(file_put_contents($filepath, $content));
 		}
@@ -48,7 +49,7 @@ class Curatescape_View_Helper_CuratescapeCache extends Zend_View_Helper_Abstract
 			if(isset($_GET['curatescape_cache_break']) && $_GET['curatescape_cache_break'] == 'debug'){
 				date_default_timezone_set("UTC");
 				$timeUpdated = date('H:i:s');
-				$webpath = WEB_ROOT.'/plugins/'._PLUGIN_NAME_.str_replace(_PLUGIN_DIR_, '', $filepath);
+				$webpath = WEB_FILES . '/curatescape/' . basename($filepath);
 				$livefeed = current_url(array('output'=>'mobile-json', 'curatescape_cache_break'=>'live'));
 				echo '<code><ul><li>'.implode('</li><li>', array( 
 					__('API Endpoint: %s', '<a href="'.$livefeed.'">'.str_replace('&curatescape_cache_break=live','',$livefeed).'</a>'),

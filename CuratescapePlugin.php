@@ -10,10 +10,11 @@ define('_CURATESCAPE_ITEM_TYPE_NAME_PLURAL_', 'Curatescape Stories');
 define('_CURATESCAPE_ITEM_TYPE_SETNAME_', _CURATESCAPE_ITEM_TYPE_NAME_.' Item Type Metadata');
 // Constants (Cache)
 define('_CACHEABLE_PATHS_', array('/admin/','/items/browse?output=mobile-json','/tours/browse?output=mobile-json'));
-define('_JSON_ITEMS_FILE_', dirname(__FILE__).'/views/shared/items/items.cache.json');
-define('_JSON_TOURS_FILE_', dirname(__FILE__).'/views/shared/tours/tours.cache.json');
-define('_HTML_DASHBOARD_CONTENT_AUDIT_', dirname(__FILE__).'/views/admin/dashboard-audit.cache.html');
-define('_HTML_DASHBOARD_FILE_STATS_', dirname(__FILE__).'/views/admin/dashboard-stats.cache.html');
+define('_CURATESCAPE_CACHE_DIR_', FILES_DIR . '/curatescape');
+define('_JSON_ITEMS_FILE_', _CURATESCAPE_CACHE_DIR_ . '/items.cache.json');
+define('_JSON_TOURS_FILE_', _CURATESCAPE_CACHE_DIR_ . '/tours.cache.json');
+define('_HTML_DASHBOARD_CONTENT_AUDIT_', _CURATESCAPE_CACHE_DIR_ . '/dashboard-audit.cache.html');
+define('_HTML_DASHBOARD_FILE_STATS_', _CURATESCAPE_CACHE_DIR_ . '/dashboard-stats.cache.html');
 
 class CuratescapePlugin extends Omeka_Plugin_AbstractPlugin{
 	protected $_hooks = array(
@@ -26,6 +27,7 @@ class CuratescapePlugin extends Omeka_Plugin_AbstractPlugin{
 		'define_routes',
 		'initialize',
 		'install',
+		'upgrade',
 		'public_head',
 		'public_items_show',
 		'uninstall',
@@ -115,9 +117,25 @@ class CuratescapePlugin extends Omeka_Plugin_AbstractPlugin{
 		add_shortcode( 'curatescape_map', array(get_view(),'ShortcodeCuratescapeMap'));
 	}
 
+	private function _createCacheDir()
+	{
+		if (!is_dir(_CURATESCAPE_CACHE_DIR_)) {
+			mkdir(_CURATESCAPE_CACHE_DIR_, 0755, true);
+		}
+		if (!file_exists(_CURATESCAPE_CACHE_DIR_ . '/.htaccess')) {
+			file_put_contents(_CURATESCAPE_CACHE_DIR_ . '/.htaccess', "<FilesMatch \"\\.html$\">\n  Require all denied\n</FilesMatch>\n");
+		}
+	}
+
 	public function hookInstall()
 	{
+		$this->_createCacheDir();
 		require _PLUGIN_DIR_.'/install.php';
+	}
+
+	public function hookUpgrade($args)
+	{
+		$this->_createCacheDir();
 	}
 
 	public function hookUninstall()

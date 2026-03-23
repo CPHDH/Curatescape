@@ -161,8 +161,8 @@ class Curatescape_View_Helper_HookConfigForm extends Zend_View_Helper_Abstract{
 			);?>
 			<!-- JSON Server Cache  -->
 			<?php 
-			$itemjson = WEB_ROOT.'/plugins/'._PLUGIN_NAME_.str_replace(_PLUGIN_DIR_, '', _JSON_ITEMS_FILE_);
-			$tourjson = WEB_ROOT.'/plugins/'._PLUGIN_NAME_.str_replace(_PLUGIN_DIR_, '', _JSON_TOURS_FILE_);
+			$itemjson = WEB_FILES . '/curatescape/items.cache.json';
+			$tourjson = WEB_FILES . '/curatescape/tours.cache.json';
 			$cacheDebugLinks = '<div class="explanation"><a class="button" target="_blank" href="/items/browse?output=mobile-json&curatescape_cache_break=debug">'.__('Clear & Debug Items Cache').'</a><a class="button" target="_blank" href="/tours/browse?output=mobile-json&curatescape_cache_break=debug">'.__('Clear & Debug Tours Cache').'</a></div>';
 			echo $this->configFormSelect('curatescape_json_storage', 'JSON Server Cache', __('When enabled, certain Curatescape JSON feeds will be cached and stored on the server for the selected duration. Increase the duration to improve performance and reduce memory usage for large datasets. Disable this option if you experience errors relating to your server security configurations. All server cache files are automatically cleared when saving an item. The server cache is bypassed for logged in users. %s', $cacheDebugLinks), 
 				array(
