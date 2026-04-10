@@ -1653,3 +1653,171 @@ msgstr "elemento"
 #~ "disponibles elementos y funciones recomendados. La funcionalidad "
 #~ "predeterminada puede ser restaurada en la configuración del complemento "
 #~ "por un administrador."
+
+#: views/helpers/HookConfigForm.php
+msgid "Alternate Name"
+msgstr "Nombre alternativo"
+#: views/helpers/HookConfigForm.php
+msgid "Alternate Name Plural"
+msgstr "Nombre alternativo (plural)"
+#: views/helpers/HookConfigForm.php
+msgid "Metadata Template"
+msgstr "Plantilla de metadatos"
+#: views/helpers/HookConfigForm.php
+msgid "Link Select Elements"
+msgstr "Vincular elementos seleccionados"
+#: views/helpers/HookConfigForm.php
+msgid "If checked, the Creator and Subject metadata elements will automatically be converted into hyperlinks that point to related Items. Note that this option will be ignored if the Search By Metadata plugin is installed and activated."
+msgstr "Si está activado, los elementos de metadatos Creador y Tema se convertirán automáticamente en hipervínculos que apuntan a objetos relacionados. Esta opción se ignorará si el plugin Search By Metadata está instalado y activado."
+#: views/helpers/HookConfigForm.php
+msgid "Append Subtitle"
+msgstr "Agregar subtítulo"
+#: views/helpers/HookConfigForm.php
+msgid "If checked, the Subtitle will be automatically appended to the Title anywhere it is displayed, including the record title, &lt;meta&gt; title, and more."
+msgstr "Si está activado, el subtítulo se agregará automáticamente al título en cualquier lugar donde se muestre, incluido el título del registro, el título &lt;meta&gt; y más."
+#: views/helpers/HookConfigForm.php
+msgid "Subtitle Styles"
+msgstr "Estilos de subtítulo"
+#: views/helpers/HookConfigForm.php
+msgid "If checked, the Subtitle will be formatted using plugin styles that change the color, typography, and layout. If unchecked, the Subtitle will be separated from the title by a colon. Requires use of auto-appending subtitle option, selected above. May not be supported in some themes."
+msgstr "Si está activado, el subtítulo se formateará con los estilos del plugin que cambian el color, la tipografía y el diseño. Si está desactivado, el subtítulo se separará del título con dos puntos. Requiere el uso de la opción de agregar subtítulo automáticamente seleccionada arriba. Es posible que algunos temas no lo admitan."
+#: views/helpers/HookConfigForm.php
+msgid "Byline Location"
+msgstr "Ubicación de la firma"
+#: views/helpers/HookConfigForm.php
+msgid "Select the location where the formatted byline should be displayed."
+msgstr "Seleccione el lugar donde se debe mostrar la firma formateada."
+#: views/helpers/HookConfigForm.php
+msgid "Inline Factoids"
+msgstr "Datos en línea"
+#: views/helpers/HookConfigForm.php
+msgid "If checked, Factoids will be displayed within the main text. If the main text is more than five paragraphs in length, Factoids will be displayed after the third paragraph. Factoids are always wrapped in an &lt;aside&gt; tag for optimal accessibility."
+msgstr "Si está activado, los datos se mostrarán dentro del texto principal. Si el texto principal tiene más de cinco párrafos, los datos se mostrarán después del tercer párrafo. Los datos siempre están envueltos en una etiqueta &lt;aside&gt; para una accesibilidad óptima."
+#: views/helpers/HookConfigForm.php
+msgid "Factoids Label"
+msgstr "Etiqueta de datos"
+#: views/helpers/HookConfigForm.php
+msgid "Enter a custom label to replace the default heading for Factoids."
+msgstr "Introduzca una etiqueta personalizada para reemplazar el encabezado predeterminado de los datos."
+#: views/helpers/HookConfigForm.php
+msgid "Tour Thumbnail"
+msgstr "Miniatura del recorrido"
+#: views/helpers/HookConfigForm.php
+msgid "Select the style of thumbnail image to use when browsing tours. The composite style combines the first image from the first four Items on the Tour to create a mini-collage."
+msgstr "Seleccione el estilo de imagen en miniatura que se usará al explorar los recorridos. El estilo compuesto combina la primera imagen de los primeros cuatro objetos del recorrido para crear un mini collage."
+#: views/helpers/HookConfigForm.php
+msgid "Mirror Geolocation"
+msgstr "Reflejar geolocalización"
+#: views/helpers/HookConfigForm.php
+msgid "Primary Map Style"
+msgstr "Estilo de mapa principal"
+#: views/helpers/HookConfigForm.php
+msgid "Select the primary map style."
+msgstr "Seleccione el estilo de mapa principal."
+#: views/helpers/HookConfigForm.php
+msgid "Secondary Map Style"
+msgstr "Estilo de mapa secundario"
+#: views/helpers/HookConfigForm.php
+msgid "Select the secondary map style."
+msgstr "Seleccione el estilo de mapa secundario."
+#: views/helpers/HookConfigForm.php
+msgid "Stadia Authentication"
+msgstr "Autenticación de Stadia"
+#: views/helpers/HookConfigForm.php
+msgid "EU Preference"
+msgstr "Preferencia UE"
+#: views/helpers/HookConfigForm.php
+msgid "If checked, load supported map tile sets from servers in the European Union."
+msgstr "Si está activado, los conjuntos de teselas de mapa compatibles se cargarán desde servidores de la Unión Europea."
+#: views/helpers/HookConfigForm.php
+msgid "Custom Map Label"
+msgstr "Etiqueta de mapa personalizada"
+#: views/helpers/HookConfigForm.php
+msgid "Marker Color"
+msgstr "Color de marcadores"
+#: views/helpers/HookConfigForm.php
+msgid "Featured Marker Color"
+msgstr "Color de marcadores destacados"
+#: views/helpers/HookConfigForm.php
+msgid "Featured Marker Icon"
+msgstr "Icono de marcadores destacados"
+#: views/helpers/HookConfigForm.php
+msgid "If checked, use a star icon inside featured item map markers."
+msgstr "Si está activado, se usará un icono de estrella dentro de los marcadores de mapa de objetos destacados."
+#: views/helpers/HookConfigForm.php
+msgid "If checked, markers on the map will be grouped into clusters at higher zoom levels."
+msgstr "Si está activado, los marcadores en el mapa se agruparán en clústeres en niveles de zoom más altos."
+#: views/helpers/HookConfigForm.php
+msgid "Cluster Colors"
+msgstr "Colores de clústeres"
+#: views/helpers/HookConfigForm.php
+#, php-format
+msgid "If checked, allow users to select from a dropdown of Subject terms to filter items on the global map. Note that this option is only recommended when all items have been given at least one Subject term. Use of the <a target=\"_blank\" href=\"%s\">Simple Vocab plugin</a> is strongly recommended."
+msgstr "Si está activado, los usuarios podrán seleccionar términos de tema de una lista desplegable para filtrar objetos en el mapa global. Esta opción solo se recomienda cuando todos los objetos tienen al menos un término de tema. Se recomienda encarecidamente el uso del <a target=\"_blank\" href=\"%s\">plugin Simple Vocab</a>."
+#: views/helpers/HookConfigForm.php
+msgid "Subjects Select"
+msgstr "Selección de temas"
+#: views/helpers/HookConfigForm.php
+#, php-format
+msgid "If checked, the initial center of your multi-marker maps will always adhere to the <a target=\"_blank\" href=\"%s\">Geolocation plugin settings</a> for default latitude, longitude, and zoom level. This option does not apply to tours, to single items, or to maps where the user has explicitly chosen a specific set of parameters (such as a subject term). This option may be useful if your map contains outliers beyond the expected bounds of your coverage area."
+msgstr "Si está activado, el centro inicial de sus mapas con múltiples marcadores siempre seguirá la <a target=\"_blank\" href=\"%s\">configuración del plugin de geolocalización</a> para la latitud, longitud y nivel de zoom predeterminados. Esta opción no se aplica a los recorridos, a los objetos individuales ni a los mapas donde el usuario ha elegido explícitamente un conjunto específico de parámetros (como un término de tema). Esta opción puede ser útil si su mapa contiene valores atípicos más allá de los límites esperados de su área de cobertura."
+#: views/helpers/HookConfigForm.php
+msgid "Fixed Center"
+msgstr "Centro fijo"
+#: views/helpers/HookConfigForm.php
+msgid "Admin Bar"
+msgstr "Barra de administración"
+#: views/helpers/HookConfigForm.php
+msgid "If checked, an \"Edit\" link will be appended to the default Omeka admin bar for supported record types. Theme support varies. Note that this option will be selectively ignored if the Admin Tools plugin is active and configured to add its own edit link for a given record type."
+msgstr "Si está activado, se agregará un enlace \"Editar\" a la barra de administración predeterminada de Omeka para los tipos de registro compatibles. La compatibilidad con temas varía. Esta opción se ignorará de forma selectiva si el plugin Admin Tools está activo y configurado para agregar su propio enlace de edición para un tipo de registro determinado."
+#: views/helpers/HookConfigForm.php
+msgid "Append Secondary"
+msgstr "Agregar navegación secundaria"
+#: views/helpers/HookConfigForm.php
+msgid "If checked, new navigation items for Featured and Curatescape Stories will be added to the secondary/Item navigation for the items/browse view."
+msgstr "Si está activado, se agregarán nuevos elementos de navegación para objetos destacados y relatos de Curatescape a la navegación secundaria/Objeto para la vista de exploración de objetos."
+#: views/helpers/HookConfigForm.php
+msgid "Shorten Secondary"
+msgstr "Acortar navegación secundaria"
+#: views/helpers/HookConfigForm.php
+msgid "If checked, the secondary (item) navigation labels will be shortened to preserve space in some themes. For example, \"Browse By Tags\" will be shortened to \"Tags.\""
+msgstr "Si está activado, las etiquetas de navegación secundaria (objeto) se acortarán para conservar espacio en algunos temas. Por ejemplo, \"Explorar por etiquetas\" se acortará a \"Etiquetas\"."
+#: views/helpers/HookConfigForm.php
+msgid "Filter Text"
+msgstr "Filtrar texto"
+#: views/helpers/HookConfigForm.php
+msgid "Format Warnings"
+msgstr "Advertencias de formato"
+#: views/helpers/HookConfigForm.php
+msgid "If checked, display a warning after the user has saved an Item that appears to violate the recommended formatting rules (for example, by including a new line within a Subject term). This option does not result in the modification of any content. Strongly recommended for mobile app projects and generally recommended for all."
+msgstr "Si está activado, se mostrará una advertencia después de que el usuario haya guardado un objeto que parece infringir las reglas de formato recomendadas (por ejemplo, al incluir una nueva línea dentro de un término de tema). Esta opción no modifica ningún contenido. Muy recomendado para proyectos de aplicaciones móviles y generalmente recomendado para todos."
+#: views/helpers/HookConfigForm.php
+msgid "Form Enforcement"
+msgstr "Aplicación de reglas del formulario"
+#: views/helpers/HookConfigForm.php
+msgid "JSON Browser Cache"
+msgstr "Caché de navegador JSON"
+#: views/helpers/HookConfigForm.php
+msgid "JSON Server Cache"
+msgstr "Caché de servidor JSON"
+#: views/helpers/HookConfigForm.php
+msgid "Enhanced RSS"
+msgstr "RSS mejorado"
+#: views/helpers/HookConfigForm.php
+msgid "File Statistics"
+msgstr "Estadísticas de archivos"
+#: views/helpers/HookConfigForm.php
+msgid "Android App"
+msgstr "Aplicación Android"
+#: views/helpers/HookConfigForm.php
+msgid "Safari App Banner"
+msgstr "Banner de aplicación Safari"
+#: views/helpers/HookConfigForm.php
+msgid "Plugin Styles"
+msgstr "Estilos del plugin"
+#: views/helpers/HookConfigForm.php
+msgid "Theme Fixes"
+msgstr "Correcciones del tema"
+#: views/helpers/HookConfigForm.php
+msgid "Omit Redundant"
+msgstr "Omitir elementos redundantes"
