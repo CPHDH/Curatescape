@@ -816,9 +816,9 @@ const setMarkers = async (src, fitBoundsAllowed = true, initialLoad = false) => 
 		bounds = new maplibregl.LngLatBounds();
 		geojson.features.forEach((f) => bounds.extend(f.geometry.coordinates));
 		if (fitBoundsAllowed && (!attr('data-fixed-center', true) || term)) {
-			map.fitBounds(bounds, { 
-				padding: {top: 25, bottom:25, left: 75, right: 75}, 
-				maxZoom: 15, 
+			map.fitBounds(bounds, {
+				padding: {top: 25, bottom:25, left: 75, right: 75},
+				maxZoom: (attr('data-maptype') === 'single' && geojson?.features?.[0]?.properties?.zoom) ? +geojson.features[0].properties.zoom : 15,
 				animate: !prefReducedMotion && items.length !== 1, // no animation for single
 			});
 		}
