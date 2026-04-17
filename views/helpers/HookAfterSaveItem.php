@@ -108,7 +108,7 @@ class Curatescape_View_Helper_HookAfterSaveItem extends Zend_View_Helper_Abstrac
 			array(
 				'rule'=>'full',
 				'elements'=>array('Story'),
-				'allowed'=>'<b><i><em><strong><br><cite><blockquote><a><ul><ol><li><h2><h3><h4><h5>'
+				'allowed'=>'<p><b><i><em><strong><br><cite><blockquote><a><ul><ol><li><h2><h3><h4><h5>'
 				),
 			);
 	}
@@ -118,12 +118,12 @@ class Curatescape_View_Helper_HookAfterSaveItem extends Zend_View_Helper_Abstrac
 		array(
 			'warning'=>__('Use the "Add Input" button to create separate fields for each Subject. Avoid using HTML and new lines. Warnings may include false positives and can be disabled in %s plugin settings.', _PLUGIN_NAME_),
 			'elements'=>array('Subject'),
-			'avoid'=>array(';',',','/>', '/ >','<br', "\n")
+			'avoid'=>array(';','/>', '/ >','<br', "\n")
 			),
 		array(
 			'warning'=>__('Use the "Add Input" button to create separate fields for each Creator. Avoid using HTML and new lines. Warnings may include false positives and can be disabled in %s plugin settings.', _PLUGIN_NAME_),
 			'elements'=>array('Creator'),
-			'avoid'=>array(';',',','/>', '/ >','<br', "\n")
+			'avoid'=>array(';',' and ','/>', '/ >','<br', "\n")
 			),
 		array(
 			'warning'=>__('Use the "Add Input" button to create separate fields for each Related Resource. Avoid using new lines. Warnings may include false positives and can be disabled in %s plugin settings.', _PLUGIN_NAME_),
