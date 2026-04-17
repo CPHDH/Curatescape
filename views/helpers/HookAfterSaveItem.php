@@ -16,26 +16,41 @@ class Curatescape_View_Helper_HookAfterSaveItem extends Zend_View_Helper_Abstrac
 		$elementTable = $db->getTable('Element');
 		$warningsNotify = array();
 		foreach($args['post']['Elements'] as $id=>$elementTexts){
-			foreach($elementTexts as $i=>$elementText){
-				$elementObj = get_record_by_id('Element',$id);
-				$setName = $elementObj->set_name;
-				$elementName = $elementObj->name;
-				if(in_array($elementName, array_merge(...$elementsToFilter)) && option('curatescape_filter_text')==1){
+			$elementObj = get_record_by_id('Element',$id);
+			$setName = $elementObj->set_name;
+			$elementName = $elementObj->name;
+			if(in_array($elementName, array_merge(...$elementsToFilter)) && option('curatescape_filter_text')==1){
+				// Check if any entry for this element has HTML enabled (requiring filtering)
+				$hasHtmlEntry = false;
+				foreach($elementTexts as $elementText){
 					if($elementText['text'] && $elementText['html'] == '1'){
-						$newElText = $elementTable->findByElementSetNameAndElementName($setName, $elementName);
-						$allowedTags = $this->allowedTagsByElementName($elementName, $rules);
-						$filteredText = $this->customFilter($elementText['text'], $allowedTags);
-						$record->deleteElementTextsByElementId(array($newElText->id));
-						$record->addTextForElement($newElText, $filteredText, $elementText['html']);
+						$hasHtmlEntry = true;
+						break;
 					}
 				}
-				if(in_array($elementName, array_merge(...$elementsToWarn)) && option('curatescape_format_warnings')==1){
-					$avoid = array_column($warnings, 'avoid');
+				if($hasHtmlEntry){
+					$newElText = $elementTable->findByElementSetNameAndElementName($setName, $elementName);
+					$allowedTags = $this->allowedTagsByElementName($elementName, $rules);
+					// Delete all entries for this element once, then re-add all of them
+					// (filtering only the HTML-enabled ones). This prevents non-HTML
+					// entries from being lost when a sibling entry has HTML checked.
+					$record->deleteElementTextsByElementId(array($newElText->id));
+					foreach($elementTexts as $elementText){
+						if($elementText['text'] && $elementText['html'] == '1'){
+							$filteredText = $this->customFilter($elementText['text'], $allowedTags);
+							$record->addTextForElement($newElText, $filteredText, $elementText['html']);
+						} else {
+							$record->addTextForElement($newElText, $elementText['text'], $elementText['html']);
+						}
+					}
+				}
+			}
+			if(in_array($elementName, array_merge(...$elementsToWarn)) && option('curatescape_format_warnings')==1){
+				foreach($elementTexts as $elementText){
 					if($w = $this->getWarningsByTextAndElementName($elementText['text'], $elementName, $warnings)){
 						$warningsNotify[$elementName] = $elementName.' '.__('Warning').': '.$w;
 					}
 				}
-				
 			}
 		}
 		// save filtered element texts
