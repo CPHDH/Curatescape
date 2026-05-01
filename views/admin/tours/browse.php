@@ -1,9 +1,3 @@
-<?php
-if(hasTours()){
-  $tours = activeSort($tours);
-}
-?>
-
 <?php echo head(array('title' =>toursBrowsePageTitle($total_results), 'bodyid'=>'tour','bodyclass' => 'tours browse'));?>
 
 <?php echo item_search_filters();?>

@@ -53,6 +53,14 @@ class Curatescape_ToursController extends Omeka_Controller_AbstractActionControl
 			$select->group('curatescape_tours.id');
 			$select->having('COUNT(DISTINCT tags.name) = ?', count($tagArray)); // matches multiple tags
 		}
+
+		$sortField = $request->getParam('sort_field');
+		$sortDir = ($request->getParam('sort_dir') === 'd') ? 'DESC' : 'ASC';
+		$allowedSortFields = array('title', 'id', 'ordinal');
+		if ($sortField && in_array($sortField, $allowedSortFields)) {
+			$select->reset(Zend_Db_Select::ORDER);
+			$select->order("curatescape_tours.$sortField $sortDir");
+		}
 		$tours = $table->fetchObjects($select);
 		$total_results = count($tours);
 

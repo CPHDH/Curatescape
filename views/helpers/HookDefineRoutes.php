@@ -17,7 +17,6 @@ class Curatescape_View_Helper_HookDefineRoutes extends Zend_View_Helper_Abstract
 			array(
 				'module' => 'curatescape',
 				'controller' => 'tours',
-				'action' => 'browse',
 			)
 		));
 		// TOURS (ToursController)

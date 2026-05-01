@@ -34,7 +34,10 @@ class CuratescapeTourTable extends Omeka_Db_Table
 
 	public function getSelect()
 	{
-		$select = parent::getSelect()->order('curatescape_tours.id');
+		$select = parent::getSelect()
+			->order(new Zend_Db_Expr('(curatescape_tours.ordinal = 0) ASC'))
+			->order('curatescape_tours.ordinal ASC')
+			->order('curatescape_tours.id ASC');
 		$permissions = new Omeka_Db_Select_PublicPermissions('Curatescape_CuratescapeTours');
 		$permissions->apply( $select, 'curatescape_tours', null );
 		$acl = Zend_Registry::get('bootstrap')->getResource('Acl');
