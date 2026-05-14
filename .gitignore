@@ -1,3 +1,4 @@
 .DS_Store
 *.cache.html
 *.cache.json
+.plans.md
