@@ -6,7 +6,8 @@ class Curatescape_View_Helper_JsonItem extends Zend_View_Helper_Abstract
 		return $this;
 	}
 	public function JsonItemsShow($item, $isExtended = false){
-		if($location = get_db()->getTable( 'Location' )->findLocationByItem( $item, true )){
+		if($locationData = getLocationData($item)){
+			$location = keyLocationOnly($locationData);
 			$itemMetadata = array(
 				'id' => $item->id,
 				'featured' => $item->featured,
@@ -19,6 +20,7 @@ class Curatescape_View_Helper_JsonItem extends Zend_View_Helper_Abstract
 				'address' => strip_tags(itm($item, 'Street Address')),
 			);
 			if($isExtended){
+				$itemMetadata['all_locations'] = $this->additionalLocations($locationData);
 				$itemMetadata['zoom'] = $location['zoom_level'];
 				$itemMetadata['creator'] = $this->getCreators($item);
 				$itemMetadata['description'] = itm($item, 'Story');
@@ -123,5 +125,30 @@ class Curatescape_View_Helper_JsonItem extends Zend_View_Helper_Abstract
 		}
 		return $this;
 	}
-
+	private function additionalLocations($locationData, $values = array())
+	{
+		if(is_array($locationData)){
+			foreach($locationData as $keyloc){
+				if(is_array($keyloc)){ // v4
+					foreach($locationData as $locs){
+						foreach($locs as $loc){
+							$values[] = array(
+								'latitude' => $loc['latitude'],
+								'longitude' => $loc['longitude'],
+								'label' => $loc['label'],
+							);
+						}
+					}
+				} else { // v3
+					$values[] = array(
+						'latitude' => $locationData['latitude'],
+						'longitude' => $locationData['longitude'],
+						'label' => null,
+					);
+				}
+				break;
+			}
+		}
+		return $values;
+	}
 }
