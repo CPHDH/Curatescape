@@ -161,7 +161,7 @@ class Curatescape_View_Helper_HookAdminDashboard extends Zend_View_Helper_Abstra
 		$items = get_records('Item', array('public'=>true,'type'=>$itemType->id), 0);
 		if(!$items) return null;
 		// pre-fetch all locations in one query to avoid per-item hasLocation() calls
-		$mappedItemIds = get_db()->getTable('Location')->findLocationByItem($items, false);
+		$mappedItemIds = getLocationData($items, false, array());
 		$missingFileMeta = $noImages = $noMap = $noTags = $noSubjects = $noCreator = $noStory = $noSubtitles = $noLede = $noAddress = array();
 		foreach($items as $item){
 			if(!$item->public) continue;
