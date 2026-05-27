@@ -301,7 +301,29 @@ function activeSort($objects, $sort = array())
 
 function hasLocation($item)
 {
-	return boolval( get_db()->getTable( 'Location' )->findLocationByItem( $item, true ) );
+	return boolval(getLocationData($item));
+}
+
+function getLocationData($item, $single = true, $default = null)
+{
+	$locationTable = get_db()->getTable('Location');
+	if (method_exists($locationTable, 'findLocationsByItem')) { // geolocation v4+ (multi)
+		return $locationTable->findLocationsByItem($item);
+	}
+	if (method_exists($locationTable, 'findLocationByItem')) { // geolocation v3 (single)
+		return $locationTable->findLocationByItem($item, $single);
+	}
+	return $default;
+}
+
+function keyLocationOnly($locationData = null)
+{
+	if (is_array($locationData)) {
+		foreach ($locationData as $keyloc) {
+			return is_array($keyloc) ? $keyloc[0] : $locationData; // v4 vs v3
+		}
+	}
+	return $locationData;
 }
 
 function appStoreValidURL($string, $root='https://itunes.apple.com/us/app/id'){
