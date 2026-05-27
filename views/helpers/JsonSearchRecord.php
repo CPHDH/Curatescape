@@ -12,7 +12,7 @@ class Curatescape_View_Helper_JsonSearchRecord extends Zend_View_Helper_Abstract
 		/* ITEM */
 		if($searchText->record_type == 'Item'){
 			if(
-				get_db()->getTable( 'Location' )->findLocationByItem( $searchText->record_id, true ) &&
+				hasLocation($record) &&
 				isCuratescapeStory($record)
 			){
 				return array(
@@ -29,7 +29,7 @@ class Curatescape_View_Helper_JsonSearchRecord extends Zend_View_Helper_Abstract
 			$parentRecord = get_record_by_id('Item', $record->item_id );
 			if(
 				$parentRecord && 
-				get_db()->getTable( 'Location' )->findLocationByItem( $record->item_id, true ) &&
+				hasLocation($parentRecord) &&
 				isCuratescapeStory($parentRecord)
 			){
 				return array(
