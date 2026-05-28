@@ -14,20 +14,20 @@ class Curatescape_View_Helper_JsonItem extends Zend_View_Helper_Abstract
 				'modified' => $item->modified,
 				'latitude' => $location['latitude'],
 				'longitude' => $location['longitude'],
-				'title' => dc($item, 'Title', array('no_filter'=>true)),
-				'subtitle' => itm($item, 'Subtitle'),
+				'title' => trim(dc($item, 'Title', array('no_filter'=>true))),
+				'subtitle' => trim(itm($item, 'Subtitle')),
 				'fullsize' => preferredItemImageUrl($item),
-				'address' => strip_tags(itm($item, 'Street Address')),
+				'address' => strip_tags(trim(itm($item, 'Street Address'))),
 			);
 			if($isExtended){
 				$itemMetadata['all_locations'] = $this->additionalLocations($locationData);
 				$itemMetadata['zoom'] = $location['zoom_level'];
 				$itemMetadata['creator'] = $this->getCreators($item);
-				$itemMetadata['description'] = itm($item, 'Story');
+				$itemMetadata['description'] = trim(itm($item, 'Story'));
 				$itemMetadata['sponsor'] = itm($item, 'Sponsor');
-				$itemMetadata['accessinfo'] = strip_tags(itm($item, 'Access Information'));
-				$itemMetadata['lede'] = itm($item, 'Lede');
-				$itemMetadata['website'] = itm($item, 'Official Website');
+				$itemMetadata['accessinfo'] = strip_tags(trim(itm($item, 'Access Information')));
+				$itemMetadata['lede'] = trim(itm($item, 'Lede'));
+				$itemMetadata['website'] = trim(itm($item, 'Official Website'));
 				$itemMetadata['related_resources' ] = $this->getRelatedResources($item);
 				$itemMetadata['factoids'] = $this->getFactoids($item);
 				$itemMetadata['files'] = $this->getFiles($item);
