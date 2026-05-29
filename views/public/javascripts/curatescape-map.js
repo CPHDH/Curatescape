@@ -52,6 +52,9 @@ let currentStyleLayer = 0;
 let bitmapMarkerReg = null;
 let markerBitmapFeat = null;
 let loadingIndicator = null;
+let maptype = null;
+let rootUrl = null;
+let markerColor = null;
 // TRACKED EVENTS
 let subjectSelectListener = null;
 let markerRequestListener = null;
@@ -391,7 +394,7 @@ const keyboardEnhancements = () => {
 			this.skipButton.addEventListener('click', this.skipHandler);
 			this.container.appendChild(this.skipButton);
 			// multi maps only...
-			if(attr('data-maptype') !== 'multi') return this.container;
+			if(maptype !== 'multi') return this.container;
 			// LIST
 			this.listButton = document.createElement('button');
 			this.listButton.innerText = getCommaSeparatedValue(attr('data-map-list-labels'), 0);
@@ -572,7 +575,7 @@ const removeLoading = () => {
 }
 const dataSource = (term) => {
 	if (term) {
-		return `${attr('data-root-url')}/items/browse?search=&advanced[0][element_id]=49&advanced[0][type]=contains&advanced[0][terms]=${term}&output=mobile-json`;
+		return `${rootUrl}/items/browse?search=&advanced[0][element_id]=49&advanced[0][type]=contains&advanced[0][terms]=${term}&output=mobile-json`;
 	} else {
 		return attr('data-json-source');
 	}
@@ -773,9 +776,9 @@ const setPopup = (props) => {
 	let subtitle = props.subtitle ? ': '+props.subtitle : '';
 	let infowindow = `
 	<div class="curatescape-iw">
-		<a href="${attr('data-root-url')}/items/show/${props.id + params}" class="curatescape-iw-image portrait" style="background-image:url(${props.fullsize});"></a>
+		<a href="${rootUrl}/items/show/${props.id + params}" class="curatescape-iw-image portrait" style="background-image:url(${props.fullsize});"></a>
 		<div class="curatescape-iw-content">
-			<a href="${attr('data-root-url')}/items/show/${props.id}" class="curatescape-iw-title">
+			<a href="${rootUrl}/items/show/${props.id}" class="curatescape-iw-title">
 				${htmlEntities(props.title + subtitle)}
 			</a>
 			<div class="curatescape-iw-address">
@@ -801,7 +804,7 @@ const setMarkers = async (src, fitBoundsAllowed = true, initialLoad = false) => 
 		return response.json()
 	}).then((data) => {
 		// Curatescape JSON -> GeoJSON FeatureCollection
-		let items = attr('data-maptype') === 'multi' ? data.items : [data];
+		let items = maptype === 'multi' ? data.items : [data];
 		geojson = {
 			type: 'FeatureCollection',
 			features: (items || []).map((item, index) => ({
@@ -818,7 +821,7 @@ const setMarkers = async (src, fitBoundsAllowed = true, initialLoad = false) => 
 		if (fitBoundsAllowed && (!attr('data-fixed-center', true) || term)) {
 			map.fitBounds(bounds, {
 				padding: {top: 25, bottom:25, left: 75, right: 75},
-				maxZoom: (attr('data-maptype') === 'single' && geojson?.features?.[0]?.properties?.zoom) ? +geojson.features[0].properties.zoom : 15,
+				maxZoom: (maptype === 'single' && geojson?.features?.[0]?.properties?.zoom) ? +geojson.features[0].properties.zoom : 15,
 				animate: !prefReducedMotion && items.length !== 1, // no animation for single
 			});
 		}
@@ -863,7 +866,7 @@ const initMarkerEvents = () => {
 			message += ' (' + props.address + ')'
 		}
 		announce(message);
-		if(attr('data-maptype') !== 'single'){
+		if(maptype !== 'single'){
 			setPopup(props);
 		}
 	}
@@ -904,17 +907,17 @@ const initMarkerEvents = () => {
 const addImageSources = async () => {
 	if (!map) return;
 	if (!map.hasImage('marker-regular')){
-		bitmapMarkerReg = await map.loadImage(await toBitmap(markerSVG(attr('data-color'), false, false)));
+		bitmapMarkerReg = await map.loadImage(await toBitmap(markerSVG(markerColor, false, false)));
 		map.addImage('marker-regular', bitmapMarkerReg.data);
 	}
-	if(attr('data-maptype') === 'single' && !map.hasImage('marker-featured')) {
+	if(maptype === 'single' && !map.hasImage('marker-featured')) {
 		map.addImage('marker-featured', bitmapMarkerReg.data);
 		return;
 	}
 	if (!map.hasImage('marker-featured')){
-		let featuredColor = attr('data-featured-color') || attr('data-color');
+		let featuredColor = attr('data-featured-color') || markerColor;
 		let featuredStar = attr('data-featured-star', true);
-		if(attr('data-color') === featuredColor && !featuredStar){ // identical settings
+		if(markerColor === featuredColor && !featuredStar){ // identical settings
 			markerBitmapFeat = bitmapMarkerReg; 
 		}
 		markerBitmapFeat = markerBitmapFeat || await map.loadImage(await toBitmap(markerSVG(featuredColor, true, featuredStar)));
@@ -946,13 +949,16 @@ const CuratescapeMapInit = () => {
 		console.error('Map canvas element not found.');
 		return;
 	}
+	maptype = attr('data-maptype');
+	rootUrl = attr('data-root-url');
+	markerColor = attr('data-color');
 	try {
 		map = new maplibregl.Map({
 			container: mapcanvas,
 			center: [attr('data-lon'), attr('data-lat')],
 			zoom: attr('data-zoom'),
 			bearing: 0,
-			scrollZoom: (attr('data-maptype') !== 'multi'),
+			scrollZoom: (maptype !== 'multi'),
 			attributionControl: { compact: true },
 			interactive: false,
 		}).once("mousedown", () => {
