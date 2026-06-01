@@ -183,3 +183,12 @@ if(databaseTableExists($db,'tour_items')){
 		SQL
 	);
 }
+
+/*
+** ENABLE TOURS IN SEARCH BY DEFAULT
+*/
+$searchRecordTypes = unserialize(get_option('search_record_types'));
+if (is_array($searchRecordTypes) && !isset($searchRecordTypes['CuratescapeTour'])) {
+	$searchRecordTypes['CuratescapeTour'] = 'CuratescapeTour';
+	set_option('search_record_types', serialize($searchRecordTypes));
+}
