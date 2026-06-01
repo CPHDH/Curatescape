@@ -86,10 +86,19 @@ class CuratescapeTour extends Omeka_Record_AbstractRecord
 		$this->updateSearchIndex();
 	}
 
-	public function editTourItems($post, $index = 0)
+	public function editTourItems($post)
 	{
-		$this->removeAllTourItems();
-		$this->addTourItemsByPost($post);
+		if (!isset($post['tour_item_ids'])) return;
+		$db = get_db();
+		$db->beginTransaction();
+		try {
+			$this->removeAllTourItems();
+			$this->addTourItemsByPost($post);
+			$db->commit();
+		} catch (Exception $e) {
+			$db->rollBack();
+			throw $e;
+		}
 	}
 
 	private function removeAllTourItems(){
@@ -121,13 +130,12 @@ class CuratescapeTour extends Omeka_Record_AbstractRecord
 	protected function afterSave($args, $index = 0)
 	{
 		if($post = $args['post']){
-			if(!$args['insert']){
-				$this->removeAllTourItems();
+			if($args['insert']){
+				$this->addTourItemsByPost($post);
 			}
 			if($post['tags']){
 				$this->applyTagString($post['tags']);
 			}
-			$this->addTourItemsByPost($post);
 		}
 		$this->updateSearchIndex();
 	}

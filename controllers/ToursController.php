@@ -102,30 +102,34 @@ class Curatescape_ToursController extends Omeka_Controller_AbstractActionControl
 		if ($request->isPost()) {
 			$post = $request->getPost();
 			$tour->editTourMeta($post);
-			$tour->editTourItems($post);
-			if($post['tags']){
-				$tour->applyTagString($post['tags']);
-			}
-			if ($tour->save()) {
-				$this->_helper->flashMessenger(__('Tour updated successfully.'), 'success');
-				// Invalidate and rebuild tours JSON cache
-				$cache = get_view()->CuratescapeCache();
-				$cache->CacheBustManual(_JSON_TOURS_FILE_, true);
-				set_option('curatescape_web_root', WEB_ROOT);
-				try {
-					$jobDispatcher = Zend_Registry::get('bootstrap')->getResource('jobs');
-					$jobDispatcher->sendLongRunning('Curatescape_Job_RefreshJsonCache');
-				} catch (Throwable $e) {
-					try {
-						$jobDispatcher = Zend_Registry::get('job_dispatcher');
-						$jobDispatcher->send('Curatescape_Job_RefreshJsonCache');
-					} catch (Throwable $e) {
-						get_view()->JsonTour()->refreshJsonCache($cache);
-					}
-				}
-				$this->_helper->redirector->gotoRoute(array('action' => 'show', 'id' => $tour->id), 'tourAction');
+			if (!$tour->isValid()) {
+				$this->_helper->flashMessenger($tour->getErrors());
 			} else {
-				$this->_helper->flashMessenger(__('There was an error updating the tour.'), 'error');
+				$tour->editTourItems($post);
+				if($post['tags']){
+					$tour->applyTagString($post['tags']);
+				}
+				if ($tour->save()) {
+					$this->_helper->flashMessenger(__('Tour updated successfully.'), 'success');
+					// Invalidate and rebuild tours JSON cache
+					$cache = get_view()->CuratescapeCache();
+					$cache->CacheBustManual(_JSON_TOURS_FILE_, true);
+					set_option('curatescape_web_root', WEB_ROOT);
+					try {
+						$jobDispatcher = Zend_Registry::get('bootstrap')->getResource('jobs');
+						$jobDispatcher->sendLongRunning('Curatescape_Job_RefreshJsonCache');
+					} catch (Throwable $e) {
+						try {
+							$jobDispatcher = Zend_Registry::get('job_dispatcher');
+							$jobDispatcher->send('Curatescape_Job_RefreshJsonCache');
+						} catch (Throwable $e) {
+							get_view()->JsonTour()->refreshJsonCache($cache);
+						}
+					}
+					$this->_helper->redirector->gotoRoute(array('action' => 'show', 'id' => $tour->id), 'tourAction');
+				} else {
+					$this->_helper->flashMessenger(__('There was an error updating the tour.'), 'error');
+				}
 			}
 		}
 	}
