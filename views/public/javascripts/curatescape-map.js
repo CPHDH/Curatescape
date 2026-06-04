@@ -125,7 +125,7 @@ const toBitmap = (svgString, retina = true, width = 27, height = 41, mime = 'ima
 			resolve(pngDataURL);
 		};
 		img.onerror = () => reject(new Error('Failed to load SVG image'));
-		img.src = 'data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(svgString)));
+		img.src = 'data:image/svg+xml;base64,' + btoa(encodeURIComponent(svgString).replace(/%([0-9A-F]{2})/g, (_, p1) => String.fromCharCode(parseInt(p1, 16))));
 	});
 };
 const markerSVG = (color, featured = false, star = false, height = 41, width = 27) => {
@@ -370,7 +370,7 @@ const styleSwapControl = () => {
 }
 const keyboardEnhancements = () => {
 	class KeyboardAltControls {
-		onAdd(map) {
+		onAdd(_map) {
 			this.mapcanvas = mapcanvas;
 			this.mapfigcaption = mapfigcaption;
 			this.container = document.createElement('div');
