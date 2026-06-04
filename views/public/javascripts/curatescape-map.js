@@ -52,6 +52,7 @@ let currentStyleLayer = 0;
 let bitmapMarkerReg = null;
 let markerBitmapFeat = null;
 let loadingIndicator = null;
+let disableListLink = false;
 let maptype = null;
 let rootUrl = null;
 let markerColor = null;
@@ -399,76 +400,72 @@ const keyboardEnhancements = () => {
 			this.listButton = document.createElement('button');
 			this.listButton.innerText = getCommaSeparatedValue(attr('data-map-list-labels'), 0);
 			this.listHandler = (e) =>{
+				if (!geojson) return;
 				pauseInteractivity();
 				e.preventDefault();
-				this.pois = map.getSource('pois');
-				this.pois.getData().then((data)=>{
-					this.results = '';
-					this.results = document.createElement('div');
-					this.results.className = 'keyboard-results';
-					this.results.setAttribute('role','region');
-					this.results.setAttribute('aria-label', getCommaSeparatedValue(attr('data-marker-labels'), 1));
-					// close button
-					this.closeButton = document.createElement('button');
-					this.closeButton.id = 'keyboard-close-button';
-					this.closeButton.ariaLabel = 'ESC';
-					this.closeHandler = (e) => {
-						e.preventDefault();
-						this.results = '';
-						if(this.escapeHandler){
-							document.removeEventListener('keyup', this.escapeHandler);
-						}
-						e.target.parentElement.remove();
-						resumeInteractivity();
+				this.results = document.createElement('div');
+				this.results.className = 'keyboard-results';
+				this.results.setAttribute('role','region');
+				this.results.setAttribute('aria-label', getCommaSeparatedValue(attr('data-marker-labels'), 1));
+				// close button
+				this.closeButton = document.createElement('button');
+				this.closeButton.id = 'keyboard-close-button';
+				this.closeButton.ariaLabel = 'ESC';
+				this.closeHandler = (e) => {
+					e.preventDefault();
+					if(this.escapeHandler){
+						document.removeEventListener('keyup', this.escapeHandler);
 					}
-					this.closeButton.addEventListener('click', this.closeHandler);
-					this.results.appendChild(this.closeButton);
-					// escape
-					this.escapeHandler = (e) => {
-						e = e || window.event;
-						var isEscape = false;
-						if ("key" in e) {
-							isEscape = (e.key === "Escape" || e.key === "Esc");
-						} else {
-							isEscape = (e.keyCode === 27);
-						}
-						if (isEscape) {
-							this.closeButton.click();
-						}
-					};
-					document.addEventListener('keyup', this.escapeHandler);
-					// focus out
-					this.focusOutHandler = (e) => {
-						if (this.results.contains(e.relatedTarget)) return;
-						this.results.remove();
-						this.skipButton.focus();
+					e.target.parentElement.remove();
+					resumeInteractivity();
+				}
+				this.closeButton.addEventListener('click', this.closeHandler);
+				this.results.appendChild(this.closeButton);
+				// escape
+				this.escapeHandler = (e) => {
+					e = e || window.event;
+					var isEscape = false;
+					if ("key" in e) {
+						isEscape = (e.key === "Escape" || e.key === "Esc");
+					} else {
+						isEscape = (e.keyCode === 27);
 					}
-					this.results.addEventListener('focusout', this.focusOutHandler);
-					// item list
-					let tourid = attr('data-tour');
-					let ul = document.createElement('ul');
-					data.features.forEach(i =>{
-						let props = i.properties;
-						let params = tourid ? "?tour=" + tourid + "&index=" + props.index : "";
-						let li = document.createElement('li');
-						let a = document.createElement('a');
-							a.className = 'keyboard-item-link';
-							a.href = htmlEntities(`/items/show/${props.id + params}`);
-							let subtitle = props.subtitle ? ': '+props.subtitle : '';
-							a.innerHTML = `<strong>${htmlEntities(props.title + subtitle)}</strong>`;
-						if(props.address){
-							a.innerHTML += `<small>${htmlEntities(props.address)}</small>`;
-						}
-						li.appendChild(a);
-						ul.appendChild(li);
-						this.results.appendChild(ul);
-					});
-					this.mapcanvas.appendChild(this.results);
-					this.results.setAttribute('tabIndex','0');
-					this.results.focus();
-					this.results.removeAttribute('tabIndex');
-					announce(getCommaSeparatedValue(attr('data-map-list-labels'), 1));
+					if (isEscape) {
+						this.closeButton.click();
+					}
+				};
+				document.addEventListener('keyup', this.escapeHandler);
+				// focus out
+				this.focusOutHandler = (e) => {
+					if (this.results.contains(e.relatedTarget)) return;
+					this.results.remove();
+					this.skipButton.focus();
+				}
+				this.results.addEventListener('focusout', this.focusOutHandler);
+				// item list
+				let tourid = attr('data-tour');
+				let ul = document.createElement('ul');
+				geojson.features.forEach(i =>{
+					let props = i.properties;
+					let params = tourid ? "?tour=" + tourid + "&index=" + props.index : "";
+					let li = document.createElement('li');
+					let a = document.createElement('a');
+						a.className = 'keyboard-item-link';
+						a.href = htmlEntities(`/items/show/${props.id + params}`);
+						a.addEventListener('click', (e) => { if (testvar) e.preventDefault(); });
+						let subtitle = props.subtitle ? ': '+props.subtitle : '';
+						a.innerHTML = `<strong>${htmlEntities(props.title + subtitle)}</strong>`;
+					if(props.address){
+						a.innerHTML += `<small>${htmlEntities(props.address)}</small>`;
+					}
+					li.appendChild(a);
+					ul.appendChild(li);
 				});
+				this.results.appendChild(ul);
+				this.mapcanvas.appendChild(this.results);
+				this.results.setAttribute('tabIndex','-1');
+				this.results.focus();
+				announce(getCommaSeparatedValue(attr('data-map-list-labels'), 1));
 			}
 			this.listButton.addEventListener('click', this.listHandler);
 			this.container.appendChild(this.listButton);
@@ -813,6 +810,8 @@ const setMarkers = async (src, fitBoundsAllowed = true, initialLoad = false) => 
 			// rebuild dataset for multi-location item
 			if( items[0]['all_locations'].length > 1 ) {
 				// 2 or more locations
+				maptype = 'multi'; // allow list-based nav?
+				disableListLink = true;
 				items = items[0]['all_locations'].map((location) =>{
 					return {
 						id: items[0].id,
@@ -837,6 +836,10 @@ const setMarkers = async (src, fitBoundsAllowed = true, initialLoad = false) => 
 				properties: { ...item, index },
 			})),
 		};
+		if (initialLoad) {
+			addControls();
+			mapfigure.setAttribute('data-loaded', 'true');
+		}
 		// Add Markers
 		markerLayers(geojson, attr('data-cluster', true));
 		// Bounds
@@ -990,8 +993,6 @@ const CuratescapeMapInit = () => {
 			initMarkerRequestListener();
 		}).once('styledata', () => {
 			setMarkers(dataSource(), true, true);
-			addControls();
-			mapfigure.setAttribute('data-loaded', 'true');
 		});
 		setStyleLayers();
 	} catch (error) {

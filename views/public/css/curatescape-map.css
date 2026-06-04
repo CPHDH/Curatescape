@@ -262,6 +262,10 @@ figure[data-maptype="multi"]:not([data-tour=""]) #curatescape-map-caption{
 #keyboard-close-button:focus {
 	background-color: rgba(256, 256, 256, 1);
 }
+.keyboard-results ul{
+	padding: 0;
+	margin: 0;
+}
 .keyboard-item-link {
 	display: block;
 	font-size: 16px;
@@ -271,7 +275,7 @@ figure[data-maptype="multi"]:not([data-tour=""]) #curatescape-map-caption{
 	border-radius: 4px;
 	text-decoration: none;
 	color: inherit;
-	max-width: max(44rem, calc(100% - 134px));
+	max-width: calc(100% - 134px);
 	margin:  0.5lh auto 0;
 }
 .keyboard-item-link:hover,
