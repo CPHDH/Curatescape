@@ -33,6 +33,7 @@ class Curatescape_View_Helper_CuratescapeMap extends Zend_View_Helper_Abstract{
 			data-reset-label="<?php echo __('Reset to initial view');?>" 
 			data-style-swap-label="<?php echo __('Base Map');?>" 
 			data-skip-link-label="<?php echo __('Skip %s Map', storyLabelString());?>"
+			data-map-list-labels="<?php echo __('View %s List', storyLabelString('plural')).','.__('List Ready');?>"
 			data-marker-labels="<?php echo storyLabelString().','.storyLabelString('plural');?>" 
 			data-color="<?php echo flexOption('curatescape_map_marker_color', '#222');?>"
 			>

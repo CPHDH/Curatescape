@@ -805,6 +805,30 @@ const setMarkers = async (src, fitBoundsAllowed = true, initialLoad = false) => 
 	}).then((data) => {
 		// Curatescape JSON -> GeoJSON FeatureCollection
 		let items = maptype === 'multi' ? data.items : [data];
+		// Geolocation v4+
+		if(
+			maptype === 'single' && 
+			items[0]?.['all_locations']?.length > 0
+		){
+			// rebuild dataset for multi-location item
+			if( items[0]['all_locations'].length > 1 ) {
+				// 2 or more locations
+				items = items[0]['all_locations'].map((location) =>{
+					return {
+						id: items[0].id,
+						title: items[0].title,
+						fullsize: items[0].fullsize,
+						latitude: location.latitude,
+						longitude: location.longitude,
+						subtitle: '',
+						address: location.label || location.latitude + ',' + location.longitude,
+					}
+				});
+			} else if (items[0]['all_locations'][0].label){
+				// 1 location but with user-label, override street address
+				items[0].address = items[0]['all_locations'][0].label;
+			}
+		}
 		geojson = {
 			type: 'FeatureCollection',
 			features: (items || []).map((item, index) => ({
@@ -866,9 +890,7 @@ const initMarkerEvents = () => {
 			message += ' (' + props.address + ')'
 		}
 		announce(message);
-		if(maptype !== 'single'){
-			setPopup(props);
-		}
+		setPopup(props);
 	}
 	map.on('click', 'unclustered-point', markerClick);
 	// Cluster Click

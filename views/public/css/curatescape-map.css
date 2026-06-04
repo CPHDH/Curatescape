@@ -377,9 +377,18 @@ figure[data-maptype="multi"]:not([data-tour=""]) #curatescape-map-caption{
 	padding: 0.5lh;
 }
 
+#curatescape-map-figure[data-maptype="single"] {
+	.curatescape-iw-content {
+		margin-top: unset;
+	}
+}
+
 .curatescape-iw-title {
+	text-wrap: balance;
+	max-height: 10lh;
+	overflow: clip;
 	font-weight: 600;
-	padding-bottom: 0.25lh;
+	padding-bottom: 0.35lh;
 	margin-bottom: 0.25lh;
 	border-bottom: 1px solid rgba(256, 256, 256, .2);
 }
@@ -415,7 +424,7 @@ figure[data-maptype="multi"]:not([data-tour=""]) #curatescape-map-caption{
 	border-radius: 50%;
 	right: 10px;
 	top: 10px;
-	z-index: 1;
+	z-index: 2;
 	position: absolute;
 	color: transparent;
 	height: 24px;
