@@ -216,7 +216,7 @@ class Curatescape_View_Helper_CuratescapeMap extends Zend_View_Helper_Abstract{
 			if($addlParams = getQueryParams()){
 				$params = array_merge($addlParams, $params);
 			}
-			return WEB_ROOT.html_escape(url().'?'.http_build_query($params));
+			return html_escape(current_url($params));
 		}
 		return null;
 	}
