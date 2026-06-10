@@ -10,9 +10,9 @@ class Curatescape_View_Helper_ShortcodeCuratescapeAppButtons extends Zend_View_H
 		}
 
 		$useIcon = (isset($args['icons']) && $args['icons'] == 'true');
-		$addClass = isset($args['addclass']) ? trim($args['addclass']) : null;
-		$buttonClass = isset($args['buttonclass']) ? trim($args['buttonclass']) : 'curatescape-shortcode-button';
-		$containerclass = isset($args['containerclass']) ? trim($args['containerclass']) : 'curatescape-shortcode-app-buttons';
+		$addClass = isset($args['addclass']) ? html_escape(trim($args['addclass'])) : null;
+		$buttonClass = isset($args['buttonclass']) ? html_escape(trim($args['buttonclass'])) : 'curatescape-shortcode-button';
+		$containerclass = isset($args['containerclass']) ? html_escape(trim($args['containerclass'])) : 'curatescape-shortcode-app-buttons';
 		$platform = isset($args['platform']) ? strtolower(trim($args['platform'])) : null;
 
 		if($identifier = html_escape(option('curatescape_app_ios'))){
