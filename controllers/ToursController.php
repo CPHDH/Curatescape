@@ -98,8 +98,17 @@ class Curatescape_ToursController extends Omeka_Controller_AbstractActionControl
 
 		$this->view->assign(compact('tour'));
 
+		// CSRF token for the edit form (see form.php)
+		$csrf = new Omeka_Form_Element_SessionCsrfToken('csrf_token');
+		$this->view->csrfToken = $csrf->getToken();
+
 		// form
 		if ($request->isPost()) {
+			$csrfForm = new Omeka_Form_SessionCsrf;
+			if (!$csrfForm->isValid($_POST)) {
+				$this->_helper->flashMessenger(__('Invalid or expired form submission. Please reload the page and try again.'), 'error');
+				return;
+			}
 			$post = $request->getPost();
 			$tour->editTourMeta($post);
 			if (!$tour->isValid()) {

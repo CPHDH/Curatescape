@@ -35,6 +35,9 @@ function availableTourItemsJSON()
 }
 ?>
 
+<?php if (isset($this->csrfToken)): ?>
+<input type="hidden" name="csrf_token" value="<?php echo html_escape($this->csrfToken); ?>">
+<?php endif; ?>
 <section class="seven columns alpha" id="edit-form">
 	<div id="tour-metadata">
 		<div class="columns alpha" id="form-data">
