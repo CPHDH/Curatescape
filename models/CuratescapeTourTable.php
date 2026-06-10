@@ -13,25 +13,6 @@ class CuratescapeTourTable extends Omeka_Db_Table
 		return $itemTable->fetchObjects($select);
 	}
 
-	public function findImageByTourId( $tour_id )
-	{
-		$db = get_db();
-		$prefix=$db->prefix;
-		$itemTable = $this->getTable('File');
-		$select = $itemTable->getSelect();
-		$iAlias = $itemTable->getTableAlias();
-		$select->joinInner( array( 'ti' => $db->CuratescapeTourItem ),"ti.item_id = $iAlias.id", array() );
-		$select->where('ti.tour_id = ?', array($tour_id));
-		$select->order('ti.ordinal ASC');
-		$items = $itemTable->fetchObjects("SELECT f.*, ti.ordinal
-		FROM ".$prefix."files f LEFT JOIN ".$prefix."curatescape_tour_items ti
-		ON i.id = ti.item_id
-		WHERE ti.tour_id = ?
-		ORDER BY ti.ordinal ASC",
-		array( $tour_id ) );
-		return $items;
-	}
-
 	public function getSelect()
 	{
 		$select = parent::getSelect()
@@ -40,7 +21,6 @@ class CuratescapeTourTable extends Omeka_Db_Table
 			->order('curatescape_tours.id ASC');
 		$permissions = new Omeka_Db_Select_PublicPermissions('Curatescape_CuratescapeTours');
 		$permissions->apply( $select, 'curatescape_tours', null );
-		$acl = Zend_Registry::get('bootstrap')->getResource('Acl');
 		return $select;
 	}
 	

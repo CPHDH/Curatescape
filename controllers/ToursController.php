@@ -115,7 +115,7 @@ class Curatescape_ToursController extends Omeka_Controller_AbstractActionControl
 				$this->_helper->flashMessenger($tour->getErrors());
 			} else {
 				$tour->editTourItems($post);
-				if($post['tags']){
+				if(!empty($post['tags'])){
 					$tour->applyTagString($post['tags']);
 				}
 				if ($tour->save()) {

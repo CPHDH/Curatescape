@@ -248,7 +248,8 @@ class CuratescapeTour extends Omeka_Record_AbstractRecord
 		$db = get_db();
 		$tiTable = $db->getTable('CuratescapeTourItem');
 		$select = $tiTable->getSelect();
-		$select->where( 'tour_id='.$this->id.' AND item_id='.$itemId);
+		$select->where('tour_id = ?', (int)$this->id);
+		$select->where('item_id = ?', (int)$itemId);
 		return $tiTable->fetchObject($select);
 	}
 
