@@ -24,7 +24,7 @@ echo head(array('title' => $pageTitle, 'bodyid'=>'tours','bodyclass' => 'browse'
 							<?php echo snippet($tourDescription, 0, 500); ?>
 						</div>
 					<?php endif; ?>
-					<?php if ($tourTags = tag_string($tour, 'tours')): ?>
+					<?php if ($tourTags = tag_string($tour, 'tours/browse')): ?>
 						<div class="tags">
 							<?php echo '<strong>'.__('Tags').': </strong>'.$tourTags; ?>
 						</div>

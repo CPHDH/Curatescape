@@ -75,7 +75,7 @@
 							</p>
 							<p>
 								<strong><?php echo __('Tags');?>:</strong>
-								<?php echo ($tags = tag_string($tour, 'tours')) ? $tags : __('None'); ?>
+								<?php echo ($tags = tag_string($tour, 'tours/browse')) ? $tags : __('None'); ?>
 							</p>
 						</div>
 					</td>

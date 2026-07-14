@@ -51,7 +51,7 @@ echo flash();
 		<div id="tour_tags" class="element">
 			<h2><?php echo __('Tags');?></h2>
 			<div class="element-text">
-				<?php echo tag_string($tour,'tours');?>
+				<?php echo tag_string($tour,'tours/browse');?>
 			</div>
 		</div>
 	<?php endif; ?>
