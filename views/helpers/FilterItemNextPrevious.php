@@ -44,13 +44,13 @@ class Curatescape_View_Helper_FilterItemNextPrevious extends Zend_View_Helper_Ab
 		$tourInfo['tourURL'] = public_url( 'tours/show/'.$tourId );
 		$tourInfo['nextTourItem'] = $tour->getTourItemByIndex($tourInfo['nextIndex'] );
 		if($tourInfo['nextTourItem']){
-			$tourInfo['nextTourItemURL'] = '/items/show/'.$tourInfo['nextTourItem']->id;
+			$tourInfo['nextTourItemURL'] = public_url('items/show/'.$tourInfo['nextTourItem']->id);
 			$tourInfo['nextTourItemTitle'] = $this->normalizeText( $tour->tourItemTitleString($tourInfo['nextTourItem']) );
 			$tourInfo['nextTourItemThumb'] = preferredItemImageUrl($tourInfo['nextTourItem'], 'thumbnail');
 		}
 		$tourInfo['previousTourItem'] = $tour->getTourItemByIndex($tourInfo['previousIndex']);
 		if($tourInfo['previousTourItem']){
-			$tourInfo['previousTourItemURL'] = '/items/show/'.$tourInfo['previousTourItem']->id;
+			$tourInfo['previousTourItemURL'] = public_url('items/show/'.$tourInfo['previousTourItem']->id);
 			$tourInfo['previousTourItemTitle'] = $this->normalizeText($tour->tourItemTitleString($tourInfo['previousTourItem']));
 			$tourInfo['previousTourItemThumb'] = preferredItemImageUrl($tourInfo['previousTourItem'], 'thumbnail');
 		}
@@ -111,6 +111,9 @@ class Curatescape_View_Helper_FilterItemNextPrevious extends Zend_View_Helper_Ab
 		}
 		if(!tourNav.hasAttribute('tour-title')){
 			tourNav.setAttribute('tour-title', '<?php echo $tourInfo['tourTitle'];?>');
+		}
+		if(!tourNav.hasAttribute('tour-url')){
+			tourNav.setAttribute('tour-url', '<?php echo $tourInfo['tourURL'];?>');
 		}
 		if(!tourNav.hasAttribute('tour-nav-info-label')){
 			tourNav.setAttribute('tour-nav-info-label', '<?php echo __('%s Info', tourLabelString());?>');

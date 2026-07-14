@@ -66,6 +66,11 @@ class Curatescape_View_Helper_CuratescapeCache extends Zend_View_Helper_Abstract
 	}
 	private function cachablePath(){
 		// this protects against caching the wrong content (e.g. json results with query params)
-		return boolval(in_array($_SERVER['REQUEST_URI'], _CACHEABLE_PATHS_));
+		$base = parse_url(WEB_ROOT, PHP_URL_PATH); // subdirectory prefix, if any
+		$requestUri = $_SERVER['REQUEST_URI'];
+		if($base && str_starts_with($requestUri, $base)){
+			$requestUri = substr($requestUri, strlen($base));
+		}
+		return boolval(in_array($requestUri, _CACHEABLE_PATHS_));
 	}
 }

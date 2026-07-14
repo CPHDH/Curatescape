@@ -58,7 +58,7 @@ class Curatescape_View_Helper_CuratescapeItemMetadataPartial extends Zend_View_H
 
 	private function getTourLinks($tours = array(), $results = array()){
 		foreach($tours as $tour){
-			$results[] = '<a href="/tours/show/'.$tour['id'].'">'.$tour['title'].'</a>';
+			$results[] = '<a href="'.public_url('tours/show/'.$tour['id']).'">'.$tour['title'].'</a>';
 		}
 		return $results;
 	}

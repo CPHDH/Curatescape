@@ -119,11 +119,11 @@ class Curatescape_View_Helper_HookAdminDashboard extends Zend_View_Helper_Abstra
 		for($i=0;$i<=10;$i++){
 			if(array_key_exists($i, $results) && is_object($results[$i])){
 				$tourItems .= '<p class="recent">';
-					$tourItems .= '<a href="/admin/tours/show/'.$results[$i]->id.'">'
+					$tourItems .= '<a href="'.url('tours/show/'.$results[$i]->id).'">'
 					.$results[$i]->title.'</a>';
 				$tourItems .= '</p>';
 				$tourItems .= '<p class="dash-edit">';
-					$tourItems .= '<a href="/admin/tours/edit/'.$results[$i]->id.'">'
+					$tourItems .= '<a href="'.url('tours/edit/'.$results[$i]->id).'">'
 					.__('Edit').'</a>';
 				$tourItems .= '</p>';
 			}

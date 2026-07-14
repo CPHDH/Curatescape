@@ -34,29 +34,29 @@ class Curatescape_View_Helper_HookAdminHead extends Zend_View_Helper_Abstract{
 	private function adminCss()
 	{
 		queue_css_file('curatescape-dashboard', 'all', false, 'css', get_plugin_ini('Curatescape', 'version'));
-		if(is_current_url('/admin/tours/')){
+		if(is_current_url('/tours/')){
 			queue_css_file('curatescape-tours', 'all', false, 'css', get_plugin_ini('Curatescape', 'version'));
 		}
 		if(
-			is_current_url('/admin/plugins/config?name=Curatescape') ||
-			is_current_url('/admin/plugins/config/name/Curatescape')
+			is_current_url('/plugins/config?name=Curatescape') ||
+			is_current_url('/plugins/config/name/Curatescape')
 		){
 			queue_css_file('curatescape-config', 'all', false, 'css', get_plugin_ini('Curatescape', 'version'));
 		}
 	}
 	private function adminJs()
 	{
-		if(is_current_url('/admin/tours/')){
+		if(is_current_url('/tours/')){
 			queue_js_file('curatescape-tours', 'javascripts');
 		}
 	}
 	private function compatibilityCheck()
 	{
 		if(
-			(is_current_url('/admin/plugins/') && !is_current_url('/admin/plugins/uninstall/')) ||
-			is_current_url('/admin/themes/') ||
-			is_current_url('/admin/settings/') ||
-			is_current_url('/admin/tours/')
+			(is_current_url('/plugins/') && !is_current_url('/plugins/uninstall/')) ||
+			is_current_url('/themes/') ||
+			is_current_url('/settings/') ||
+			is_current_url('/tours/')
 		){
 			$warnings = array();
 			foreach(self::DEPRECATEDPLUGINS as $plugin){
@@ -219,7 +219,7 @@ class Curatescape_View_Helper_HookAdminHead extends Zend_View_Helper_Abstract{
 		$disable = json_encode(__('Disable Restrictions'));
 		$reenable = json_encode(__('Re-enable Restrictions'));
 		$label = json_encode(__('Form Restrictions'));
-		$desc = json_encode(__('Administrators may temporarily disable form restrictions. See also: <a href="%1s">%2s plugin settings</a>.', '/admin/plugins', 'Curatescape'));
+		$desc = json_encode(__('Administrators may temporarily disable form restrictions. See also: <a href="%1s">%2s plugin settings</a>.', admin_url('/plugins'), 'Curatescape'));
 		echo <<<JS
 		const sheet = document.getElementById('curatescape-form-restrictions');
 		const panel = document.querySelector('#save.panel');

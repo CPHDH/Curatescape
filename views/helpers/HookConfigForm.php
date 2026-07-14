@@ -163,7 +163,7 @@ class Curatescape_View_Helper_HookConfigForm extends Zend_View_Helper_Abstract{
 			<?php
 			$itemjson = WEB_FILES . '/curatescape/items.cache.json';
 			$tourjson = WEB_FILES . '/curatescape/tours.cache.json';
-			$cacheDebugLinks = '<div class="explanation"><a class="button" target="_blank" href="/items/browse?output=mobile-json&curatescape_cache_break=debug">'.__('Clear & Debug Items Cache').'</a><a class="button" target="_blank" href="/tours/browse?output=mobile-json&curatescape_cache_break=debug">'.__('Clear & Debug Tours Cache').'</a></div>';
+			$cacheDebugLinks = '<div class="explanation"><a class="button" target="_blank" href="'.public_url('items/browse').'?output=mobile-json&curatescape_cache_break=debug">'.__('Clear & Debug Items Cache').'</a><a class="button" target="_blank" href="'.public_url('tours/browse').'?output=mobile-json&curatescape_cache_break=debug">'.__('Clear & Debug Tours Cache').'</a></div>';
 			echo $this->configFormSelect('curatescape_json_storage', __('JSON Server Cache'), __('When enabled, certain Curatescape JSON feeds will be cached and stored on the server for the selected duration. Increase the duration to improve performance and reduce memory usage for large datasets. Disable this option if you experience errors relating to your server security configurations. All server cache files are automatically cleared when saving an item. The server cache is bypassed for logged in users. %s', $cacheDebugLinks),
 				array(
 				'0' => __('Disable cache'),
@@ -182,7 +182,7 @@ class Curatescape_View_Helper_HookConfigForm extends Zend_View_Helper_Abstract{
 
 		<fieldset>
 			<legend><?php echo __('Dashboard Settings'); ?></legend>
-			<p><?php echo __('Use the following options to add new panels to the <a href="/admin/" target="_blank">admin dashboard</a>.');?></p>
+			<p><?php echo __('Use the following options to add new panels to the <a href="%s" target="_blank">admin dashboard</a>.', admin_url('/'));?></p>
 
 			<!-- Content Audit -->
 			<?php echo $this->configFormCheckBox('curatescape_dashboard_audit', __('Content Audit'), __('If checked, the admin dashboard will display the results of a content audit to ensure that authors are employing the recommended best practices for %s. Audit results are cached on the server side for up to 1 week or until an item record is added or modified. This option may temporarily slow down loading of the dashboard when the cache is being refreshed.', _CURATESCAPE_ITEM_TYPE_NAME_PLURAL_) );?>

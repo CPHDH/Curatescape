@@ -114,7 +114,7 @@ function availableTourItemsJSON()
 						$tourItems = $tour->getItems();
 						foreach($tourItems as $ti){
 							$custom=$tour->getTourItem($ti->id);
-							$html = '<li data-id="'.$ti->id.'" class="ui-state-highlight"><div class="item-primary"><div class="drag">'.svg('drag').'</div><span class="title"><a href="/items/show/'.$ti->id.'" target="_blank">'.metadata($ti,array('Dublin Core','Title')).'</a></span><div class="edit" onclick="editTourItem(this)" tabindex="0" aria-role="button" title="'.$strings['title_edit'].'">'.svg('edit').'</div><div class="remove" tabindex="0" aria-role="button" title="'.$strings['title_remove'].'">'.svg('trash').'</div></div><div class="item-secondary" hidden><div class="editable"><label for="ti_sub_'.$ti->id.'">'.$strings['label_subtitle'].'</label><input id="ti_sub_'.$ti->id.'" name="ti_sub_'.$ti->id.'" type="text" placeholder="'.$strings['placeholder_subtitle'].'" value="'.$custom->subtitle.'"><label for="ti_text_'.$ti->id.'">'.$strings['label_text'].'</label><textarea id="ti_text_'.$ti->id.'" name="ti_text_'.$ti->id.'" rows="5" placeholder="'.$strings['placeholder_text'].'">'.$custom->text.'</textarea></div></div></li>';
+							$html = '<li data-id="'.$ti->id.'" class="ui-state-highlight"><div class="item-primary"><div class="drag">'.svg('drag').'</div><span class="title"><a href="'.url('items/show/'.$ti->id).'" target="_blank">'.metadata($ti,array('Dublin Core','Title')).'</a></span><div class="edit" onclick="editTourItem(this)" tabindex="0" aria-role="button" title="'.$strings['title_edit'].'">'.svg('edit').'</div><div class="remove" tabindex="0" aria-role="button" title="'.$strings['title_remove'].'">'.svg('trash').'</div></div><div class="item-secondary" hidden><div class="editable"><label for="ti_sub_'.$ti->id.'">'.$strings['label_subtitle'].'</label><input id="ti_sub_'.$ti->id.'" name="ti_sub_'.$ti->id.'" type="text" placeholder="'.$strings['placeholder_subtitle'].'" value="'.$custom->subtitle.'"><label for="ti_text_'.$ti->id.'">'.$strings['label_text'].'</label><textarea id="ti_text_'.$ti->id.'" name="ti_text_'.$ti->id.'" rows="5" placeholder="'.$strings['placeholder_text'].'">'.$custom->text.'</textarea></div></div></li>';
 							echo $html;
 						}
 					} ?>
@@ -126,7 +126,7 @@ function availableTourItemsJSON()
 
 <section class="three columns omega">
 	<div id="save" class="panel">
-		<?php if(is_current_url('/admin/tours/add')):?>
+		<?php if(!$tourId):?>
 			<!-- add -->
 			<?php echo $this->formSubmit('submit',__('Add Tour'), 
 			array('id' => 'save-changes', 'class' => 'submit big green button')); ?>
@@ -234,7 +234,7 @@ function availableTourItemsJSON()
 			if(jQuery.inArray(id, _itemsInTour(),0) >= 0){
 				alert('The item "' +label+ '" has already been added to the tour.');
 			}else{
-				jQuery( '<li data-id="' + id + '" class="ui-state-highlight">' ).html( '<div class="item-primary">'+'<div class="drag">'+'<?php echo svg('drag');?>'+'</div><span class="title"><a href="/items/show/'+id+'" target="_blank">'+label + '</a></span><div class="edit" onclick="editTourItem(this)" tabindex="0" aria-role="button" title="<?php echo $strings['title_edit'];?>">'+'<?php echo svg('edit');?>'+'</div><div class="remove" tabindex="0" aria-role="button" title="<?php echo $strings['title_remove'];?>">'+'<?php echo svg('trash');?>'+'</div></div><div class="item-secondary" hidden><div class="editable"><label for="ti_sub_' + id + '"><?php echo $strings['label_subtitle'];?></label><input id="ti_sub_' + id + '" name="ti_sub_' + id + '" type="text" placeholder="<?php echo $strings['placeholder_subtitle'];?>" value=""><label for="ti_text_' + id + '"><?php echo $strings['label_text'];?></label><textarea id="ti_text_' + id + '" name="ti_text_' + id + '" rows="5" placeholder="<?php echo $strings['placeholder_text'];?>"></textarea></div></div>' ).prependTo( "#sortable" );
+				jQuery( '<li data-id="' + id + '" class="ui-state-highlight">' ).html( '<div class="item-primary">'+'<div class="drag">'+'<?php echo svg('drag');?>'+'</div><span class="title"><a href="<?php echo url('items/show');?>/'+id+'" target="_blank">'+label + '</a></span><div class="edit" onclick="editTourItem(this)" tabindex="0" aria-role="button" title="<?php echo $strings['title_edit'];?>">'+'<?php echo svg('edit');?>'+'</div><div class="remove" tabindex="0" aria-role="button" title="<?php echo $strings['title_remove'];?>">'+'<?php echo svg('trash');?>'+'</div></div><div class="item-secondary" hidden><div class="editable"><label for="ti_sub_' + id + '"><?php echo $strings['label_subtitle'];?></label><input id="ti_sub_' + id + '" name="ti_sub_' + id + '" type="text" placeholder="<?php echo $strings['placeholder_subtitle'];?>" value=""><label for="ti_text_' + id + '"><?php echo $strings['label_text'];?></label><textarea id="ti_text_' + id + '" name="ti_text_' + id + '" rows="5" placeholder="<?php echo $strings['placeholder_text'];?>"></textarea></div></div>' ).prependTo( "#sortable" );
 				jQuery( "#sortable" ).scrollTop( 0 );
 				// update list on add
 				jQuery(document).trigger('tourItemsUpdated');

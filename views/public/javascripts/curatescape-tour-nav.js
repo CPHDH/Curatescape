@@ -31,6 +31,7 @@ class CuratescapeTourNav extends HTMLElement {
 				this.attr('tour-id'),
 				this.attr('tour-title'),
 				this.attr('tour-nav-info-label'),
+				this.attr('tour-url'),
 			)
 		);
 		// next tour item (end)
@@ -53,13 +54,13 @@ class CuratescapeTourNav extends HTMLElement {
 	attr(string){
 		return this.hasAttribute(string) ? this.getAttribute(string) : null;
 	}
-	tourDetail(id, tourid, title, tourinfo){
+	tourDetail(id, tourid, title, tourinfo, toururl){
 		if(!id || !tourid || !title || !tourinfo){
 			return this.spacer();
 		}
 		let infoSvg = '<svg xmlns="http://www.w3.org/2000/svg" class="ionicon" viewBox="0 0 512 512"><path d="M256 56C145.72 56 56 145.72 56 256s89.72 200 200 200 200-89.72 200-200S366.28 56 256 56zm0 82a26 26 0 11-26 26 26 26 0 0126-26zm64 226H200v-32h44v-88h-32v-32h64v120h44z"/></svg>'; // @todo: customizable using file URL
 		let link = document.createElement('a');
-		link.href = '/tours/show/'+tourid;
+		link.href = toururl ? toururl : '/tours/show/'+tourid;
 		link.title = title;
 		link.innerHTML = infoSvg + '<span>' + tourinfo + '</span>';
 		let tourDetail = document.createElement("div");
