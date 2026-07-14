@@ -8,21 +8,15 @@
 	--formBlack: #222;
 }
 /* BROWSE */
-@media (max-width: 767px) {
-	#tour.browse .middot{
-		display: none;
-	}
-	tr.tour .details div{
-		display: block;
-		width: 100%;
-	}
-}
 .hidden {
 	display: none;
 	visibility: hidden;
 }
-tr.tour .details .middot{
-	margin: 0 3px; 
+#tour.browse .details p{
+	width: 100%;
+}
+#tour.browse #tours th:first-child{
+	width: 50%; /* matches core .batch-edit-heading + th (items/browse title column) */
 }
 /* SHOW */
 .tours input[type="text"] {
@@ -71,38 +65,38 @@ tr.tour .details .middot{
 	padding: 1em !important;
 	box-sizing: border-box;
 }
-li .drag,
-li .remove,
-li .edit{
+#sortable li .drag,
+#sortable li .remove,
+#sortable li .edit{
 	flex-shrink: 0;
 	margin: 0;
 	color: var(--formGreyMedium);
 	transition: color .15s linear;
 }
-li .drag{
+#sortable li .drag{
 	width: 10px;
 	height: 20px;
 	margin-right: .75em;
 }
-li .remove,
-li .edit{
+#sortable li .remove,
+#sortable li .edit{
 	cursor: pointer;
 	width: 20px;
 	height: 20px;
 	margin-left: 1em;
 }
-li .remove:hover{
+#sortable li .remove:hover{
 	color: var(--formRed);
 }
-li .edit:hover{
+#sortable li .edit:hover{
 	color: var(--formBlack);
 }
-li .title{
+#sortable li .title{
 	flex-grow: 1;
 	margin: 0;
 }
-li .title a,
-li .title a:visited{
+#sortable li .title a,
+#sortable li .title a:visited{
 	color: inherit;
 }
 /* Item Search Form */
