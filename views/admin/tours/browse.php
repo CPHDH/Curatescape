@@ -91,10 +91,14 @@
 
 <?php else: ?>
 
-	<h2><?php echo __('You have no tours.'); ?></h2>
-	<?php if(is_allowed( 'Curatescape_CuratescapeTours', 'add' )): ?>
-		<p><?php echo __('Get started by adding your first tour.'); ?></p>
-		<a href="<?php echo html_escape(url( array( 'action' => 'add' ) )); ?>" class="add big green button"><?php echo __('Add a Tour'); ?></a>
+	<?php if(total_records('CuratescapeTour') === 0): ?>
+		<h2><?php echo __('You have no tours.'); ?></h2>
+		<?php if(is_allowed( 'Curatescape_CuratescapeTours', 'add' )): ?>
+			<p><?php echo __('Get started by adding your first tour.'); ?></p>
+			<a href="<?php echo html_escape(url( array( 'action' => 'add' ) )); ?>" class="add big green button"><?php echo __('Add a Tour'); ?></a>
+		<?php endif;?>
+	<?php else: ?>
+		<p><?php echo __('The query returned no results.'); ?></p>
 	<?php endif;?>
 
 <?php endif;?>
