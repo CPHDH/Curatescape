@@ -3,8 +3,9 @@ document.addEventListener('DOMContentLoaded', function() {
 	btns.forEach((b)=>{
 		b.addEventListener('click',(a)=>{
 			a.preventDefault();
-			let details = a.target.closest('tr').querySelector('.details');
-			details.classList.toggle('hidden')
+			let details = b.closest('tr').querySelector('.details');
+			let hidden = details.classList.toggle('hidden');
+			b.setAttribute('aria-expanded', hidden ? 'false' : 'true');
 		});
 	});
 });

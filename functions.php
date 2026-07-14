@@ -65,7 +65,12 @@ function svg($name, $path = null){
 	}
 	$filepath = $path.$name.'.svg';
 	if(!file_exists($filepath)) return null;
-	return file_get_contents($filepath);
+	$svg = file_get_contents($filepath);
+	if(!str_contains($svg, 'aria-hidden')){
+		// icons are decorative; hide them from assistive tech
+		$svg = preg_replace('/<svg\b/', '<svg aria-hidden="true" focusable="false"', $svg, 1);
+	}
+	return $svg;
 }
 
 function isCuratescapeStory($record)

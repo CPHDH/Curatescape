@@ -12,6 +12,7 @@
 
 	<div class="table-responsive">
 		<table id="tours">
+			<caption class="sr-only"><?php echo __('Tours listed by title, ID, and custom order'); ?></caption>
 			<thead>
 				<tr>
 				<?php echo browse_sort_links(
@@ -46,21 +47,21 @@
 
 						<ul class="action-links group">
 							<li>
-								<a href="#" class="details-link"><?php echo __('Details');?></a>
+								<a href="#" class="details-link" aria-expanded="false" aria-controls="tour-details-<?php echo $tour->id; ?>" aria-label="<?php echo html_escape(__('Details: %s', $tour->title)); ?>"><?php echo __('Details');?></a>
 							</li>
 							<?php if(is_allowed( 'Curatescape_CuratescapeTours', 'edit')):?>
 							<li>
-								<a href="<?php echo url(array( 'action' => 'edit','id' => $tour->id), 'tourAction' );?>" class="edit"><?php echo __('Edit')?></a>
+								<a href="<?php echo url(array( 'action' => 'edit','id' => $tour->id), 'tourAction' );?>" class="edit" aria-label="<?php echo html_escape(__('Edit: %s', $tour->title)); ?>"><?php echo __('Edit')?></a>
 							</li>
 							<?php endif;?>
 							<?php if(is_allowed( 'Curatescape_CuratescapeTours', 'delete')):?>
 							<li>
-								<a href="<?php echo url(array( 'action' => 'delete-confirm','id' => $tour->id), 'tourAction' );?>" class="delete-confirm"><?php echo __('Delete')?></a>
+								<a href="<?php echo url(array( 'action' => 'delete-confirm','id' => $tour->id), 'tourAction' );?>" class="delete-confirm" aria-label="<?php echo html_escape(__('Delete: %s', $tour->title)); ?>"><?php echo __('Delete')?></a>
 							</li>
 							<?php endif;?>
 						</ul>
 
-						<div class="details hidden">
+						<div class="details hidden" id="tour-details-<?php echo $tour->id; ?>">
 							<?php $tourDescription = snippet_by_word_count($tour->description, 40); ?>
 							<?php if($tourDescription !== ''): ?>
 								<p class="description"><?php echo html_escape($tourDescription); ?></p>

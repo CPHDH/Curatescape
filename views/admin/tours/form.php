@@ -106,7 +106,8 @@ function availableTourItemsJSON()
 				<p><?php echo __('Search for items to add to tour (item geolocation is required). Drag and drop to change order.');?></p>
 
 				<div class="input-container">
-					<input type="search" id="tour-item-search" placeholder="Search by title..." onkeydown="if (event.keyCode == 13) return false"/>
+					<label for="tour-item-search" class="sr-only"><?php echo __('Search for items to add to the tour');?></label>
+					<input type="search" id="tour-item-search" placeholder="<?php echo html_escape(__('Search by title...'));?>" onkeydown="if (event.keyCode == 13) return false"/>
 				</div>
 
 				<ul id="sortable">
@@ -114,7 +115,7 @@ function availableTourItemsJSON()
 						$tourItems = $tour->getItems();
 						foreach($tourItems as $ti){
 							$custom=$tour->getTourItem($ti->id);
-							$html = '<li data-id="'.$ti->id.'" class="ui-state-highlight"><div class="item-primary"><div class="drag">'.svg('drag').'</div><span class="title"><a href="'.url('items/show/'.$ti->id).'" target="_blank">'.metadata($ti,array('Dublin Core','Title')).'</a></span><div class="edit" onclick="editTourItem(this)" tabindex="0" aria-role="button" title="'.$strings['title_edit'].'">'.svg('edit').'</div><div class="remove" tabindex="0" aria-role="button" title="'.$strings['title_remove'].'">'.svg('trash').'</div></div><div class="item-secondary" hidden><div class="editable"><label for="ti_sub_'.$ti->id.'">'.$strings['label_subtitle'].'</label><input id="ti_sub_'.$ti->id.'" name="ti_sub_'.$ti->id.'" type="text" placeholder="'.$strings['placeholder_subtitle'].'" value="'.$custom->subtitle.'"><label for="ti_text_'.$ti->id.'">'.$strings['label_text'].'</label><textarea id="ti_text_'.$ti->id.'" name="ti_text_'.$ti->id.'" rows="5" placeholder="'.$strings['placeholder_text'].'">'.$custom->text.'</textarea></div></div></li>';
+							$html = '<li data-id="'.$ti->id.'" class="ui-state-highlight"><div class="item-primary"><div class="drag">'.svg('drag').'</div><span class="title"><a href="'.url('items/show/'.$ti->id).'" target="_blank">'.metadata($ti,array('Dublin Core','Title')).'</a></span><button type="button" class="edit" onclick="editTourItem(this)" aria-label="'.$strings['title_edit'].'" title="'.$strings['title_edit'].'">'.svg('edit').'</button><button type="button" class="remove" aria-label="'.$strings['title_remove'].'" title="'.$strings['title_remove'].'">'.svg('trash').'</button></div><div class="item-secondary" hidden><div class="editable"><label for="ti_sub_'.$ti->id.'">'.$strings['label_subtitle'].'</label><input id="ti_sub_'.$ti->id.'" name="ti_sub_'.$ti->id.'" type="text" placeholder="'.$strings['placeholder_subtitle'].'" value="'.$custom->subtitle.'"><label for="ti_text_'.$ti->id.'">'.$strings['label_text'].'</label><textarea id="ti_text_'.$ti->id.'" name="ti_text_'.$ti->id.'" rows="5" placeholder="'.$strings['placeholder_text'].'">'.$custom->text.'</textarea></div></div></li>';
 							echo $html;
 						}
 					} ?>
@@ -137,7 +138,7 @@ function availableTourItemsJSON()
 			<!-- view -->
 			<a href="<?php echo html_escape( public_url( 'tours/show/' . $tour->id ) ); ?>"
 			class="big blue button" target="_blank">
-			<?php echo __('View Public Page'); ?>
+			<?php echo __('View Public Page'); ?> <span class="sr-only"><?php echo __('(opens in new tab)'); ?></span>
 			</a>
 			<!-- delete -->
 			<?php if(is_allowed('Curatescape_CuratescapeTours', 'delete')): ?>
@@ -234,7 +235,7 @@ function availableTourItemsJSON()
 			if(jQuery.inArray(id, _itemsInTour(),0) >= 0){
 				alert('The item "' +label+ '" has already been added to the tour.');
 			}else{
-				jQuery( '<li data-id="' + id + '" class="ui-state-highlight">' ).html( '<div class="item-primary">'+'<div class="drag">'+'<?php echo svg('drag');?>'+'</div><span class="title"><a href="<?php echo url('items/show');?>/'+id+'" target="_blank">'+label + '</a></span><div class="edit" onclick="editTourItem(this)" tabindex="0" aria-role="button" title="<?php echo $strings['title_edit'];?>">'+'<?php echo svg('edit');?>'+'</div><div class="remove" tabindex="0" aria-role="button" title="<?php echo $strings['title_remove'];?>">'+'<?php echo svg('trash');?>'+'</div></div><div class="item-secondary" hidden><div class="editable"><label for="ti_sub_' + id + '"><?php echo $strings['label_subtitle'];?></label><input id="ti_sub_' + id + '" name="ti_sub_' + id + '" type="text" placeholder="<?php echo $strings['placeholder_subtitle'];?>" value=""><label for="ti_text_' + id + '"><?php echo $strings['label_text'];?></label><textarea id="ti_text_' + id + '" name="ti_text_' + id + '" rows="5" placeholder="<?php echo $strings['placeholder_text'];?>"></textarea></div></div>' ).prependTo( "#sortable" );
+				jQuery( '<li data-id="' + id + '" class="ui-state-highlight">' ).html( '<div class="item-primary">'+'<div class="drag">'+'<?php echo svg('drag');?>'+'</div><span class="title"><a href="<?php echo url('items/show');?>/'+id+'" target="_blank">'+label + '</a></span><button type="button" class="edit" onclick="editTourItem(this)" aria-label="<?php echo $strings['title_edit'];?>" title="<?php echo $strings['title_edit'];?>">'+'<?php echo svg('edit');?>'+'</button><button type="button" class="remove" aria-label="<?php echo $strings['title_remove'];?>" title="<?php echo $strings['title_remove'];?>">'+'<?php echo svg('trash');?>'+'</button></div><div class="item-secondary" hidden><div class="editable"><label for="ti_sub_' + id + '"><?php echo $strings['label_subtitle'];?></label><input id="ti_sub_' + id + '" name="ti_sub_' + id + '" type="text" placeholder="<?php echo $strings['placeholder_subtitle'];?>" value=""><label for="ti_text_' + id + '"><?php echo $strings['label_text'];?></label><textarea id="ti_text_' + id + '" name="ti_text_' + id + '" rows="5" placeholder="<?php echo $strings['placeholder_text'];?>"></textarea></div></div>' ).prependTo( "#sortable" );
 				jQuery( "#sortable" ).scrollTop( 0 );
 				// update list on add
 				jQuery(document).trigger('tourItemsUpdated');

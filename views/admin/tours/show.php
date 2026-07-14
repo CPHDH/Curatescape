@@ -84,7 +84,7 @@ echo flash();
 		<?php endif; ?>
 
 		<a href="<?php echo html_escape(public_url( 'tours/show/'.$tour->id)); ?>"
-			class="big blue button" target="_blank"><?php echo __('View Public Page'); ?></a>
+			class="big blue button" target="_blank"><?php echo __('View Public Page'); ?> <span class="sr-only"><?php echo __('(opens in new tab)'); ?></span></a>
 
 		<?php if(is_allowed('Curatescape_CuratescapeTours', 'delete')): ?>
 			<a href="<?php echo url(array( 'action' => 'delete-confirm','id' => $tour->id), 'tourAction' );?>"
