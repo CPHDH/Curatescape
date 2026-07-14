@@ -18,6 +18,33 @@
 #tour.browse #tours th:first-child{
 	width: 50%; /* matches core .batch-edit-heading + th (items/browse title column) */
 }
+/* shims for Omeka versions < 3.2.1 */
+.curatescape--is-omeka-version-lte-3-2 {
+	.labels {
+		display: inline-block;
+	}
+	.private.label {
+		&:before {
+			content: "(";
+		}
+		&:after {
+			content: ")";
+		}
+	}
+	.featured.label {
+		font-size: 0;
+		&:after {
+			font-size: 1rem;
+		}
+	}
+	.action-links li:not(:last-child):after {
+		content: "\00b7";
+		margin: 0 5px;
+		@media (max-width: 767px) {
+			display: none;
+		}
+	}
+}
 /* SHOW */
 .tours input[type="text"] {
 	margin-bottom: 0;
