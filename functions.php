@@ -306,7 +306,8 @@ function activeSort($objects, $sort = array())
 
 function hasLocation($item)
 {
-	return boolval(getLocationData($item));
+	// requires at least one Point (v4)
+	return boolval(keyLocationOnly(getLocationData($item)));
 }
 
 function getLocationData($item, $single = true, $default = null)
@@ -325,7 +326,17 @@ function keyLocationOnly($locationData = null)
 {
 	if (is_array($locationData)) {
 		foreach ($locationData as $keyloc) {
-			return is_array($keyloc) ? $keyloc[0] : $locationData; // v4 vs v3
+			if (!is_array($keyloc)) {
+				return $locationData; // v3
+			}
+			// v4: the key location is the first Point
+			foreach ($keyloc as $loc) {
+				$geometry = json_decode($loc['geometry_json'], true);
+				if (isset($geometry['type']) && $geometry['type'] == 'Point') {
+					return $loc;
+				}
+			}
+			return null;
 		}
 	}
 	return $locationData;

@@ -22,6 +22,7 @@ class CuratescapeMap extends HTMLElement {
 		currentStyleLayer = 0;
 		bitmapMarkerReg = null;
 		markerBitmapFeat = null;
+		disableListLink = false;
 	}
 	uiElements() {
 		this.shadow.appendChild(this.fig);
@@ -60,6 +61,7 @@ let markerColor = null;
 let subjectSelectListener = null;
 let markerRequestListener = null;
 let markerClick = null;
+let shapeClick = null;
 let clusterClick = null;
 let cursorPointer = null;
 let cursorDefault = null;
@@ -452,11 +454,17 @@ const keyboardEnhancements = () => {
 					let a = document.createElement('a');
 						a.className = 'keyboard-item-link';
 						a.href = htmlEntities(`/items/show/${props.id + params}`);
-						a.addEventListener('click', (e) => { if (testvar) e.preventDefault(); });
+						a.addEventListener('click', (e) => {
+							if (!disableListLink) return;
+							// multi-location single item: navigate the map instead of reloading the page
+							e.preventDefault();
+							this.closeButton.click();
+							flyToFeature(i);
+						});
 						let subtitle = props.subtitle ? ': '+props.subtitle : '';
 						a.innerHTML = `<strong>${htmlEntities(props.title + subtitle)}</strong>`;
-					if(props.address){
-						a.innerHTML += `<small>${htmlEntities(props.address)}</small>`;
+					if(props.address || props.type){ // unlabeled shapes fall back to geometry type
+						a.innerHTML += `<small>${htmlEntities(props.address || props.type)}</small>`;
 					}
 					li.appendChild(a);
 					ul.appendChild(li);
@@ -577,7 +585,40 @@ const dataSource = (term) => {
 		return attr('data-json-source');
 	}
 }
-const flyToById = async (id, zoom = 16) => {
+const extendBounds = (bounds, coordinates) => { // recursive, handles nested shape coordinates
+	if (typeof coordinates[0] === 'number') {
+		bounds.extend(coordinates);
+	} else {
+		coordinates.forEach((c) => extendBounds(bounds, c));
+	}
+};
+const flyToFeature = (feature, zoom = 16) => {
+	if (!map || !feature) return;
+	if (feature.geometry.type !== 'Point') {
+		const featureBounds = new maplibregl.LngLatBounds();
+		extendBounds(featureBounds, feature.geometry.coordinates);
+		map.once('moveend', () => {
+			setPopup(feature.properties, featureBounds.getCenter());
+		});
+		map.fitBounds(featureBounds, {
+			padding: {top: 50, bottom: 25, left: 25, right: 75},
+			maxZoom: zoom,
+			animate: !prefReducedMotion,
+		});
+		return;
+	}
+	map.once('moveend', () => {
+		setPopup(feature.properties);
+	});
+	map.flyTo({
+		center: feature.geometry.coordinates,
+		zoom: zoom,
+		essential: true,
+		animate: !prefReducedMotion,
+		offset: [0, 88],
+	});
+};
+const flyToById = (id, zoom = 16) => {
 	if (!map || !geojson || !geojson.features) return;
 	const targetFeature = geojson.features.find(feature =>
 		feature.properties.id == id || feature.properties.id == parseInt(id)
@@ -586,17 +627,7 @@ const flyToById = async (id, zoom = 16) => {
 		console.warn(`Marker with id ${id} not found`);
 		return;
 	}
-	const coordinates = targetFeature.geometry.coordinates;
-	map.once('moveend', () => {
-		setPopup(targetFeature.properties);
-	});
-	map.flyTo({
-		center: coordinates,
-		zoom: zoom,
-		essential: true,
-		animate: !prefReducedMotion,
-		offset: [0, 88],
-	});
+	flyToFeature(targetFeature, zoom);
 };
 const resetMarkerRequest = () => {
 	if (markerRequestListener) {
@@ -621,17 +652,23 @@ const resetMarkerLayers = (clusters) => {
 		if (map.getLayer('cluster-count')) map.removeLayer('cluster-count');
 	}
 	if (map.getLayer('unclustered-point')) map.removeLayer('unclustered-point');
+	if (map.getLayer('shape-fill')) map.removeLayer('shape-fill');
+	if (map.getLayer('shape-line')) map.removeLayer('shape-line');
+	if (map.getLayer('shape-point')) map.removeLayer('shape-point');
 	if (map.getSource('pois')) map.removeSource('pois');
+	if (map.getSource('shapes')) map.removeSource('shapes');
 }
 const markerLayers = async (geojson, clusters = false) => {
 	if (!map) return;
 	clusters = Boolean(clusters);
 	// Cleanup
 	resetMarkerLayers(clusters);
-	// Source
+	// Sources: shapes kept separate so they never enter the cluster index
+	let pointFeatures = geojson.features.filter((f) => f.geometry.type === 'Point');
+	let shapeFeatures = geojson.features.filter((f) => f.geometry.type !== 'Point');
 	let sourceConfig = {
 		type: 'geojson',
-		data: geojson,
+		data: { type: 'FeatureCollection', features: pointFeatures },
 	}
 	if (clusters) {
 		sourceConfig.cluster = true;
@@ -639,6 +676,13 @@ const markerLayers = async (geojson, clusters = false) => {
 		sourceConfig.clusterRadius = 40;
 	}
 	map.addSource('pois', sourceConfig);
+	if (shapeFeatures.length) {
+		map.addSource('shapes', {
+			type: 'geojson',
+			data: { type: 'FeatureCollection', features: shapeFeatures },
+		});
+		shapeLayers();
+	}
 	// Layer(s)
 	let layerConfig = {
 		id: 'unclustered-point',
@@ -662,6 +706,45 @@ const markerLayers = async (geojson, clusters = false) => {
 	if (clusters) {
 		clusterLayers();
 	}
+}
+const shapeLayers = () => { // lines, polygons, rectangles, multi-point (Geolocation v4+)
+	if (!map) return;
+	let shapeColor = markerColor || '#2c83cb';
+	map.addLayer({
+		id: 'shape-fill',
+		type: 'fill',
+		source: 'shapes',
+		filter: ['==', ['geometry-type'], 'Polygon'],
+		paint: {
+			'fill-color': shapeColor,
+			'fill-opacity': 0.25,
+		},
+	});
+	map.addLayer({
+		id: 'shape-line',
+		type: 'line',
+		source: 'shapes',
+		filter: ['any', ['==', ['geometry-type'], 'Polygon'], ['==', ['geometry-type'], 'LineString']],
+		layout: {
+			'line-cap': 'round',
+			'line-join': 'round',
+		},
+		paint: {
+			'line-color': shapeColor,
+			'line-width': 3,
+		},
+	});
+	map.addLayer({ // MultiPoint features use the standard marker icon
+		id: 'shape-point',
+		type: 'symbol',
+		source: 'shapes',
+		filter: ['==', ['geometry-type'], 'Point'],
+		layout: {
+			'icon-image': 'marker-regular',
+			'icon-size': 0.5,
+			'icon-allow-overlap': true,
+		},
+	});
 }
 const clusterLayers = (clusterColors = ['110,204,57', '240,194,12', '241,128,23']) => {
 	if (!map) return;
@@ -766,11 +849,15 @@ const resetMap = () => {
 	}
 	map = null;
 }
-const setPopup = (props) => {
+const setPopup = (props, lngLat = null) => {
 	resetPopups();
+	// shapes have no single lat/lon, so callers pass an anchor (click point, shape center, etc)
+	if (!lngLat) lngLat = new maplibregl.LngLat(+props.longitude, +props.latitude);
 	let tourid = attr('data-tour');
 	let params = tourid ? "?tour=" + tourid + "&index=" + props.index : "";
 	let subtitle = props.subtitle ? ': '+props.subtitle : '';
+	// points fall back to lat/lon; shapes without a user-set label fall back to the geometry type
+	let address = props.address || ((props.latitude && props.longitude) ? props.latitude + ',' + props.longitude : (props.type || ''));
 	let infowindow = `
 	<div class="curatescape-iw">
 		<a href="${rootUrl}/items/show/${props.id + params}" class="curatescape-iw-image portrait" style="background-image:url(${props.fullsize});"></a>
@@ -778,12 +865,10 @@ const setPopup = (props) => {
 			<a href="${rootUrl}/items/show/${props.id}" class="curatescape-iw-title">
 				${htmlEntities(props.title + subtitle)}
 			</a>
-			<div class="curatescape-iw-address">
-				${props.address ? htmlEntities(props.address) : htmlEntities(props.latitude + ',' + props.longitude)}
-			</div>
+			${address ? `<div class="curatescape-iw-address">${htmlEntities(address)}</div>` : ''}
 		</div>
 	</div>`;
-	let popup = new maplibregl.Popup({ offset: 22, closeButton: true }).setLngLat([props.longitude, props.latitude]).setHTML(infowindow);
+	let popup = new maplibregl.Popup({ offset: 22, closeButton: true }).setLngLat(lngLat).setHTML(infowindow);
 	popups.push(popup);
 	popup.addTo(map);
 }
@@ -801,12 +886,10 @@ const setMarkers = async (src, fitBoundsAllowed = true, initialLoad = false) => 
 		return response.json()
 	}).then((data) => {
 		// Curatescape JSON -> GeoJSON FeatureCollection
-		let items = maptype === 'multi' ? data.items : [data];
-		// Geolocation v4+
-		if(
-			maptype === 'single' && 
-			items[0]?.['all_locations']?.length > 0
-		){
+		// note: maptype may be reassigned to multi below, so detect data shape directly
+		let items = data.items ? data.items : [data];
+		// Geolocation v4+ (all_locations only present in single-item JSON)
+		if(items[0]?.['all_locations']?.length > 0){
 			// rebuild dataset for multi-location item
 			if( items[0]['all_locations'].length > 1 ) {
 				// 2 or more locations
@@ -817,10 +900,15 @@ const setMarkers = async (src, fitBoundsAllowed = true, initialLoad = false) => 
 						id: items[0].id,
 						title: items[0].title,
 						fullsize: items[0].fullsize,
-						latitude: location.latitude,
-						longitude: location.longitude,
+						type: location.type,
+						latitude: location.type == 'Point' && location.latitude ? 
+							location.latitude : '',
+						longitude: location.type == 'Point' && location.longitude ? 
+							location.longitude : '',
+						coordinates: location.type !== 'Point' && location.coordinates ? 
+							location.coordinates : '',
 						subtitle: '',
-						address: location.label || location.latitude + ',' + location.longitude,
+						address: location.label || ((location.latitude && location.longitude) ? location.latitude + ',' + location.longitude : ''),
 					}
 				});
 			} else if (items[0]['all_locations'][0].label){
@@ -830,11 +918,17 @@ const setMarkers = async (src, fitBoundsAllowed = true, initialLoad = false) => 
 		}
 		geojson = {
 			type: 'FeatureCollection',
-			features: (items || []).map((item, index) => ({
-				type: 'Feature',
-				geometry: { type: 'Point', coordinates: [+item.longitude, +item.latitude] },
-				properties: { ...item, index },
-			})),
+			features: (items || []).map((item, index) => {
+				// keep geometry data out of feature properties
+				let { coordinates, all_locations, ...properties } = item;
+				return {
+					type: 'Feature',
+					geometry: (item.type && item.type !== 'Point' && coordinates) ?
+						{ type: item.type, coordinates: coordinates } :
+						{ type: 'Point', coordinates: [+item.longitude, +item.latitude] },
+					properties: { ...properties, index },
+				};
+			}),
 		};
 		if (initialLoad) {
 			addControls();
@@ -844,7 +938,7 @@ const setMarkers = async (src, fitBoundsAllowed = true, initialLoad = false) => 
 		markerLayers(geojson, attr('data-cluster', true));
 		// Bounds
 		bounds = new maplibregl.LngLatBounds();
-		geojson.features.forEach((f) => bounds.extend(f.geometry.coordinates));
+		geojson.features.forEach((f) => extendBounds(bounds, f.geometry.coordinates));
 		if (fitBoundsAllowed && (!attr('data-fixed-center', true) || term)) {
 			map.fitBounds(bounds, {
 				padding: {top: 25, bottom:25, left: 75, right: 75},
@@ -865,8 +959,16 @@ const setMarkers = async (src, fitBoundsAllowed = true, initialLoad = false) => 
 const resetMarkerEvents = () => {
 	if (!map) return;
 	map.off('click', 'unclustered-point', markerClick);
+	map.off('click', 'shape-point', markerClick);
+	map.off('click', 'shape-fill', shapeClick);
+	map.off('click', 'shape-line', shapeClick);
 	map.off('click', 'clusters', clusterClick);
+	['shape-fill', 'shape-line', 'shape-point'].forEach((layer) => {
+		map.off('mouseenter', layer, cursorPointer);
+		map.off('mouseleave', layer, cursorDefault);
+	});
 	markerClick = null;
+	shapeClick = null;
 	clusterClick = null;
 	if (map.getLayer('clusters')) {
 		map.off('mouseenter', 'clusters', cursorPointer);
@@ -889,13 +991,23 @@ const initMarkerEvents = () => {
 		if(props.title){
 			message += ': ' + props.title
 		}
-		if(props.address){
-			message += ' (' + props.address + ')'
+		if(props.address || props.type){ // unlabeled shapes fall back to geometry type
+			message += ' (' + (props.address || props.type) + ')'
 		}
 		announce(message);
-		setPopup(props);
+		// features without their own lat/lon (shapes) anchor the popup at the click location
+		setPopup(props, (props.longitude && props.latitude) ? null : e.lngLat);
 	}
 	map.on('click', 'unclustered-point', markerClick);
+	if (map.getLayer('shape-point')) map.on('click', 'shape-point', markerClick);
+	// Shape Click (markers render above shapes, so they win overlapping clicks/touches)
+	shapeClick = (e) => {
+		let markerLayerIds = ['unclustered-point', 'shape-point', 'clusters'].filter((l) => map.getLayer(l));
+		if (map.queryRenderedFeatures(e.point, { layers: markerLayerIds }).length) return;
+		markerClick(e);
+	}
+	if (map.getLayer('shape-fill')) map.on('click', 'shape-fill', shapeClick);
+	if (map.getLayer('shape-line')) map.on('click', 'shape-line', shapeClick);
 	// Cluster Click
 	clusterClick = async (e) => {
 		const clusterId = e.features[0].properties.cluster_id;
@@ -928,6 +1040,12 @@ const initMarkerEvents = () => {
 		map.on('mouseenter', 'unclustered-point', cursorPointer);
 		map.on('mouseleave', 'unclustered-point', cursorDefault);
 	}
+	['shape-fill', 'shape-line', 'shape-point'].forEach((layer) => {
+		if (map.getLayer(layer)) {
+			map.on('mouseenter', layer, cursorPointer);
+			map.on('mouseleave', layer, cursorDefault);
+		}
+	});
 }
 const addImageSources = async () => {
 	if (!map) return;

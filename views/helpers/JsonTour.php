@@ -45,6 +45,7 @@ class Curatescape_View_Helper_JsonTour extends Zend_View_Helper_Abstract
 		if(!$item || !$tour) return null;
 		if($locationData = getLocationData($item)){
 			$location = keyLocationOnly($locationData);
+			if(!$location) return null; // no Point location, no key location
 			$itemMeta = array(
 				'id' => $item->id,
 				'title' => plainText( dc( $item, 'Title', array('no_filter'=>true) ) ),

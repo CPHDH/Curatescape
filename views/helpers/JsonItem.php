@@ -8,6 +8,7 @@ class Curatescape_View_Helper_JsonItem extends Zend_View_Helper_Abstract
 	public function JsonItemsShow($item, $isExtended = false){
 		if($locationData = getLocationData($item)){
 			$location = keyLocationOnly($locationData);
+			if(!$location) return false; // no Point location, no key location
 			$itemMetadata = array(
 				'id' => $item->id,
 				'featured' => $item->featured,
@@ -130,12 +131,21 @@ class Curatescape_View_Helper_JsonItem extends Zend_View_Helper_Abstract
 		if(is_array($locationData)){
 			foreach($locationData as $keyloc){
 				if(is_array($keyloc)){ // v4
-					foreach($locationData as $locs){
-						foreach($locs as $loc){
+					foreach($keyloc as $loc){
+						$geometry = json_decode($loc['geometry_json'], true);
+						if(empty($geometry['type'])) continue; // malformed geometry_json
+						if($geometry['type'] == 'Point') {
 							$values[] = array(
 								'latitude' => $loc['latitude'],
 								'longitude' => $loc['longitude'],
 								'label' => $loc['label'],
+								'type' => $geometry['type'],
+							);
+						} elseif(!empty($geometry['coordinates'])) {
+							$values[] = array(
+								'coordinates' => $geometry['coordinates'],
+								'label' => $loc['label'],
+								'type' => $geometry['type'],
 							);
 						}
 					}
@@ -144,6 +154,7 @@ class Curatescape_View_Helper_JsonItem extends Zend_View_Helper_Abstract
 						'latitude' => $locationData['latitude'],
 						'longitude' => $locationData['longitude'],
 						'label' => null,
+						'type' => 'Point',
 					);
 				}
 				break;
