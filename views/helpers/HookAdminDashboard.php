@@ -27,8 +27,7 @@ class Curatescape_View_Helper_HookAdminDashboard extends Zend_View_Helper_Abstra
 	}
 	public function refreshDashboardWidgets($cache){
 		// called from HookAfterSaveItem or via Job Dispatcher
-		// content audit contains admin URLs — skip in CLI context where router base URL is wrong
-		if(option('curatescape_dashboard_audit') && PHP_SAPI !== 'cli'){
+		if(option('curatescape_dashboard_audit')){
 			$html = $this->generateDashboardAudit();
 			if($html) {
 				$cache->WriteCacheFile(_HTML_DASHBOARD_CONTENT_AUDIT_, $html, true);
@@ -408,8 +407,18 @@ class Curatescape_View_Helper_HookAdminDashboard extends Zend_View_Helper_Abstra
 		return $html;
 	}
 	private function formatIssueText($recordIds, $queryParams, $string, $context = null){
-		$url = admin_url('items/browse?' . http_build_query($queryParams));
+		$url = $this->adminItemsUrl($queryParams);
 		$title = __('View affected %s', __(plural('item', 'items', count($recordIds))));
 		return '<li data-count="'.sprintf('%05d',count($recordIds)).'"><a title="'.$title.'" href="'.$url.'">'.$string.'</a><span title="'.$context.'">'.svg('information-circle').'</span></li>';
+	}
+	private function adminItemsUrl($queryParams){
+		// admin_url() is wrong in CLI/background context
+		// curatescape_web_root is captured in the web request that dispatches the
+		// job (see HookAfterSaveItem), so use it instead when running in CLI.
+		if(PHP_SAPI === 'cli'){
+			$webRoot = rtrim((string) get_option('curatescape_web_root'), '/');
+			return $webRoot . '/admin/items/browse?' . http_build_query($queryParams);
+		}
+		return admin_url('items/browse?' . http_build_query($queryParams));
 	}
 }
