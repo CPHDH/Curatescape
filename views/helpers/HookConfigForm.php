@@ -66,10 +66,10 @@ class Curatescape_View_Helper_HookConfigForm extends Zend_View_Helper_Abstract{
 			<?php echo $this->configFormCheckBox('curatescape_map_mirror_geolocation', __('Mirror Geolocation'), __('If checked, use the maps provided by the Geolocation plugin. Uncheck and configure custom options if you are using a Curatescape theme or if you have developed a Curatescape-optimized custom theme. Additional information available in <a target="_blank" href="%s"> plugin documentation</a>.', 'https://omeka.org/classic/plugins/'._PLUGIN_NAME_));?>
 			<span class="map-settings">
 				<?php $mapLayers = array(
-					'CARTO_VOYAGER'=>__('CartoDB | Voyager (default)'),
-					'CARTO_DARKMATTER'=>__('CartoDB | Dark Matter'),
-					'CARTO_POSITRON'=>__('CartoDB | Positron'),
-					'OFM_LIBERTY'=>__('Open Free Map | Liberty'),
+					'OFM_LIBERTY'=>__('Open Free Map | Liberty (default)'),
+					'CARTO_VOYAGER'=>__('CartoDB | Voyager (API key required)'),
+					'CARTO_DARKMATTER'=>__('CartoDB | Dark Matter (API key required)'),
+					'CARTO_POSITRON'=>__('CartoDB | Positron (API key required)'),
 					'STADIA_OSMBRIGHT'=>__('Stadia | OSM Bright (account required)'),
 					'STADIA_OUTDOORS'=>__('Stadia | Outdoors (account required)'),
 					'STADIA_STAMENTONER'=>__('Stadia | Stamen Toner (account required)'),
@@ -90,6 +90,10 @@ class Curatescape_View_Helper_HookConfigForm extends Zend_View_Helper_Abstract{
 				<span class="custom-settings">
 					<!-- Custom URL -->
 					<?php echo $this->configFormText('curatescape_map_custom_url', __('Custom URL'), __('Enter the URL for a vector style source that conforms to the <a href="">MapLibre style specification</a>. If using custom settings for both primary and secondary layers, please enter two URLs, separated by a comma.', 'https://maplibre.org/maplibre-style-spec/'), 'Example: https://api.maptiler.com/maps/my-map/?key=xxxxxxx...');?>
+				</span>
+				<span class="carto-settings">
+					<!-- CartoDB Key -->
+					<?php echo $this->configFormText('curatescape_map_cartodb_key', __('CartoDB API Key'), __('Enter your CartoDB API key below. <a target="_blank" href="%s">Request an API key for basemaps</a>.', 'https://carto.com/basemaps/apikey/'), 'Example: xxx_xxxx_x_xxxxxxxxxxxxxxxx');?>
 				</span>
 				<span class="stadia-settings">
 					<!-- Stadia Key -->
@@ -235,6 +239,12 @@ class Curatescape_View_Helper_HookConfigForm extends Zend_View_Helper_Abstract{
 					jQuery('#curatescape_map_secondary_layer').val().startsWith('STADIA')
 				);
 			}
+			function toggleCartoDBSettings(){
+				jQuery('.carto-settings').toggle(
+					jQuery('#curatescape_map_primary_layer').val().startsWith('CARTO') ||
+					jQuery('#curatescape_map_secondary_layer').val().startsWith('CARTO')
+				);
+			}
 			function toggleClusterSettings(){
 				jQuery('.cluster-settings').toggle( jQuery('#curatescape_map_clusters').prop('checked') == true );
 			}
@@ -242,12 +252,15 @@ class Curatescape_View_Helper_HookConfigForm extends Zend_View_Helper_Abstract{
 				toggleMapSettings();
 				toggleCustomSettings();
 				toggleStadiaSettings();
+				toggleCartoDBSettings();
 				toggleClusterSettings();
 				jQuery('#curatescape_map_mirror_geolocation').on('change', toggleMapSettings);
 				jQuery('#curatescape_map_primary_layer').on('change', toggleCustomSettings);
 				jQuery('#curatescape_map_secondary_layer').on('change', toggleCustomSettings);
 				jQuery('#curatescape_map_primary_layer').on('change', toggleStadiaSettings);
 				jQuery('#curatescape_map_secondary_layer').on('change', toggleStadiaSettings);
+				jQuery('#curatescape_map_primary_layer').on('change', toggleCartoDBSettings);
+				jQuery('#curatescape_map_secondary_layer').on('change', toggleCartoDBSettings);
 				jQuery('#curatescape_map_clusters').on('change', toggleClusterSettings);
 			});
 		</script>

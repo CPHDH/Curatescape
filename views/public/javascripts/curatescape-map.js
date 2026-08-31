@@ -162,8 +162,9 @@ const markerSVG = (color, featured = false, star = false, height = 41, width = 2
 		</g>
 	</svg>`;
 }
-const stylesConfig = (name, label, stadiaKey, preferEU, styleIndex = 0, fallback = 'CARTO_VOYAGER') => {
+const stylesConfig = (name, label, cartodbKey, stadiaKey, preferEU, styleIndex = 0, fallback = 'OFM_LIBERTY') => {
 	stadiaKey = stadiaKey ? '?api_key=' + stadiaKey : '';
+	cartodbKey = cartodbKey ? '?key=' + cartodbKey : '';
 	preferEU = Boolean(preferEU) ? 'tiles-eu' : 'tiles';
 	let styles = [];
 	styles.OFM_LIBERTY = {
@@ -199,15 +200,15 @@ const stylesConfig = (name, label, stadiaKey, preferEU, styleIndex = 0, fallback
 		label: label ? label : 'Stadia | Outdoors',
 	};
 	styles.CARTO_POSITRON = {
-		url: `//basemaps.cartocdn.com/gl/positron-gl-style/style.json`,
+		url: `//basemaps.cartocdn.com/gl/positron-gl-style/style.json${cartodbKey}`,
 		label: label ? label : 'CartoDB | Positron',
 	};
 	styles.CARTO_DARKMATTER = {
-		url: `//basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json`,
+		url: `//basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json${cartodbKey}`,
 		label: label ? label : 'CartoDB | Dark Matter',
 	};
 	styles.CARTO_VOYAGER = {
-		url: `//basemaps.cartocdn.com/gl/voyager-gl-style/style.json`,
+		url: `//basemaps.cartocdn.com/gl/voyager-gl-style/style.json${cartodbKey}`,
 		label: label ? label : 'CartoDB | Voyager',
 	};
 	styles.CUSTOM_URL = {
@@ -220,6 +221,7 @@ const setStyleLayers = (styleIndex = 0) => {
 	styleLayers[0] = stylesConfig(
 		attr('data-primary-layer'),
 		getCommaSeparatedValue(attr('data-custom-label'), 0),
+		attr('data-cartodb-key'),
 		attr('data-stadia-key'),
 		attr('data-prefer-eu', true),
 		0
@@ -228,6 +230,7 @@ const setStyleLayers = (styleIndex = 0) => {
 		styleLayers[1] = stylesConfig(
 			attr('data-secondary-layer'),
 			getCommaSeparatedValue(attr('data-custom-label'), 1),
+			attr('data-cartodb-key'),
 			attr('data-stadia-key'),
 			attr('data-prefer-eu', true),
 			1
