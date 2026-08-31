@@ -62,6 +62,9 @@ class Curatescape_View_Helper_JsonItem extends Zend_View_Helper_Abstract
 			if( strpos( $mimetype, 'image/' ) === 0 )
 			{
 				$path = $file->getWebPath( 'fullsize' );
+				if( method_exists( $file, 'getAltText' ) && $alttext = metadata( $file, 'alt_text' ) ) {
+					$filedata[ 'alt' ] = $alttext;
+				}
 			}else{
 				$path = $file->getWebPath( 'original' );
 			}
