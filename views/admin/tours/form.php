@@ -1,37 +1,47 @@
 <?php 
-$tourOrdinal = isset($tour) ? $tour->ordinal : 0;
-$tourPublic = isset($tour) ? $tour->public : 0;
-$tourFeatured = isset($tour) ? $tour->featured : 0;
-$tour = isset($tour) ? $tour : null;
-$tourId = isset($tour) ? $tour->id : null;
-$tourTitle = isset($tour) ? $tour->title : null;
-$tourCredits = isset($tour) ? $tour->credits : null;
-$tourDescription = isset($tour) ? $tour->description : null;
-$tourPostscript = isset($tour) ? $tour->postscript_text : null;
-$tourTags = isset($tour) ? join(', ', pluck('name', $tour->Tags)) : null;
-$strings = array( // translatable strings used in js
+$tour = isset($tour) ? $tour : null; // unset on add, assigned on edit
+$tourOrdinal = $tour ? $tour->ordinal : 0;
+$tourPublic = $tour ? $tour->public : 0;
+$tourFeatured = $tour ? $tour->featured : 0;
+$tourId = $tour ? $tour->id : null;
+$tourTitle = $tour ? $tour->title : null;
+$tourCredits = $tour ? $tour->credits : null;
+$tourDescription = $tour ? $tour->description : null;
+$tourPostscript = $tour ? $tour->postscript_text : null;
+$tourTags = $tour ? join(', ', pluck('name', $tour->Tags)) : null;
+$tourItems = $tour ? $tour->getItems() : array(); // ordered by ti.ordinal
+$tourItemIds = join(',', pluck('id', $tourItems));
+// translatable strings used in html attributes and js strings
+$strings = array_map('html_escape', array(
 	'label_subtitle' =>__('Custom Subtitle (optional)'),
 	'placeholder_subtitle'	=>__('Leave blank to use default subtitle'),
 	'label_text' =>__('Custom Text (optional)'),
 	'placeholder_text' =>__('Leave blank to use default text'),
 	'title_remove' =>__('Remove'),
 	'title_edit' =>__('Edit'),
-);
+));
 function availableTourItemsJSON()
 {
 	$db = get_db();
-	$itemTable = $db->getTable( 'Item' );
-	$items = $itemTable->fetchObjects(
+	$itemTypeId = itemTypeID();
+	if(!$itemTypeId) return json_encode(array());
+	$items = $db->getTable( 'Item' )->fetchObjects(
 		<<<SQL
-		SELECT i.* FROM {$db->prefix}items i 
+		SELECT i.* FROM {$db->prefix}items i
+		WHERE i.item_type_id = {$itemTypeId}
+		AND EXISTS (SELECT 1 FROM {$db->prefix}locations l WHERE l.item_id = i.id)
 		ORDER BY i.modified DESC
 		SQL
 	);
-	foreach($items as $index => $item) {
-		if(!hasLocation($item) || !isCuratescapeStory($item)) continue;
-		$items[$index]['label'] = dc( $item,'Title');
+	$available = array();
+	foreach($items as $item) {
+		if(!hasLocation($item)) continue; // geolocation v4: key location must be a Point
+		$available[] = array(
+			'id' => intval($item->id),
+			'label' => dc( $item,'Title'),
+		);
 	}
-	return json_encode($items);
+	return json_encode($available);
 }
 ?>
 
@@ -98,7 +108,7 @@ function availableTourItemsJSON()
 			<fieldset id="tour-items-picker">
 				<div class="field">
 					<div class="tour_item_ids hidden">
-						<?php echo $this->formText( 'tour_item_ids', null ); ?>
+						<?php echo $this->formText( 'tour_item_ids', $tourItemIds ); ?>
 					</div>
 				</div>
 
@@ -112,10 +122,9 @@ function availableTourItemsJSON()
 
 				<ul id="sortable">
 					<?php if($tourId){
-						$tourItems = $tour->getItems();
 						foreach($tourItems as $ti){
 							$custom=$tour->getTourItem($ti->id);
-							$html = '<li data-id="'.$ti->id.'" class="ui-state-highlight"><div class="item-primary"><div class="drag">'.svg('drag').'</div><span class="title"><a href="'.url('items/show/'.$ti->id).'" target="_blank">'.metadata($ti,array('Dublin Core','Title')).'</a></span><button type="button" class="edit" onclick="editTourItem(this)" aria-label="'.$strings['title_edit'].'" title="'.$strings['title_edit'].'">'.svg('edit').'</button><button type="button" class="remove" aria-label="'.$strings['title_remove'].'" title="'.$strings['title_remove'].'">'.svg('trash').'</button></div><div class="item-secondary" hidden><div class="editable"><label for="ti_sub_'.$ti->id.'">'.$strings['label_subtitle'].'</label><input id="ti_sub_'.$ti->id.'" name="ti_sub_'.$ti->id.'" type="text" placeholder="'.$strings['placeholder_subtitle'].'" value="'.$custom->subtitle.'"><label for="ti_text_'.$ti->id.'">'.$strings['label_text'].'</label><textarea id="ti_text_'.$ti->id.'" name="ti_text_'.$ti->id.'" rows="5" placeholder="'.$strings['placeholder_text'].'">'.$custom->text.'</textarea></div></div></li>';
+							$html = '<li data-id="'.$ti->id.'" class="ui-state-highlight"><div class="item-primary"><div class="drag">'.svg('drag').'</div><span class="title"><a href="'.url('items/show/'.$ti->id).'" target="_blank">'.metadata($ti,array('Dublin Core','Title')).'</a></span><button type="button" class="edit" onclick="editTourItem(this)" aria-label="'.$strings['title_edit'].'" title="'.$strings['title_edit'].'">'.svg('edit').'</button><button type="button" class="remove" aria-label="'.$strings['title_remove'].'" title="'.$strings['title_remove'].'">'.svg('trash').'</button></div><div class="item-secondary" hidden><div class="editable"><label for="ti_sub_'.$ti->id.'">'.$strings['label_subtitle'].'</label><input id="ti_sub_'.$ti->id.'" name="ti_sub_'.$ti->id.'" type="text" placeholder="'.$strings['placeholder_subtitle'].'" value="'.html_escape($custom->subtitle).'"><label for="ti_text_'.$ti->id.'">'.$strings['label_text'].'</label><textarea id="ti_text_'.$ti->id.'" name="ti_text_'.$ti->id.'" rows="5" placeholder="'.$strings['placeholder_text'].'">'.html_escape($custom->text).'</textarea></div></div></li>';
 							echo $html;
 						}
 					} ?>
@@ -183,7 +192,15 @@ function availableTourItemsJSON()
 <!-- Items Selection -->
 <script>
 	const editTourItem = (t)=>{
-		t.parentElement.nextSibling.toggleAttribute('hidden')
+		t.parentElement.nextElementSibling.toggleAttribute('hidden')
+	}
+	// labels are html-escaped so they are safe to concatenate into markup below;
+	// jquery ui puts item.value in the search input and matches against it, so
+	// each item also carries a decoded plain-text copy
+	const decodeEntities = (str)=>{
+		const el = document.createElement('textarea');
+		el.innerHTML = str;
+		return el.value;
 	}
 	var allItems=<?php echo availableTourItemsJSON();?>;
 	var svg_icon='<?php echo svg('drag');?>';
@@ -195,6 +212,7 @@ function availableTourItemsJSON()
 		jQuery.formCanSubmit = false;
 		var tourItems=_itemsInTour();
 		jQuery('#tour_item_ids').val(tourItems);
+		allItems.forEach((item)=>{ item.value = decodeEntities(item.label); });
 		// UI BUTTONS
 		(function () {
 			var _UIButtons;
@@ -231,9 +249,9 @@ function availableTourItemsJSON()
 		});
 		jQuery( "#sortable" ).disableSelection();
 		// AUTOCOMPLETE
-		function addItem( label, id, subtitle, text ) {
+		function addItem( label, id ) {
 			if(jQuery.inArray(id, _itemsInTour(),0) >= 0){
-				alert('The item "' +label+ '" has already been added to the tour.');
+				alert('The item "' +decodeEntities(label)+ '" has already been added to the tour.');
 			}else{
 				jQuery( '<li data-id="' + id + '" class="ui-state-highlight">' ).html( '<div class="item-primary">'+'<div class="drag">'+'<?php echo svg('drag');?>'+'</div><span class="title"><a href="<?php echo url('items/show');?>/'+id+'" target="_blank">'+label + '</a></span><button type="button" class="edit" onclick="editTourItem(this)" aria-label="<?php echo $strings['title_edit'];?>" title="<?php echo $strings['title_edit'];?>">'+'<?php echo svg('edit');?>'+'</button><button type="button" class="remove" aria-label="<?php echo $strings['title_remove'];?>" title="<?php echo $strings['title_remove'];?>">'+'<?php echo svg('trash');?>'+'</button></div><div class="item-secondary" hidden><div class="editable"><label for="ti_sub_' + id + '"><?php echo $strings['label_subtitle'];?></label><input id="ti_sub_' + id + '" name="ti_sub_' + id + '" type="text" placeholder="<?php echo $strings['placeholder_subtitle'];?>" value=""><label for="ti_text_' + id + '"><?php echo $strings['label_text'];?></label><textarea id="ti_text_' + id + '" name="ti_text_' + id + '" rows="5" placeholder="<?php echo $strings['placeholder_text'];?>"></textarea></div></div>' ).prependTo( "#sortable" );
 				jQuery( "#sortable" ).scrollTop( 0 );
@@ -243,9 +261,15 @@ function availableTourItemsJSON()
 		}
 		jQuery( "#tour-item-search" ).autocomplete({
 			minLength: 3,
-			source: allItems,
+			source: function( request, response ) {
+				// skip items that have been added
+				const inTour = _itemsInTour();
+				// match the decoded text, not the escaped label
+				const matcher = new RegExp(jQuery.ui.autocomplete.escapeRegex(request.term), 'i');
+				response(allItems.filter((item)=> !inTour.includes(item.id) && matcher.test(item.value)));
+			},
 			select: function( event, ui ) {
-				addItem( ui.item.label,ui.item.id, ui.item.subtitle, ui.item.text);
+				addItem( ui.item.label, ui.item.id );
 				// update list on select
 				jQuery(document).trigger('tourItemsUpdated');
 				// clear the form
