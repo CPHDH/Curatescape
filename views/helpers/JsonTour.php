@@ -17,6 +17,7 @@ class Curatescape_View_Helper_JsonTour extends Zend_View_Helper_Abstract
 		return array(
 			'id' => $tour->id,
 			'ordinal' => isset($tour->ordinal) ? $tour->ordinal : 0,
+			'modified' => $tour->modified,
 			'featured' => isset($tour->featured) ? $tour->featured : 0,
 			'title' => plainText($tour->title),
 			'creator' => plainText($tour->credits),
