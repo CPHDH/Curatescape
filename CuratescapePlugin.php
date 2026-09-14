@@ -20,6 +20,7 @@ class CuratescapePlugin extends Omeka_Plugin_AbstractPlugin{
 	protected $_hooks = array(
 		'admin_dashboard',
 		'admin_head',
+		'after_delete_item',
 		'after_save_item',
 		'config_form',
 		'config',
@@ -137,6 +138,9 @@ class CuratescapePlugin extends Omeka_Plugin_AbstractPlugin{
 	public function hookUpgrade($args)
 	{
 		$this->_createCacheDir();
+		$cache = get_view()->CuratescapeCache();
+		$cache->CacheBustManual(_JSON_ITEMS_FILE_, true);
+		$cache->CacheBustManual(_JSON_TOURS_FILE_, true);
 	}
 
 	public function hookUninstall()
@@ -187,6 +191,15 @@ class CuratescapePlugin extends Omeka_Plugin_AbstractPlugin{
 	public function hookAfterSaveItem($post)
 	{
 		return get_view()->HookAfterSaveItem($post);
+	}
+
+	public function hookAfterDeleteItem($args)
+	{
+		$cache = get_view()->CuratescapeCache();
+		$cache->CacheBustManual(_JSON_ITEMS_FILE_, true);
+		$cache->CacheBustManual(_JSON_TOURS_FILE_, true);
+		$cache->CacheBustManual(_HTML_DASHBOARD_FILE_STATS_, true);
+		$cache->CacheBustManual(_HTML_DASHBOARD_CONTENT_AUDIT_, true);
 	}
 
 	public function filterAdminNavigationMain($nav)

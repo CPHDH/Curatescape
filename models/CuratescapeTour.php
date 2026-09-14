@@ -145,6 +145,11 @@ class CuratescapeTour extends Omeka_Record_AbstractRecord
 		$this->deleteTaggings();
 	}
 
+	protected function afterDelete()
+	{
+		get_view()->CuratescapeCache()->CacheBustManual(_JSON_TOURS_FILE_, true);
+	}
+
 	protected function _validate()
 	{
 		if(empty( $this->title)){
