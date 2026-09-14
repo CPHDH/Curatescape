@@ -52,7 +52,7 @@ class Curatescape_View_Helper_JsonTour extends Zend_View_Helper_Abstract
 				'title' => plainText( dc( $item, 'Title', array('no_filter'=>true) ) ),
 				'latitude' => $location['latitude'],
 				'longitude' => $location['longitude'],
-				'thumbnail' => preferredItemImageUrl($item, 'square_thumbnail', ''),
+				'thumbnail' => preferredItemImageUrl($item, 'square_thumbnail', ''), // legacy
 				'fullsize' => preferredItemImageUrl($item, 'fullsize', ''),
 				'subtitle' => plainText( itm($item, 'Subtitle') ),
 				'address' => plainText( itm($item, 'Street Address') ),

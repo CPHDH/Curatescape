@@ -17,9 +17,9 @@ class CuratescapeTour extends Omeka_Record_AbstractRecord
 
 	public $ordinal = 0;
 	
-	public $modified; // @todo
+	public $modified;
 	
-	public $added; // @todo
+	public $added;
 
 	protected $_related = array(
 		'Items' => 'getItems',
@@ -34,11 +34,10 @@ class CuratescapeTour extends Omeka_Record_AbstractRecord
 		$this->_mixins[] = new Mixin_PublicFeatured($this);
 	}
 
-	public function addTourItem($itemId, $ordinal = null, $item_subtitle = null, $item_text = null)
+	private function addTourItem($itemId, $ordinal = null, $item_subtitle = null, $item_text = null)
 	{
-		if(!is_numeric($itemId)) {
-			$itemId = $itemId->id; // @todo: is this really necessary?
-		}
+		$itemId = (int) $itemId;
+		if (!$itemId) return;
 		// get the next ordinal
 		$db = get_db();
 		$tiTable = $db->getTable('CuratescapeTourItem');
