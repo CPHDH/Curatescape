@@ -6,18 +6,24 @@ class Curatescape_View_Helper_JsonTour extends Zend_View_Helper_Abstract
 	}
 
 	public function JsonToursShow( $tour = null, $isExtended = false, $items = array() ){
+		$modified = (string) $tour->modified; // sorting, etc
+		$contentModified = $modified; // in-app content refresh check, incl. tour item updates
 		foreach( $tour->Items as $item ){
 			if($item->public){
 				set_current_record( 'Item', $item );
 				if($tourItem = $this->tourItem($item, $tour, $isExtended)){
 					array_push( $items, $tourItem );
+					if(strcmp((string) $item->modified, $contentModified) > 0){
+						$contentModified = (string) $item->modified;
+					}
 				}
 			}
 		}
 		return array(
 			'id' => $tour->id,
 			'ordinal' => isset($tour->ordinal) ? $tour->ordinal : 0,
-			'modified' => $tour->modified,
+			'modified' => $modified,
+			'content_modified' => $contentModified,
 			'featured' => isset($tour->featured) ? $tour->featured : 0,
 			'title' => plainText($tour->title),
 			'creator' => plainText($tour->credits),
