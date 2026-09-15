@@ -138,9 +138,18 @@ class CuratescapePlugin extends Omeka_Plugin_AbstractPlugin{
 	public function hookUpgrade($args)
 	{
 		$this->_createCacheDir();
-		$cache = get_view()->CuratescapeCache();
-		$cache->CacheBustManual(_JSON_ITEMS_FILE_, true);
-		$cache->CacheBustManual(_JSON_TOURS_FILE_, true);
+		// Note: View helpers aren't available during upgrade, so logic is inline here
+		$cacheFiles = array(
+			_JSON_ITEMS_FILE_,
+			_JSON_TOURS_FILE_,
+			_HTML_DASHBOARD_FILE_STATS_,
+			_HTML_DASHBOARD_CONTENT_AUDIT_,
+		);
+		foreach($cacheFiles as $cacheFile){
+			if(file_exists($cacheFile) && is_writable($cacheFile)){
+				@file_put_contents($cacheFile, null);
+			}
+		}
 	}
 
 	public function hookUninstall()
