@@ -108,24 +108,25 @@ class Curatescape_View_Helper_HookAdminDashboard extends Zend_View_Helper_Abstra
 		}
 		return $html;
 	}
-	private function displayDashboardTours($html = null)
+	private function displayDashboardTours($html = null, $limit = 10)
 	{
 		$db = get_db();
 		$table = $db->getTable('CuratescapeTour');
 		$select = $table->getSelect();
+		$select->reset(Zend_Db_Select::ORDER);
+		$select->order('curatescape_tours.id DESC');
+		$select->limit($limit);
 		$results = $table->fetchObjects($select);
 		$tourItems = null;
-		for($i=0;$i<=10;$i++){
-			if(array_key_exists($i, $results) && is_object($results[$i])){
-				$tourItems .= '<p class="recent">';
-					$tourItems .= '<a href="'.url('tours/show/'.$results[$i]->id).'">'
-					.$results[$i]->title.'</a>';
-				$tourItems .= '</p>';
-				$tourItems .= '<p class="dash-edit">';
-					$tourItems .= '<a href="'.url('tours/edit/'.$results[$i]->id).'">'
-					.__('Edit').'</a>';
-				$tourItems .= '</p>';
-			}
+		foreach($results as $tour){
+			$tourItems .= '<p class="recent">';
+				$tourItems .= '<a href="'.html_escape(url('tours/show/'.$tour->id)).'">'
+				.html_escape($tour->title).'</a>';
+			$tourItems .= '</p>';
+			$tourItems .= '<p class="dash-edit">';
+				$tourItems .= '<a href="'.html_escape(url('tours/edit/'.$tour->id)).'">'
+				.__('Edit').'</a>';
+			$tourItems .= '</p>';
 		}
 		if($tourItems){
 			$html .= '<section class="panel five columns omega">';
