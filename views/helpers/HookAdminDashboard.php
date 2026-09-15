@@ -91,7 +91,7 @@ class Curatescape_View_Helper_HookAdminDashboard extends Zend_View_Helper_Abstra
 						$html .= '<a target="_blank" class="appstore blue button" href="https://analytics.google.com/analytics/web">'.__('Google Analytics').'</a>';
 					}
 					if($ma){
-						$html .= '<a target="_blank" class="appstore blue button" href="'.$ma.'">'.__('Matomo Analytics').'</a>';
+						$html .= '<a target="_blank" class="appstore blue button" href="'.html_escape($ma).'">'.__('Matomo Analytics').'</a>';
 					}
 				}
 				if(option('curatescape_app_android') || option('curatescape_app_ios')){
