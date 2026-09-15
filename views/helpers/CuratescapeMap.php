@@ -90,7 +90,7 @@ class Curatescape_View_Helper_CuratescapeMap extends Zend_View_Helper_Abstract{
 			data-featured-color="<?php echo html_escape(flexOption('curatescape_map_marker_featured_color', $color));?>"
 			data-featured-star="<?php echo html_escape(flexOption('curatescape_map_marker_featured_star', 0));?>"
 			data-fixed-center="<?php echo $isGlobal ? html_escape(flexOption('curatescape_map_fixed_center', 0)) : 0;?>"
-			data-terms-json="<?php echo $this->getTermsJson(49, $isGlobal, $class);?>"
+			data-terms-json="<?php echo $this->getTermsJson($this->subjectElementId(), $isGlobal, $class);?>"
 			>
 				<div class="curatescape-map">
 					<div id="curatescape-map-canvas" aria-label="<?php echo __('Interactive Map');?>">
@@ -149,13 +149,25 @@ class Curatescape_View_Helper_CuratescapeMap extends Zend_View_Helper_Abstract{
 		$results = $q->fetchAll();
 		return count($results);
 	}
+	private function subjectElementId()
+	{
+		static $id;
+		if($id === null){
+			$element = get_db()->getTable('Element')
+				->findByElementSetNameAndElementName('Dublin Core', 'Subject');
+			$id = $element ? (int) $element->id : 0;
+		}
+		return $id;
+	}
 	private function getTermsJson($elementId, $isGlobal, $class, $allItemTypes = false)
 	{
 		if( 
+			!$elementId ||
 			!$isGlobal || 
 			!get_option('curatescape_map_subjects_select') || 
 			$class === "shortcode-no-subjects"
 		) return null;
+		$elementId = (int) $elementId;
 		$ands = array();
 		if(!$allItemTypes){
 			$ands[] = 'AND i.item_type_id = '.itemTypeID();
