@@ -30,11 +30,36 @@ class Curatescape_View_Helper_CuratescapeCache extends Zend_View_Helper_Abstract
 	public function WriteCacheFile($filepath, $content = '', $bypassPathCheck = false){
 		if(!$bypassPathCheck && !$this->cachablePath()) return false;
 		if(!is_dir(_CURATESCAPE_CACHE_DIR_) && !mkdir(_CURATESCAPE_CACHE_DIR_, 0755, true)) return false;
+		$this->SweepTempFiles($filepath);
+		// write beside the target and rename over it
+		if($tmp = @tempnam(dirname($filepath), basename($filepath).'.')){
+			// full disk gives a short count rather than false
+			$complete = file_put_contents($tmp, $content) === strlen((string) $content);
+			if($complete && @rename($tmp, $filepath)){
+				@chmod($filepath, 0644); // tempnam() creates at 0600
+				return true;
+			}
+			@unlink($tmp);
+			if(!$complete) return false;
+		}
+		// if no temp file or no rename, fall back to writing in place
 		if(!file_exists($filepath)){
 			return boolval(file_put_contents($filepath, $content));
 		}
 		if(!is_writable($filepath)) return false;
 		return boolval(file_put_contents($filepath, $content));
+	}
+	/*
+	** Remove stranded temp files.
+	** Matches cache file with suffix after extension
+	** Age floor prevents deleting an in-use temp file
+	*/
+	private function SweepTempFiles($filepath, $maxAgeSeconds = 3600){
+		foreach(glob($filepath.'.*') ?: array() as $tmp){
+			if(is_file($tmp) && (time() - filemtime($tmp)) > $maxAgeSeconds){
+				@unlink($tmp);
+			}
+		}
 	}
 	public function CacheBustManual($filepath, $afterSave = false){ 
 		if( $afterSave ||
