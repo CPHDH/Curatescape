@@ -12,8 +12,8 @@ class Curatescape_View_Helper_RssItems extends Zend_View_Helper_Abstract{
 			'name' => option('site_title'),
 			'uri' => WEB_ROOT,
 		));
-		$feed->setDateModified(time());
-		$feed->addHub('http://pubsubhubbub.appspot.com/');
+		$feed->addHub('https://pubsubhubbub.appspot.com/');
+		$feedModified = null;
 		
 		foreach( loop( 'items' ) as $item )
 		{
@@ -26,12 +26,15 @@ class Curatescape_View_Helper_RssItems extends Zend_View_Helper_Abstract{
 			$entry->setTitle($title);
 			$entry->setLink($url);
 			$entry->addAuthor(array('name' => $author ));
-			$entry->setDateModified(strtotime($item->modified));
+			$modified = strtotime($item->modified);
+			$entry->setDateModified($modified);
 			$entry->setDateCreated(strtotime($item->added));
 			$entry->setDescription($content);
 			$feed->addEntry($entry);
+			$feedModified = max($feedModified, $modified);
 		}
-		echo get_view()->CuratescapeCache()->Config(600); // 5 minutes
+		$feed->setDateModified($feedModified ? $feedModified : time());
+		echo get_view()->CuratescapeCache()->Config(600); // 10 minutes
 		echo $feed->export('atom');
 	}
 	
