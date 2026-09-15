@@ -393,14 +393,16 @@ function storyLabelString($plural = false)
 
 function toursForItem($item_id = null)
 {
-	if(!is_int($item_id)) return null;
+	$item_id = (int) $item_id;
+	if(!$item_id) return null;
 
 	$db = get_db();
 	$prefix = $db->prefix;
 	$select = $db->select()
 	->from(array('ti' => $prefix.'curatescape_tour_items'))
 	->join(array('t' => $prefix.'curatescape_tours'), 'ti.tour_id = t.id')
-	->where("item_id=$item_id AND public=1");
+	->where('ti.item_id = ?', $item_id)
+	->where('t.public = ?', 1);
 	$q = $select->query();
 	$results = $q->fetchAll();
 	return $results;
