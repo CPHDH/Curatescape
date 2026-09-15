@@ -349,7 +349,7 @@ class Curatescape_View_Helper_HookAdminDashboard extends Zend_View_Helper_Abstra
 		return $html;
 	}
 	private function generateDashboardFilesStats($html = null, $totalFiles = 0, $images = 0, $audio = 0, $video = 0, $docs = 0, $other = 0){
-		$file_dir = $_SERVER['DOCUMENT_ROOT'].'/files/original/';
+		$file_dir = FILES_DIR.'/original/';
 		if(!is_dir($file_dir)) return null;
 		$dir = opendir($file_dir);
 		while ($file = readdir($dir)) {
