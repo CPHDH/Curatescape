@@ -53,7 +53,7 @@ class Curatescape_View_Helper_HookAdminDashboard extends Zend_View_Helper_Abstra
 		} else {
 			$html = $this->generateDashboardAudit();
 			if($html) {
-				$cache->WriteCacheFile(_HTML_DASHBOARD_CONTENT_AUDIT_, $html);
+				$cache->WriteCacheFile(_HTML_DASHBOARD_CONTENT_AUDIT_, $html, true);
 			}
 			return $html;
 		}
@@ -68,7 +68,7 @@ class Curatescape_View_Helper_HookAdminDashboard extends Zend_View_Helper_Abstra
 			if($fileStats = $this->generateDashboardFilesStats()){
 				$html = $this->formatFilesSummary($fileStats);
 				if($html) {
-					$cache->WriteCacheFile(_HTML_DASHBOARD_FILE_STATS_, $html);
+					$cache->WriteCacheFile(_HTML_DASHBOARD_FILE_STATS_, $html, true);
 				}
 				return $html;
 			}
