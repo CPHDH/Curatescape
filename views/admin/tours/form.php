@@ -45,7 +45,9 @@ function availableTourItemsJSON()
 }
 ?>
 
-<?php if (isset($this->csrfToken)): ?>
+<?php if (isset($this->csrf)): // add: core's form object ?>
+<?php echo $this->csrf; ?>
+<?php elseif (isset($this->csrfToken)): // edit: token issued in editAction() ?>
 <input type="hidden" name="csrf_token" value="<?php echo html_escape($this->csrfToken); ?>">
 <?php endif; ?>
 <section class="seven columns alpha" id="edit-form">

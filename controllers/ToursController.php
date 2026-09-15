@@ -1,6 +1,8 @@
 <?php
 class Curatescape_ToursController extends Omeka_Controller_AbstractActionController
 {
+	protected $_autoCsrfProtection = true;
+
 	public function init()
 	{
 		$this->_helper->db->setDefaultModelName('CuratescapeTour');
