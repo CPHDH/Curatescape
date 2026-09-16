@@ -246,7 +246,7 @@
   .tour a.tour-image {
     margin: 0 0 1lh 0;
   }
-  .tour h2 {
+  .tour h2, .subtitle {
     text-align: center;
   }
 }
