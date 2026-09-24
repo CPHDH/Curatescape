@@ -90,7 +90,7 @@ class Curatescape_View_Helper_FilterItemNextPrevious extends Zend_View_Helper_Ab
 	document.addEventListener('DOMContentLoaded', function() {
 		let appendIndex = <?php echo $appendIndex;?>;
 		// APPEND PARAMS TO ITEM <?php echo strtoupper($nextOrPrevious);?> LINK
-		let containsMatch = document.querySelectorAll("a[href*='<?php echo $match;?>']");
+		let containsMatch = document.querySelectorAll("nav a[href*='<?php echo $match;?>']");
 		containsMatch.forEach((link)=>{
 			if(appendIndex !== null){
 				let withParams = new URL(link.href);
