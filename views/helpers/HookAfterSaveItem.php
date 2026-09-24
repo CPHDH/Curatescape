@@ -209,8 +209,11 @@ class Curatescape_View_Helper_HookAfterSaveItem extends Zend_View_Helper_Abstrac
 		$text = preg_replace(array('/<([0-9]+)/'), array('< $1'), $text);
 		$text = strip_tags($text, $allowed_tags);
 		$text = preg_replace(array('/^\s\s+/', '/\s\s+$/', '/\s\s+/u'), array('', '', ' '), $text);
-		$search = array('#<(strong|b)[^>]*>(.*?)</(strong|b)>#isu', '#<(em|i)[^>]*>(.*?)</(em|i)>#isu', '#<u[^>]*>(.*?)</u>#isu');
-		$replace = array('<b>$2</b>', '<i>$2</i>', '<u>$1</u>');
+		// normalize tag names and strip attributes; opening and closing tags are
+		// replaced independently so nesting is preserved, and \b prevents <b> from
+		// matching <br> or <blockquote>
+		$search = array('#<(strong|b)\b[^>]*>#iu', '#</(strong|b)\s*>#iu', '#<(em|i)\b[^>]*>#iu', '#</(em|i)\s*>#iu', '#<u\b[^>]*>#iu', '#</u\s*>#iu');
+		$replace = array('<b>', '</b>', '<i>', '</i>', '<u>', '</u>');
 		$text = preg_replace($search, $replace, $text);
 		$num_matches = preg_match_all("/\<!--/u", $text, $matches);
 		if($num_matches){
