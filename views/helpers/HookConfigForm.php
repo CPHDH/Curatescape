@@ -93,7 +93,8 @@ class Curatescape_View_Helper_HookConfigForm extends Zend_View_Helper_Abstract{
 				</span>
 				<span class="carto-settings">
 					<!-- CartoDB Key -->
-					<?php echo $this->configFormText('curatescape_map_cartodb_key', __('CartoDB API Key'), __('Enter your CartoDB API key below. <a target="_blank" href="%s">Request an API key for basemaps</a>.', 'https://carto.com/basemaps/apikey/'), 'Example: xxx_xxxx_x_xxxxxxxxxxxxxxxx');?>
+					<!-- pre-populates with and falls back to 'geolocation_carto_api_key' when empty -->
+					<?php echo $this->configFormText('curatescape_map_cartodb_key', __('CartoDB API Key'), __('Enter your CartoDB API key below. <a target="_blank" href="%s">Request an API key for basemaps</a>.', 'https://carto.com/basemaps/apikey/'), 'Example: xxx_xxxx_x_xxxxxxxxxxxxxxxx', 'geolocation_carto_api_key');?>
 				</span>
 				<span class="stadia-settings">
 					<!-- Stadia Key -->
@@ -298,8 +299,9 @@ class Curatescape_View_Helper_HookConfigForm extends Zend_View_Helper_Abstract{
 		<?php
 	}
 
-	private function configFormText($optionName, $labelName, $helperText, $placeholder=null){
+	private function configFormText($optionName, $labelName, $helperText, $placeholder=null, $fallbackOptionName=null){
 		if(!$optionName || !$labelName || !$helperText) return null;
+		$optionValue = $fallbackOptionName ? flexOption($optionName, get_option($fallbackOptionName)) : get_option($optionName);
 		?>
 		<div class="field">
 			<div class="two columns alpha">
@@ -307,7 +309,7 @@ class Curatescape_View_Helper_HookConfigForm extends Zend_View_Helper_Abstract{
 			</div>
 			<div class="inputs five columns omega">
 				<p class="explanation"><?php echo __($helperText); ?></p>
-				<?php echo get_view()->formText($optionName, get_option($optionName), array('placeholder' => __($placeholder))); ?>
+				<?php echo get_view()->formText($optionName, $optionValue, array('placeholder' => __($placeholder))); ?>
 			</div>
 		</div>
 		<?php
